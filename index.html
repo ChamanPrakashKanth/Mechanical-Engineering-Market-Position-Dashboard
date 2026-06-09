@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mechanical Engineering Market Position Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Mozilla PDF.js library for client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Application Header -->
+        <header>
+            <div class="brand">
+                <span class="brand-icon">⚛</span>
+                <div class="brand-text">
+                    <h1>MECH-ENG PATHFINDER</h1>
+                    <p>Anonymized Market-Position & Career Intelligence Dashboard</p>
+                </div>
+            </div>
+            <div class="header-status">
+                <span class="badge badge-purple" id="db-status-badge">
+                    <span class="pulse-dot"></span> Database Loaded: 25,000 Profiles
+                </span>
+            </div>
+        </header>
+
+        <!-- SETUP SCREEN: Resume upload and manual profile constructor -->
+        <section id="setup-panel" class="setup-grid">
+            
+            <!-- Left Side: Paste Resume text -->
+            <div class="glass-card setup-left">
+                <h2>
+                    <span>📝</span> Paste Your Resume
+                </h2>
+                <div class="paste-container">
+                    <!-- PDF File Upload Component -->
+                    <div style="margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 10px; border: 1px dashed var(--border-color);">
+                        <label for="resume-file-input" style="font-weight: 600; display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
+                            <span>📄</span> Compare via PDF Upload:
+                        </label>
+                        <input type="file" id="resume-file-input" accept=".pdf" style="font-family: var(--font-body); font-size: 0.85rem; color: var(--text-secondary); width: 100%;">
+                        <div id="pdf-upload-status" style="font-size: 0.75rem; color: var(--info); display: none; font-weight: 500;"></div>
+                    </div>
+
+                    <textarea id="resume-paste-box" placeholder="Or paste the full text of your resume here...&#10;&#10;The smart keyword parser will automatically extract your:&#10;- Degree level & college tier heuristics&#10;- Core mechanical skills (GD&T, FEA, CFD, HVAC, etc.)&#10;- Software tools (SolidWorks, ANSYS, AutoCAD, MATLAB, etc.)&#10;- Certifications (CSWA, Six Sigma, etc.)&#10;- Project, internship, and publication counts"></textarea>
+                    
+                    <button type="button" class="btn" id="btn-parse-resume">
+                        <span>⚡</span> Auto-Parse Resume Text
+                    </button>
+                    
+                    <div class="parse-pulse hidden" id="parse-indicator">
+                        <span class="pulse-dot"></span> Scanning text & extracting professional attributes...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side: Profile Refinement Form -->
+            <div class="glass-card setup-right">
+                <h2>
+                    <span>🛠</span> Profile Builder & Refinement
+                </h2>
+                
+                <!-- Quick Presets for fast testing -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label>Quick Test Profiles:</label>
+                    <div class="preset-container">
+                        <span class="preset-chip" data-preset="entry-cad" id="preset-chip-entry">Entry-Level Design (India)</span>
+                        <span class="preset-chip" data-preset="cae-mid" id="preset-chip-mid">CAE Specialist (M.Tech India)</span>
+                        <span class="preset-chip" data-preset="global-robotics" id="preset-chip-robotics">Global Robotics (Tier 1 B.S.)</span>
+                    </div>
+                </div>
+                
+                <form id="profile-refinement-form" onsubmit="event.preventDefault();">
+                    <div class="form-grid">
+                        
+                        <!-- Region selection -->
+                        <div class="form-group">
+                            <label for="form-region">Target Benchmark Region</label>
+                            <select id="form-region">
+                                <option value="India">India</option>
+                                <option value="Global">Global / Worldwide</option>
+                            </select>
+                        </div>
+                        
+                        <!-- College Tier selection -->
+                        <div class="form-group">
+                            <label for="form-tier">College / University Tier</label>
+                            <select id="form-tier">
+                                <option value="Tier 1">Tier 1 (IITs, NITs, BITS, MIT, Stanford, Imperial)</option>
+                                <option value="Tier 2">Tier 2 (VIT, Manipal, DTU, State Universities, Purdue)</option>
+                                <option value="Tier 3">Tier 3 (Local Colleges, Regional Polytechnics)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Degree level selection -->
+                        <div class="form-group">
+                            <label for="form-degree">Degree Type</label>
+                            <select id="form-degree">
+                                <option value="B.Tech/B.S.">B.Tech / B.E. / B.S.</option>
+                                <option value="M.Tech/M.S.">M.Tech / M.E. / M.S.</option>
+                                <option value="Ph.D.">Ph.D. / Doctoral Degree</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Practical project count -->
+                        <div class="form-group">
+                            <label for="form-projects">Project Portfolio Count</label>
+                            <input type="number" id="form-projects" min="0" max="10" value="2">
+                        </div>
+                        
+                        <!-- Internship count -->
+                        <div class="form-group">
+                            <label for="form-internships">Completed Internships</label>
+                            <input type="number" id="form-internships" min="0" max="5" value="0">
+                        </div>
+                        
+                        <!-- Research papers count -->
+                        <div class="form-group">
+                            <label for="form-papers">Research Publications</label>
+                            <input type="number" id="form-papers" min="0" max="10" value="0">
+                        </div>
+                        
+                        <!-- Competitions count -->
+                        <div class="form-group">
+                            <label for="form-competitions">Major Competitions (FSAE, Robo, etc.)</label>
+                            <input type="number" id="form-competitions" min="0" max="5" value="0">
+                        </div>
+                        
+                        <!-- Skills tags input -->
+                        <div class="form-group form-group-full">
+                            <label>Professional Skills (Press Enter or comma to add)</label>
+                            <div class="tags-input-container" id="skills-input-wrapper">
+                                <input type="text" id="skills-text-input" placeholder="e.g. GD&T, FEA, HVAC, Product Design...">
+                            </div>
+                        </div>
+                        
+                        <!-- Software tools tags input -->
+                        <div class="form-group form-group-full">
+                            <label>Software Tools (Press Enter or comma to add)</label>
+                            <div class="tags-input-container" id="tools-input-wrapper">
+                                <input type="text" id="tools-text-input" placeholder="e.g. SolidWorks, ANSYS, MATLAB, AutoCAD...">
+                            </div>
+                        </div>
+                        
+                        <!-- Certifications tags input -->
+                        <div class="form-group form-group-full">
+                            <label>Professional Certifications (Press Enter or comma to add)</label>
+                            <div class="tags-input-container" id="certs-input-wrapper">
+                                <input type="text" id="certs-text-input" placeholder="e.g. CSWA, Six Sigma Green Belt, Revit MEP...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-success" id="btn-run-analysis" style="width: 100%;">
+                        <span>📈</span> Compare & Compute Rankings
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- RESULTS / ANALYTICS DASHBOARD SCREEN -->
+        <section id="dashboard-panel" class="hidden">
+            
+            <!-- Floating Navigation & Summary -->
+            <div class="back-header">
+                <div>
+                    <button type="button" class="btn btn-secondary" id="btn-back-to-input">
+                        <span>←</span> Adjust Profile
+                    </button>
+                </div>
+                <div class="dashboard-nav">
+                    <button type="button" class="tab-btn active" data-tab="dashboard" id="tab-dashboard-btn">Analytics Dashboard</button>
+                    <button type="button" class="tab-btn" data-tab="database" id="tab-database-btn">Anonymized Candidate DB</button>
+                </div>
+            </div>
+
+            <!-- VIEW 1: Dashboard analytics layout -->
+            <div id="tab-dashboard-view">
+                
+                <div class="dashboard-grid">
+                    
+                    <!-- Candidate Quick Info Header -->
+                    <div class="glass-card col-12" style="padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <span class="badge" id="competitiveness-badge">Top 25% Competitiveness</span>
+                            <span style="margin-left: 1rem; font-size: 0.9rem; color: var(--text-secondary);" id="db-college-val">B.Tech | Tier 2 College</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-weight: 600; color: var(--text-primary);" id="db-candidate-id">
+                            Candidate #ME-49023
+                        </div>
+                              <!-- Rankings summary card -->
+                    <div class="glass-card col-12">
+                        <div class="card-header">
+                            <div class="card-title">🏆 Freshers & Entry-Level Market Rank Percentiles (Benchmarked against 60,000 Candidates)</div>
+                        </div>
+                        <div class="rank-metrics">
+                            <!-- Global rank circle -->
+                            <div class="rank-metric-box">
+                                <svg class="circular-chart" viewBox="0 0 36 36">
+                                    <defs>
+                                        <linearGradient id="globalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="var(--primary)" />
+                                            <stop offset="100%" stop-color="var(--accent)" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle circle-global" id="global-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.3" class="percentage" id="global-pct-text">0%</text>
+                                </svg>
+                                <div>
+                                    <div class="percent-label">Worldwide Rank</div>
+                                    <div class="percent-sublabel" id="global-pct-sublabel">Rank #0 of 60k global freshers</div>
+                                </div>
+                            </div>
+                            <!-- India rank circle -->
+                            <div class="rank-metric-box">
+                                <svg class="circular-chart" viewBox="0 0 36 36">
+                                    <defs>
+                                        <linearGradient id="indiaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="var(--info)" />
+                                            <stop offset="100%" stop-color="var(--success)" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle circle-india" id="india-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.3" class="percentage" id="india-pct-text">0%</text>
+                                </svg>
+                                <div>
+                                    <div class="percent-label">National Rank (India)</div>
+                                    <div class="percent-sublabel" id="india-pct-sublabel">Rank #0 of 36k Indian freshers</div>
+                                </div>
+                            </div>
+                            <!-- Tier rank circle -->
+                            <div class="rank-metric-box">
+                                <svg class="circular-chart" viewBox="0 0 36 36">
+                                    <defs>
+                                        <linearGradient id="tierGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#f59e0b" />
+                                            <stop offset="100%" stop-color="#ef4444" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" style="stroke: url(#tierGrad);" id="tier-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.3" class="percentage" id="tier-pct-text">0%</text>
+                                </svg>
+                                <div>
+                                    <div class="percent-label">Institution Tier Rank</div>
+                                    <div class="percent-sublabel" id="tier-pct-sublabel">Rank #0 within your tier group</div>
+                                </div>
+                            </div>
+                            <!-- Cluster rank circle -->
+                            <div class="rank-metric-box">
+                                <svg class="circular-chart" viewBox="0 0 36 36">
+                                    <defs>
+                                        <linearGradient id="clusterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366f1" />
+                                            <stop offset="100%" stop-color="#06b6d4" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" style="stroke: url(#clusterGrad);" id="cluster-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.3" class="percentage" id="cluster-pct-text">0%</text>
+                                </svg>
+                                <div>
+                                    <div class="percent-label">Technical Specialty Rank</div>
+                                    <div class="percent-sublabel" id="cluster-pct-sublabel">Rank #0 within your specialty</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Career Role Clustering Alignment -->
+                    <div class="glass-card col-6">
+                        <div class="card-header">
+                            <div class="card-title">🤖 Candidate Cluster Match</div>
+                            <span class="badge badge-green" id="matched-cluster-strength">90% Profile Alignment</span>
+                        </div>
+                        <div class="cluster-display">
+                            <div class="cluster-icon" id="matched-cluster-icon">💻</div>
+                            <div class="cluster-name" id="matched-cluster-name">CAE/Simulation Engineer</div>
+                            <div class="cluster-desc" id="matched-cluster-desc">Primary skills center around finite element analysis solvers, structural optimization models, and flow dynamics analysis.</div>
+                        </div>
+                    </div>
+
+                    <!-- Strengths Card -->
+                    <div class="glass-card col-6">
+                        <div class="card-header">
+                            <div class="card-title" style="color: var(--success)">✓ Strengths Diagnostic</div>
+                        </div>
+                        <ul class="data-list" id="strengths-list">
+                            <li>
+                                <span class="icon-bullet icon-bullet-green">✓</span>
+                                <div>Advanced degree (M.Tech/M.S.) signals deep technical competency.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Weaknesses Card -->
+                    <div class="glass-card col-6">
+                        <div class="card-header">
+                            <div class="card-title" style="color: var(--danger)">✗ Weaknesses / Disadvantages</div>
+                        </div>
+                        <ul class="data-list" id="weaknesses-list">
+                            <li>
+                                <span class="icon-bullet icon-bullet-red">✗</span>
+                                <div>Lack of physical engineering competitions (Formula SAE/BAJA) compared to top percentile candidates.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Skill Gap Card -->
+                    <div class="glass-card col-6">
+                        <div class="card-header">
+                            <div class="card-title">📊 Skill Frequency Gap Analysis</div>
+                            <span style="font-size: 0.75rem; color: var(--text-secondary);">Your Profile vs. Matched Cluster Peers</span>
+                        </div>
+                        <div class="chart-container" id="gap-chart-container">
+                            <!-- Dynamically loaded custom bars -->
+                        </div>
+                        <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 1rem; font-size: 0.75rem; color: var(--text-muted);">
+                            <span><span style="display:inline-block; width:10px; height:10px; background:linear-gradient(to right, var(--primary), var(--accent)); border-radius: 2px;"></span> Peer Frequency</span>
+                            <span><span style="display:inline-block; width:10px; height:10px; background:var(--info); border-radius: 2px;"></span> Your Profile</span>
+                        </div>
+                    </div>
+
+                    <!-- High ROI Career Roadmap -->
+                    <div class="glass-card col-6">
+                        <div class="card-header">
+                            <div class="card-title">🚀 High-ROI Improvement Roadmap</div>
+                        </div>
+                        <div class="roadmap-timeline" id="roadmap-container">
+                            <!-- Dynamically loaded roadmap items -->
+                        </div>
+                    </div>
+
+                    <!-- Peer comparison table -->
+                    <div class="glass-card col-12">
+                        <div class="card-header">
+                            <div class="card-title">👥 Mathematically Similar Peer Candidates (Anonymized)</div>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">Profiles closest to your experience and score range</span>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Candidate ID</th>
+                                        <th>Degree</th>
+                                        <th>College Tier</th>
+                                        <th>Specialty Cluster</th>
+                                        <th>Core Skills & Software</th>
+                                        <th>Employability Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="peer-table-body">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Final Assessment Box -->
+                    <div class="glass-card col-12 assessment-box">
+                        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-primary);">Career Intelligence Assessment</h3>
+                        <p>Based on 25,000 candidate profiles representing mechanical graduates globally and in India, this candidate demonstrates solid competitive metrics. Gaining specialized software certifications (e.g. CSWP, ANSYS) and increasing high-ROI design elements in your portfolio is estimated to yield a significant percentile improvement.</p>
+                        <div class="assessment-meta">
+                            <span>Analysis Confidence: High (95%)</span>
+                            <span>Calculated: June 2026</span>
+                            <span>Compliance: 100% Anonymized (No PII)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- VIEW 2: Paginated Candidates DB Search and Filters -->
+            <div id="tab-database-view" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">📁 Public Anonymized Candidate Database</div>
+                    </div>
+                    
+                    <!-- Search and filters -->
+                    <div class="db-controls">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="db-search" placeholder="Search by ID, college, degree, skills, software...">
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem;">
+                            <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                <label for="db-region-filter">Region:</label>
+                                <select id="db-region-filter" style="padding: 0.4rem 0.8rem;">
+                                    <option value="All">All Regions</option>
+                                    <option value="India">India Only</option>
+                                    <option value="Global">Global Only</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                <label for="db-cluster-filter">Specialty:</label>
+                                <select id="db-cluster-filter" style="padding: 0.4rem 0.8rem;">
+                                    <option value="All">All Clusters</option>
+                                    <option value="CAD Design">CAD Design</option>
+                                    <option value="CAE/Simulation">Simulation/CAE</option>
+                                    <option value="Robotics/Mechatronics">Mechatronics</option>
+                                    <option value="Manufacturing/Operations">Manufacturing</option>
+                                    <option value="HVAC/Thermal">HVAC/Thermal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Candidate Table -->
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Candidate ID</th>
+                                    <th>Region</th>
+                                    <th>College (Tier)</th>
+                                    <th>Specialty Cluster</th>
+                                    <th>Core Skills & Software</th>
+                                    <th>Employability Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);" id="db-count-text">
+                            Showing 1-12 of 25,000 profiles
+                        </span>
+                        
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="button" class="btn btn-secondary" id="prev-page-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;" disabled>Previous</button>
+                            <button type="button" class="btn btn-secondary" id="next-page-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
