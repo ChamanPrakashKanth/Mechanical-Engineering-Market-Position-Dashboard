@@ -14,6 +14,9 @@ def minify_js(js):
     
     lines = js.split('\n')
     cleaned_lines = []
+    
+    # Pre-clean lines to filter out comments and empty entries
+    raw_lines = []
     for line in lines:
         line = line.strip()
         if not line:
@@ -24,23 +27,49 @@ def minify_js(js):
         
         # Remove trailing comments if they are not part of URLs
         if '//' in line:
-            # Check if it's a URL comment or a regular comment
-            # Split by '//' but check if the previous token ends with ':' (as in https://)
             parts = line.split('//')
             if len(parts) > 1:
                 # If first part ends with 'http:' or 'https:', keep it as URL
                 if parts[0].strip().endswith('http:') or parts[0].strip().endswith('https:'):
-                    # It's a URL, keep it
                     pass
                 else:
-                    # It's a comment, discard the rest
                     line = parts[0].strip()
                     
         if line:
-            # Add semicolon if line doesn't end with standard delimiters to prevent line-merge syntax errors
-            if not line.endswith(';') and not line.endswith('{') and not line.endswith('}') and not line.endswith(',') and not line.endswith('[') and not line.endswith(']') and not line.endswith(':'):
+            raw_lines.append(line)
+            
+    # Process lines with a peek ahead
+    for i, line in enumerate(raw_lines):
+        next_line = raw_lines[i + 1] if i + 1 < len(raw_lines) else ""
+        
+        # Standard delimiters that block semicolons
+        ends_with_delim = (
+            line.endswith(';') or line.endswith('{') or line.endswith('}') or 
+            line.endswith(',') or line.endswith('[') or line.endswith(']') or 
+            line.endswith(':') or line.endswith('.') or line.endswith('&&') or 
+            line.endswith('||') or line.endswith('+') or line.endswith('-') or 
+            line.endswith('?') or line.endswith('=>')
+        )
+        
+        # Semicolon should not be appended if the next line starts with a closing delimiter
+        is_closing_next = (
+            next_line.startswith('}') or next_line.startswith(']') or 
+            next_line.startswith(')') or next_line.startswith('.') or
+            next_line.startswith(',') or next_line.startswith(';')
+        )
+        
+        if not ends_with_delim and not is_closing_next:
+            # Avoid appending semicolons after control flow headers like if, while, for
+            is_control_header = (
+                line.startswith('if') or line.startswith('else if') or 
+                line.startswith('for') or line.startswith('while') or 
+                line.startswith('function') or line.startswith('catch')
+            ) and line.endswith(')')
+            
+            if not is_control_header:
                 line += ';'
-            cleaned_lines.append(line)
+                
+        cleaned_lines.append(line)
             
     return " ".join(cleaned_lines)
 

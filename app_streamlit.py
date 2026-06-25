@@ -973,11 +973,11 @@ if submit_btn or parsed_data or preset != "None":
     st.success(f"⚛ Compiled Profile: {degree} | College Tier: {tier} | Matched Specialization: {best_cluster} (Score: {target_score}/100)")
     
     # Initialize tabs
-    tab_dashboard, tab_demand, tab_recommendations, tab_database = st.tabs([
-        "📊 Employability Dashboard", 
+    tab_dashboard, tab_demand, tab_courses, tab_database = st.tabs([
+        "📊 Analytics Dashboard", 
         "💼 Employer Insights",
-        "🎯 Recommendations Engine", 
-        "📁 Competitor Database"
+        "📖 Written Courses", 
+        "📁 Anonymized Candidate DB"
     ])
     
     with tab_dashboard:
@@ -1051,57 +1051,11 @@ if submit_btn or parsed_data or preset != "None":
                     st.write("Target this skill/tool next to close the gap. Build a dedicated portfolio project centered on it or prepare for its entry certification.")
         else:
             st.success("Perfect alignment! No critical technical gaps found relative to matched specialty peers.")
-
-    with tab_demand:
-        st.subheader("💼 Employer Demands & Hiring Benchmarks")
-        cluster_icons = {
-            "CAD Design": "📐",
-            "CAE/Simulation": "💻",
-            "Robotics/Mechatronics": "🤖",
-            "Manufacturing/Operations": "⚙️",
-            "HVAC/Thermal": "🔥"
-        }
-        cluster_icon = cluster_icons.get(best_cluster, "🔧")
-        st.markdown(f"### {cluster_icon} Specialization: **{best_cluster}**")
-        
-        demands = EMPLOYER_DEMANDS.get(best_cluster, EMPLOYER_DEMANDS["CAD Design"])
-        st.markdown(f"**Target Professional Role:** `{demands['role']}`")
-        st.write("Employers look for these key competencies and credentials when evaluating freshers:")
-        
-        col_d1, col_d2 = st.columns(2)
-        with col_d1:
-            st.markdown("#### 🎯 In-Demand Core Skills")
-            for s in demands["skills"]:
-                p_color = "red" if s["priority"] == "Critical" else ("orange" if s["priority"] == "High" else "blue")
-                st.markdown(f"- **{s['name']}** :{p_color}[({s['priority']})]")
-                st.write(f"  *{s['desc']}*")
             
-            st.markdown("#### 📜 Valued Certifications")
-            for c in demands["certs"]:
-                p_color = "red" if c["priority"] == "Critical" else ("orange" if c["priority"] == "High" else "blue")
-                st.markdown(f"- **{c['name']}** :{p_color}[({c['priority']})]")
-                st.write(f"  *{c['desc']}*")
-                
-        with col_d2:
-            st.markdown("#### 💻 Essential Software Packages")
-            for sw in demands["software"]:
-                p_color = "red" if sw["priority"] == "Critical" else ("orange" if sw["priority"] == "High" else "blue")
-                st.markdown(f"- **{sw['name']}** :{p_color}[({sw['priority']})]")
-                st.write(f"  *{sw['desc']}*")
-                
-            st.markdown("#### 📂 Portfolio & Project Expectations")
-            for p in demands["portfolio"]:
-                st.markdown(f"- **{p['title']}**")
-                st.write(f"  *{p['desc']}*")
-                
-        st.info("💡 **Ready to learn these?** Switch to the **Recommendations Engine** tab to complete the mini-course lectures and test your knowledge!")
-
-    with tab_recommendations:
-        st.subheader("🎯 Personalized Career Recommendations Engine")
-        st.caption("Custom learning pathways, capstone project blueprints, and real-time rank-booster simulation.")
+        st.divider()
         
         # 1. Rank Booster Simulator (Interactive Checkbox Widget)
-        st.markdown("### ⚡ Employability Booster Simulator")
+        st.subheader("⚡ Employability Booster Simulator")
         st.write("Toggle the action items below to simulate how they would boost your score and standing:")
         
         # Determine missing skills/certs/etc. for simulation
@@ -1217,7 +1171,7 @@ if submit_btn or parsed_data or preset != "None":
         st.divider()
         
         # 2. Targeted Capstone Project Blueprints
-        st.markdown(f"### 📂 Specialized Capstone Project Blueprints ({best_cluster})")
+        st.subheader(f"📂 Specialized Capstone Project Blueprints ({best_cluster})")
         st.write("Build one of these projects from scratch to address your portfolio gaps and showcase deep specialty competency:")
         
         cluster_projects = PROJECTS_RECOMMENDATIONS.get(best_cluster, [])
@@ -1227,89 +1181,11 @@ if submit_btn or parsed_data or preset != "None":
                 st.markdown("**Step-by-Step Implementation Guide:**")
                 for s_step, step_text in enumerate(proj["steps"]):
                     st.markdown(f"{s_step+1}. {step_text}")
-                
+                    
         st.divider()
         
-        # 3. Learning Pathways & Courses
-        col_l1, col_l2 = st.columns(2)
-        with col_l1:
-            st.markdown(f"### Manim Video Mini-Course: {best_cluster}")
-            course_data = COURSE_CATALOG.get(best_cluster)
-            if course_data:
-                video_source, video_source_type = get_course_video_source(course_data)
-                boost_value = course_data.get("score_boost", 5.0)
-                is_completed = best_cluster in st.session_state.completed_courses
-
-                st.caption(course_data["description"])
-                st.markdown(f"**Lesson:** {course_data['title']}")
-                st.markdown("**Skill tags:** " + ", ".join(course_data.get("skill_tags", [])))
-
-                if video_source:
-                    st.video(video_source)
-                    if video_source_type == "youtube":
-                        st.caption("Hosted on YouTube. Completion is awarded only after the quiz is passed.")
-                    else:
-                        st.caption("Playing local Manim render while the YouTube upload ID is pending.")
-                else:
-                    st.warning(
-                        "Video render pending. Add a local MP4 at "
-                        f"`{course_data.get('local_video_path')}` or paste a YouTube video ID into COURSE_CATALOG."
-                    )
-
-                with st.expander("Written lecture notes and formulas", expanded=False):
-                    st.markdown(course_data["written_content"])
-
-                st.markdown("#### Quick Knowledge Check")
-
-                if is_completed:
-                    st.success(f"Course completed. +{boost_value:g} employability points are active for this specialization.")
-                    st.info(f"**Quiz Question:** {course_data['quiz_question']}\n\n*Correct Answer:* `{course_data['quiz_answer']}`")
-                else:
-                    st.write(course_data["quiz_question"])
-                    quiz_key = f"quiz_{course_data['slug']}"
-                    user_answer = st.radio(
-                        "Select the correct answer:",
-                        course_data["quiz_options"],
-                        key=quiz_key
-                    )
-
-                    if st.button("Submit Quiz Answer", key=f"btn_{course_data['slug']}"):
-                        if user_answer == course_data["quiz_answer"]:
-                            st.session_state.completed_courses.append(best_cluster)
-                            st.success(f"Correct answer. +{boost_value:g} employability points unlocked.")
-                            st.rerun()
-                        else:
-                            st.error("Incorrect answer. Review the lesson notes and try again.")
-        with col_l2:
-            st.markdown("### 📚 Recommended Courses")
-            st.write("Target these external courses to build a solid foundation:")
-            rec_courses = COURSES_RECOMMENDATIONS.get(best_cluster, [])
-            for c in rec_courses:
-                st.markdown(f"- **{c['name']}** ({c['source']}) — *Duration: {c['duration']}*")
-            st.write("")
-            
-            st.markdown("### 🎖 Professional Certification Pathways")
-            st.write("Industry-validated credentials to bypass background filters:")
-            if best_cluster == "CAD Design":
-                st.markdown("- **Certified SolidWorks Professional (CSWP)**: Pass 3 segments testing segment modeling, configurations, and assemblies.")
-                st.markdown("- **Autodesk Certified Professional**: Core AutoCAD/Inventor validation.")
-            elif best_cluster == "CAE/Simulation":
-                st.markdown("- **ANSYS Certified Professional**: Demonstrates advanced meshing and boundary setup rigor.")
-                st.markdown("- **NAFEMS Professional Simulation Engineer**: Global benchmark certification for finite element analysis.")
-            elif best_cluster == "Robotics/Mechatronics":
-                st.markdown("- **CLAD (Certified LabVIEW Associate Developer)**: Focus on hardware DAQ integration.")
-                st.markdown("- **ASME Robotics Certification**: Focus on automation and mechanism design compliance.")
-            elif best_cluster == "Manufacturing/Operations":
-                st.markdown("- **Lean Six Sigma Green Belt**: Focus on DMAIC frameworks and process variance reduction.")
-                st.markdown("- **SME Certified Manufacturing Engineer (CMfgE)**: Focus on manufacturing automation and operations.")
-            else: # HVAC/Thermal
-                st.markdown("- **ASHRAE HVAC Design Certificate**: Focus on load calculations and duct sizing.")
-                st.markdown("- **Revit MEP Certified Professional**: Industry standard BIM modeling credential.")
-                
-        st.divider()
-        
-        # 4. Offline Networking Strategy (Highly tailored for Tier 3 / zero internship profiles)
-        st.markdown("### 🤝 Strategic Job Hunting & Placement Guidance")
+        # 3. Offline Networking Strategy (Highly tailored for Tier 3 / zero internship profiles)
+        st.subheader("🤝 Strategic Job Hunting & Placement Guidance")
         if tier == "Tier 3":
             st.warning("⚠️ **Tier 3 College Strategy:** Standard campus hiring channels are thin. To gain traction: \n"
                        "1. **Upload designs to GrabCAD / GitHub**: Create visual case studies with design reports. Recruiters value proof of skills over college brand.\n"
@@ -1321,6 +1197,148 @@ if submit_btn or parsed_data or preset != "None":
                     "2. Partner with a professor on an industrial consultancy project. This counts as project/experience on a resume.")
         else:
             st.success("✨ **Advanced Strategy:** Leverage your existing internships. Turn them into case studies on your resume, clearly highlighting metrics (e.g., 'reduced weight by 12%', 'saved 15 hours of machining time').")
+
+    with tab_demand:
+        st.subheader("💼 Employer Demands & Hiring Benchmarks")
+        cluster_icons = {
+            "CAD Design": "📐",
+            "CAE/Simulation": "💻",
+            "Robotics/Mechatronics": "🤖",
+            "Manufacturing/Operations": "⚙️",
+            "HVAC/Thermal": "🔥"
+        }
+        cluster_icon = cluster_icons.get(best_cluster, "🔧")
+        st.markdown(f"### {cluster_icon} Specialization: **{best_cluster}**")
+        
+        demands = EMPLOYER_DEMANDS.get(best_cluster, EMPLOYER_DEMANDS["CAD Design"])
+        st.markdown(f"**Target Professional Role:** `{demands['role']}`")
+        st.write("Employers look for these key competencies and credentials when evaluating freshers:")
+        
+        col_d1, col_d2 = st.columns(2)
+        with col_d1:
+            st.markdown("#### 🎯 In-Demand Core Skills")
+            for s in demands["skills"]:
+                p_color = "red" if s["priority"] == "Critical" else ("orange" if s["priority"] == "High" else "blue")
+                st.markdown(f"- **{s['name']}** :{p_color}[({s['priority']})]")
+                st.write(f"  *{s['desc']}*")
+            
+            st.markdown("#### 📜 Valued Certifications")
+            for c in demands["certs"]:
+                p_color = "red" if c["priority"] == "Critical" else ("orange" if c["priority"] == "High" else "blue")
+                st.markdown(f"- **{c['name']}** :{p_color}[({c['priority']})]")
+                st.write(f"  *{c['desc']}*")
+                
+        with col_d2:
+            st.markdown("#### 💻 Essential Software Packages")
+            for sw in demands["software"]:
+                p_color = "red" if sw["priority"] == "Critical" else ("orange" if sw["priority"] == "High" else "blue")
+                st.markdown(f"- **{sw['name']}** :{p_color}[({sw['priority']})]")
+                st.write(f"  *{sw['desc']}*")
+                
+            st.markdown("#### 📂 Portfolio & Project Expectations")
+            for p in demands["portfolio"]:
+                st.markdown(f"- **{p['title']}**")
+                st.write(f"  *{p['desc']}*")
+                
+        st.info("💡 **Ready to learn these?** Switch to the **Written Courses** tab to complete the mini-course lectures and test your knowledge!")
+
+    with tab_courses:
+        st.subheader("📖 Written Skill Courses & Interactive Quizzes")
+        st.caption("Read high-quality written lessons for key mechanical engineering specialties and pass quizzes to boost your Employability Score by +5!")
+        
+        # Dropdown to select course to browse
+        selected_cluster = st.selectbox(
+            "Select Specialization Course to Browse:",
+            CLUSTERS,
+            index=CLUSTERS.index(best_cluster)
+        )
+        
+        course_data = COURSE_CATALOG.get(selected_cluster)
+        if course_data:
+            boost_value = course_data.get("score_boost", 5.0)
+            is_completed = selected_cluster in st.session_state.completed_courses
+            
+            # Completion Badge
+            if is_completed:
+                st.success(f"✨ **Status: Completed (+{boost_value:g} Boost Active)**")
+            else:
+                st.info("⏳ **Status: Incomplete** (Complete the lecture below and answer the quiz to earn points)")
+            
+            col_l1, col_l2 = st.columns([3, 2])
+            
+            with col_l1:
+                st.markdown(f"## Lesson: {course_data['title']}")
+                st.caption(course_data["description"])
+                st.markdown("**Skill tags:** " + ", ".join(course_data.get("skill_tags", [])))
+                
+                # Render written content directly in a beautiful card-like format
+                st.markdown("### 📝 Lecture Notes & Formula Sheet")
+                st.markdown(course_data["written_content"])
+                
+                st.divider()
+                
+                st.markdown("### ⚡ Quick Knowledge Check")
+                if is_completed:
+                    st.success(f"🎉 Quiz passed successfully! +{boost_value:g} employability points are active for this specialization.")
+                    st.info(f"**Quiz Question:** {course_data['quiz_question']}\n\n*Correct Answer:* `{course_data['quiz_answer']}`")
+                else:
+                    st.write(course_data['quiz_question'])
+                    quiz_key = f"quiz_{course_data['slug']}"
+                    user_answer = st.radio(
+                        "Select the correct answer:",
+                        course_data["quiz_options"],
+                        key=quiz_key
+                    )
+                    
+                    if st.button("Submit Quiz Answer", key=f"btn_{course_data['slug']}"):
+                        if user_answer == course_data["quiz_answer"]:
+                            st.session_state.completed_courses.append(selected_cluster)
+                            st.success(f"🎉 Correct answer! +{boost_value:g} Employability Points unlocked.")
+                            st.rerun()
+                        else:
+                            st.error("❌ Incorrect answer. Review the lesson notes and try again.")
+                            
+            with col_l2:
+                st.markdown("### 📚 Recommended Courses")
+                st.write("Target these external courses to build a solid foundation:")
+                rec_courses = COURSES_RECOMMENDATIONS.get(selected_cluster, [])
+                for c in rec_courses:
+                    st.markdown(f"- **{c['name']}** ({c['source']}) — *Duration: {c['duration']}*")
+                st.write("")
+                
+                st.markdown("### 🎖 Professional Certification Pathways")
+                st.write("Industry-validated credentials to bypass background filters:")
+                if selected_cluster == "CAD Design":
+                    st.markdown("- **Certified SolidWorks Professional (CSWP)**: Pass 3 segments testing segment modeling, configurations, and assemblies.")
+                    st.markdown("- **Autodesk Certified Professional**: Core AutoCAD/Inventor validation.")
+                elif selected_cluster == "CAE/Simulation":
+                    st.markdown("- **ANSYS Certified Professional**: Demonstrates advanced meshing and boundary setup rigor.")
+                    st.markdown("- **NAFEMS Professional Simulation Engineer**: Global benchmark certification for finite element analysis.")
+                elif selected_cluster == "Robotics/Mechatronics":
+                    st.markdown("- **CLAD (Certified LabVIEW Associate Developer)**: Focus on hardware DAQ integration.")
+                    st.markdown("- **ASME Robotics Certification**: Focus on automation and mechanism design compliance.")
+                elif selected_cluster == "Manufacturing/Operations":
+                    st.markdown("- **Lean Six Sigma Green Belt**: Focus on DMAIC frameworks and process variance reduction.")
+                    st.markdown("- **SME Certified Manufacturing Engineer (CMfgE)**: Focus on manufacturing automation and operations.")
+                else: # HVAC/Thermal
+                    st.markdown("- **ASHRAE HVAC Design Certificate**: Focus on load calculations and duct sizing.")
+                    st.markdown("- **Revit MEP Certified Professional**: Industry standard BIM modeling credential.")
+                    
+                st.divider()
+                
+                # Manim Video Course Reference
+                st.markdown("### 🎥 Animation Reference")
+                video_source, video_source_type = get_course_video_source(course_data)
+                if video_source:
+                    st.video(video_source)
+                    if video_source_type == "youtube":
+                        st.caption("Hosted on YouTube.")
+                    else:
+                        st.caption("Playing local Manim render reference.")
+                else:
+                    st.warning(
+                        "Animation reference video render pending. Written lecture notes and quizzes are fully active above!"
+                    )
 
     with tab_database:
         # Searchable peer candidate datatable

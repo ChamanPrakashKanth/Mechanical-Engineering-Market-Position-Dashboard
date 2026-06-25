@@ -16,6 +16,191 @@ let targetProfile = null;
 let filteredCandidates = [];
 let currentPage = 1;
 const pageSize = 12;
+let completedCourses = [];
+
+const COURSE_CATALOG = {
+    "CAD Design": {
+        title: "ASME Y14.5 Geometric Dimensioning & Tolerancing (GD&T) & Mechanical Design",
+        slug: "cad-lewis-gear-bending",
+        description: "Learn standard dimensioning constraints, DFM rules, and tolerance stack-up analysis for mechanical systems.",
+        written_content: `
+            <h4>1. Geometric Dimensioning & Tolerancing (GD&T) - ASME Y14.5</h4>
+            <p>GD&T is a system of symbols used to specify the exact allowable variation of geometric features. Instead of relying solely on linear dimensions (which create square tolerance zones), GD&T uses circular or cylindrical tolerance zones.</p>
+            <ul>
+                <li><strong>Datum Reference Frame (DRF):</strong> A coordinate system that restricts the 6 degrees of freedom of a part during machining and inspection. Datums are established in order of priority: Primary (constrains 3 DOF), Secondary (constrains 2 DOF), and Tertiary (constrains 1 DOF).</li>
+                <li><strong>Geometric Controls:</strong> Position (controls centers/axes from True Position), Profile (controls shape/size of surfaces), and Runout (controls coaxiality of rotating features).</li>
+                <li><strong>Material Modifiers:</strong> Maximum Material Condition (MMC - Ⓜ) represents the state containing the maximum amount of material (smallest hole, largest pin). Selecting MMC grants additional 'bonus tolerance' as the feature size departs from MMC.</li>
+            </ul>
+
+            <h4>2. Design for Manufacturing (DFM) Guidelines</h4>
+            <p>Designing components without considering manufacturing constraints leads to high production rejection rates.</p>
+            <ul>
+                <li><strong>Plastic Injection Molding:</strong> Maintain uniform wall thickness (2.0 - 3.0 mm) to prevent sink marks and warpage. Add draft angles of 1.0° - 2.0° to vertical faces for easy ejection from the mold core/cavity.</li>
+                <li><strong>Sheet Metal Design:</strong> Minimum bend radius must satisfy R ≥ t (sheet thickness). Design bend reliefs of width w ≥ 1.5t and depth d ≥ 1.5t at corners to prevent tearing.</li>
+                <li><strong>Machined Fits (ASME B4.1):</strong> Clearance Fits (RC - free rotation), Transition Fits (LT - overlap), and Interference/Press Fits (LN - require force to assemble).</li>
+            </ul>
+
+            <h4>3. Step-by-Step Tolerance Stack-Up Calculation</h4>
+            <p>In a linear shaft assembly with components stacked end-to-end, we calculate clearances to ensure fitment:</p>
+            <ul>
+                <li><strong>Worst-Case Method:</strong> Sums the absolute limits of tolerances: T<sub>c</sub> = Σ T<sub>i</sub>.</li>
+                <li><strong>Statistical (Root-Sum-Square - RSS) Method:</strong> Assumes normal distribution of components: T<sub>RSS</sub> = √Σ T<sub>i</sub><sup>2</sup>.</li>
+                <li><strong>Lewis Bending Equation:</strong> Root bending stress in gear design (modeled as a cantilever beam under tangential load W<sub>t</sub>): σ = W<sub>t</sub> / (F · m · Y) ≤ [σ]<sub>all</sub>, where F is face width, m is module, and Y is the Lewis Form Factor.</li>
+            </ul>
+        `,
+        quiz_question: "What is the primary benefit of designing parts using the Maximum Material Condition (MMC) modifier?",
+        quiz_options: [
+            "It eliminates the need for any datum reference frames",
+            "It grants additional 'bonus tolerance' as the feature size departs from MMC",
+            "It guarantees zero friction in rotating shaft bearings"
+        ],
+        quiz_answer: "It grants additional 'bonus tolerance' as the feature size departs from MMC"
+    },
+    "CAE/Simulation": {
+        title: "Computational Finite Element Analysis (FEA) & Fluid Solvers",
+        slug: "cae-stiffness-matrix",
+        description: "Understand element stiffness formulations, boundary conditions, meshing metrics, and Navier-Stokes equations.",
+        written_content: `
+            <h4>1. Element Types & Formulations in FEA</h4>
+            <p>FEA discretizes solid continuous structures into discrete finite elements.</p>
+            <ul>
+                <li><strong>1D Elements (Truss/Beam):</strong> Truss elements only support axial loads. Beam elements support bending, torsion, and axial loads.</li>
+                <li><strong>2D Elements (Shell):</strong> Used for thin-walled parts (thickness is small compared to other dimensions). Mid-surfaces are extracted to solve elements.</li>
+                <li><strong>3D Elements (Solid/Tetrahedral/Hexahedral):</strong> Used for bulky, complex 3D parts. Hexahedral (brick) elements provide higher accuracy and faster convergence than tetrahedral elements.</li>
+            </ul>
+
+            <h4>2. Stiffness Matrices & Deflection Mechanics</h4>
+            <p>For a discretized system under loading, the nodal displacement vector <strong>u</strong> is solved using the system stiffness matrix <strong>K</strong> and force vector <strong>f</strong>:</p>
+            <pre><strong>K</strong> <strong>u</strong> = <strong>f</strong></pre>
+            <ul>
+                <li><strong>Cantilever Deflection Formula:</strong> The maximum tip deflection δ<sub>max</sub> under a point load P at the free end is: δ<sub>max</sub> = P L<sup>3</sup> / (3 E I), where E is Young's Modulus and I is the Area Moment of Inertia.</li>
+                <li><strong>Von Mises Yield Criterion:</strong> In multi-axial stress states, the equivalent Von Mises stress σ<sub>v</sub> is calculated to predict ductile yield failure: σ<sub>v</sub> = √[0.5 · ((σ<sub>1</sub>-σ<sub>2</sub>)<sup>2</sup> + (σ<sub>2</sub>-σ<sub>3</sub>)<sup>2</sup> + (σ<sub>3</sub>-σ<sub>1</sub>)<sup>2</sup>)] ≤ S<sub>y</sub>.</li>
+            </ul>
+
+            <h4>3. Mesh Quality & CFD Boundary Layer Modeling</h4>
+            <p>In Computational Fluid Dynamics (CFD), fluid flow is solved using the discretized Navier-Stokes momentum equations:</p>
+            <pre>ρ (∂<strong>u</strong>/∂t + <strong>u</strong> · ∇<strong>u</strong>) = -∇p + μ ∇<sup>2</sup><strong>u</strong> + <strong>f</strong></pre>
+            <ul>
+                <li><strong>Mesh Quality Metrics:</strong> Aspect Ratio (should be close to 1.0), Skewness (deviation from equilateral shape; high skewness degrades solver accuracy), and Jacobian (element distortion; must be positive).</li>
+                <li><strong>Turbulence Models & y+ Calculation:</strong> SST k-omega (k-ω SST) integrates near-wall k-ω and free-stream k-ε, making it the industry standard for boundary layers. The dimensionless wall distance y<sup>+</sup> = u<sub>*</sub> y / ν is targeted near 1.0 to resolve the viscous sublayer directly.</li>
+            </ul>
+        `,
+        quiz_question: "Why is a y+ value near 1.0 targeted when setting up boundary layer meshes for aerodynamic simulations?",
+        quiz_options: [
+            "It allows the solver to bypass Navier-Stokes computations completely",
+            "It resolves the viscous sublayer directly without relying on wall functions",
+            "It automatically increases the material's structural yield strength"
+        ],
+        quiz_answer: "It resolves the viscous sublayer directly without relying on wall functions"
+    },
+    "Robotics/Mechatronics": {
+        title: "Closed-Loop Feedforward Control Systems & PID Tuning",
+        slug: "robotics-pid-control",
+        description: "Explore the mathematics behind closed-loop PID control tuning, microcontrollers, and kinematics.",
+        written_content: `
+            <h4>1. Proportional-Integral-Derivative (PID) Control Theory</h4>
+            <p>PID controllers regulate the error e(t) = r(t) - y(t) between a desired setpoint r(t) and measured process output y(t):</p>
+            <pre>u(t) = K<sub>p</sub> e(t) + K<sub>i</sub> ∫ e(τ)dτ + K<sub>d</sub> de(t)/dt</pre>
+            <ul>
+                <li><strong>K<sub>p</sub> (Proportional Gain):</strong> Corrects current error; higher gain speeds up response but causes overshoot.</li>
+                <li><strong>K<sub>i</sub> (Integral Gain):</strong> Corrects past accumulated errors; eliminates steady-state offset but can lead to windup.</li>
+                <li><strong>K<sub>d</sub> (Derivative Gain):</strong> Predicts future error; dampens oscillations and stabilizes settling time.</li>
+                <li><strong>Laplace transfer function G<sub>c</sub>(s):</strong> G<sub>c</sub>(s) = K<sub>p</sub> + K<sub>i</sub>/s + K<sub>d</sub> s = (K<sub>d</sub> s<sup>2</sup> + K<sub>p</sub> s + K<sub>i</sub>) / s.</li>
+            </ul>
+
+            <h4>2. Embedded Controller Interfaces & Filtering</h4>
+            <p>Microcontrollers interface with analog sensors (thermistors, strain gages) through Analog-to-Digital Converters (ADCs).</p>
+            <ul>
+                <li><strong>ADC Resolution Step Voltage:</strong> The smallest change in input voltage that can be resolved by an N-bit ADC with reference voltage V<sub>ref</sub>: ΔV = V<sub>ref</sub> / (2<sup>N</sup> - 1). For a 10-bit ADC at 5.0V, resolution is 5.0V / 1023 ≈ 4.88 mV.</li>
+                <li><strong>Active RC Low-Pass Filter:</strong> Used to filter out high-frequency noise from sensors: f<sub>c</sub> = 1 / (2π R C), where f<sub>c</sub> is the cutoff frequency in Hertz.</li>
+            </ul>
+
+            <h4>3. Robotic Kinematics Equations</h4>
+            <ul>
+                <li><strong>Homogeneous Transformation Matrix (T):</strong> Links a robot joint coordinate frame to the next frame: T = [[R, d], [0, 1]], where R is rotation matrix and d is translation vector.</li>
+                <li><strong>Denavit-Hartenberg (D-H) Parameters:</strong> Standard convention utilizing link parameters (length a, twist α, offset d, joint angle θ) to define joint coordinate frames.</li>
+            </ul>
+        `,
+        quiz_question: "For a 10-bit Analog-to-Digital Converter (ADC) operating with a 5.0V reference, what is the smallest step voltage resolution?",
+        quiz_options: [
+            "Approximately 4.88 mV",
+            "Exactly 5.00 mV",
+            "Approximately 9.77 mV"
+        ],
+        quiz_answer: "Approximately 4.88 mV"
+    },
+    "Manufacturing/Operations": {
+        title: "Statistical Quality Control & Six Sigma Process Capability",
+        slug: "manufacturing-cpk-capability",
+        description: "Learn to calculate quality capability indices and analyze production deviation from specification limits.",
+        written_content: `
+            <h4>1. Process Capability Indices (C<sub>p</sub> and C<sub>pk</sub>)</h4>
+            <p>In manufacturing, components must stay within Upper (USL) and Lower (LSL) Specification Limits.</p>
+            <ul>
+                <li><strong>C<sub>p</sub> (Potential Capability):</strong> Represents potential performance assuming a centered mean: C<sub>p</sub> = (USL - LSL) / (6σ), where σ is standard deviation.</li>
+                <li><strong>C<sub>pk</sub> (Actual Capability):</strong> Accounts for shifts in the process mean μ: C<sub>pk</sub> = min((USL - μ)/(3σ), (μ - LSL)/(3σ)).</li>
+                <li><strong>Capability Thresholds:</strong> C<sub>pk</sub> < 1.0 means process is incapable; C<sub>pk</sub> ≥ 1.33 is the industry standard threshold; C<sub>pk</sub> ≥ 2.0 achieves Six Sigma quality.</li>
+            </ul>
+
+            <h4>2. Step-by-Step Cp/Cpk Calculation Example</h4>
+            <p><strong>Scenario:</strong> A shaft production line has LSL = 9.5 mm and USL = 10.5 mm. Measurements show sample mean μ = 10.1 mm and standard deviation σ = 0.1 mm.</p>
+            <ol>
+                <li><strong>Calculate C<sub>p</sub>:</strong> C<sub>p</sub> = (10.5 - 9.5) / (6 · 0.1) = 1.0 / 0.6 ≈ 1.67</li>
+                <li><strong>Calculate C<sub>pk</sub>:</strong>
+                    <ul>
+                        <li>Upper side: (10.5 - 10.1) / (3 · 0.1) = 0.4 / 0.3 ≈ 1.33</li>
+                        <li>Lower side: (10.1 - 9.5) / (3 · 0.1) = 0.6 / 0.3 = 2.0</li>
+                        <li>C<sub>pk</sub> = min(1.33, 2.0) = 1.33</li>
+                    </ul>
+                </li>
+                <li><strong>Conclusion:</strong> The process is capable (C<sub>pk</sub> ≥ 1.33), but off-center. Adjusting the tooling center will improve C<sub>pk</sub>.</li>
+            </ol>
+
+            <h4>3. Machining Calculations (CNC Parameters)</h4>
+            <ul>
+                <li><strong>Cutting Speed (V<sub>c</sub>):</strong> Surface speed in m/min: V<sub>c</sub> = (π · D · N) / 1000, where D is diameter (mm) and N is spindle speed (RPM).</li>
+                <li><strong>Feed Rate (V<sub>f</sub>):</strong> Tool feed speed in mm/min: V<sub>f</sub> = f<sub>z</sub> · z · N, where f<sub>z</sub> is feed per tooth and z is number of teeth.</li>
+                <li><strong>Material Removal Rate (MRR):</strong> Volume removed per minute: MRR = a<sub>p</sub> · a<sub>e</sub> · V<sub>f</sub>, where a<sub>p</sub> is axial depth of cut and a<sub>e</sub> is radial width of cut.</li>
+            </ul>
+        `,
+        quiz_question: "If a process has a mean of 10.0, standard deviation of 0.1, and specification limits of 9.5 to 10.5, what is the process capability Cp?",
+        quiz_options: [
+            "Cp = 0.83",
+            "Cp = 1.67",
+            "Cp = 1.33"
+        ],
+        quiz_answer: "Cp = 1.67"
+    },
+    "HVAC/Thermal": {
+        title: "Thermodynamics & Psychrometric HVAC Heat Load Calculation",
+        slug: "hvac-sensible-latent-loads",
+        description: "Study energy transfer boundaries, refrigeration cycles, and sensible vs. latent load sizing.",
+        written_content: `
+            <h4>1. Sensible Heat Transfer Rate</h4>
+            <p>In HVAC systems, cooling load calculations depend on sensible heat (temperature change) and latent heat (humidity/phase change):</p>
+            <pre>q<sub>s</sub> = m · C<sub>p</sub> · ΔT</pre>
+            <p>Where q<sub>s</sub> is sensible heat rate (kW), m is air mass flow rate (kg/s), C<sub>p</sub> is specific heat of air (≈1.005 kJ/kg·K), and ΔT is the temperature difference (K).</p>
+
+            <h4>2. Latent Heat Transfer Rate</h4>
+            <p>Latent heat exchange accounts for water vapor density change (dehumidification):</p>
+            <pre>q<sub>l</sub> = m · h<sub>fg</sub> · Δw</pre>
+            <p>Where h<sub>fg</sub> is the latent heat of vaporization of water (≈2501 kJ/kg) and Δw is the humidity ratio difference (kg water / kg dry air).</p>
+
+            <h4>3. Piping & Duct Friction Head Loss (Fluid Flow)</h4>
+            <ul>
+                <li><strong>Darcy-Weisbach Equation:</strong> Friction head loss h<sub>f</sub> in meters of fluid: h<sub>f</sub> = f · (L/D) · (v<sup>2</sup> / 2g), where f is friction factor, L is length, D is pipe internal diameter, v is velocity, and g is gravity.</li>
+                <li><strong>Equivalent Duct Diameter (D<sub>e</sub>):</strong> For rectangular ducts of width a and height b (Huebscher formula): D<sub>e</sub> = 1.30 · (a · b)<sup>0.625</sup> / (a + b)<sup>0.25</sup>.</li>
+            </ul>
+        `,
+        quiz_question: "Which cooling load component accounts for the heat required to condense moisture out of the air?",
+        quiz_options: [
+            "Sensible cooling load",
+            "Latent cooling load",
+            "Radiation heat gain"
+        ],
+        quiz_answer: "Latent cooling load"
+    }
+};
 
 // Standard Mechanical Engineering taxonomy for normalization and parsing
 const SKILLS_DICT = {
@@ -47,7 +232,7 @@ const SKILLS_DICT = {
     "vibration analysis": "Vibration Analysis",
     "cnc programming": "CNC Programming",
     "embedded systems": "Embedded Systems",
-    "robotics": "Robotics"
+    "robotics": "Robotics",
 };
 
 const SOFTWARE_DICT = {
@@ -303,8 +488,13 @@ function calculateScore(profile) {
     const certScore = Math.min(certsCount * 50, 100);
     
     const academicExtrasWeighted = (paperScore * 0.5 + certScore * 0.5) * 0.10;
+    let totalScore = academicWeighted + skillsWeighted + experienceWeighted + academicExtrasWeighted;
     
-    const totalScore = academicWeighted + skillsWeighted + experienceWeighted + academicExtrasWeighted;
+    // Add course completion boost of 5 points if they have completed the course for their matched cluster
+    if (profile.cluster && completedCourses.includes(profile.cluster)) {
+        totalScore = Math.min(totalScore + 5.0, 100.0);
+    }
+    
     return Math.round(totalScore * 10) / 10;
 }
 
@@ -438,6 +628,9 @@ function runAnalysis(profile) {
             bestCluster = c;
         }
     });
+    
+    targetProfile.cluster = bestCluster;
+    targetProfile.score = calculateScore(targetProfile);
     
     // Calculate match strength as percentage of target cluster keywords matched (capped/scaled)
     const matchStrength = Math.min(Math.round((maxIntersection / Math.max(targetAttrs.length, 3)) * 100), 100);
@@ -1451,6 +1644,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("tab-dashboard-view").classList.add("hidden");
             document.getElementById("tab-database-view").classList.add("hidden");
             document.getElementById("tab-demand-view").classList.add("hidden");
+            document.getElementById("tab-courses-view").classList.add("hidden");
             
             if (target === "dashboard") {
                 document.getElementById("tab-dashboard-view").classList.remove("hidden");
@@ -1463,6 +1657,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     renderEmployerInsights(targetProfile.cluster || "CAD Design");
                 } else {
                     renderEmployerInsights("CAD Design");
+                }
+            } else if (target === "courses") {
+                document.getElementById("tab-courses-view").classList.remove("hidden");
+                if (targetProfile) {
+                    renderCourses(targetProfile.cluster || "CAD Design");
+                } else {
+                    renderCourses("CAD Design");
                 }
             }
         });
@@ -1898,4 +2099,104 @@ function renderEmployerInsights(cluster) {
             <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${p.desc}</p>
         </div>
     `).join("");
+}
+
+function renderCourses(cluster) {
+    const course = COURSE_CATALOG[cluster] || COURSE_CATALOG["CAD Design"];
+    
+    // Update header
+    document.getElementById("course-title-cluster").innerText = cluster;
+    document.getElementById("course-lesson-name").innerText = course.title;
+    
+    // Update completion status badge
+    const isCompleted = completedCourses.includes(cluster);
+    const badge = document.getElementById("course-completion-badge");
+    if (isCompleted) {
+        badge.className = "badge badge-success";
+        badge.innerText = "✨ Status: Completed (+5 Boost Active)";
+        badge.style.background = "rgba(16, 185, 129, 0.15)";
+        badge.style.borderColor = "rgba(16, 185, 129, 0.3)";
+        badge.style.color = "#34d399";
+    } else {
+        badge.className = "badge badge-purple";
+        badge.innerText = "⏳ Status: Incomplete";
+        badge.style.background = "rgba(139, 92, 246, 0.15)";
+        badge.style.borderColor = "rgba(139, 92, 246, 0.3)";
+        badge.style.color = "#ddd6fe";
+    }
+    
+    // Render lecture notes
+    document.getElementById("course-lecture-notes").innerHTML = course.written_content;
+    
+    // Render quiz question
+    document.getElementById("course-quiz-question").innerText = course.quiz_question;
+    
+    // Render quiz options (radios)
+    const form = document.getElementById("course-quiz-form");
+    form.innerHTML = course.quiz_options.map((opt, idx) => `
+        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.55rem 0.75rem; background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 6px; transition: all 0.2s; margin-bottom: 0.25rem;">
+            <input type="radio" name="quiz-option" value="${opt}" ${isCompleted ? 'disabled' : ''} style="accent-color: var(--primary);">
+            <span style="color: var(--text-secondary); font-size: 0.95rem;">${opt}</span>
+        </label>
+    `).join("");
+    
+    // Clear feedback
+    const feedback = document.getElementById("quiz-feedback-message");
+    feedback.innerText = "";
+    feedback.style.color = "";
+    
+    // Handle Submit Button
+    const submitBtn = document.getElementById("btn-submit-quiz");
+    if (isCompleted) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.5";
+        feedback.innerText = "Quiz completed successfully! +5 boost points applied to your score.";
+        feedback.style.color = "var(--success)";
+    } else {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        
+        // Remove existing listener to avoid stacking
+        const newSubmitBtn = submitBtn.cloneNode(true);
+        submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+        
+        newSubmitBtn.addEventListener("click", () => {
+            const selectedOpt = form.querySelector('input[name="quiz-option"]:checked');
+            if (!selectedOpt) {
+                feedback.innerText = "⚠️ Please select an answer option.";
+                feedback.style.color = "#fbbf24";
+                return;
+            }
+            
+            if (selectedOpt.value === course.quiz_answer) {
+                completedCourses.push(cluster);
+                feedback.innerText = "🎉 Correct answer! +5 Employability Points unlocked!";
+                feedback.style.color = "#34d399";
+                newSubmitBtn.disabled = true;
+                newSubmitBtn.style.opacity = "0.5";
+                
+                // Disable all radios
+                form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+                
+                // Recompute active profile rankings dynamically!
+                if (targetProfile) {
+                    // Update target profile score (which will now see the new course completion!)
+                    targetProfile.score = calculateScore(targetProfile);
+                    
+                    // Recompute ranks and update DOM
+                    runAnalysis(targetProfile);
+                }
+                
+                // Update course badge
+                badge.className = "badge badge-success";
+                badge.innerText = "✨ Status: Completed (+5 Boost Active)";
+                badge.style.background = "rgba(16, 185, 129, 0.15)";
+                badge.style.borderColor = "rgba(16, 185, 129, 0.3)";
+                badge.style.color = "#34d399";
+            } else {
+                feedback.innerText = "❌ Incorrect answer. Please review the lecture notes and try again.";
+                feedback.style.color = "#f87171";
+            }
+        });
+    }
 }
