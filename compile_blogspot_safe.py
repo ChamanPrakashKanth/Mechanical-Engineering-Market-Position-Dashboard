@@ -70,13 +70,13 @@ def compile_safe():
     min_js = minify_js(js_content)
     
     # Replace stylesheets and script links
-    css_link_pattern = r'<link rel="stylesheet" href="styles.css">'
+    css_link_pattern = '<link rel="stylesheet" href="styles.css">'
     style_block = f"<style>{min_css}</style>"
-    html_content = re.sub(css_link_pattern, style_block, html_content)
+    html_content = html_content.replace(css_link_pattern, style_block)
     
-    js_script_pattern = r'<script src="app.js"></script>'
+    js_script_pattern = '<script src="app.js"></script>'
     script_block = f"<script>{min_js}</script>"
-    html_content = re.sub(js_script_pattern, script_block, html_content)
+    html_content = html_content.replace(js_script_pattern, script_block)
     
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html_content)

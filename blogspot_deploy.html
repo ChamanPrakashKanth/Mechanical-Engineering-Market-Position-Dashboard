@@ -930,11 +930,311 @@ tr:hover td {
     border-radius: 3px;
 }
 
+/* --- PREMIUM VISUAL ENHANCEMENT STYLES --- */
+
+/* Canvas background particle network */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Neon Glow Cards */
+.neon-glow-card {
+    position: relative;
+    overflow: hidden;
+}
+.neon-glow-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.4)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.neon-glow-card:hover::after {
+    opacity: 1;
+}
+
+/* Interactive Resume Highlights */
+.highlighted-resume-card {
+    margin-top: 1.5rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+.highlighted-resume-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.highlighted-resume-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.legend-skill { background: #06b6d4; }
+.legend-software { background: #6366f1; }
+.legend-cert { background: #f59e0b; }
+
+.highlight-box {
+    max-height: 250px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: #cbd5e1;
+}
+
+/* Color codes */
+.hl-skill {
+    background: rgba(6, 182, 212, 0.15);
+    border-bottom: 2px solid #06b6d4;
+    color: #22d3ee;
+    padding: 0.1rem 0.25rem;
+    border-radius: 2px;
+    font-weight: 500;
+}
+.hl-software {
+    background: rgba(99, 102, 241, 0.15);
+    border-bottom: 2px solid #6366f1;
+    color: #a5b4fc;
+    padding: 0.1rem 0.25rem;
+    border-radius: 2px;
+    font-weight: 500;
+}
+.hl-cert {
+    background: rgba(245, 158, 11, 0.15);
+    border-bottom: 2px solid #f59e0b;
+    color: #fde047;
+    padding: 0.1rem 0.25rem;
+    border-radius: 2px;
+    font-weight: 500;
+}
+
+/* Resume Scanner Overlay Modal */
+.scanner-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.scanner-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.scanner-modal-card {
+    background: rgba(22, 30, 49, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.2);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    width: 480px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.scanner-modal-overlay.active .scanner-modal-card {
+    transform: translateY(0);
+}
+.scanner-modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Scanning document visualizer */
+.scanner-doc-viewport {
+    width: 140px;
+    height: 180px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    margin: 0 auto 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem;
+}
+.scanner-doc-line {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+.scanner-doc-line.short { width: 60%; }
+.scanner-doc-line.med { width: 80%; }
+.scanner-doc-laser {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.8), transparent);
+    box-shadow: 0 0 12px #06b6d4;
+    animation: laserScan 2s ease-in-out infinite;
+}
+@keyframes laserScan {
+    0% { top: 0%; }
+    50% { top: 96%; }
+    100% { top: 0%; }
+}
+
+/* Checklist steps */
+.scanner-steps-list {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+}
+.scanner-step-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.scanner-step-row.active {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.scanner-step-row.completed {
+    color: var(--success);
+}
+.scanner-step-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    transition: all 0.3s ease;
+}
+.scanner-step-row.active .scanner-step-icon {
+    border-color: var(--info);
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    background: rgba(6, 182, 212, 0.1);
+    animation: pulseBorder 1s infinite alternate;
+}
+.scanner-step-row.completed .scanner-step-icon {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+@keyframes pulseBorder {
+    0% { box-shadow: 0 0 2px rgba(6, 182, 212, 0.3); }
+    100% { box-shadow: 0 0 10px rgba(6, 182, 212, 0.7); }
+}
+
+/* Score distribution plot */
+.distribution-card {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+.distribution-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.dist-svg-container {
+    width: 100%;
+    height: 140px;
+    position: relative;
+}
+.dist-svg-container svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.dist-user-marker {
+    animation: markerPulse 1.5s infinite alternate;
+}
+@keyframes markerPulse {
+    0% { filter: drop-shadow(0 0 2px var(--primary)); }
+    100% { filter: drop-shadow(0 0 8px var(--primary)); }
+}
+.dist-axis-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    padding: 0 0.5rem;
+}
+
+
 </style>
     <!-- Mozilla PDF.js library for client-side PDF text extraction -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
+    <!-- Background Canvas Particles -->
+    <canvas id="particle-canvas"></canvas>
+
     <div class="container">
         <!-- Main Application Header -->
         <header>
@@ -978,6 +1278,17 @@ tr:hover td {
                     
                     <div class="parse-pulse hidden" id="parse-indicator">
                         <span class="pulse-dot"></span> Scanning text & extracting professional attributes...
+                    </div>
+
+                    <!-- Parsed Resume Highlighter Card -->
+                    <div id="highlighted-resume-container" class="highlighted-resume-card hidden">
+                        <div class="highlighted-resume-title"><span>🔍</span> Extracted Professional Keywords</div>
+                        <div class="highlighted-resume-legend">
+                            <div class="legend-item"><span class="legend-dot legend-skill"></span> Skills</div>
+                            <div class="legend-item"><span class="legend-dot legend-software"></span> Software Tools</div>
+                            <div class="legend-item"><span class="legend-dot legend-cert"></span> Certifications</div>
+                        </div>
+                        <div id="highlighted-resume-box" class="highlight-box"></div>
                     </div>
                 </div>
             </div>
@@ -1197,6 +1508,23 @@ tr:hover td {
                         </div>
                     </div>
 
+                    <!-- Score Distribution Card -->
+                    <div class="glass-card col-12 distribution-card">
+                        <div class="distribution-title">
+                            <span>📊</span> Global Score Distribution Curve (Your Market Standing)
+                        </div>
+                        <div class="dist-svg-container">
+                            <svg id="distribution-curve-svg" viewBox="0 0 600 120" preserveAspectRatio="none">
+                                <!-- SVG path and elements generated dynamically -->
+                            </svg>
+                        </div>
+                        <div class="dist-axis-labels">
+                            <span>Entry Baseline (Score: 10)</span>
+                            <span style="color: var(--primary); font-weight: 600;" id="dist-your-score-label">Your Standing</span>
+                            <span>Expert Target (Score: 90)</span>
+                        </div>
+                    </div>
+
                     <!-- Career Role Clustering Alignment -->
                     <div class="glass-card col-6">
                         <div class="card-header">
@@ -1372,6 +1700,39 @@ tr:hover td {
             </div>
 
         </section>
+    </div>
+
+    <!-- Scanner Overlay Modal -->
+    <div id="scanner-overlay" class="scanner-modal-overlay">
+        <div class="scanner-modal-card">
+            <div class="scanner-modal-title">Smart Resume Scanner</div>
+            <div class="scanner-doc-viewport">
+                <div class="scanner-doc-laser"></div>
+                <div class="scanner-doc-line med"></div>
+                <div class="scanner-doc-line short"></div>
+                <div class="scanner-doc-line"></div>
+                <div class="scanner-doc-line med"></div>
+                <div class="scanner-doc-line short"></div>
+            </div>
+            <div class="scanner-steps-list">
+                <div class="scanner-step-row" id="scan-step-1">
+                    <span class="scanner-step-icon">1</span>
+                    <span>Reading document text & removing PII...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-2">
+                    <span class="scanner-step-icon">2</span>
+                    <span>Extracting mechanical skills and tools...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-3">
+                    <span class="scanner-step-icon">3</span>
+                    <span>Verifying industry certifications...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-4">
+                    <span class="scanner-step-icon">4</span>
+                    <span>Running market benchmarking algorithms...</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Load scripts -->
@@ -1703,9 +2064,9 @@ function parseResumeText(text) {
     // 2. Extract Software Tools
     for (const [key, value] of Object.entries(SOFTWARE_DICT)) {
         // Escape special characters (like + in c++) to prevent regex compilation syntax errors
-        const escapedKey = key.replace(/[.*+?^${}()|[\]\]/g, '\$&');
+        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         // Word boundary match to prevent matching partial words
-        const regex = new RegExp(`\b${escapedKey}\b`, 'i');
+        const regex = new RegExp(`\\b${escapedKey}\\b`, 'i');
         if (regex.test(textLower)) {
             software.add(value);
         }
@@ -1728,7 +2089,7 @@ function parseResumeText(text) {
     
     // Internships
     let internCount = 0;
-    const internMatches = textLower.match(/internship|intern|trainee/g);
+    const internMatches = textLower.match(/internship|intern\b|trainee/g);
     if (internMatches) {
         internCount = Math.min(Math.max(Math.floor(internMatches.length / 2), 0), 3);
     }
@@ -2110,19 +2471,19 @@ function renderDashboard(ranks, cluster, strength, strengths, weaknesses, gaps, 
     
     // Percentile progress rings and absolute ranks
     animateCircle("global-pct-circle", ranks.global.pct);
-    setCircleText("global-pct-text", ranks.global.rank);
+    animateCircleText("global-pct-text", ranks.global.rank);
     document.getElementById("global-pct-sublabel").innerText = `Rank #${ranks.global.rank.toLocaleString()} of ${ranks.global.total.toLocaleString()} global freshers`;
     
     animateCircle("india-pct-circle", ranks.india.pct);
-    setCircleText("india-pct-text", ranks.india.rank);
+    animateCircleText("india-pct-text", ranks.india.rank);
     document.getElementById("india-pct-sublabel").innerText = `Rank #${ranks.india.rank.toLocaleString()} of ${ranks.india.total.toLocaleString()} Indian freshers`;
 
     animateCircle("tier-pct-circle", ranks.tier.pct);
-    setCircleText("tier-pct-text", ranks.tier.rank);
+    animateCircleText("tier-pct-text", ranks.tier.rank);
     document.getElementById("tier-pct-sublabel").innerText = `Rank #${ranks.tier.rank.toLocaleString()} of ${ranks.tier.total.toLocaleString()} in your tier group`;
 
     animateCircle("cluster-pct-circle", ranks.cluster.pct);
-    setCircleText("cluster-pct-text", ranks.cluster.rank);
+    animateCircleText("cluster-pct-text", ranks.cluster.rank);
     document.getElementById("cluster-pct-sublabel").innerText = `Rank #${ranks.cluster.rank.toLocaleString()} of ${ranks.cluster.total.toLocaleString()} in your specialty`;
     
     // Competitiveness level text
@@ -2228,6 +2589,9 @@ function renderDashboard(ranks, cluster, strength, strengths, weaknesses, gaps, 
             </td>
         </tr>
     `).join("");
+    
+    // Draw the distribution curve
+    renderDistributionCurve(targetProfile.score);
 }
 
 // Animate the circular SVG rankings rings
@@ -2269,6 +2633,289 @@ function setCircleText(elementId, rank) {
         el.style.fontSize = "7.5px";
         el.setAttribute("y", "20.3");
     }
+}
+
+// Visual count-down rank animation matching circular progress transitions
+function animateCircleText(elementId, targetRank) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    
+    const duration = 1200; // 1.2s matching transition duration
+    const startTime = performance.now();
+    
+    // Start from a lower rank (higher rank number)
+    const startRank = Math.min(targetRank * 4 + 100, 60000);
+    
+    function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Quad ease out
+        const ease = 1 - Math.pow(1 - progress, 2);
+        const currentRank = Math.round(startRank - (startRank - targetRank) * ease);
+        
+        const text = "#" + currentRank.toLocaleString();
+        el.textContent = text;
+        
+        if (text.length >= 7) {
+            el.style.fontSize = "4.2px";
+            el.setAttribute("y", "19.5");
+        } else if (text.length >= 5) {
+            el.style.fontSize = "5.5px";
+            el.setAttribute("y", "20.0");
+        } else {
+            el.style.fontSize = "7.5px";
+            el.setAttribute("y", "20.3");
+        }
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            el.textContent = "#" + targetRank.toLocaleString();
+        }
+    }
+    requestAnimationFrame(update);
+}
+
+// Generate dynamic SVG bell curve and mark user standing
+function renderDistributionCurve(userScore) {
+    const svg = document.getElementById("distribution-curve-svg");
+    if (!svg) return;
+    
+    svg.innerHTML = "";
+    
+    const width = 600;
+    const height = 120;
+    const paddingBottom = 15;
+    const graphHeight = height - paddingBottom;
+    
+    const mean = 50;
+    const stdDev = 16;
+    
+    // Build distribution curve points
+    let points = [];
+    for (let x = 0; x <= width; x++) {
+        const scoreVal = (x / width) * 100;
+        const exponent = -Math.pow(scoreVal - mean, 2) / (2 * Math.pow(stdDev, 2));
+        const yVal = graphHeight - (Math.exp(exponent) * (graphHeight - 12));
+        points.push(`${x},${yVal}`);
+    }
+    
+    const pathD = `M 0,${graphHeight} L ${points.join(" L ")} L ${width},${graphHeight} Z`;
+    
+    // Fill path
+    const pathFill = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathFill.setAttribute("d", pathD);
+    pathFill.setAttribute("fill", "url(#curveGrad)");
+    pathFill.setAttribute("opacity", "0.15");
+    
+    // Stroke path
+    const pathStroke = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathStroke.setAttribute("d", `M 0,${graphHeight} L ${points.join(" L ")}`);
+    pathStroke.setAttribute("fill", "none");
+    pathStroke.setAttribute("stroke", "url(#curveGradStroke)");
+    pathStroke.setAttribute("stroke-width", "2");
+    
+    // Gradients definitions
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    defs.innerHTML = `
+        <linearGradient id="curveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="curveGradStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--info)" />
+            <stop offset="50%" stop-color="var(--primary)" />
+            <stop offset="100%" stop-color="var(--accent)" />
+        </linearGradient>
+    `;
+    
+    svg.appendChild(defs);
+    svg.appendChild(pathFill);
+    svg.appendChild(pathStroke);
+    
+    // Compute User Coordinates
+    const userX = (userScore / 100) * width;
+    const userExponent = -Math.pow(userScore - mean, 2) / (2 * Math.pow(stdDev, 2));
+    const userY = graphHeight - (Math.exp(userExponent) * (graphHeight - 12));
+    
+    // Vertical dashed marker line
+    const markerLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    markerLine.setAttribute("x1", userX);
+    markerLine.setAttribute("y1", graphHeight);
+    markerLine.setAttribute("x2", userX);
+    markerLine.setAttribute("y2", userY);
+    markerLine.setAttribute("stroke", "var(--primary)");
+    markerLine.setAttribute("stroke-width", "1.5");
+    markerLine.setAttribute("stroke-dasharray", "3,3");
+    markerLine.className.baseVal = "dist-user-marker";
+    
+    // Glowing outer circle
+    const glowCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    glowCircle.setAttribute("cx", userX);
+    glowCircle.setAttribute("cy", userY);
+    glowCircle.setAttribute("r", "8");
+    glowCircle.setAttribute("fill", "rgba(99, 102, 241, 0.3)");
+    glowCircle.setAttribute("stroke", "var(--primary)");
+    glowCircle.setAttribute("stroke-width", "1.5");
+    glowCircle.className.baseVal = "dist-user-marker";
+    
+    // Inner solid dot
+    const solidCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    solidCircle.setAttribute("cx", userX);
+    solidCircle.setAttribute("cy", userY);
+    solidCircle.setAttribute("r", "4");
+    solidCircle.setAttribute("fill", "#ffffff");
+    
+    svg.appendChild(markerLine);
+    svg.appendChild(glowCircle);
+    svg.appendChild(solidCircle);
+    
+    // Align score label text positioning
+    const label = document.getElementById("dist-your-score-label");
+    if (label) {
+        label.innerText = `Your Standing (Score: ${userScore})`;
+        const pctPos = Math.min(Math.max((userScore / 100) * 100 - 15, 2), 78);
+        label.style.marginLeft = `${pctPos}%`;
+    }
+}
+
+// Canvas particle network background creator
+function initParticles() {
+    const canvas = document.getElementById("particle-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+    
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(99, 102, 241, 0.2)";
+            ctx.fill();
+        }
+    }
+    
+    const count = Math.min(Math.floor((canvas.width * canvas.height) / 25000), 75);
+    for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particles.length; i++) {
+            const p1 = particles[i];
+            p1.update();
+            p1.draw();
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - dist / 120)})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// Highlights professional keywords extracted from the pasted text
+function renderHighlightedText(text, parsed) {
+    const container = document.getElementById("highlighted-resume-container");
+    const box = document.getElementById("highlighted-resume-box");
+    if (!container || !box) return;
+    
+    const skillsToHighlight = parsed.skills || [];
+    const softwareToHighlight = parsed.software_tools || [];
+    const certsToHighlight = parsed.certifications || [];
+    
+    let replacements = [];
+    
+    function findMatches(dict, parsedValues, className) {
+        for (const [key, normalizedValue] of Object.entries(dict)) {
+            if (parsedValues.includes(normalizedValue)) {
+                const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regexStr = key.match(/^\w/) ? `\\b${escapedKey}\\b` : escapedKey;
+                const regex = new RegExp(regexStr, 'gi');
+                
+                let match;
+                while ((match = regex.exec(text)) !== null) {
+                    replacements.push({
+                        start: match.index,
+                        end: match.index + match[0].length,
+                        className: className,
+                        origText: match[0]
+                    });
+                }
+            }
+        }
+    }
+    
+    findMatches(SKILLS_DICT, skillsToHighlight, 'hl-skill');
+    findMatches(SOFTWARE_DICT, softwareToHighlight, 'hl-software');
+    findMatches(CERTS_DICT, certsToHighlight, 'hl-cert');
+    
+    // Sort and remove overlaps
+    replacements.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+    
+    let filteredReplacements = [];
+    let lastEnd = 0;
+    for (const r of replacements) {
+        if (r.start >= lastEnd) {
+            filteredReplacements.push(r);
+            lastEnd = r.end;
+        }
+    }
+    
+    let resultHtml = "";
+    let lastIndex = 0;
+    for (const r of filteredReplacements) {
+        resultHtml += escapeHtml(text.slice(lastIndex, r.start));
+        resultHtml += `<span class="${r.className}">${escapeHtml(r.origText)}</span>`;
+        lastIndex = r.end;
+    }
+    resultHtml += escapeHtml(text.slice(lastIndex));
+    
+    box.innerHTML = resultHtml;
+    container.classList.remove("hidden");
+}
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 // Map cluster to visual icon
@@ -2370,6 +3017,8 @@ function updateCandidatesTable() {
 
 // DOM Setup on load
 document.addEventListener("DOMContentLoaded", () => {
+    // Initialize particle background
+    initParticles();
     // 1. Generate the massive dataset of 60,000 records
     const loaderText = document.createElement("p");
     loaderText.style.color = "var(--text-muted)";
@@ -2422,35 +3071,75 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         
-        // Visual indicator pulse
-        const indicator = document.getElementById("parse-indicator");
-        indicator.classList.remove("hidden");
+        const overlay = document.getElementById("scanner-overlay");
+        const steps = [
+            document.getElementById("scan-step-1"),
+            document.getElementById("scan-step-2"),
+            document.getElementById("scan-step-3"),
+            document.getElementById("scan-step-4")
+        ];
+        
+        // Reset classes
+        steps.forEach(step => {
+            step.className = "scanner-step-row";
+        });
+        
+        // Show scan overlay modal
+        overlay.classList.add("active");
+        
+        // Timeline animations
+        steps[0].classList.add("active");
         
         setTimeout(() => {
-            try {
-                const parsed = parseResumeText(text);
+            steps[0].classList.remove("active");
+            steps[0].classList.add("completed");
+            steps[1].classList.add("active");
+            
+            setTimeout(() => {
+                steps[1].classList.remove("active");
+                steps[1].classList.add("completed");
+                steps[2].classList.add("active");
                 
-                // Populate form
-                document.getElementById("form-region").value = parsed.region;
-                document.getElementById("form-tier").value = parsed.tier;
-                document.getElementById("form-degree").value = parsed.degree;
-                document.getElementById("form-projects").value = parsed.projects;
-                document.getElementById("form-internships").value = parsed.internships;
-                document.getElementById("form-papers").value = parsed.research_papers;
-                document.getElementById("form-competitions").value = parsed.competitions;
-                
-                // Clear and add tags
-                setTags("skills-input-wrapper", parsed.skills);
-                setTags("tools-input-wrapper", parsed.software_tools);
-                setTags("certs-input-wrapper", parsed.certifications);
-            } catch (err) {
-                console.error("Resume parsing error:", err);
-                alert("Error during automatic parsing: " + err.message + "
-Please try manually entering your details in the form.");
-            } finally {
-                indicator.classList.add("hidden");
-            }
-        }, 800); // 800ms simulated analysis
+                setTimeout(() => {
+                    steps[2].classList.remove("active");
+                    steps[2].classList.add("completed");
+                    steps[3].classList.add("active");
+                    
+                    setTimeout(() => {
+                        steps[3].classList.remove("active");
+                        steps[3].classList.add("completed");
+                        
+                        try {
+                            const parsed = parseResumeText(text);
+                            
+                            // Populate form
+                            document.getElementById("form-region").value = parsed.region;
+                            document.getElementById("form-tier").value = parsed.tier;
+                            document.getElementById("form-degree").value = parsed.degree;
+                            document.getElementById("form-projects").value = parsed.projects;
+                            document.getElementById("form-internships").value = parsed.internships;
+                            document.getElementById("form-papers").value = parsed.research_papers;
+                            document.getElementById("form-competitions").value = parsed.competitions;
+                            
+                            // Load tags
+                            setTags("skills-input-wrapper", parsed.skills);
+                            setTags("tools-input-wrapper", parsed.software_tools);
+                            setTags("certs-input-wrapper", parsed.certifications);
+                            
+                            // Render Highlighter
+                            renderHighlightedText(text, parsed);
+                        } catch (err) {
+                            console.error("Resume parsing error:", err);
+                            alert("Error during automatic parsing: " + err.message + "\nPlease try manually entering your details in the form.");
+                        } finally {
+                            setTimeout(() => {
+                                overlay.classList.remove("active");
+                            }, 400);
+                        }
+                    }, 650);
+                }, 600);
+            }, 700);
+        }, 600);
     });
     
     document.getElementById("btn-run-analysis").addEventListener("click", () => {
@@ -2582,8 +3271,7 @@ Please try manually entering your details in the form.");
                     const page = await pdf.getPage(i);
                     const textContent = await page.getTextContent();
                     const pageText = textContent.items.map(item => item.str).join(" ");
-                    extractedText += pageText + "
-";
+                    extractedText += pageText + "\n";
                 }
                 
                 if (!extractedText.trim()) {

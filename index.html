@@ -9,6 +9,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
+    <!-- Background Canvas Particles -->
+    <canvas id="particle-canvas"></canvas>
+
     <div class="container">
         <!-- Main Application Header -->
         <header>
@@ -52,6 +55,17 @@
                     
                     <div class="parse-pulse hidden" id="parse-indicator">
                         <span class="pulse-dot"></span> Scanning text & extracting professional attributes...
+                    </div>
+
+                    <!-- Parsed Resume Highlighter Card -->
+                    <div id="highlighted-resume-container" class="highlighted-resume-card hidden">
+                        <div class="highlighted-resume-title"><span>🔍</span> Extracted Professional Keywords</div>
+                        <div class="highlighted-resume-legend">
+                            <div class="legend-item"><span class="legend-dot legend-skill"></span> Skills</div>
+                            <div class="legend-item"><span class="legend-dot legend-software"></span> Software Tools</div>
+                            <div class="legend-item"><span class="legend-dot legend-cert"></span> Certifications</div>
+                        </div>
+                        <div id="highlighted-resume-box" class="highlight-box"></div>
                     </div>
                 </div>
             </div>
@@ -271,6 +285,23 @@
                         </div>
                     </div>
 
+                    <!-- Score Distribution Card -->
+                    <div class="glass-card col-12 distribution-card">
+                        <div class="distribution-title">
+                            <span>📊</span> Global Score Distribution Curve (Your Market Standing)
+                        </div>
+                        <div class="dist-svg-container">
+                            <svg id="distribution-curve-svg" viewBox="0 0 600 120" preserveAspectRatio="none">
+                                <!-- SVG path and elements generated dynamically -->
+                            </svg>
+                        </div>
+                        <div class="dist-axis-labels">
+                            <span>Entry Baseline (Score: 10)</span>
+                            <span style="color: var(--primary); font-weight: 600;" id="dist-your-score-label">Your Standing</span>
+                            <span>Expert Target (Score: 90)</span>
+                        </div>
+                    </div>
+
                     <!-- Career Role Clustering Alignment -->
                     <div class="glass-card col-6">
                         <div class="card-header">
@@ -446,6 +477,39 @@
             </div>
 
         </section>
+    </div>
+
+    <!-- Scanner Overlay Modal -->
+    <div id="scanner-overlay" class="scanner-modal-overlay">
+        <div class="scanner-modal-card">
+            <div class="scanner-modal-title">Smart Resume Scanner</div>
+            <div class="scanner-doc-viewport">
+                <div class="scanner-doc-laser"></div>
+                <div class="scanner-doc-line med"></div>
+                <div class="scanner-doc-line short"></div>
+                <div class="scanner-doc-line"></div>
+                <div class="scanner-doc-line med"></div>
+                <div class="scanner-doc-line short"></div>
+            </div>
+            <div class="scanner-steps-list">
+                <div class="scanner-step-row" id="scan-step-1">
+                    <span class="scanner-step-icon">1</span>
+                    <span>Reading document text & removing PII...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-2">
+                    <span class="scanner-step-icon">2</span>
+                    <span>Extracting mechanical skills and tools...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-3">
+                    <span class="scanner-step-icon">3</span>
+                    <span>Verifying industry certifications...</span>
+                </div>
+                <div class="scanner-step-row" id="scan-step-4">
+                    <span class="scanner-step-icon">4</span>
+                    <span>Running market benchmarking algorithms...</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Load scripts -->
