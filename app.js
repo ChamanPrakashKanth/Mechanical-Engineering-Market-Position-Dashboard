@@ -110,7 +110,7 @@ const COLLEGES = {
 };
 
 // Helper: Seeded candidate dataset generator
-function generateDataset(size = 25000) {
+function generateDataset(size = 100000) {
     const random = createRandom(42); // Fixed seed
     const data = [];
     
@@ -853,6 +853,9 @@ function renderDashboard(ranks, cluster, strength, strengths, weaknesses, gaps, 
     
     // Draw the distribution curve
     renderDistributionCurve(targetProfile.score);
+    
+    // Render employer insights for the matched cluster
+    renderEmployerInsights(cluster);
 }
 
 // Animate the circular SVG rankings rings
@@ -1239,7 +1242,7 @@ function updateCandidatesTable() {
     
     // Render count text
     document.getElementById("db-count-text").innerText = 
-        `Showing ${filteredCandidates.length === 0 ? 0 : startIdx + 1} - ${Math.min(endIdx, filteredCandidates.length)} of ${filteredCandidates.length} profiles (Dataset seeded with 25,000 records)`;
+        `Showing ${filteredCandidates.length === 0 ? 0 : startIdx + 1} - ${Math.min(endIdx, filteredCandidates.length)} of ${filteredCandidates.length} profiles (Dataset seeded with 100,000 records)`;
         
     // Render Table Rows
     const tableBody = document.getElementById("db-table-body");
@@ -1280,7 +1283,7 @@ function updateCandidatesTable() {
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize particle background
     initParticles();
-    // 1. Generate the massive dataset of 60,000 records
+    // 1. Generate the massive dataset of 100,000 records
     const loaderText = document.createElement("p");
     loaderText.style.color = "var(--text-muted)";
     loaderText.style.fontSize = "0.85rem";
@@ -1288,7 +1291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Measure generation/load time
     const t0 = performance.now();
-    fetch('candidates_60k.json')
+    fetch('candidates_100k.json')
         .then(response => {
             if (!response.ok) throw new Error("File not found or CORS block");
             return response.json();
@@ -1296,24 +1299,24 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             candidates = data;
             const t1 = performance.now();
-            console.log(`Loaded ${candidates.length} candidates from candidates_60k.json in ${(t1 - t0).toFixed(2)}ms`);
+            console.log(`Loaded ${candidates.length} candidates from candidates_100k.json in ${(t1 - t0).toFixed(2)}ms`);
             
             const statusBadge = document.getElementById("db-status-badge");
             if (statusBadge) {
-                statusBadge.innerHTML = `<span class="pulse-dot" style="background-color: var(--success)"></span> Database Loaded: 60,000 Web Extracted`;
+                statusBadge.innerHTML = `<span class="pulse-dot" style="background-color: var(--success)"></span> Database Loaded: 100,000 Web Extracted`;
             }
             filteredCandidates = [...candidates];
             updateCandidatesTable();
         })
         .catch(err => {
-            console.log("Loading candidates_60k.json bypassed (CORS / file absent). Generating dynamic fallback...");
-            candidates = generateDataset(60000);
+            console.log("Loading candidates_100k.json bypassed (CORS / file absent). Generating dynamic fallback...");
+            candidates = generateDataset(100000);
             const t1 = performance.now();
             console.log(`Generated ${candidates.length} candidates in ${(t1 - t0).toFixed(2)}ms`);
             
             const statusBadge = document.getElementById("db-status-badge");
             if (statusBadge) {
-                statusBadge.innerHTML = `<span class="pulse-dot"></span> Database Loaded: 60,000 Freshers`;
+                statusBadge.innerHTML = `<span class="pulse-dot"></span> Database Loaded: 100,000 Freshers`;
             }
             filteredCandidates = [...candidates];
             updateCandidatesTable();
@@ -1443,13 +1446,24 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.add("active");
             
             const target = btn.dataset.tab;
+            
+            // Hide all tab views
+            document.getElementById("tab-dashboard-view").classList.add("hidden");
+            document.getElementById("tab-database-view").classList.add("hidden");
+            document.getElementById("tab-demand-view").classList.add("hidden");
+            
             if (target === "dashboard") {
                 document.getElementById("tab-dashboard-view").classList.remove("hidden");
-                document.getElementById("tab-database-view").classList.add("hidden");
-            } else {
-                document.getElementById("tab-dashboard-view").classList.add("hidden");
+            } else if (target === "database") {
                 document.getElementById("tab-database-view").classList.remove("hidden");
                 updateCandidatesTable();
+            } else if (target === "demand") {
+                document.getElementById("tab-demand-view").classList.remove("hidden");
+                if (targetProfile) {
+                    renderEmployerInsights(targetProfile.cluster || "CAD Design");
+                } else {
+                    renderEmployerInsights("CAD Design");
+                }
             }
         });
     });
@@ -1692,4 +1706,196 @@ function loadPreset(presetName) {
     setTags("skills-input-wrapper", preset.skills);
     setTags("tools-input-wrapper", preset.software_tools);
     setTags("certs-input-wrapper", preset.certifications);
+}
+
+// Detailed Employer Demands data segmented by Career Specialization
+const EMPLOYER_DEMANDS = {
+    "CAD Design": {
+        role: "Design Engineer / CAD Analyst / Product Developer",
+        skills: [
+            { name: "Geometric Dimensioning & Tolerancing (GD&T)", desc: "Applying ASME Y14.5 rules for datum definitions, feature control frames, MMC/LMC, and precision component matching.", priority: "Critical" },
+            { name: "Design for Manufacturing & Assembly (DFM/DFMA)", desc: "Optimizing CAD models for cost-efficient injection molding (draft angles), sheet metal fabrication (bend reliefs), and CNC machining.", priority: "High" },
+            { name: "Tolerance Stack-up Analysis", desc: "Performing linear and statistical (Root Sum Square - RSS) tolerance analyses to prevent assembly failures.", priority: "High" }
+        ],
+        software: [
+            { name: "SolidWorks", desc: "Industry-standard parametric 3D modeling, advanced surfacing, and assembly configuration management.", priority: "Critical" },
+            { name: "Autodesk AutoCAD", desc: "Producing precise 2D mechanical drafts, plant piping layouts, and mechanical details.", priority: "High" },
+            { name: "CATIA", desc: "Advanced surfacing and structural frame modeling, dominant in aerospace and automotive giants.", priority: "High" },
+            { name: "PTC Creo / Siemens NX", desc: "Top-tier CAD systems used in complex high-end automotive assemblies and machinery design.", priority: "Medium" }
+        ],
+        certs: [
+            { name: "Certified SolidWorks Professional (CSWP)", desc: "Validates complex solid modeling, multi-body parts, and coordinate systems setup.", priority: "High" },
+            { name: "Certified SolidWorks Associate (CSWA)", desc: "Entry-level credential proving core part drafting and assembly mating competence.", priority: "Medium" },
+            { name: "Autodesk Certified Professional", desc: "Verifies AutoCAD/Inventor drafting standards and speed proficiency.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "Parametric Gearbox Assembly", desc: "A fully constrained gear system complying with tooth bending calculations and bearing fits." },
+            { title: "Sheet Metal Enclosure Design", desc: "Electronics casing detailing precise flat patterns, bend radii, and fastener reliefs." }
+        ]
+    },
+    "CAE/Simulation": {
+        role: "Simulation Analyst / FEA Engineer / CFD Specialist",
+        skills: [
+            { name: "Finite Element Method (FEM) Fundamentals", desc: "Theoretical understanding of element formulations (1D beams, 2D shells, 3D solids), meshing density, and convergence curves.", priority: "Critical" },
+            { name: "Computational Fluid Dynamics (CFD)", desc: "Applying turbulence models (SST k-omega, standard k-epsilon), near-wall cell treatment (y+), and mass flow conservation laws.", priority: "Critical" },
+            { name: "Structural & Vibration Dynamics", desc: "Setting up modal, harmonic response, fatigue lifecycle, and non-linear contact simulations.", priority: "High" }
+        ],
+        software: [
+            { name: "ANSYS Workbench", desc: "Industry benchmark for Static Structural, Modal, Fluent CFD solvers, and thermal simulations.", priority: "Critical" },
+            { name: "Abaqus / Nastran", desc: "Advanced solver software for complex structural fatigue, crash testing, and automotive structural durability.", priority: "High" },
+            { name: "Altair HyperMesh", desc: "Primary pre-processor used in automotive/aerospace industries to build structured meshes.", priority: "High" },
+            { name: "MATLAB", desc: "Used to build numerical scripts, solve differential matrices, and run optimization loops.", priority: "Medium" }
+        ],
+        certs: [
+            { name: "ANSYS Certified Professional", desc: "Industry-recognized validation of simulation setups, solver settings, and post-processing accuracy.", priority: "High" },
+            { name: "NAFEMS Certification", desc: "Structural simulation verification complying with international standards.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "NACA Wing Section Aerodynamic CFD", desc: "CFD analysis validating lift/drag coefficients and boundary layer grid independence." },
+            { title: "Bike Frame Fatigue FEA", desc: "Structural fatigue FEA analyzing stress concentrations under dynamic cyclist loads." }
+        ]
+    },
+    "Robotics/Mechatronics": {
+        role: "Automation Engineer / Mechatronics specialist / Controls Engineer",
+        skills: [
+            { name: "Control Systems & PID Tuning", desc: "Designing closed-loop feedback controllers, tuning proportional, integral, and derivative constants for speed/position.", priority: "Critical" },
+            { name: "Embedded Programming", desc: "Writing C/C++ firmware for microcontrollers (Arduino, STM32, ESP32) to read sensor data (I2C, SPI) and drive actuators.", priority: "Critical" },
+            { name: "Robot Kinematics", desc: "Deriving Forward & Inverse kinematics matrices for joint angles and robotic tool positioning.", priority: "High" }
+        ],
+        software: [
+            { name: "MATLAB & Simulink", desc: "Modeling dynamic physical systems, root-locus design, and control loop simulations.", priority: "Critical" },
+            { name: "Python", desc: "Standard for robot vision scripting (OpenCV), motion planning algorithms, and machine learning models.", priority: "High" },
+            { name: "Arduino IDE / STM32Cube", desc: "Compiling firmware code for hardware execution and debugging hardware interfaces.", priority: "High" },
+            { name: "ROS (Robot Operating System)", desc: "Software framework providing hardware abstraction, device drivers, and package messaging.", priority: "Medium" }
+        ],
+        certs: [
+            { name: "CLAD (Certified LabVIEW Associate Developer)", desc: "Validates capability in automated testing, data acquisition, and virtual instrument controls.", priority: "High" },
+            { name: "ASME Robotics Specialist", desc: "Validates fundamentals of automation and robotic mechanism designs.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "3-Axis Closed-loop Robotic Arm", desc: "Trajectory mapping and servo-driven controller utilizing Simulink & Arduino." },
+            { title: "PID Balance Bot", desc: "Self-balancing two-wheeled robot using IMU sensors and real-time PID feedback." }
+        ]
+    },
+    "Manufacturing/Operations": {
+        role: "Production Engineer / Quality Analyst / Operations Manager",
+        skills: [
+            { name: "Lean Six Sigma (DMAIC)", desc: "Process capability evaluation (Cp, Cpk indices), cycle time balancing, and statistical quality audits.", priority: "Critical" },
+            { name: "CNC Machining & CAM Fixtures", desc: "Generating precise tool paths (G-code/M-code) and designing mechanical fixtures using the 3-2-1 locating principle.", priority: "High" },
+            { name: "FMEA & Process Safety", desc: "Conducting Failure Mode and Effects Analyses to identify risks and establish safety protocols.", priority: "High" }
+        ],
+        software: [
+            { name: "Mastercam / SolidCAM", desc: "Industry-standard software for generating computer-aided manufacturing toolpaths.", priority: "Critical" },
+            { name: "Minitab", desc: "Primary statistical tool for analyzing manufacturing variance, Gage R&R, and control charts.", priority: "High" },
+            { name: "Autodesk AutoCAD", desc: "Used to draft factory layout designs, assembly floor configurations, and workflow steps.", priority: "Medium" }
+        ],
+        certs: [
+            { name: "Lean Six Sigma Green Belt", desc: "Validates candidate's capability to lead small process improvement and waste reduction projects.", priority: "Critical" },
+            { name: "Lean Six Sigma Yellow Belt", desc: "Proves familiarity with Lean terminologies, 5S layouts, and quality tools.", priority: "High" },
+            { name: "ASQ Certified Quality Engineer (CQE)", desc: "Verifies statistical evaluation competence and control methods.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "Six Sigma DMAIC Yield Audit", desc: "Statistical process improvement study analyzing 500 samples in Minitab to boost yield." },
+            { title: "CAM-designed Welding Fixture", desc: "Fixture design utilizing quick-clamp fixtures and Mastercam CNC programming." }
+        ]
+    },
+    "HVAC/Thermal": {
+        role: "HVAC Project Engineer / MEP Designer / Building Energy Analyst",
+        skills: [
+            { name: "Cooling & Heating Load Calculation", desc: "Calculating sensible and latent heat transfer rates using CLTD and psychrometric principles.", priority: "Critical" },
+            { name: "Duct & Water Piping Design", desc: "Determining friction losses, pipe sizes, duct paths, and ventilation rates in buildings.", priority: "Critical" },
+            { name: "ASHRAE Standard Compliance", desc: "Applying international standards (Standard 55, 62.1, 90.1) for thermal comfort, ventilation, and efficiency.", priority: "High" }
+        ],
+        software: [
+            { name: "Autodesk Revit MEP", desc: "Industry standard for building information modeling (BIM), 3D duct layout, and coordinate checks.", priority: "Critical" },
+            { name: "Carrier Hourly Analysis Program (HAP)", desc: "Standard software for office heat load simulations, energy cost checks, and climate analysis.", priority: "High" },
+            { name: "Autodesk AutoCAD", desc: "Producing schematic double-line layouts and 2D piping plans.", priority: "High" }
+        ],
+        certs: [
+            { name: "HVAC Design Certificate", desc: "Validates core design knowledge from accredited engineering associations.", priority: "High" },
+            { name: "ASHRAE Member Certification", desc: "Demonstrates standard alignment and membership in ASHRAE.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "Office Building VRF Design", desc: "Full heat load simulation in HAP, duct routing, and MEP layout in Revit." },
+            { title: "Shell-and-Tube Heat Exchanger Design", desc: "Thermal analysis using LMTD and effectiveness-NTU methods." }
+        ]
+    }
+};
+
+function renderEmployerInsights(cluster) {
+    const data = EMPLOYER_DEMANDS[cluster] || EMPLOYER_DEMANDS["CAD Design"];
+    
+    // Update header
+    document.getElementById("demand-cluster-icon").innerText = getClusterIcon(cluster);
+    document.getElementById("demand-cluster-title").innerText = cluster;
+    document.getElementById("demand-cluster-role").innerText = data.role;
+    
+    // Render Skills
+    const skillsList = document.getElementById("demand-skills-list");
+    skillsList.innerHTML = data.skills.map(s => {
+        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
+        if (s.priority === 'Critical') {
+            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
+        } else if (s.priority === 'High') {
+            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
+        }
+        return `
+            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
+                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${s.name}</strong>
+                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${s.priority}</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${s.desc}</p>
+            </div>
+        `;
+    }).join("");
+    
+    // Render Software
+    const softwareList = document.getElementById("demand-software-list");
+    softwareList.innerHTML = data.software.map(sw => {
+        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
+        if (sw.priority === 'Critical') {
+            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
+        } else if (sw.priority === 'High') {
+            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
+        }
+        return `
+            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
+                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${sw.name}</strong>
+                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${sw.priority}</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${sw.desc}</p>
+            </div>
+        `;
+    }).join("");
+    
+    // Render Certifications
+    const certsList = document.getElementById("demand-certs-list");
+    certsList.innerHTML = data.certs.map(c => {
+        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
+        if (c.priority === 'Critical') {
+            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
+        } else if (c.priority === 'High') {
+            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
+        }
+        return `
+            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
+                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${c.name}</strong>
+                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${c.priority}</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${c.desc}</p>
+            </div>
+        `;
+    }).join("");
+    
+    // Render Portfolio
+    const portfolioList = document.getElementById("demand-portfolio-list");
+    portfolioList.innerHTML = data.portfolio.map(p => `
+        <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
+            <strong style="color: var(--info); font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">${p.title}</strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${p.desc}</p>
+        </div>
+    `).join("");
 }

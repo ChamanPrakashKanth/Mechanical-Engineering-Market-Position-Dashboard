@@ -172,6 +172,119 @@ CLUSTER_KEYWORDS = {
     "HVAC/Thermal": ["HVAC Design", "Thermodynamics", "Heat Transfer", "Fluid Mechanics", "Piping Design", "AutoCAD", "Revit", "HVAC Design Certificate", "ASHRAE Member Certification"]
 }
 
+EMPLOYER_DEMANDS = {
+    "CAD Design": {
+        "role": "Design Engineer / CAD Analyst / Product Developer",
+        "skills": [
+            { "name": "Geometric Dimensioning & Tolerancing (GD&T)", "desc": "Applying ASME Y14.5 rules for datum definitions, feature control frames, MMC/LMC, and precision component matching.", "priority": "Critical" },
+            { "name": "Design for Manufacturing & Assembly (DFM/DFMA)", "desc": "Optimizing CAD models for cost-efficient injection molding (draft angles), sheet metal fabrication (bend reliefs), and CNC machining.", "priority": "High" },
+            { "name": "Tolerance Stack-up Analysis", "desc": "Performing linear and statistical (Root Sum Square - RSS) tolerance analyses to prevent assembly failures.", "priority": "High" }
+        ],
+        "software": [
+            { "name": "SolidWorks", "desc": "Industry-standard parametric 3D modeling, advanced surfacing, and assembly configuration management.", "priority": "Critical" },
+            { "name": "Autodesk AutoCAD", "desc": "Producing precise 2D mechanical drafts, plant piping layouts, and mechanical details.", "priority": "High" },
+            { "name": "CATIA", "desc": "Advanced surfacing and structural frame modeling, dominant in aerospace and automotive giants.", "priority": "High" },
+            { "name": "PTC Creo / Siemens NX", "desc": "Top-tier CAD systems used in complex high-end automotive assemblies and machinery design.", "priority": "Medium" }
+        ],
+        "certs": [
+            { "name": "Certified SolidWorks Professional (CSWP)", "desc": "Validates complex solid modeling, multi-body parts, and coordinate systems setup.", "priority": "High" },
+            { "name": "Certified SolidWorks Associate (CSWA)", "desc": "Entry-level credential proving core part drafting and assembly mating competence.", "priority": "Medium" },
+            { "name": "Autodesk Certified Professional", "desc": "Verifies AutoCAD/Inventor drafting standards and speed proficiency.", "priority": "Medium" }
+        ],
+        "portfolio": [
+            { "title": "Parametric Gearbox Assembly", "desc": "A fully constrained gear system complying with tooth bending calculations and bearing fits." },
+            { "title": "Sheet Metal Enclosure Design", "desc": "Electronics casing detailing precise flat patterns, bend radii, and fastener reliefs." }
+        ]
+    },
+    "CAE/Simulation": {
+        "role": "Simulation Analyst / FEA Engineer / CFD Specialist",
+        "skills": [
+            { "name": "Finite Element Method (FEM) Fundamentals", "desc": "Theoretical understanding of element formulations (1D beams, 2D shells, 3D solids), meshing density, and convergence curves.", "priority": "Critical" },
+            { "name": "Computational Fluid Dynamics (CFD)", "desc": "Applying turbulence models (SST k-omega, standard k-epsilon), near-wall cell treatment (y+), and mass flow conservation laws.", "priority": "Critical" },
+            { "name": "Structural & Vibration Dynamics", "desc": "Setting up modal, harmonic response, fatigue lifecycle, and non-linear contact simulations.", "priority": "High" }
+        ],
+        "software": [
+            { "name": "ANSYS Workbench", "desc": "Industry benchmark for Static Structural, Modal, Fluent CFD solvers, and thermal simulations.", "priority": "Critical" },
+            { "name": "Abaqus / Nastran", "desc": "Advanced solver software for complex structural fatigue, crash testing, and automotive structural durability.", "priority": "High" },
+            { "name": "Altair HyperMesh", "desc": "Primary pre-processor used in automotive/aerospace industries to build structured meshes.", "priority": "High" },
+            { "name": "MATLAB", "desc": "Used to build numerical scripts, solve differential matrices, and run optimization loops.", "priority": "Medium" }
+        ],
+        "certs": [
+            { "name": "ANSYS Certified Professional", "desc": "Industry-recognized validation of simulation setups, solver settings, and post-processing accuracy.", "priority": "High" },
+            { "name": "NAFEMS Certification", "desc": "Structural simulation verification complying with international standards.", "priority": "Medium" }
+        ],
+        "portfolio": [
+            { "title": "NACA Wing Section Aerodynamic CFD", "desc": "CFD analysis validating lift/drag coefficients and boundary layer grid independence." },
+            { "title": "Bike Frame Fatigue FEA", "desc": "Structural fatigue FEA analyzing stress concentrations under dynamic cyclist loads." }
+        ]
+    },
+    "Robotics/Mechatronics": {
+        "role": "Automation Engineer / Mechatronics specialist / Controls Engineer",
+        "skills": [
+            { "name": "Control Systems & PID Tuning", "desc": "Designing closed-loop feedback controllers, tuning proportional, integral, and derivative constants for speed/position.", "priority": "Critical" },
+            { "name": "Embedded Programming", "desc": "Writing C/C++ firmware for microcontrollers (Arduino, STM32, ESP32) to read sensor data (I2C, SPI) and drive actuators.", "priority": "Critical" },
+            { "name": "Robot Kinematics", "desc": "Deriving Forward & Inverse kinematics matrices for joint angles and robotic tool positioning.", "priority": "High" }
+        ],
+        "software": [
+            { "name": "MATLAB & Simulink", "desc": "Modeling dynamic physical systems, root-locus design, and control loop simulations.", "priority": "Critical" },
+            { "name": "Python", "desc": "Standard for robot vision scripting (OpenCV), motion planning algorithms, and machine learning models.", "priority": "High" },
+            { "name": "Arduino IDE / STM32Cube", "desc": "Compiling firmware code for hardware execution and debugging hardware interfaces.", "priority": "High" },
+            { "name": "ROS (Robot Operating System)", "desc": "Software framework providing hardware abstraction, device drivers, and package messaging.", "priority": "Medium" }
+        ],
+        "certs": [
+            { "name": "CLAD (Certified LabVIEW Associate Developer)", "desc": "Validates capability in automated testing, data acquisition, and virtual instrument controls.", "priority": "High" },
+            { "name": "ASME Robotics Specialist", "desc": "Validates fundamentals of automation and robotic mechanism designs.", "priority": "Medium" }
+        ],
+        "portfolio": [
+            { "title": "3-Axis Closed-loop Robotic Arm", "desc": "Trajectory mapping and servo-driven controller utilizing Simulink & Arduino." },
+            { "title": "PID Balance Bot", "desc": "Self-balancing two-wheeled robot using IMU sensors and real-time PID feedback." }
+        ]
+    },
+    "Manufacturing/Operations": {
+        "role": "Production Engineer / Quality Analyst / Operations Manager",
+        "skills": [
+            { "name": "Lean Six Sigma (DMAIC)", "desc": "Process capability evaluation (Cp, Cpk indices), cycle time balancing, and statistical quality audits.", "priority": "Critical" },
+            { "name": "CNC Machining & CAM Fixtures", "desc": "Generating precise tool paths (G-code/M-code) and designing mechanical fixtures using the 3-2-1 locating principle.", "priority": "High" },
+            { "name": "FMEA & Process Safety", "desc": "Conducting Failure Mode and Effects Analyses to identify risks and establish safety protocols.", "priority": "High" }
+        ],
+        "software": [
+            { "name": "Mastercam / SolidCAM", "desc": "Industry-standard software for generating computer-aided manufacturing toolpaths.", "priority": "Critical" },
+            { "name": "Minitab", "desc": "Primary statistical tool for analyzing manufacturing variance, Gage R&R, and control charts.", "priority": "High" },
+            { "name": "Autodesk AutoCAD", "desc": "Used to draft factory layout designs, assembly floor configurations, and workflow steps.", "priority": "Medium" }
+        ],
+        "certs": [
+            { "name": "Lean Six Sigma Green Belt", "desc": "Validates candidate's capability to lead small process improvement and waste reduction projects.", "priority": "Critical" },
+            { "name": "Lean Six Sigma Yellow Belt", "desc": "Proves familiarity with Lean terminologies, 5S layouts, and quality tools.", "priority": "High" },
+            { "name": "ASQ Certified Quality Engineer (CQE)", "desc": "Verifies statistical evaluation competence and control methods.", "priority": "Medium" }
+        ],
+        "portfolio": [
+            { "title": "Six Sigma DMAIC Yield Audit", "desc": "Statistical process improvement study analyzing 500 samples in Minitab to boost yield." },
+            { "title": "CAM-designed Welding Fixture", "desc": "Fixture design utilizing quick-clamp fixtures and Mastercam CNC programming." }
+        ]
+    },
+    "HVAC/Thermal": {
+        "role": "HVAC Project Engineer / MEP Designer / Building Energy Analyst",
+        "skills": [
+            { "name": "Cooling & Heating Load Calculation", "desc": "Calculating sensible and latent heat transfer rates using CLTD and psychrometric principles.", "priority": "Critical" },
+            { "name": "Duct & Water Piping Design", "desc": "Determining friction losses, pipe sizes, duct paths, and ventilation rates in buildings.", "priority": "Critical" },
+            { "name": "ASHRAE Standard Compliance", "desc": "Applying international standards (Standard 55, 62.1, 90.1) for thermal comfort, ventilation, and efficiency.", "priority": "High" }
+        ],
+        "software": [
+            { "name": "Autodesk Revit MEP", "desc": "Industry standard for building information modeling (BIM), 3D duct layout, and coordinate checks.", "priority": "Critical" },
+            { "name": "Carrier Hourly Analysis Program (HAP)", "desc": "Standard software for office heat load simulations, energy cost checks, and climate analysis.", "priority": "High" },
+            { "name": "Autodesk AutoCAD", "desc": "Producing schematic double-line layouts and 2D piping plans.", "priority": "High" }
+        ],
+        "certs": [
+            { "name": "HVAC Design Certificate", "desc": "Validates core design knowledge from accredited engineering associations.", "priority": "High" },
+            { "name": "ASHRAE Member Certification", "desc": "Demonstrates standard alignment and membership in ASHRAE.", "priority": "Medium" }
+        ],
+        "portfolio": [
+            { "title": "Office Building VRF Design", "desc": "Full heat load simulation in HAP, duct routing, and MEP layout in Revit." },
+            { "title": "Shell-and-Tube Heat Exchanger Design", "desc": "Thermal analysis using LMTD and effectiveness-NTU methods." }
+        ]
+    }
+}
+
 PROJECTS_RECOMMENDATIONS = {
     "CAD Design": [
         {
@@ -280,45 +393,55 @@ COURSES_RECOMMENDATIONS = {
 
 COURSE_CATALOG = {
     "CAD Design": {
-        "title": "ASME Y14.5 Geometric Dimensioning & Tolerancing (GD&T) & Mechanical Gear Design",
+        "title": "ASME Y14.5 Geometric Dimensioning & Tolerancing (GD&T) & Mechanical Design",
         "slug": "cad-lewis-gear-bending",
         "skill_tags": ["GD&T (Geometric Dimensioning & Tolerancing)", "Product Design", "SolidWorks"],
         "youtube_video_id": "",
         "local_video_path": "manim_courses/renders/cad-lewis-gear-bending.mp4",
         "score_boost": 5.0,
-        "description": "Learn how to apply standard dimensioning constraints and calculate structural strength boundaries for rotating systems.",
+        "description": "Learn standard dimensioning constraints, DFM rules, and tolerance stack-up analysis for mechanical systems.",
         "written_content": """
-### 1. The Lewis Bending Formula
-In gear design, teeth are modeled as cantilever beams loaded by a tangential force. The maximum bending stress at the root of the tooth is governed by the **Lewis Bending Equation**:
+### 1. Geometric Dimensioning & Tolerancing (GD&T) - ASME Y14.5
+GD&T is a system of symbols used to specify the exact allowable variation of geometric features. Instead of relying solely on linear dimensions (which create square tolerance zones), GD&T uses circular or cylindrical tolerance zones.
+- **Datum Reference Frame (DRF)**: A coordinate system that restricts the 6 degrees of freedom of a part during machining and inspection. Datums are established in order of priority: Primary (constrains 3 DOF), Secondary (constrains 2 DOF), and Tertiary (constrains 1 DOF).
+- **Geometric Controls**:
+  - *Position*: Defines the allowable deviation of a feature's center, axis, or center plane from its 'True Position'.
+  - *Profile of a Surface*: Controls the size, shape, orientation, and location of a surface relative to datums.
+  - *Runout*: Controls coaxiality and circularity of rotating features (Circular vs. Total Runout).
+- **Material Modifiers**:
+  - *Maximum Material Condition (MMC - Ⓜ)*: The state where a feature contains the maximum amount of material within its size limit (e.g., smallest hole diameter, largest pin diameter). Selecting MMC grants additional 'bonus tolerance' as the feature departs from MMC.
+  - *Least Material Condition (LMC - Ⓛ)*: The state containing the minimum amount of material.
 
-$$ \\sigma = \\frac{W_t}{F \\cdot m \\cdot Y} $$
+### 2. Design for Manufacturing (DFM) Guidelines
+Designing components without considering manufacturing constraints leads to high production rejection rates.
+- **Plastic Injection Molding**:
+  - Wall thickness must be kept uniform ($2.0 - 3.0 \\text{ mm}$) to prevent sink marks and warpage during cooling.
+  - Draft angles of $1.0^{\\circ} - 2.0^{\\circ}$ must be added to all vertical faces to allow easy part ejection from the mold core/cavity.
+- **Sheet Metal Design**:
+  - The minimum bend radius should be greater than or equal to the sheet thickness ($R \\ge t$).
+  - Bend reliefs of width $w \\ge 1.5t$ and depth $d \\ge 1.5t$ must be designed at corners to prevent tearing during stamping.
+- **Machined Fits (ASME B4.1)**:
+  - *Clearance Fits (RC)*: The shaft is always smaller than the hole, allowing free rotation (e.g., sleeve bearings).
+  - *Transition Fits (LT)*: The tolerance zones overlap; parts may fit with clearance or interference.
+  - *Interference/Press Fits (LN)*: The shaft is always larger than the hole, requiring force to assemble (e.g., gears on shafts).
 
-Where:
-- $\\sigma$ is the calculated bending stress (MPa)
-- $W_t$ is the tangential load transmitted by the gear (N)
-- $F$ is the face width of the gear (mm)
-- $m$ is the module of the gear (mm), representing tooth size
-- $Y$ is the dimensionless **Lewis Form Factor**, which accounts for tooth shape and geometry.
-
-To prevent bending fatigue failure, this stress must not exceed the allowable design stress of the material:
-$$ \\sigma \\le [\\sigma]_{all} $$
-
-### 2. Tolerance Stack-up Analysis
-Tolerance stack-up is the cumulative effect of dimensional tolerances. In a linear assembly, the maximum assembly clearance ($A_{max}$) is computed by summing the upper limits of the internal dimensions and subtracting the lower limits of external dimensions:
-
-$$ T_c = \\sum_{i=1}^{n} T_i \\quad \\text{(Worst-Case Tolerance)} $$
-
-For statistical designs, the **Root-Sum-Square (RSS)** method yields a more realistic clearances boundary assuming normal distribution:
-
-$$ T_{RSS} = \\sqrt{\\sum_{i=1}^{n} T_i^2} $$
+### 3. Step-by-Step Tolerance Stack-Up Calculation
+In a linear shaft assembly with components stacked end-to-end, we must calculate the minimum and maximum clearance to ensure fitment:
+- **Worst-Case Method**: Sums the absolute limits of tolerances.
+  $$ T_c = \\sum_{i=1}^{n} T_i $$
+- **Statistical (Root-Sum-Square - RSS) Method**: Assumes components are manufactured within a normal distribution.
+  $$ T_{RSS} = \\sqrt{\\sum_{i=1}^{n} T_i^2} $$
+- **Lewis Bending Equation**: Gear teeth are modeled as cantilever beams under tangential load $W_t$. The root bending stress is given by:
+  $$ \\sigma = \\frac{W_t}{F \\cdot m \\cdot Y} \\le [\\sigma]_{all} $$
+  Where $F$ is face width, $m$ is module, and $Y$ is the dimensionless Lewis Form Factor.
 """,
-        "quiz_question": "Which parameter in the Lewis formula represents the profile shape and tooth count of the gear?",
+        "quiz_question": "What is the primary benefit of designing parts using the Maximum Material Condition (MMC) modifier?",
         "quiz_options": [
-            "Tangential load (Wt)",
-            "Gear Module (m)",
-            "Lewis Form Factor (Y)"
+            "It eliminates the need for any datum reference frames",
+            "It grants additional 'bonus tolerance' as the feature size departs from MMC",
+            "It guarantees zero friction in rotating shaft bearings"
         ],
-        "quiz_answer": "Lewis Form Factor (Y)"
+        "quiz_answer": "It grants additional 'bonus tolerance' as the feature size departs from MMC"
     },
     "CAE/Simulation": {
         "title": "Computational Finite Element Analysis (FEA) & Fluid Solvers",
@@ -327,36 +450,45 @@ $$ T_{RSS} = \\sqrt{\\sum_{i=1}^{n} T_i^2} $$
         "youtube_video_id": "",
         "local_video_path": "manim_courses/renders/cae-stiffness-matrix.mp4",
         "score_boost": 5.0,
-        "description": "Understand stiffness matrix formulations in structural loads and Navier-Stokes equations in fluid boundaries.",
+        "description": "Understand element stiffness formulations, boundary conditions, meshing metrics, and Navier-Stokes equations.",
         "written_content": """
-### 1. Element Stiffness Equations in FEA
-In structural simulation, the physical component is discretized into elements. For a simple spring/bar element with stiffness $k$, the nodal forces $f$ and displacements $u$ are related by:
+### 1. Element Types & Formulations in FEA
+FEA discretizes solid continuous structures into discrete finite elements.
+- **1D Elements (Truss/Beam)**: Used for slender structural members where length is much greater than width/height. Beam elements support bending and torsional loads, while truss elements only support axial tension/compression.
+- **2D Elements (Shell)**: Used for thin-walled parts (e.g., sheet metal, pressure vessels) where thickness is small compared to other dimensions. Mid-surfaces are extracted to solve elements.
+- **3D Elements (Solid/Tetrahedral/Hexahedral)**: Used for bulky, complex 3D geometries. Hexahedral (brick) elements provide higher accuracy and faster convergence than tetrahedral elements for structured grids.
 
+### 2. Stiffness Matrices & Deflection Mechanics
+For a discretized system under loading, the nodal displacement vector $\\mathbf{u}$ is solved using the system stiffness matrix $\\mathbf{K}$ and force vector $\\mathbf{f}$:
 $$ \\mathbf{K} \\mathbf{u} = \\mathbf{f} $$
+- **Cantilever Deflection Formula**: The maximum tip deflection $\\delta_{max}$ under a point load $P$ at the free end is:
+  $$ \\delta_{max} = \\frac{P L^3}{3 E I} $$
+  Where $E$ is Young's Modulus, and $I$ is the Area Moment of Inertia.
+- **Von Mises Yield Criterion**: In multi-axial stress states, the equivalent Von Mises stress $\\sigma_v$ is calculated to predict ductile failure:
+  $$ \\sigma_v = \\sqrt{\\frac{1}{2} \\left[ (\\sigma_1 - \\sigma_2)^2 + (\\sigma_2 - \\sigma_3)^2 + (\\sigma_3 - \\sigma_1)^2 \\right]} \\le S_y $$
+  Where $\\sigma_1, \\sigma_2, \\sigma_3$ are principal stresses and $S_y$ is the yield strength.
 
-Where $\\mathbf{K}$ is the global stiffness matrix, $\\mathbf{u}$ is the nodal displacement vector, and $\\mathbf{f}$ is the nodal force vector. For a single 1D spring element connecting node $i$ and node $j$, the stiffness relation is:
-
-$$ \\begin{bmatrix} k & -k \\\\ -k & k \\end{bmatrix} \\begin{bmatrix} u_i \\\\ u_j \\end{bmatrix} = \\begin{bmatrix} f_i \\\\ f_j \\end{bmatrix} $$
-
-### 2. Governing Equations in CFD
-Fluid motion is governed by the **Navier-Stokes Equations** for conservation of momentum (assuming an incompressible Newtonian fluid):
-
+### 3. Mesh Quality & CFD Boundary Layer Modeling
+In Computational Fluid Dynamics (CFD), fluid flow is solved using the discretized Navier-Stokes momentum equations:
 $$ \\rho \\left( \\frac{\\partial \\mathbf{u}}{\\partial t} + \\mathbf{u} \\cdot \\nabla \\mathbf{u} \\right) = -\\nabla p + \\mu \\nabla^2 \\mathbf{u} + \\mathbf{f} $$
-
-Where:
-- $\\rho$ is the fluid density ($kg/m^3$)
-- $\\mathbf{u}$ is the velocity vector field ($m/s$)
-- $p$ is the static pressure ($Pa$)
-- $\\mu$ is the dynamic viscosity ($Pa \\cdot s$)
-- $\\mathbf{f}$ represents body forces (e.g., gravity)
+- **Mesh Quality Metrics**:
+  - *Aspect Ratio*: Ratio of maximum element edge length to minimum edge length. Should be close to $1.0$.
+  - *Skewness*: Deviation from equilateral shape. High skewness degrades solver accuracy.
+  - *Jacobian*: Measures element distortion. Must be positive.
+- **Turbulence Models & y+ Calculation**:
+  - *Standard k-epsilon ($k-\\epsilon$)*: Best for high-Reynolds number flows away from boundary walls.
+  - *SST k-omega ($k-\\omega \\text{ SST}$)*: Integrates near-wall $k-\\omega$ and free-stream $k-\\epsilon$, making it the industry standard for boundary layers.
+  - *$y^+$ Dimensionless Wall Distance*: Measures mesh resolution near the wall:
+    $$ y^+ = \\frac{u_* y}{\\nu} $$
+    For wall-resolved flows, we target $y^+ \\approx 1.0$ to resolve the viscous sublayer directly.
 """,
-        "quiz_question": "In structural FEA, what does the matrix equation K * u = f represent?",
+        "quiz_question": "Why is a y+ value near 1.0 targeted when setting up boundary layer meshes for aerodynamic simulations?",
         "quiz_options": [
-            "Stiffness-displacement equilibrium relation",
-            "Thermal heat conduction boundary condition",
-            "Fluid continuity and momentum conservation"
+            "It allows the solver to bypass Navier-Stokes computations completely",
+            "It resolves the viscous sublayer directly without relying on wall functions",
+            "It automatically increases the material's structural yield strength"
         ],
-        "quiz_answer": "Stiffness-displacement equilibrium relation"
+        "quiz_answer": "It resolves the viscous sublayer directly without relying on wall functions"
     },
     "Robotics/Mechatronics": {
         "title": "Closed-Loop Feedforward Control Systems & PID Tuning",
@@ -365,30 +497,39 @@ Where:
         "youtube_video_id": "",
         "local_video_path": "manim_courses/renders/robotics-pid-control.mp4",
         "score_boost": 5.0,
-        "description": "Explore the mathematics behind transient response optimization and active feedback control loops.",
+        "description": "Explore the mathematics behind closed-loop PID control tuning, microcontrollers, and kinematics.",
         "written_content": """
-### 1. Proportional-Integral-Derivative (PID) Control
-In mechatronic feedback systems, the PID controller regulates system state (e.g., motor position or temperature) by computing a control output $u(t)$ based on the error $e(t) = r(t) - y(t)$:
-
+### 1. Proportional-Integral-Derivative (PID) Control Theory
+PID controllers regulate the error $e(t) = r(t) - y(t)$ between a desired setpoint $r(t)$ and measured process output $y(t)$:
 $$ u(t) = K_p e(t) + K_i \\int_{0}^{t} e(\\tau) d\\tau + K_d \\frac{de(t)}{dt} $$
-
 Where:
-- $K_p$ is the **Proportional Gain** (corrects current error; higher gain speeds up response but causes overshoot).
-- $K_i$ is the **Integral Gain** (corrects past error; integrates steady-state offsets to zero).
-- $K_d$ is the **Derivative Gain** (predicts future error; dampens oscillations and stabilizes settling time).
+- $K_p$ (Proportional Gain): Corrects current error; higher gain speeds up response but causes overshoot.
+- $K_i$ (Integral Gain): Corrects past accumulated errors; eliminates steady-state offset but can lead to windup.
+- $K_d$ (Derivative Gain): Predicts future error; dampens oscillations and stabilizes settling time.
+- **Laplace domain transfer function representation**:
+  $$ G_c(s) = K_p + \\frac{K_i}{s} + K_d s = \\frac{K_d s^2 + K_p s + K_i}{s} $$
 
-### 2. Transfer Function Representation
-In Laplace domain, the system transfer function $G_c(s)$ of the PID controller is represented as:
+### 2. Embedded Controller Interfaces & Filtering
+Microcontrollers interface with analog engineering sensors (thermistors, strain gages) through Analog-to-Digital Converters (ADCs).
+- **ADC Resolution Step Voltage**: The smallest change in input voltage that can be resolved by an $N$-bit ADC with reference voltage $V_{ref}$:
+  $$ \\Delta V = \\frac{V_{ref}}{2^N - 1} $$
+- **Active RC Low-Pass Filter**: Used to filter out high-frequency noise from sensors:
+  $$ f_c = \\frac{1}{2\\pi R C} $$
+  Where $f_c$ is the cutoff frequency (-3dB point) in Hertz.
 
-$$ G_c(s) = K_p + \\frac{K_i}{s} + K_d s = \\frac{K_d s^2 + K_p s + K_i}{s} $$
+### 3. Robotic Kinematics Equations
+- **Homogeneous Transformation Matrix ($T$)**: Links a robot joint coordinate frame to the next frame:
+  $$ T = \\begin{bmatrix} R_{3\\times3} & \\mathbf{d}_{3\\times1} \\\\ 0_{1\\times3} & 1 \\end{bmatrix} $$
+  Where $R$ is rotation and $\\mathbf{d}$ is translation.
+- **Denavit-Hartenberg (D-H) Parameters**: Standard convention utilizing four parameters (link length $a$, link twist $\\alpha$, link offset $d$, joint angle $\\theta$) to define joints coordinates relative to adjacent joints.
 """,
-        "quiz_question": "Which term in a PID controller integrates past error signals to eliminate steady-state offsets?",
+        "quiz_question": "For a 10-bit Analog-to-Digital Converter (ADC) operating with a 5.0V reference, what is the smallest step voltage resolution?",
         "quiz_options": [
-            "Proportional Gain (Kp)",
-            "Integral Gain (Ki)",
-            "Derivative Gain (Kd)"
+            "Approximately 4.88 mV",
+            "Exactly 5.00 mV",
+            "Approximately 9.77 mV"
         ],
-        "quiz_answer": "Integral Gain (Ki)"
+        "quiz_answer": "Approximately 4.88 mV"
     },
     "Manufacturing/Operations": {
         "title": "Statistical Quality Control & Six Sigma Process Capability",
@@ -400,27 +541,47 @@ $$ G_c(s) = K_p + \\frac{K_i}{s} + K_d s = \\frac{K_d s^2 + K_p s + K_i}{s} $$
         "description": "Learn to calculate quality capability indices and analyze production deviation from specification limits.",
         "written_content": """
 ### 1. Process Capability Indices ($C_p$ and $C_{pk}$)
-In high-volume manufacturing, components must stay within Upper ($USL$) and Lower ($LSL$) Specification Limits. The overall process capability $C_p$ represents potential performance assuming a centered mean:
+In manufacturing, components must stay within Upper ($USL$) and Lower ($LSL$) Specification Limits.
+- **$C_p$ (Potential Capability)**: Represents potential performance assuming a centered mean:
+  $$ C_p = \\frac{USL - LSL}{6\\sigma} $$
+  Where $\\sigma$ is the standard deviation.
+- **$C_{pk}$ (Actual Capability)**: Accounts for shifts in the process mean $\\mu$:
+  $$ C_{pk} = \\min \\left( \\frac{USL - \\mu}{3\\sigma}, \\frac{\\mu - LSL}{3\\sigma} \\right) $$
+- **Capability Thresholds**:
+  - $C_{pk} < 1.0$: Process is incapable (defective parts are produced).
+  - $C_{pk} = 1.0$: Process is barely capable (3-sigma overlap).
+  - $C_{pk} \\ge 1.33$: Industry standard capability threshold.
+  - $C_{pk} \\ge 2.0$: Six Sigma level (less than 3.4 defects per million opportunities).
 
-$$ C_p = \\frac{USL - LSL}{6\\sigma} $$
+### 2. Step-by-Step Cp/Cpk Calculation Example
+**Scenario**: A shafts production line targets a diameter of $10.0 \\text{ mm}$ with specification limits between $9.5 \\text{ mm}$ ($LSL$) and $10.5 \\text{ mm}$ ($USL$).
+Measurements show the sample mean $\\mu = 10.1 \\text{ mm}$ and standard deviation $\\sigma = 0.1 \\text{ mm}$.
+1. **Calculate $C_p$**:
+   $$ C_p = \\frac{10.5 - 9.5}{6(0.1)} = \\frac{1.0}{0.6} \\approx 1.67 $$
+2. **Calculate $C_{pk}$**:
+   - Upper side: $\\frac{10.5 - 10.1}{3(0.1)} = \\frac{0.4}{0.3} \\approx 1.33$
+   - Lower side: $\\frac{10.1 - 9.5}{3(0.1)} = \\frac{0.6}{0.3} = 2.0$
+   - $C_{pk} = \\min(1.33, 2.0) = 1.33$
+   *Conclusion*: The line is statistically capable ($C_{pk} \\ge 1.33$), but off-center.
 
-Where $\\sigma$ is the standard deviation of the process sample. To account for shifts in the process mean $\\mu$, the actual process capability index **$C_{pk}$** is calculated:
-
-$$ C_{pk} = \\min \\left( \\frac{USL - \\mu}{3\\sigma}, \\frac{\\mu - LSL}{3\\sigma} \\right) $$
-
-### 2. Meaning of $C_{pk}$ Values
-- $C_{pk} < 1.0$: Process is incapable; producing defective parts.
-- $C_{pk} = 1.0$: Process is barely capable (3-sigma boundary overlap).
-- $C_{pk} \\ge 1.33$: Industry standard capability threshold.
-- $C_{pk} \\ge 2.0$: Six Sigma quality level (less than 3.4 defects per million opportunities).
+### 3. Machining Calculations (CNC Parameters)
+- **Cutting Speed ($V_c$)**: Linear surface speed of workpiece/cutter in m/min:
+  $$ V_c = \\frac{\\pi \\cdot D \\cdot N}{1000} $$
+  Where $D$ is diameter (mm) and $N$ is spindle speed (RPM).
+- **Feed Rate ($V_f$)**: Cutting tool feed speed in mm/min:
+  $$ V_f = f_z \\cdot z \\cdot N $$
+  Where $f_z$ is feed per tooth (mm/tooth) and $z$ is number of teeth.
+- **Material Removal Rate ($MRR$)**: In mm$^3$/min:
+  $$ MRR = a_p \\cdot a_e \\cdot V_f $$
+  Where $a_p$ is axial depth of cut (mm) and $a_e$ is radial width of cut (mm).
 """,
-        "quiz_question": "What does a calculated Cpk value of 2.0 or higher indicate for a manufacturing line?",
+        "quiz_question": "If a process has a mean of 10.0, standard deviation of 0.1, and specification limits of 9.5 to 10.5, what is the process capability Cp?",
         "quiz_options": [
-            "The process is unstable and out of statistical control",
-            "The process has achieved Six Sigma quality standards",
-            "The process requires 100% manual inspections"
+            "Cp = 0.83",
+            "Cp = 1.67",
+            "Cp = 1.33"
         ],
-        "quiz_answer": "The process has achieved Six Sigma quality standards"
+        "quiz_answer": "Cp = 1.67"
     },
     "HVAC/Thermal": {
         "title": "Thermodynamics & Psychrometric HVAC Heat Load Calculation",
@@ -432,30 +593,34 @@ $$ C_{pk} = \\min \\left( \\frac{USL - \\mu}{3\\sigma}, \\frac{\\mu - LSL}{3\\si
         "description": "Study energy transfer boundaries, refrigeration cycles, and sensible vs. latent load sizing.",
         "written_content": """
 ### 1. Sensible Heat Transfer Rate
-In HVAC and thermal management, cooling load calculations depend on sensible heat (temperature change) and latent heat (phase/moisture change). The sensible heat rate $q_s$ is given by:
-
+In HVAC systems, cooling load calculations depend on sensible heat (temperature change) and latent heat (humidity/phase change):
 $$ q_s = \\dot{m} \\cdot C_p \\cdot \\Delta T $$
-
 Where:
-- $q_s$ is the sensible heat transfer rate (kW)
-- $\\dot{m}$ is the mass flow rate of air ($kg/s$)
+- $q_s$ is the sensible heat rate (kW)
+- $\\dot{m}$ is the air mass flow rate ($kg/s$)
 - $C_p$ is the specific heat capacity of dry air ($C_p \\approx 1.005 \\text{ kJ/kg}\\cdot\\text{K}$)
-- $\\Delta T$ is the air temperature difference across the heat exchanger ($K$ or $^{\\circ}C$).
+- $\\Delta T$ is the air temperature difference across the cooling coil ($K$).
 
 ### 2. Latent Heat Transfer Rate
-Latent heat exchange $q_l$ is due to change in water vapor density:
-
+Latent heat exchange accounts for water vapor density change (dehumidification):
 $$ q_l = \\dot{m} \\cdot h_{fg} \\cdot \\Delta w $$
-
 Where $h_{fg}$ is the latent heat of vaporization of water (approx. $2501 \\text{ kJ/kg}$) and $\\Delta w$ is the humidity ratio difference ($kg \\text{ water} / kg \\text{ dry air}$).
+
+### 3. Piping & Duct Friction Head Loss (Fluid Flow)
+Determining pump and fan static pressures depends on head loss:
+- **Darcy-Weisbach Equation**: Head loss $h_f$ in meters of fluid:
+  $$ h_f = f \\cdot \\frac{L}{D} \\cdot \\frac{v^2}{2g} $$
+  Where $f$ is Darcy friction factor, $L$ is length (m), $D$ is pipe internal diameter (m), $v$ is velocity (m/s), and $g$ is acceleration of gravity.
+- **Equivalent Duct Diameter ($D_e$)**: For rectangular ducts of width $a$ and height $b$ (Huebscher formula):
+  $$ D_e = 1.30 \\cdot \\frac{(a \\cdot b)^{0.625}}{(a + b)^{0.25}} $$
 """,
-        "quiz_question": "Which of the following processes represents an increase in temperature without altering humidity levels?",
+        "quiz_question": "Which cooling load component accounts for the heat required to condense moisture out of the air?",
         "quiz_options": [
-            "Latent cooling",
-            "Sensible heating",
-            "Evaporative cooling"
+            "Sensible cooling load",
+            "Latent cooling load",
+            "Radiation heat gain"
         ],
-        "quiz_answer": "Sensible heating"
+        "quiz_answer": "Latent cooling load"
     }
 }
 
@@ -475,10 +640,10 @@ def get_course_video_source(course_data):
 # Cache the dataset load
 @st.cache_data
 def load_or_generate_dataset():
-    # Attempt to load candidates_60k.json if it exists
+    # Attempt to load candidates_100k.json if it exists
     try:
-        if os.path.exists("candidates_60k.json"):
-            with open("candidates_60k.json", "r") as f:
+        if os.path.exists("candidates_100k.json"):
+            with open("candidates_100k.json", "r") as f:
                 data = json.load(f)
                 df = pd.DataFrame(data)
                 return df
@@ -486,7 +651,7 @@ def load_or_generate_dataset():
          pass
          
     # Fallback/dynamic generation in python
-    print("Generating seeded 60k dataset in Python...")
+    print("Generating seeded 100k dataset in Python...")
     random_state = np.random.RandomState(42)
     records = []
     
@@ -503,7 +668,7 @@ def load_or_generate_dataset():
         }
     }
     
-    for i in range(60000):
+    for i in range(100000):
         region = "India" if random_state.rand() < 0.60 else "Global"
         tier_roll = random_state.rand()
         tier = "Tier 1" if tier_roll < 0.15 else ("Tier 2" if tier_roll < 0.60 else "Tier 3")
@@ -808,8 +973,9 @@ if submit_btn or parsed_data or preset != "None":
     st.success(f"⚛ Compiled Profile: {degree} | College Tier: {tier} | Matched Specialization: {best_cluster} (Score: {target_score}/100)")
     
     # Initialize tabs
-    tab_dashboard, tab_recommendations, tab_database = st.tabs([
+    tab_dashboard, tab_demand, tab_recommendations, tab_database = st.tabs([
         "📊 Employability Dashboard", 
+        "💼 Employer Insights",
         "🎯 Recommendations Engine", 
         "📁 Competitor Database"
     ])
@@ -885,6 +1051,50 @@ if submit_btn or parsed_data or preset != "None":
                     st.write("Target this skill/tool next to close the gap. Build a dedicated portfolio project centered on it or prepare for its entry certification.")
         else:
             st.success("Perfect alignment! No critical technical gaps found relative to matched specialty peers.")
+
+    with tab_demand:
+        st.subheader("💼 Employer Demands & Hiring Benchmarks")
+        cluster_icons = {
+            "CAD Design": "📐",
+            "CAE/Simulation": "💻",
+            "Robotics/Mechatronics": "🤖",
+            "Manufacturing/Operations": "⚙️",
+            "HVAC/Thermal": "🔥"
+        }
+        cluster_icon = cluster_icons.get(best_cluster, "🔧")
+        st.markdown(f"### {cluster_icon} Specialization: **{best_cluster}**")
+        
+        demands = EMPLOYER_DEMANDS.get(best_cluster, EMPLOYER_DEMANDS["CAD Design"])
+        st.markdown(f"**Target Professional Role:** `{demands['role']}`")
+        st.write("Employers look for these key competencies and credentials when evaluating freshers:")
+        
+        col_d1, col_d2 = st.columns(2)
+        with col_d1:
+            st.markdown("#### 🎯 In-Demand Core Skills")
+            for s in demands["skills"]:
+                p_color = "red" if s["priority"] == "Critical" else ("orange" if s["priority"] == "High" else "blue")
+                st.markdown(f"- **{s['name']}** :{p_color}[({s['priority']})]")
+                st.write(f"  *{s['desc']}*")
+            
+            st.markdown("#### 📜 Valued Certifications")
+            for c in demands["certs"]:
+                p_color = "red" if c["priority"] == "Critical" else ("orange" if c["priority"] == "High" else "blue")
+                st.markdown(f"- **{c['name']}** :{p_color}[({c['priority']})]")
+                st.write(f"  *{c['desc']}*")
+                
+        with col_d2:
+            st.markdown("#### 💻 Essential Software Packages")
+            for sw in demands["software"]:
+                p_color = "red" if sw["priority"] == "Critical" else ("orange" if sw["priority"] == "High" else "blue")
+                st.markdown(f"- **{sw['name']}** :{p_color}[({sw['priority']})]")
+                st.write(f"  *{sw['desc']}*")
+                
+            st.markdown("#### 📂 Portfolio & Project Expectations")
+            for p in demands["portfolio"]:
+                st.markdown(f"- **{p['title']}**")
+                st.write(f"  *{p['desc']}*")
+                
+        st.info("💡 **Ready to learn these?** Switch to the **Recommendations Engine** tab to complete the mini-course lectures and test your knowledge!")
 
     with tab_recommendations:
         st.subheader("🎯 Personalized Career Recommendations Engine")
@@ -1115,7 +1325,7 @@ if submit_btn or parsed_data or preset != "None":
     with tab_database:
         # Searchable peer candidate datatable
         st.subheader("📁 Anonymized Competitor Database")
-        st.caption("Filter and search through the database of 60,000 entry-level candidates")
+        st.caption("Filter and search through the database of 100,000 (1 Lakh) entry-level candidates")
         
         f_region = st.selectbox("Filter Region", ["All", "India", "Global"])
         f_cluster = st.selectbox("Filter Specialty Specialty", ["All"] + CLUSTERS)

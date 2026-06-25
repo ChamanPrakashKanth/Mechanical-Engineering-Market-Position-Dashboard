@@ -1,6 +1,6 @@
 # Mech-Eng Pathfinder: Market Position & Career Intelligence Dashboard
 
-An interactive, premium career intelligence dashboard designed for Mechanical Engineering graduates to parse resumes, evaluate technical skills, map profiles to career clusters, and compute rankings against a database of **60,000+ mechanical engineering graduates** worldwide and in India.
+An interactive, premium career intelligence dashboard designed for Mechanical Engineering graduates to parse resumes, evaluate technical skills, map profiles to career clusters, and compute rankings against a database of **1 Lakh (100,000+) mechanical engineering graduates** worldwide and in India.
 
 This project offers two fully functional UI versions:
 1. **Single-Page Application (SPA)**: Built with HTML5, Vanilla CSS3 (glassmorphic theme), and pure JavaScript. It operates completely client-side in the browser.
@@ -19,7 +19,7 @@ This project offers two fully functional UI versions:
 
 ### 2. Double-Percentile Ranking Heuristics
 Computes a custom **Employability Score** (from 0 to 100) based on weighted resume attributes, and calculates the candidate's exact percentile and ordinal rank across four key dimensions:
-- **Global / Worldwide Rank**: Position against the entire 60,000 candidate dataset.
+- **Global / Worldwide Rank**: Position against the entire 100,000 candidate dataset.
 - **National (India) Rank**: Position against the subset of Indian candidates (~36,000 records).
 - **Tier Group Rank**: Performance relative to peers from the same college tier.
 - **Specialization Cluster Rank**: Ranking within the matched career discipline.
@@ -32,23 +32,31 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - ⚙️ **Manufacturing/Operations**: Quality assurance, CNC programming, and Lean Six Sigma methodologies.
 - 🔥 **HVAC/Thermal**: Piping design, thermal load sizing, HVAC duct systems, and BIM (Revit MEP) layouts.
 
-### 4. Dynamic Skill Gap Analysis
+### 4. Employer Demand Insights
+- Displays target professional roles, in-demand core skills, essential software packages, and professional certifications with priority rankings (Critical, High, Medium) based on employer benchmarks.
+- Outlines real-world capstone and portfolio project expectations tailored for each specialization.
+
+### 5. Dynamic Skill Gap Analysis
 - Maps the candidate's skillset against the top-requested skills from peers within their matched specialty.
 - Renders a clean visual chart showing peer frequency rates alongside a check/gap indicator for the user's profile.
 
-### 5. High-ROI Roadmaps & Strategic Job Hunting
+### 6. High-ROI Roadmaps & Strategic Job Hunting
 - Recommends the top 3 high-ROI skills, tools, or certifications needed to bridge technical gaps.
 - Links to relevant professional certification pathways (e.g. CSWA/CSWP, Lean Six Sigma Green Belt, ASHRAE, or ANSYS Certified Professional) and external course targets.
 - **Offline Networking Strategies**: Provides custom job placement guidance, specifically tailoring advice for Tier 3 college graduates (e.g. building portfolios on GrabCAD/GitHub, targeting local manufacturing SMEs, cold outreach tactics) and candidates with zero internship experience.
 
-### 6. Interactive Competitor Database Viewer
-- Explore, filter, and paginate through the 60,000 anonymized candidate database.
+### 7. Interactive Competitor Database Viewer
+- Explore, filter, and paginate through the 100,000 anonymized candidate database.
 - Filter by target region (India vs. Global) or career cluster, and search for specific colleges, degrees, or tools.
 
-### 7. Course Learning Modules (Streamlit Exclusive)
-- Includes micro-course modules for each career cluster.
-- Provides written lecture notes and formula cheatsheets.
-- Integrates quick quiz checks that unlock **employability boost points** upon correct answers, updating the candidate's percentile score in real-time.
+### 8. Comprehensive Written Courses & Quizzes (Streamlit Exclusive)
+- Includes detailed written lecture notes, industrial guidelines, and LaTeX equations for each career cluster:
+  - *CAD Design*: ASME Y14.5 GD&T controls, DFM principles, Worst-Case vs. RSS tolerance stack-ups, and the Lewis Bending Equation.
+  - *CAE/Simulation*: Element formulations, stiffness matrices ($\mathbf{K}\mathbf{u}=\mathbf{f}$), cantilever deflection, Von Mises yield criteria, Navier-Stokes, and $y^+$ wall distance.
+  - *Robotics*: Closed-loop PID control theory, ADC step voltage resolution calculations, and active RC low-pass filters.
+  - *Manufacturing*: Six Sigma capability indices ($C_p$/$C_{pk}$ step-by-step example), DMAIC phases, and CNC machining speeds/feeds.
+  - *HVAC/Thermal*: Sensible vs. Latent cooling load rates ($q_s$, $q_l$), psychrometrics, and Darcy-Weisbach head loss equations.
+- Integrates interactive quiz checks that unlock **employability boost points** (+5.0 score boost) upon correct answers.
 
 ---
 
@@ -98,7 +106,7 @@ The Employability Score is calculated out of 100 points using the following weig
 ├── index.html                 # Frontend SPA HTML entry point (glassmorphism template)
 ├── app.js                     # SPA application logic (local resume parser, score calculator)
 ├── styles.css                 # SPA glassmorphic CSS styling sheet
-├── candidates_60k.json        # Main benchmark database of 60,000 anonymized candidates
+├── candidates_100k.json       # Main benchmark database of 1 Lakh (100,000) anonymized candidates
 ├── extract_web_data.py        # Resume parsing helpers and parser normalization taxonomy
 ├── requirements.txt           # Python application dependencies
 ├── compile_single_file.py     # Combines HTML, CSS, and JS into blogspot_deploy.html
@@ -147,7 +155,7 @@ The frontend client requires zero external package installations.
 
 #### 2. Running without a local server:
 - Double-click `index.html` to open it in any modern browser.
-- *Note*: If opening `index.html` directly as a local file, browsers may block loading the local `candidates_60k.json` due to CORS. In this case, `app.js` automatically falls back to generating a deterministic, seeded dataset of 60,000 candidates directly in the browser so that the app remains fully functional.
+- *Note*: If opening `index.html` directly as a local file, browsers may block loading the local `candidates_100k.json` due to CORS. In this case, `app.js` automatically falls back to generating a deterministic, seeded dataset of 100,000 candidates directly in the browser so that the app remains fully functional.
 
 ---
 

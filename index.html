@@ -24,7 +24,7 @@
             </div>
             <div class="header-status">
                 <span class="badge badge-purple" id="db-status-badge">
-                    <span class="pulse-dot"></span> Database Loaded: 25,000 Profiles
+                    <span class="pulse-dot"></span> Database Loaded: 100,000 Profiles
                 </span>
             </div>
         </header>
@@ -186,6 +186,7 @@
                 </div>
                 <div class="dashboard-nav">
                     <button type="button" class="tab-btn active" data-tab="dashboard" id="tab-dashboard-btn">Analytics Dashboard</button>
+                    <button type="button" class="tab-btn" data-tab="demand" id="tab-demand-btn">💼 Employer Insights</button>
                     <button type="button" class="tab-btn" data-tab="database" id="tab-database-btn">Anonymized Candidate DB</button>
                 </div>
             </div>
@@ -204,10 +205,11 @@
                         <div style="font-family: var(--font-heading); font-weight: 600; color: var(--text-primary);" id="db-candidate-id">
                             Candidate #ME-49023
                         </div>
+                    </div>
                               <!-- Rankings summary card -->
                     <div class="glass-card col-12">
                         <div class="card-header">
-                            <div class="card-title">🏆 Freshers & Entry-Level Market Rank Percentiles (Benchmarked against 60,000 Candidates)</div>
+                            <div class="card-title">🏆 Freshers & Entry-Level Market Rank Percentiles (Benchmarked against 1 Lakh Candidates)</div>
                         </div>
                         <div class="rank-metrics">
                             <!-- Global rank circle -->
@@ -225,7 +227,7 @@
                                 </svg>
                                 <div>
                                     <div class="percent-label">Worldwide Rank</div>
-                                    <div class="percent-sublabel" id="global-pct-sublabel">Rank #0 of 60k global freshers</div>
+                                    <div class="percent-sublabel" id="global-pct-sublabel">Rank #0 of 100k global freshers</div>
                                 </div>
                             </div>
                             <!-- India rank circle -->
@@ -402,6 +404,80 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <!-- VIEW 3: Employer Insights -->
+            <div id="tab-demand-view" class="hidden">
+                <div class="glass-card" style="margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                        <div>
+                            <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem;">
+                                <span id="demand-cluster-icon">📐</span> <span id="demand-cluster-title">CAD Design</span> Employer Demands
+                            </h2>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                                Target Role: <strong id="demand-cluster-role" style="color: var(--info);">Design Engineer</strong>
+                            </p>
+                        </div>
+                        <div class="badge badge-purple" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            💼 Hiring Benchmarks
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <!-- Skills Card -->
+                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                                🎯 In-Demand Core Skills
+                            </h3>
+                            <div id="demand-skills-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <!-- Software Card -->
+                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--info); display: flex; align-items: center; gap: 0.5rem;">
+                                💻 Essential Software Packages
+                            </h3>
+                            <div id="demand-software-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <!-- Certifications Card -->
+                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
+                                📜 Valued Certifications
+                            </h3>
+                            <div id="demand-certs-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <!-- Projects Card -->
+                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--success); display: flex; align-items: center; gap: 0.5rem;">
+                                📂 Portfolio & Project Expectations
+                            </h3>
+                            <div id="demand-portfolio-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Written Course Upsell Banner -->
+                    <div style="margin-top: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+                        <div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.25rem;">🚀 Boost Your Employability standing!</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary);">We have comprehensive, written training material for <strong style="color: var(--primary);">employer-demanded skills</strong> ready for you. Launch the Streamlit app to take the interactive quizzes!</p>
+                        </div>
+                        <button type="button" class="btn btn-success" id="btn-go-to-courses" style="font-size: 0.9rem; padding: 0.6rem 1.2rem;" onclick="alert('Open the Streamlit app (app_streamlit.py) to read the full course material and complete the interactive quizzes!')">
+                            📖 Interactive Quizzes in Streamlit
+                        </button>
+                    </div>
                 </div>
             </div>
 

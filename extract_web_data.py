@@ -131,7 +131,7 @@ def extract_and_generate():
     base_skills, base_software, base_certs, base_proj, base_intern, base_papers, base_comp = parse_profile(cleaned_corpus)
     
     # We now generate/scale a robust dataset of 60,000 candidates based on these extracted web patterns and standard placement metrics
-    print("Augmenting and compiling 60,000 entry-level & fresher profiles...")
+    print("Augmenting and compiling 100,000 entry-level & fresher profiles...")
     
     random.seed(42)
     candidates = []
@@ -182,7 +182,7 @@ def extract_and_generate():
         
         return round((acad_weighted + skills_weighted + exp_weighted + extra_weighted) * 10) / 10
 
-    for i in range(60000):
+    for i in range(100000):
         is_india = random.random() < 0.60
         region = "India" if is_india else "Global"
         
@@ -255,11 +255,11 @@ def extract_and_generate():
         cand["score"] = calculate_score(cand)
         candidates.append(cand)
         
-    output_path = "candidates_60k.json"
+    output_path = "candidates_100k.json"
     with open(output_path, 'w') as f:
         json.dump(candidates, f, indent=2)
         
-    print(f"Success! 60,000 cleansed and normalized fresher candidates written to {output_path}")
+    print(f"Success! 100,000 cleansed and normalized fresher candidates written to {output_path}")
 
 if __name__ == "__main__":
     extract_and_generate()
