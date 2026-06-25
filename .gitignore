@@ -1,0 +1,26 @@
+# Manim courses ignore patterns
+manim_courses/client_secrets.json
+manim_courses/renders/
+manim_courses/media/
+*.token.json
+manim_courses/__pycache__/
+
+# Log files
+streamlit_run.log
+streamlit_run.err.log
+*.log
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Virtual environments
+.venv-manim/
+.venv-manim312/
+venv/
+.venv/
+env/
+.env/

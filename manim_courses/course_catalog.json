@@ -1,0 +1,49 @@
+{
+  "lessons": [
+    {
+      "cluster": "CAD Design",
+      "slug": "cad-lewis-gear-bending",
+      "scene": "CadLewisGearBending",
+      "file": "manim_courses/renders/cad-lewis-gear-bending.mp4",
+      "title": "CAD Design: Lewis Gear Tooth Bending",
+      "description": "A short Manim lesson explaining tangential load, module, face width, and Lewis form factor for gear tooth bending.",
+      "tags": ["mechanical engineering", "CAD", "gear design", "GD&T", "Manim"]
+    },
+    {
+      "cluster": "CAE/Simulation",
+      "slug": "cae-stiffness-matrix",
+      "scene": "CaeStiffnessMatrix",
+      "file": "manim_courses/renders/cae-stiffness-matrix.mp4",
+      "title": "CAE Simulation: Stiffness Matrix Intuition",
+      "description": "A short Manim lesson explaining the K u equals f relationship used in finite element analysis.",
+      "tags": ["mechanical engineering", "FEA", "CAE", "simulation", "Manim"]
+    },
+    {
+      "cluster": "Robotics/Mechatronics",
+      "slug": "robotics-pid-control",
+      "scene": "RoboticsPidControl",
+      "file": "manim_courses/renders/robotics-pid-control.mp4",
+      "title": "Robotics: PID Control Terms",
+      "description": "A short Manim lesson showing how proportional, integral, and derivative terms shape closed-loop response.",
+      "tags": ["mechanical engineering", "robotics", "PID", "control systems", "Manim"]
+    },
+    {
+      "cluster": "Manufacturing/Operations",
+      "slug": "manufacturing-cpk-capability",
+      "scene": "ManufacturingCpkCapability",
+      "file": "manim_courses/renders/manufacturing-cpk-capability.mp4",
+      "title": "Manufacturing: Cp and Cpk Process Capability",
+      "description": "A short Manim lesson explaining specification limits, process spread, centering, Cp, and Cpk.",
+      "tags": ["mechanical engineering", "manufacturing", "six sigma", "quality", "Manim"]
+    },
+    {
+      "cluster": "HVAC/Thermal",
+      "slug": "hvac-sensible-latent-loads",
+      "scene": "HvacSensibleLatentLoads",
+      "file": "manim_courses/renders/hvac-sensible-latent-loads.mp4",
+      "title": "HVAC Thermal: Sensible and Latent Loads",
+      "description": "A short Manim lesson explaining temperature load, moisture load, and how HVAC engineers separate the two.",
+      "tags": ["mechanical engineering", "HVAC", "thermal", "heat transfer", "Manim"]
+    }
+  ]
+}
