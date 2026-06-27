@@ -2220,7 +2220,27 @@ h1, h2, h3, h4, h5, h6 {
             </div>
         </section>
 
-
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials-section" class="features-section" style="border-top: 1px solid var(--border-color); padding-top: 3rem; margin-top: 2rem;">
+            <div class="section-header">
+                <h2>Loved by Engineers Globally</h2>
+                <p>See how students and working professionals are mapping their career trajectories with MechIntel.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card glass-card" style="padding: 1.5rem;">
+                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"MechIntel's software tracker helped me identify that I needed ANSYS Fluent alongside my CAD skills to land my target CFD job. The roadmap was incredibly accurate."</p>
+                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Rohan Mehta, Automotive CFD Engineer</div>
+                </div>
+                <div class="feature-card glass-card" style="padding: 1.5rem;">
+                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"As a Tier 3 graduate, I struggled to pass automated ATS filters. MechIntel's resume scanner pointed out the exact keywords I was missing."</p>
+                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Priya Sharma, Junior Design Engineer</div>
+                </div>
+                <div class="feature-card glass-card" style="padding: 1.5rem;">
+                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"The 40-course Learning Hub is outstanding. Sourcing lectures from MIT OCW and NPTEL saved me hours of searching for quality study materials."</p>
+                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Alex Mercer, Robotics Student</div>
+                </div>
+            </div>
+        </section>
 
         <!-- FAQ SECTION -->
         <section id="faq-section" class="faq-section">
@@ -4576,6 +4596,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // View Routing
+    document.querySelectorAll(".nav-item").forEach(link => {
+        link.addEventListener("click", (e) => {
+            const targetId = link.getAttribute("href");
+            if (targetId && targetId.startsWith("#")) {
+                e.preventDefault();
+                showPane("landing-page-container");
+                setTimeout(() => {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 50);
+            }
+        });
+    });
+
     document.getElementById("nav-cta-btn").addEventListener("click", () => {
         const saved = sessionStorage.getItem("userProfile");
         if(saved) {

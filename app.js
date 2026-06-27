@@ -1230,6 +1230,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // View Routing
+    document.querySelectorAll(".nav-item").forEach(link => {
+        link.addEventListener("click", (e) => {
+            const targetId = link.getAttribute("href");
+            if (targetId && targetId.startsWith("#")) {
+                e.preventDefault();
+                showPane("landing-page-container");
+                setTimeout(() => {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 50);
+            }
+        });
+    });
+
     document.getElementById("nav-cta-btn").addEventListener("click", () => {
         const saved = sessionStorage.getItem("userProfile");
         if(saved) {
