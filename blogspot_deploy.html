@@ -1973,6 +1973,121 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* Course Cards and Learning Hub Styles */
+.course-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15);
+}
+.course-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+}
+.course-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+}
+.course-badge.beginner { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
+.course-badge.intermediate { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.course-badge.advanced { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.course-notes-area {
+    width: 100%;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    resize: none;
+    margin-top: 0.75rem;
+    outline: none;
+    font-family: inherit;
+}
+.course-notes-area:focus {
+    border-color: var(--primary);
+}
+
+.course-btn-bookmark {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    outline: none;
+}
+.course-btn-bookmark:hover {
+    color: #f59e0b;
+}
+.course-btn-bookmark.active {
+    color: #f59e0b !important;
+}
+
+/* Roadmap Timeline Node Styles */
+.roadmap-node {
+    display: flex;
+    gap: 1.25rem;
+    position: relative;
+}
+.roadmap-node:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 30px;
+    bottom: -20px;
+    width: 2px;
+    background-color: var(--border-color);
+}
+.roadmap-node-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    z-index: 2;
+}
+.roadmap-node.active .roadmap-node-indicator {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: var(--primary-glow);
+}
+.roadmap-node.completed .roadmap-node-indicator {
+    border-color: var(--success);
+    color: #ffffff;
+    background-color: var(--success);
+}
+.roadmap-node-content {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    flex: 1;
+}
+.roadmap-node.completed .roadmap-node-content {
+    border-color: rgba(16, 185, 129, 0.2);
+    background-color: rgba(16, 185, 129, 0.01);
+}
+
 </style>
     <!-- CDNs -->
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
@@ -2343,6 +2458,12 @@ h1, h2, h3, h4, h5, h6 {
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-database">
                         <i data-lucide="users"></i> Competitor Database
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-learning">
+                        <i data-lucide="book-open"></i> Learning Hub
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-roadmaps">
+                        <i data-lucide="map"></i> Learning Roadmaps
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-placeholders">
                         <i data-lucide="rocket"></i> Future Integrations
@@ -2956,6 +3077,172 @@ h1, h2, h3, h4, h5, h6 {
                     </div>
                 </div>
 
+                <!-- Dashboard Sub-View: Learning Hub -->
+                <div id="view-dashboard-learning" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Mechanical Engineering Learning Hub</h1>
+                            <p>Master core disciplines and software packages using verified free educational lectures</p>
+                        </div>
+                    </header>
+
+                    <!-- Learning Stats Banner -->
+                    <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon blue"><i data-lucide="book-open"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Total Courses</span>
+                                <span class="metric-value">40 Subjects</span>
+                                <span class="metric-change">Sourced Curriculum</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon green"><i data-lucide="check-circle-2"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Courses Completed</span>
+                                <span class="metric-value" id="learn-stat-completed">0</span>
+                                <span class="metric-change" id="learn-stat-completed-pct">0% Complete</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon purple"><i data-lucide="clock"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Hours Studied</span>
+                                <span class="metric-value" id="learn-stat-hours">0 hrs</span>
+                                <span class="metric-change">Est. Lecture Blocks</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon orange"><i data-lucide="flame"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Learning Streak</span>
+                                <span class="metric-value" id="learn-stat-streak">1 Day</span>
+                                <span class="metric-change">Daily Check-ins</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="glass-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="db-controls-row" style="gap: 1.25rem;">
+                            <div class="search-input-wrapper" style="flex: 1.5; max-width: none;">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" id="learn-search-input" placeholder="Search courses by title, prerequisites, or skills gained...">
+                            </div>
+                            
+                            <div class="db-filters" style="flex: 1; justify-content: flex-end; gap: 1rem; flex-wrap: wrap;">
+                                <select id="learn-category-filter" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none;">
+                                    <option value="All">All Categories</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Core Mechanical Engineering">Core Mechanical Engineering</option>
+                                    <option value="CAD & Design">CAD & Design</option>
+                                    <option value="Simulation">Simulation</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Automation">Automation</option>
+                                    <option value="Programming">Programming</option>
+                                </select>
+
+                                <select id="learn-difficulty-filter" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none;">
+                                    <option value="All">All Difficulties</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+
+                                <button class="btn btn-outline" id="learn-btn-favorites" style="padding: 0.5rem 1rem;">
+                                    <i data-lucide="star" style="width: 16px; height: 16px;"></i> Bookmarked Only
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course grid -->
+                    <div class="features-grid" id="learning-course-grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.5rem;">
+                        <!-- Courses populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Learning Roadmaps -->
+                <div id="view-dashboard-roadmaps" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Mechanical Engineering Learning Roadmaps</h1>
+                            <p>Follow structured learning tracks customized for 12 core industrial engineering roles</p>
+                        </div>
+                        <button class="btn btn-primary" id="btn-download-study-plan">
+                            <i data-lucide="download"></i> Download Study Plan (.txt)
+                        </button>
+                    </header>
+
+                    <div class="dashboard-data-grid">
+                        <div class="grid-col-8">
+                            <!-- Roadmap Details Card -->
+                            <div class="glass-card element-card">
+                                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                                    <div>
+                                        <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Select Roadmap Specialty</label>
+                                        <select id="roadmap-selector" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none; display:block; margin-top:0.3rem; font-size:1.1rem; font-weight:700; width: 280px;">
+                                            <option value="Mechanical Engineer">Mechanical Engineer</option>
+                                            <option value="Design Engineer">Design Engineer</option>
+                                            <option value="Manufacturing Engineer">Manufacturing Engineer</option>
+                                            <option value="Production Engineer">Production Engineer</option>
+                                            <option value="Quality Engineer">Quality Engineer</option>
+                                            <option value="Maintenance Engineer">Maintenance Engineer</option>
+                                            <option value="HVAC Engineer">HVAC Engineer</option>
+                                            <option value="Automotive Engineer">Automotive Engineer</option>
+                                            <option value="Aerospace Engineer">Aerospace Engineer</option>
+                                            <option value="Robotics Engineer">Robotics Engineer</option>
+                                            <option value="CFD Engineer">CFD Engineer</option>
+                                            <option value="FEA Engineer">FEA Engineer</option>
+                                        </select>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <span class="metric-label" style="display:block; margin-bottom:0.25rem;">Roadmap Progress</span>
+                                        <span class="metric-value" id="roadmap-progress-val" style="font-size:1.8rem; font-weight:800; color:var(--success);">0%</span>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Container -->
+                                <h4 style="margin-bottom: 1rem;"><i data-lucide="map-pin" style="color:var(--primary);"></i> Sequential Learning Order</h4>
+                                <div id="roadmap-steps-container" style="display: flex; flex-direction: column; gap: 1.5rem; position: relative; padding-left: 1.5rem;">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-col-4">
+                            <!-- Metrics Summary -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="info"></i> Roadmap Specifications</h3>
+                                <div style="display:flex; flex-direction:column; gap:1.25rem; font-size:0.85rem; margin-top:0.5rem;">
+                                    <div>
+                                        <strong>Estimated Study Duration:</strong>
+                                        <p style="color:var(--text-secondary); margin-top:0.2rem;" id="roadmap-est-time">120 Hours</p>
+                                    </div>
+                                    <div>
+                                        <strong>Required Software Packages:</strong>
+                                        <div id="roadmap-req-sw-wrapper" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;"></div>
+                                    </div>
+                                    <div>
+                                        <strong>Recommended Certifications:</strong>
+                                        <div id="roadmap-certs-wrapper" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;"></div>
+                                    </div>
+                                    <div>
+                                        <strong>Benchmark Portfolio Project:</strong>
+                                        <p style="color:var(--text-secondary); margin-top:0.2rem;" id="roadmap-project-desc"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plotly Progress Node -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="bar-chart-2"></i> Category Matches</h3>
+                                <div id="plotly-roadmap-bar-chart" class="plotly-chart-node" style="height: 200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Dashboard Sub-View: Settings & Placeholders -->
                 <div id="view-dashboard-placeholders" class="dashboard-view-pane">
                     <header class="dashboard-pane-header">
@@ -3353,11 +3640,12 @@ function calculateScores(profile) {
     const certVal = Math.min(profile.certifications.length * 50, 100);
     const extraWeighted = (paperVal * 0.5 + certVal * 0.5) * 0.10;
     
+    const courseBonus = typeof userCompletedCourses !== 'undefined' ? Math.min(userCompletedCourses.length * 2.5, 20) : 0;
     const readiness = Math.round((acadWeighted + skillsWeighted + expWeighted + extraWeighted) * 10) / 10;
     const marketPosition = Math.round(readiness * 0.9 + (profile.tier === "Tier 1" ? 10 : 0));
     const employability = Math.round((projVal * 0.3 + internVal * 0.5 + swAverage * 0.2));
     const recruiter = Math.round((acadBase * 0.3 + internVal * 0.4 + certVal * 0.3));
-    const engineeringCompetency = Math.round((swAverage * 0.7 + Math.min(profile.skills.length * 20, 100) * 0.3));
+    const engineeringCompetency = Math.min(100, Math.round((swAverage * 0.7 + Math.min(profile.skills.length * 20, 100) * 0.3) + courseBonus));
     
     // Calculate profile completeness
     let completion = 20; // default name
@@ -4211,6 +4499,14 @@ function showDashboardView(viewId) {
             item.classList.remove("active");
         }
     });
+
+    if (viewId === "dashboard-learning") {
+        initLearningHub();
+        renderCourses();
+    } else if (viewId === "dashboard-roadmaps") {
+        initLearningHub();
+        renderActiveRoadmap();
+    }
 }
 
 // Calculate ranks in database
@@ -4482,7 +4778,1143 @@ document.addEventListener("DOMContentLoaded", () => {
         dbPage++;
         renderDatabaseTable();
     });
+
+    // Learning Hub Filters
+    document.getElementById("learn-search-input").addEventListener("input", renderCourses);
+    document.getElementById("learn-category-filter").addEventListener("change", renderCourses);
+    document.getElementById("learn-difficulty-filter").addEventListener("change", renderCourses);
+    document.getElementById("learn-btn-favorites").addEventListener("click", () => {
+        const btn = document.getElementById("learn-btn-favorites");
+        btn.classList.toggle("active");
+        renderCourses();
+    });
+
+    // Roadmap selectors
+    document.getElementById("roadmap-selector").addEventListener("change", renderActiveRoadmap);
+
+    // Study plan downloader
+    document.getElementById("btn-download-study-plan").addEventListener("click", downloadStudyPlan);
 });
+
+// ==========================================
+// LEARNING HUB & ROADMAPS DATABASE & ENGINE
+// ==========================================
+
+const COURSES_DATABASE = [
+    // Mathematics
+    {
+        title: "Calculus",
+        category: "Mathematics",
+        description: "Master limits, derivatives, integration, and their applications to mechanical engineering rates and optimizations.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "High School Algebra",
+        skills: ["Limits & Convergence", "Differentiation", "Integration Theorems"],
+        order: 1,
+        links: [
+            { name: "MIT OpenCourseWare Single Variable", url: "https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/" },
+            { name: "NPTEL Calculus Series", url: "https://nptel.ac.in/courses/111104085" }
+        ]
+    },
+    {
+        title: "Linear Algebra",
+        category: "Mathematics",
+        description: "Develop matrix computations, vector spaces, and eigenvalue analysis essential for finite element solvers.",
+        difficulty: "Intermediate",
+        time: "25 Hours",
+        prereq: "Calculus",
+        skills: ["Matrix Operations", "Vector Spaces", "Eigenvalues & Eigenvectors"],
+        order: 2,
+        links: [
+            { name: "MIT OCW Linear Algebra (Strang)", url: "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/" },
+            { name: "NPTEL Matrix Methods", url: "https://nptel.ac.in/courses/111108066" }
+        ]
+    },
+    {
+        title: "Differential Equations",
+        category: "Mathematics",
+        description: "Understand ordinary and partial differential equations modeling vibration dynamics and heat flow.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Calculus",
+        skills: ["First/Second Order ODEs", "Fourier Series", "Laplace Transforms"],
+        order: 3,
+        links: [
+            { name: "MIT OCW Differential Equations", url: "https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/" },
+            { name: "NPTEL ODE Course", url: "https://nptel.ac.in/courses/111105038" }
+        ]
+    },
+    {
+        title: "Probability & Statistics",
+        category: "Mathematics",
+        description: "Apply probability theory, hypothesis tests, and statistical process controls for manufacturing systems.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Probability Distributions", "Hypothesis Testing", "Regression Analysis"],
+        order: 4,
+        links: [
+            { name: "MIT OCW Prob & Stats", url: "https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/" },
+            { name: "NPTEL Applied Statistics", url: "https://nptel.ac.in/courses/111105090" }
+        ]
+    },
+    {
+        title: "Numerical Methods",
+        category: "Mathematics",
+        description: "Formulate computational algorithms to solve non-linear equations, boundary problems, and numerical integrals.",
+        difficulty: "Advanced",
+        time: "25 Hours",
+        prereq: "Linear Algebra",
+        skills: ["Root Finding Algorithms", "Finite Difference Approximations", "Numerical Quadrature"],
+        order: 5,
+        links: [
+            { name: "MIT OCW Numerical Analysis", url: "https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/" },
+            { name: "NPTEL Numerical Methods", url: "https://nptel.ac.in/courses/111107105" }
+        ]
+    },
+    {
+        title: "Engineering Mathematics",
+        category: "Mathematics",
+        description: "Comprehensive vector calculus, complex variables, and boundary value solutions for solid/fluid solvers.",
+        difficulty: "Intermediate",
+        time: "35 Hours",
+        prereq: "Linear Algebra",
+        skills: ["Vector Fields", "Complex Analysis", "Bessel Functions"],
+        order: 6,
+        links: [
+            { name: "NPTEL Advanced Eng Math", url: "https://nptel.ac.in/courses/111107119" }
+        ]
+    },
+
+    // Core Mechanical Engineering
+    {
+        title: "Engineering Mechanics",
+        category: "Core Mechanical Engineering",
+        description: "Define static equilibrium, force systems, moments, trusses, centroids, friction, and kinematic acceleration.",
+        difficulty: "Beginner",
+        time: "30 Hours",
+        prereq: "None",
+        skills: ["Force System Analysis", "Static Equilibrium", "Truss & Frame Analysis"],
+        order: 7,
+        links: [
+            { name: "NPTEL Applied Mechanics", url: "https://nptel.ac.in/courses/112103109" }
+        ]
+    },
+    {
+        title: "Strength of Materials",
+        category: "Core Mechanical Engineering",
+        description: "Analyze uniaxial stress-strain states, beam bending moments, shear forces, torsion of shafts, and column buckling.",
+        difficulty: "Intermediate",
+        time: "35 Hours",
+        prereq: "Engineering Mechanics",
+        skills: ["Stress-Strain Tensor", "Bending & Shear Diagrams", "Torsional Deflection"],
+        order: 8,
+        links: [
+            { name: "NPTEL Strength of Materials", url: "https://nptel.ac.in/courses/112105124" }
+        ]
+    },
+    {
+        title: "Fluid Mechanics",
+        category: "Core Mechanical Engineering",
+        description: "Study fluid statics, kinematics, control volume analysis, Navier-Stokes formulation, and boundary layer behavior.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Calculus",
+        skills: ["Navier-Stokes Equations", "Control Volume Analysis", "Boundary Layer Theory"],
+        order: 9,
+        links: [
+            { name: "MIT OCW Fluid Dynamics", url: "https://ocw.mit.edu/courses/2-06-fluid-dynamics-spring-2013/" },
+            { name: "NPTEL Fluid Mechanics", url: "https://nptel.ac.in/courses/112105171" }
+        ]
+    },
+    {
+        title: "Thermodynamics",
+        category: "Core Mechanical Engineering",
+        description: "Understand the laws of thermodynamics, energy transfers, cycle optimization (Rankine, Brayton, Diesel, Otto).",
+        difficulty: "Beginner",
+        time: "25 Hours",
+        prereq: "None",
+        skills: ["First & Second Laws", "Entropy & Exergy", "Thermodynamic Power Cycles"],
+        order: 10,
+        links: [
+            { name: "MIT OCW Thermal Fluids", url: "https://ocw.mit.edu/courses/2-005-thermal-fluids-engineering-i-fall-2015/" },
+            { name: "NPTEL Basic Thermo", url: "https://nptel.ac.in/courses/112105123" }
+        ]
+    },
+    {
+        title: "Heat Transfer",
+        category: "Core Mechanical Engineering",
+        description: "Formulate physical heat transfer systems: steady-state conduction, convective flow, and graybody radiation.",
+        difficulty: "Advanced",
+        time: "30 Hours",
+        prereq: "Differential Equations",
+        skills: ["Transient Conduction", "Convective heat coefficients", "Radiative heat exchange"],
+        order: 11,
+        links: [
+            { name: "NPTEL Heat & Mass Transfer", url: "https://nptel.ac.in/courses/112108149" }
+        ]
+    },
+    {
+        title: "Theory of Machines",
+        category: "Core Mechanical Engineering",
+        description: "Analyze kinematic constraints in linkages, slider-cranks, gear trains, gyroscopic couples, and rotor balance.",
+        difficulty: "Intermediate",
+        time: "40 Hours",
+        prereq: "Engineering Mechanics",
+        skills: ["Kinematic Linkage Design", "Gear Train Velocity Ratios", "Rotor Balancing"],
+        order: 12,
+        links: [
+            { name: "NPTEL Kinematics of Machines", url: "https://nptel.ac.in/courses/112104114" }
+        ]
+    },
+    {
+        title: "Machine Design",
+        category: "Core Mechanical Engineering",
+        description: "Design load-bearing components: bolted joints, shafts, journal bearings, springs, gears, and wear parameters.",
+        difficulty: "Advanced",
+        time: "45 Hours",
+        prereq: "Strength of Materials",
+        skills: ["Failure Theories (Von Mises)", "Shaft Fatigue Analysis", "Bearing Selection"],
+        order: 13,
+        links: [
+            { name: "NPTEL Design of Machine Elements", url: "https://nptel.ac.in/courses/112105125" }
+        ]
+    },
+    {
+        title: "Manufacturing Processes",
+        category: "Core Mechanical Engineering",
+        description: "Master conventional metal casting, forging, metal forming, plastic deformation, and standard welding processes.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Metal Casting Physics", "Metal Forming Operations", "Welding Joints"],
+        order: 14,
+        links: [
+            { name: "NPTEL Manufacturing Processes", url: "https://nptel.ac.in/courses/112105126" }
+        ]
+    },
+    {
+        title: "Materials Science",
+        category: "Core Mechanical Engineering",
+        description: "Analyze atomic lattices, phase diagrams (Iron-Carbon), heat treatments, tensile testing, and grain structures.",
+        difficulty: "Beginner",
+        time: "25 Hours",
+        prereq: "None",
+        skills: ["Iron-Carbon Diagram", "Heat Treatment Profiles", "Alloying Mechanics"],
+        order: 15,
+        links: [
+            { name: "MIT OCW Solid State Chem", url: "https://ocw.mit.edu/courses/3-091sc-introduction-to-solid-state-chemistry-fall-2010/" },
+            { name: "NPTEL Materials Science", url: "https://nptel.ac.in/courses/113105081" }
+        ]
+    },
+    {
+        title: "Engineering Drawing",
+        category: "Core Mechanical Engineering",
+        description: "Draft orthographic projections, auxiliary planes, section views, dimensions, and ASME standard conventions.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["Orthographic Projection", "Isometric Drawings", "ASME Dimensioning Standards"],
+        order: 16,
+        links: [
+            { name: "NPTEL Engineering Drawing", url: "https://nptel.ac.in/courses/112103019" }
+        ]
+    },
+    {
+        title: "Industrial Engineering",
+        category: "Core Mechanical Engineering",
+        description: "Optimize operations planning: linear programming, inventory logistics, forecasting, queuing systems, and ERP workflows.",
+        difficulty: "Intermediate",
+        time: "20 Hours",
+        prereq: "Probability & Statistics",
+        skills: ["Linear Programming", "MRP & Inventory Control", "Queuing Line Models"],
+        order: 17,
+        links: [
+            { name: "NPTEL Industrial Engineering", url: "https://nptel.ac.in/courses/112107142" }
+        ]
+    },
+    {
+        title: "Metrology",
+        category: "Core Mechanical Engineering",
+        description: "Calibrate and implement dial gauges, micrometer tools, limit gauges, surface finish profilometry, and CMM checks.",
+        difficulty: "Intermediate",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Limit Gauges & Fits", "Surface Roughness Metrics", "Coordinate Measuring Machines"],
+        order: 18,
+        links: [
+            { name: "NPTEL Metrology & Measurements", url: "https://nptel.ac.in/courses/112106179" }
+        ]
+    },
+    {
+        title: "Tribology",
+        category: "Core Mechanical Engineering",
+        description: "Study lubrication states (hydrodynamic, boundary), friction theories, adhesive wear, and contact mechanics.",
+        difficulty: "Advanced",
+        time: "20 Hours",
+        prereq: "Fluid Mechanics",
+        skills: ["Hydrodynamic Reynolds Solver", "Wear Rate Estimation", "Lubricant Chemistry"],
+        order: 19,
+        links: [
+            { name: "NPTEL Tribology Series", url: "https://nptel.ac.in/courses/112102015" }
+        ]
+    },
+
+    // CAD & Design
+    {
+        title: "AutoCAD",
+        category: "CAD & Design",
+        description: "Standard 2D layout planning, orthographic drafting, layer schemes, and parametric drawing files.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "Engineering Drawing",
+        skills: ["2D Vector Layouts", "Layer Mapping", "Paper Space Plotting"],
+        order: 20,
+        links: [
+            { name: "Autodesk Design Academy", url: "https://learn.autodesk.com/" }
+        ]
+    },
+    {
+        title: "SolidWorks",
+        category: "CAD & Design",
+        description: "3D parametric modeling, assembly configurations, mating constraints, drawing files, and basic simulation tools.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "Engineering Drawing",
+        skills: ["3D Part Parametrics", "Assembly Configurations", "CSWA Exam Prep"],
+        order: 21,
+        links: [
+            { name: "SolidWorks Student Tutorials", url: "https://www.solidworks.com/support/free-student-downloads" }
+        ]
+    },
+    {
+        title: "CATIA",
+        category: "CAD & Design",
+        description: "Advanced generative shape design, sheet metal, aerospace routing, and complex product configuration trees.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "SolidWorks",
+        skills: ["Generative Surface Modeling", "Sheet Metal Tooling", "Aerospace Rib Design"],
+        order: 22,
+        links: [
+            { name: "Dassault Academy Center", url: "https://academy.3ds.com/en" }
+        ]
+    },
+    {
+        title: "Creo",
+        category: "CAD & Design",
+        description: "Parametric robust model assembly, skeletal modeling, dynamic kinematic checks, and sheet metal parts.",
+        difficulty: "Intermediate",
+        time: "25 Hours",
+        prereq: "SolidWorks",
+        skills: ["Skeletal Assembly Control", "Creo Parametric Tables", "Flexible Component Mates"],
+        order: 23,
+        links: [
+            { name: "Creo Student Learning Center", url: "https://freecad-academy.org/" }
+        ]
+    },
+    {
+        title: "Siemens NX",
+        category: "CAD & Design",
+        description: "Synchronous engineering modifications, large assembly loading, surface modeling, and integrated CAM configurations.",
+        difficulty: "Advanced",
+        time: "30 Hours",
+        prereq: "CATIA",
+        skills: ["Synchronous Face Modifiers", "Large Assembly Load Profiles", "CAD-to-CAM Bridging"],
+        order: 24,
+        links: [
+            { name: "Siemens PLM Academy Platform", url: "https://training.plm.automation.siemens.com/" }
+        ]
+    },
+    {
+        title: "Fusion 360",
+        category: "CAD & Design",
+        description: "Cloud-collaborative layout drawing, integrated milling toolpaths, additive slicers, and generative shape generators.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["Collaborative Modeling", "Generative Constraint Setup", "Milling Toolpaths"],
+        order: 25,
+        links: [
+            { name: "Autodesk Fusion Learning Catalog", url: "https://www.autodesk.com/campaigns/education/fusion-360" }
+        ]
+    },
+
+    // Simulation
+    {
+        title: "CFD Fundamentals",
+        category: "Simulation",
+        description: "Discretize flow equations: finite volume cells, SIMPLE solvers, numerical stability grid independent limits.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Fluid Mechanics",
+        skills: ["Finite Volume Method", "SIMPLE Flow Solver", "Grid Convergence Index"],
+        order: 26,
+        links: [
+            { name: "NPTEL Intro to CFD", url: "https://nptel.ac.in/courses/112105045" }
+        ]
+    },
+    {
+        title: "Finite Element Analysis",
+        category: "Simulation",
+        description: "Derive element stiffness matrices, formulate 1D/2D elements, shape profiles, and structural convergence curves.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Strength of Materials",
+        skills: ["Stiffness Matrix Assembly", "Shape Function Derivation", "Energy Minimization"],
+        order: 27,
+        links: [
+            { name: "NPTEL Finite Element Method", url: "https://nptel.ac.in/courses/112104115" }
+        ]
+    },
+    {
+        title: "ANSYS Mechanical",
+        category: "Simulation",
+        description: "Set up structural simulation blocks: meshes, boundary constraints, static loading, dynamic vibration modes.",
+        difficulty: "Advanced",
+        time: "25 Hours",
+        prereq: "Finite Element Analysis",
+        skills: ["Static Structural FEA", "Modal Harmonic Analysis", "Mesh Quality Checks"],
+        order: 28,
+        links: [
+            { name: "ANSYS Innovation Course Portal", url: "https://www.ansys.com/academic/free-courses" }
+        ]
+    },
+    {
+        title: "ANSYS Fluent",
+        category: "Simulation",
+        description: "Execute flow simulations: mesh setup, turbulence boundaries (k-epsilon, SST), thermal gradients.",
+        difficulty: "Advanced",
+        time: "30 Hours",
+        prereq: "CFD Fundamentals",
+        skills: ["Turbulence Boundary Mapping", "Conjugate Heat Transfer", "Fluent Post-Processing"],
+        order: 29,
+        links: [
+            { name: "ANSYS Innovation CFD Academy", url: "https://www.ansys.com/academic/free-courses" }
+        ]
+    },
+    {
+        title: "Abaqus",
+        category: "Simulation",
+        description: "Model complex structural solvers: material yielding, contact friction interfaces, crash impacts.",
+        difficulty: "Advanced",
+        time: "35 Hours",
+        prereq: "Finite Element Analysis",
+        skills: ["Non-Linear Material Yielding", "Contact Interaction FEA", "Explicit Impact Solver"],
+        order: 30,
+        links: [
+            { name: "Dassault Abaqus Student Center", url: "https://academy.3ds.com/en/software/abaqus-student-edition" }
+        ]
+    },
+    {
+        title: "OpenFOAM",
+        category: "Simulation",
+        description: "Master open-source CFD mesh generation, case directory setups, boundary dictionaries, and terminal execution.",
+        difficulty: "Advanced",
+        time: "40 Hours",
+        prereq: "CFD Fundamentals",
+        skills: ["Terminal Solver Setup", "BlockMesh Configuration", "Custom Solver Compiling"],
+        order: 31,
+        links: [
+            { name: "OpenFOAM User Guide Guides", url: "https://www.openfoam.com/documentation/" }
+        ]
+    },
+    {
+        title: "COMSOL",
+        category: "Simulation",
+        description: "Solve multiphysics equations: coupled thermal-structural, piezo-electric parameters, and electrostatic fields.",
+        difficulty: "Advanced",
+        time: "30 Hours",
+        prereq: "Finite Element Analysis",
+        skills: ["Coupled Field FEA", "Piezoelectric Parameters", "Custom PDE Integration"],
+        order: 32,
+        links: [
+            { name: "NPTEL Multiphysics Modeling", url: "https://nptel.ac.in/courses/112108150" }
+        ]
+    },
+
+    // Manufacturing
+    {
+        title: "CNC Programming",
+        category: "Manufacturing",
+        description: "Generate milling and turning toolpaths manually using standard G-code, tool offsets, and canned cycles.",
+        difficulty: "Intermediate",
+        time: "20 Hours",
+        prereq: "Machining",
+        skills: ["G-code & M-code Drafting", "Tool Radius Compensation", "Milling Cycle Blocks"],
+        order: 33,
+        links: [
+            { name: "NPTEL Modern Machining", url: "https://nptel.ac.in/courses/112105211" }
+        ]
+    },
+    {
+        title: "Welding",
+        category: "Manufacturing",
+        description: "Classify arc welding, resistance, friction welding processes, solid state joining, and weld metallurgy.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "Materials Science",
+        skills: ["Weld Joint Design", "Arc Physics Parameters", "Weld Inspection Checks"],
+        order: 34,
+        links: [
+            { name: "NPTEL Welding Metallurgy", url: "https://nptel.ac.in/courses/112105126" }
+        ]
+    },
+    {
+        title: "Casting",
+        category: "Manufacturing",
+        description: "Study sand mold casting, pattern design, gating systems, solidification rate variables, and casting defects.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "Materials Science",
+        skills: ["Gating System Design", "Solidification Heat Laws", "Casting Quality Testing"],
+        order: 35,
+        links: [
+            { name: "NPTEL Casting Technology", url: "https://nptel.ac.in/courses/112105126" }
+        ]
+    },
+    {
+        title: "Machining",
+        category: "Manufacturing",
+        description: "Formulate mechanics of orthogonal cutting, shear angle, merchant circle model, tool life curves.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Merchant Circle Model", "Taylor Tool Life Curve", "Cutting Fluid Chemistry"],
+        order: 36,
+        links: [
+            { name: "NPTEL Machining Science", url: "https://nptel.ac.in/courses/112105126" }
+        ]
+    },
+    {
+        title: "Additive Manufacturing",
+        category: "Manufacturing",
+        description: "Study plastic and metal 3D printing technologies (FDM, SLA, SLS, DMLS) and support generation strategies.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["3D Printing Slicing Settings", "SLA Support Structures", "Metal DMLS Sintering"],
+        order: 37,
+        links: [
+            { name: "NPTEL Additive Manufacturing", url: "https://nptel.ac.in/courses/112105249" }
+        ]
+    },
+    {
+        title: "Lean Manufacturing",
+        category: "Manufacturing",
+        description: "Apply production principles: Toyota production system, inventory waste, Kanban, Kaizen, SMED setup blocks.",
+        difficulty: "Intermediate",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["Waste Identification (Muda)", "Value Stream Mapping", "Single Minute Exchange (SMED)"],
+        order: 38,
+        links: [
+            { name: "NPTEL Lean Manufacturing", url: "https://nptel.ac.in/courses/112107143" }
+        ]
+    },
+    {
+        title: "Six Sigma",
+        category: "Manufacturing",
+        description: "Formulate process controls: DMAIC steps, statistical charts, Gage R&R, ANOVA variance models.",
+        difficulty: "Intermediate",
+        time: "20 Hours",
+        prereq: "Probability & Statistics",
+        skills: ["DMAIC Implementation", "Control Chart Drafting", "ANOVA Analysis Tables"],
+        order: 39,
+        links: [
+            { name: "NPTEL Quality Control", url: "https://nptel.ac.in/courses/110105039" }
+        ]
+    },
+
+    // Automation
+    {
+        title: "PLC",
+        category: "Automation",
+        description: "Write ladder logic diagrams, register memory mapping, analog input channels, timer counters.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Ladder Logic Diagrams", "Analog I/O Processing", "Counter Time Operations"],
+        order: 40,
+        links: [
+            { name: "NPTEL Industrial Automation", url: "https://nptel.ac.in/courses/108105063" }
+        ]
+    },
+    {
+        title: "SCADA",
+        category: "Automation",
+        description: "Map human machine interfaces (HMI), tag databases, alarm configurations, industrial networks.",
+        difficulty: "Intermediate",
+        time: "20 Hours",
+        prereq: "PLC",
+        skills: ["HMI Visual Layouts", "Tag Memory Mapping", "Modbus Communication Setup"],
+        order: 41,
+        links: [
+            { name: "NPTEL SCADA Course", url: "https://nptel.ac.in/courses/108105063" }
+        ]
+    },
+    {
+        title: "Robotics",
+        category: "Automation",
+        description: "Derive Denavit-Hartenberg kinematic matrices, inverse coordinates, jacobian matrices, joint trajectories.",
+        difficulty: "Advanced",
+        time: "30 Hours",
+        prereq: "Linear Algebra",
+        skills: ["Denavit-Hartenberg Setup", "Inverse Jacobian Models", "Joint Trajectory Splines"],
+        order: 42,
+        links: [
+            { name: "MIT OCW Intro to Robotics", url: "https://ocw.mit.edu/courses/2-12-introduction-to-robotics-fall-2005/" },
+            { name: "NPTEL Robotics Series", url: "https://nptel.ac.in/courses/112105249" }
+        ]
+    },
+    {
+        title: "Mechatronics",
+        category: "Automation",
+        description: "Interface microcontroller boards, rotary encoders, servo actuators, PID feedback loop calculations.",
+        difficulty: "Intermediate",
+        time: "25 Hours",
+        prereq: "PLC",
+        skills: ["Rotary Encoder Interfaces", "PID Coefficient Tuning", "Actuator Driver Wiring"],
+        order: 43,
+        links: [
+            { name: "NPTEL Mechatronics", url: "https://nptel.ac.in/courses/112103174" }
+        ]
+    },
+    {
+        title: "Industrial Automation",
+        category: "Automation",
+        description: "Design pneumatic cylinder circuits, hydraulic valves, solenoid maps, fieldbus communications.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Mechatronics",
+        skills: ["Pneumatic Valve Circuitry", "Hydraulic Sizing Calculus", "Solenoid Output Tables"],
+        order: 44,
+        links: [
+            { name: "NPTEL Automation Circuits", url: "https://nptel.ac.in/courses/112102011" }
+        ]
+    },
+    {
+        title: "Industry 4.0",
+        category: "Automation",
+        description: "Deploy factory sensor clusters: OPC-UA servers, edge device aggregators, cloud dashboards.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["IoT Industrial Sensors", "OPC-UA Server Mapping", "Smart Factory Analytics"],
+        order: 45,
+        links: [
+            { name: "NPTEL Industry 4.0 Series", url: "https://nptel.ac.in/courses/106105195" }
+        ]
+    },
+    {
+        title: "Digital Twin",
+        category: "Automation",
+        description: "Build physical simulation twins: real-time telemetry inputs, predictive maintenance alerts.",
+        difficulty: "Advanced",
+        time: "20 Hours",
+        prereq: "Industry 4.0",
+        skills: ["Physics-based FEA Twins", "Predictive Analytics", "Real-Time Telemetry Mapping"],
+        order: 46,
+        links: [
+            { name: "Siemens Digital Enterprise Catalog", url: "https://learn.sw.siemens.com/" }
+        ]
+    },
+
+    // Programming
+    {
+        title: "Python",
+        category: "Programming",
+        description: "Learn Python script architecture: lists, dicts, math functions, matplotlib, numpy, scipy matrices.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "None",
+        skills: ["Script syntax controls", "Numpy Array operations", "Matplotlib plots"],
+        order: 47,
+        links: [
+            { name: "Python Docs Tutorial", url: "https://docs.python.org/3/" },
+            { name: "NumPy Official Guides", url: "https://numpy.org/doc/stable/" }
+        ]
+    },
+    {
+        title: "MATLAB",
+        category: "Programming",
+        description: "Code matrix calculations, script routines, ode45 solvers, Simulink block models.",
+        difficulty: "Beginner",
+        time: "20 Hours",
+        prereq: "Calculus",
+        skills: ["Matrix Compute Syntax", "ODE45 Solver Functions", "Simulink Control Blocks"],
+        order: 48,
+        links: [
+            { name: "MathWorks Academy Onramps", url: "https://matlabacademy.mathworks.com/" }
+        ]
+    },
+    {
+        title: "C++",
+        category: "Programming",
+        description: "Study structural C++: memory variables, pointers, object-oriented solvers, compilation links.",
+        difficulty: "Intermediate",
+        time: "30 Hours",
+        prereq: "Python",
+        skills: ["Memory Pointer Management", "OOP Class Formulations", "Compilation Setup"],
+        order: 49,
+        links: [
+            { name: "NPTEL C++ Course", url: "https://nptel.ac.in/courses/106105151" }
+        ]
+    },
+    {
+        title: "SQL",
+        category: "Programming",
+        description: "Draft database operations: table indexing, SELECT queries, database schema files.",
+        difficulty: "Beginner",
+        time: "15 Hours",
+        prereq: "None",
+        skills: ["Relational Database Indexing", "SQL Query Joins", "Schema Structures"],
+        order: 50,
+        links: [
+            { name: "NPTEL Database Management", url: "https://nptel.ac.in/courses/106106093" }
+        ]
+    },
+    {
+        title: "Git & GitHub",
+        category: "Programming",
+        description: "Commit project code, branch features, resolve merge conflicts, track history.",
+        difficulty: "Beginner",
+        time: "10 Hours",
+        prereq: "None",
+        skills: ["Git Commit History", "Feature Branch Toggles", "Pull Request Approvals"],
+        order: 51,
+        links: [
+            { name: "GitHub Official Guides", url: "https://docs.github.com/en/get-started" }
+        ]
+    }
+];
+
+const ROADMAPS_DATABASE = {
+    "Mechanical Engineer": {
+        time: "185 Hours",
+        software: ["SolidWorks", "AutoCAD"],
+        certs: ["ASME Member / Cert"],
+        project: "Design of a multi-stage gear reduction gearbox with shaft sizing",
+        courses: ["Engineering Drawing", "Engineering Mechanics", "Strength of Materials", "Fluid Mechanics", "Thermodynamics", "Materials Science", "SolidWorks"]
+    },
+    "Design Engineer": {
+        time: "190 Hours",
+        software: ["SolidWorks", "CATIA", "ANSYS"],
+        certs: ["CSWP (Certified SolidWorks Professional)", "ASME GD&T Professional"],
+        project: "3D CAD modeling and GD&T tolerancing of a steering knuckle",
+        courses: ["Engineering Drawing", "Calculus", "SolidWorks", "CATIA", "Strength of Materials", "Machine Design", "Finite Element Analysis"]
+    },
+    "Manufacturing Engineer": {
+        time: "110 Hours",
+        software: ["Fusion 360", "AutoCAD"],
+        certs: ["Six Sigma Green Belt", "SME Certified Manufacturing Engineer"],
+        project: "G-code CNC programming and toolpath optimization for an aluminum impeller",
+        courses: ["Manufacturing Processes", "Metrology", "CNC Programming", "Machining", "Lean Manufacturing", "Six Sigma"]
+    },
+    "Production Engineer": {
+        time: "115 Hours",
+        software: ["AutoCAD", "Excel Solver"],
+        certs: ["APICS CPIM Logistics Cert", "Lean Bronze"],
+        project: "Plant layout optimization and value stream mapping for assembly line",
+        courses: ["Manufacturing Processes", "Lean Manufacturing", "Industrial Engineering", "Six Sigma", "SCADA", "Industry 4.0"]
+    },
+    "Quality Engineer": {
+        time: "95 Hours",
+        software: ["Minitab", "SQL"],
+        certs: ["ASQ Certified Quality Engineer (CQE)", "Six Sigma Green Belt"],
+        project: "Statistical Process Control (SPC) implementation for machining line",
+        courses: ["Probability & Statistics", "Metrology", "Six Sigma", "Lean Manufacturing", "Industrial Engineering"]
+    },
+    "Maintenance Engineer": {
+        time: "120 Hours",
+        software: ["SAP PM", "MATLAB"],
+        certs: ["Certified Maintenance & Reliability Professional (CMRP)"],
+        project: "Predictive maintenance scheduling model based on vibration data analysis",
+        courses: ["Theory of Machines", "Mechatronics", "Tribology", "Industrial Automation", "Digital Twin"]
+    },
+    "HVAC Engineer": {
+        time: "120 Hours",
+        software: ["HAP (Hourly Analysis Program)", "ANSYS Fluent"],
+        certs: ["ASHRAE Certified HVAC Designer (CHD)"],
+        project: "Heat load calculation and duct routing design for a commercial office building",
+        courses: ["Thermodynamics", "Fluid Mechanics", "Heat Transfer", "CFD Fundamentals", "AutoCAD"]
+    },
+    "Automotive Engineer": {
+        time: "170 Hours",
+        software: ["SolidWorks", "ANSYS", "MATLAB"],
+        certs: ["SAE Member / Certification"],
+        project: "Design and stress analysis of a Formula SAE chassis space frame",
+        courses: ["Engineering Mechanics", "Theory of Machines", "Machine Design", "SolidWorks", "ANSYS Mechanical", "Python"]
+    },
+    "Aerospace Engineer": {
+        time: "200 Hours",
+        software: ["ANSYS Fluent", "OpenFOAM", "MATLAB"],
+        certs: ["AIAA Professional Member"],
+        project: "Aerodynamic lift and drag simulation of a supercritical wing section",
+        courses: ["Calculus", "Differential Equations", "Fluid Mechanics", "CFD Fundamentals", "ANSYS Fluent", "OpenFOAM"]
+    },
+    "Robotics Engineer": {
+        time: "185 Hours",
+        software: ["MATLAB", "ROS (Robot Operating System)"],
+        certs: ["IEEE Robotics Certification"],
+        project: "Forward kinematics simulation and trajectory planning for a 6-axis manipulator",
+        courses: ["Linear Algebra", "C++", "Python", "PLC", "Robotics", "Mechatronics", "Industrial Automation"]
+    },
+    "CFD Engineer": {
+        time: "215 Hours",
+        software: ["ANSYS Fluent", "OpenFOAM", "MATLAB"],
+        certs: ["ANSYS Certified Professional"],
+        project: "CFD analysis of conjugate heat transfer in an electronics cooling block",
+        courses: ["Differential Equations", "Fluid Mechanics", "Heat Transfer", "CFD Fundamentals", "ANSYS Fluent", "OpenFOAM", "Python"]
+    },
+    "FEA Engineer": {
+        time: "185 Hours",
+        software: ["ANSYS Mechanical", "Abaqus", "MATLAB"],
+        certs: ["ANSYS Certified Professional (FEA)"],
+        project: "Non-linear crashworthiness simulation of an automotive impact crash box",
+        courses: ["Linear Algebra", "Strength of Materials", "Finite Element Analysis", "ANSYS Mechanical", "Abaqus", "C++"]
+    }
+};
+
+let userCompletedCourses = [];
+let userBookmarkedCourses = [];
+let userCourseNotes = {};
+
+function initLearningHub() {
+    const completed = localStorage.getItem("userCompletedCourses");
+    userCompletedCourses = completed ? JSON.parse(completed) : [];
+
+    const bookmarked = localStorage.getItem("userBookmarkedCourses");
+    userBookmarkedCourses = bookmarked ? JSON.parse(bookmarked) : [];
+
+    const notes = localStorage.getItem("userCourseNotes");
+    userCourseNotes = notes ? JSON.parse(notes) : {};
+
+    updateLearningStats();
+}
+
+function updateLearningStats() {
+    const completedCount = userCompletedCourses.length;
+    document.getElementById("learn-stat-completed").innerText = completedCount;
+    document.getElementById("learn-stat-completed-pct").innerText = `${Math.round((completedCount / COURSES_DATABASE.length) * 100)}% Complete`;
+    
+    // Each completed course represents study hours
+    const totalHours = userCompletedCourses.reduce((sum, title) => {
+        const course = COURSES_DATABASE.find(c => c.title === title);
+        if (course) {
+            return sum + parseInt(course.time);
+        }
+        return sum + 20;
+    }, 0);
+    document.getElementById("learn-stat-hours").innerText = `${totalHours} hrs`;
+
+    // Streak and XP rewards
+    const streak = Math.max(1, Math.floor(completedCount / 3) + 1);
+    document.getElementById("learn-stat-streak").innerText = `${streak} Day${streak > 1 ? 's' : ''}`;
+}
+
+function renderCourses() {
+    const searchVal = document.getElementById("learn-search-input").value.toLowerCase();
+    const categoryVal = document.getElementById("learn-category-filter").value;
+    const difficultyVal = document.getElementById("learn-difficulty-filter").value;
+    const favoritesOnly = document.getElementById("learn-btn-favorites").classList.contains("active");
+
+    const grid = document.getElementById("learning-course-grid");
+    grid.innerHTML = "";
+
+    const filtered = COURSES_DATABASE.filter(course => {
+        // Search filter
+        if (searchVal) {
+            const matchesSearch = 
+                course.title.toLowerCase().includes(searchVal) ||
+                course.description.toLowerCase().includes(searchVal) ||
+                course.prereq.toLowerCase().includes(searchVal) ||
+                course.skills.some(s => s.toLowerCase().includes(searchVal));
+            if (!matchesSearch) return false;
+        }
+
+        // Category filter
+        if (categoryVal !== "All" && course.category !== categoryVal) return false;
+
+        // Difficulty filter
+        if (difficultyVal !== "All" && course.difficulty !== difficultyVal) return false;
+
+        // Favorites filter
+        if (favoritesOnly && !userBookmarkedCourses.includes(course.title)) return false;
+
+        return true;
+    });
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
+                <i data-lucide="search" style="width: 48px; height: 48px; margin-bottom: 1rem;"></i>
+                <p>No matching subjects found in our mechanical curriculum. Try adjusting your filters.</p>
+            </div>
+        `;
+        lucide.createIcons();
+        return;
+    }
+
+    filtered.forEach(course => {
+        const isCompleted = userCompletedCourses.includes(course.title);
+        const isBookmarked = userBookmarkedCourses.includes(course.title);
+        const savedNote = userCourseNotes[course.title] || "";
+
+        const card = document.createElement("div");
+        card.className = `glass-card course-card ${isCompleted ? 'completed' : ''}`;
+        card.innerHTML = `
+            <div>
+                <div class="course-card-meta">
+                    <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <span style="color: var(--text-muted); font-size: 0.75rem;"><i data-lucide="clock" style="width:12px; height:12px; display:inline-block; vertical-align:middle; margin-right:2px;"></i> ${course.time}</span>
+                        <button class="course-btn-bookmark ${isBookmarked ? 'active' : ''}" onclick="toggleCourseBookmark('${course.title.replace(/'/g, "\\'")}')">
+                            <i data-lucide="star" style="width: 16px; height: 16px; fill: ${isBookmarked ? '#f59e0b' : 'none'};"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    ${course.title}
+                    ${isCompleted ? ' <i data-lucide="check-circle-2" style="color: var(--success); width: 16px; height: 16px;"></i>' : ''}
+                </h3>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.75rem;">${course.description}</p>
+                
+                <div style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                    <strong>Prerequisites:</strong> <span style="color: var(--text-secondary);">${course.prereq}</span>
+                </div>
+                <div style="font-size: 0.75rem; margin-bottom: 0.75rem;">
+                    <strong>Skills Gained:</strong> 
+                    <div style="display:flex; flex-wrap:wrap; gap:0.25rem; margin-top:0.25rem;">
+                        ${course.skills.map(s => `<span class="badge badge-medium" style="background: rgba(255,255,255,0.04); font-size:0.7rem;">${s}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid var(--border-color); padding-top: 0.75rem; margin-top: 0.75rem;">
+                    <strong style="font-size: 0.75rem; display:block; margin-bottom:0.25rem;">Free Resources:</strong>
+                    <div style="display:flex; flex-direction:column; gap:0.25rem;">
+                        ${course.links.map(l => `
+                            <a href="${l.url}" target="_blank" style="font-size:0.75rem; color: var(--primary); display:flex; align-items:center; gap:0.25rem; text-decoration:none;">
+                                <i data-lucide="external-link" style="width:12px; height:12px;"></i> ${l.name}
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                <textarea class="course-notes-area" placeholder="Take study notes here (auto-saved)..." oninput="saveCourseNote('${course.title.replace(/'/g, "\\'")}', this.value)">${savedNote}</textarea>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem;">
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.8rem; cursor:pointer;">
+                        <input type="checkbox" style="cursor:pointer;" ${isCompleted ? 'checked' : ''} onchange="toggleCourseCompletion('${course.title.replace(/'/g, "\\'")}', this.checked)">
+                        Mark as Completed
+                    </label>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Recommended Order: #${course.order}</span>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+    lucide.createIcons();
+}
+
+function toggleCourseBookmark(title) {
+    const idx = userBookmarkedCourses.indexOf(title);
+    if (idx === -1) {
+        userBookmarkedCourses.push(title);
+    } else {
+        userBookmarkedCourses.splice(idx, 1);
+    }
+    localStorage.setItem("userBookmarkedCourses", JSON.stringify(userBookmarkedCourses));
+    renderCourses();
+}
+
+function saveCourseNote(title, text) {
+    userCourseNotes[title] = text;
+    localStorage.setItem("userCourseNotes", JSON.stringify(userCourseNotes));
+}
+
+function toggleCourseCompletion(title, isChecked) {
+    const idx = userCompletedCourses.indexOf(title);
+    if (isChecked && idx === -1) {
+        userCompletedCourses.push(title);
+        userXP += 100;
+        localStorage.setItem("userXP", userXP);
+    } else if (!isChecked && idx !== -1) {
+        userCompletedCourses.splice(idx, 1);
+        userXP = Math.max(0, userXP - 100);
+        localStorage.setItem("userXP", userXP);
+    }
+    
+    localStorage.setItem("userCompletedCourses", JSON.stringify(userCompletedCourses));
+    updateLearningStats();
+    renderCourses();
+    
+    if (targetProfile) {
+        buildDashboard(targetProfile);
+    }
+}
+
+// Learning Roadmaps Logic
+function renderActiveRoadmap() {
+    const selector = document.getElementById("roadmap-selector");
+    const role = selector.value;
+    const data = ROADMAPS_DATABASE[role];
+
+    if (!data) return;
+
+    // Render specifications
+    document.getElementById("roadmap-est-time").innerText = data.time;
+    
+    const swWrapper = document.getElementById("roadmap-req-sw-wrapper");
+    swWrapper.innerHTML = data.software.map(sw => `<span class="badge badge-accent">${sw}</span>`).join('');
+    
+    const certsWrapper = document.getElementById("roadmap-certs-wrapper");
+    certsWrapper.innerHTML = data.certs.map(c => `<span class="badge badge-medium">${c}</span>`).join('');
+    
+    document.getElementById("roadmap-project-desc").innerText = data.project;
+
+    // Render timeline steps
+    const stepsContainer = document.getElementById("roadmap-steps-container");
+    stepsContainer.innerHTML = "";
+
+    let completedRequiredCount = 0;
+    
+    data.courses.forEach((courseTitle, idx) => {
+        const course = COURSES_DATABASE.find(c => c.title === courseTitle);
+        if (!course) return;
+
+        const isCompleted = userCompletedCourses.includes(courseTitle);
+        if (isCompleted) completedRequiredCount++;
+
+        const stepDiv = document.createElement("div");
+        const isPrevCompleted = idx === 0 || userCompletedCourses.includes(data.courses[idx - 1]);
+        const isActive = !isCompleted && isPrevCompleted;
+
+        stepDiv.className = `roadmap-node ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}`;
+        stepDiv.innerHTML = `
+            <div class="roadmap-node-indicator">
+                ${isCompleted ? '✓' : idx + 1}
+            </div>
+            <div class="roadmap-node-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+                    <strong style="font-size:0.9rem;">Step ${idx + 1}: ${courseTitle}</strong>
+                    <span class="course-badge ${course.difficulty.toLowerCase()}" style="font-size:0.65rem;">${course.difficulty}</span>
+                </div>
+                <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">${course.description}</p>
+                <div style="margin-top:0.5rem; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:0.7rem; color:var(--text-muted);"><i data-lucide="clock" style="width:10px; height:10px; display:inline-block;"></i> ${course.time}</span>
+                    <label style="font-size:0.75rem; display:flex; align-items:center; gap:0.25rem; cursor:pointer;">
+                        <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleRoadmapCourseCompletion('${courseTitle.replace(/'/g, "\\'")}', this.checked)">
+                        Complete
+                    </label>
+                </div>
+            </div>
+        `;
+        stepsContainer.appendChild(stepDiv);
+    });
+
+    const progressPct = Math.round((completedRequiredCount / data.courses.length) * 100);
+    document.getElementById("roadmap-progress-val").innerText = `${progressPct}%`;
+
+    // Draw Plotly Bar Chart
+    drawRoadmapBarChart(data.courses);
+    lucide.createIcons();
+}
+
+function toggleRoadmapCourseCompletion(title, isChecked) {
+    toggleCourseCompletion(title, isChecked);
+    renderActiveRoadmap();
+}
+
+function drawRoadmapBarChart(roadmapCourses) {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    
+    const categories = {};
+    roadmapCourses.forEach(title => {
+        const course = COURSES_DATABASE.find(c => c.title === title);
+        if (course) {
+            categories[course.category] = (categories[course.category] || 0) + 1;
+        }
+    });
+
+    const labels = Object.keys(categories);
+    const totals = labels.map(l => categories[l]);
+    const completed = labels.map(l => {
+        return roadmapCourses.filter(title => {
+            const course = COURSES_DATABASE.find(c => c.title === title);
+            return course && course.category === l && userCompletedCourses.includes(title);
+        }).length;
+    });
+
+    const traceCompleted = {
+        x: labels,
+        y: completed,
+        name: 'Completed',
+        type: 'bar',
+        marker: { color: '#10b981' }
+    };
+
+    const traceTotal = {
+        x: labels,
+        y: totals.map((val, idx) => val - completed[idx]),
+        name: 'Remaining',
+        type: 'bar',
+        marker: { color: 'rgba(255,255,255,0.06)' }
+    };
+
+    const data = [traceCompleted, traceTotal];
+    const layout = {
+        barmode: 'stack',
+        margin: { t: 10, b: 30, l: 30, r: 10 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme, size: 8 },
+        xaxis: { color: textTheme },
+        yaxis: { color: textTheme, tickformat: ',d' },
+        showlegend: false
+    };
+
+    Plotly.newPlot("plotly-roadmap-bar-chart", data, layout, {responsive:true, displayModeBar:false});
+}
+
+function downloadStudyPlan() {
+    const role = document.getElementById("roadmap-selector").value;
+    const data = ROADMAPS_DATABASE[role];
+
+    if (!data) return;
+
+    let text = `====================================================\n`;
+    text += `MECHINTEL LEARNING HUB - STUDY PLAN\n`;
+    text += `Target Specialization: ${role}\n`;
+    text += `Generated At: ${new Date().toLocaleDateString()}\n`;
+    text += `====================================================\n\n`;
+
+    text += `ESTIMATED COMPLETION DURATION: ${data.time}\n`;
+    text += `REQUIRED SOFTWARE TOOLS: ${data.software.join(', ')}\n`;
+    text += `RECOMMENDED CERTIFICATIONS: ${data.certs.join(', ')}\n\n`;
+
+    text += `BENCHMARK PORTFOLIO PROJECT:\n`;
+    text += `-> ${data.project}\n\n`;
+
+    text += `SEQUENTIAL LEARNING ORDER & STEPS:\n`;
+    data.courses.forEach((courseTitle, idx) => {
+        const isCompleted = userCompletedCourses.includes(courseTitle) ? "[COMPLETED]" : "[ ]";
+        const notes = userCourseNotes[courseTitle] || "No notes entered.";
+        text += `${idx + 1}. ${isCompleted} ${courseTitle}\n`;
+        text += `   - Personal Study Notes: ${notes.replace(/\n/g, '\n     ')}\n\n`;
+    });
+
+    text += `====================================================\n`;
+    text += `Keep learning! The platform is 100% free and open to all.\n`;
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `MechIntel_Study_Plan_${role.replace(/ /g, '_')}.txt`;
+    link.click();
+}
 
 </script>
 </body>

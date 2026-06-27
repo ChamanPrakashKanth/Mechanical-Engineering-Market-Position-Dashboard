@@ -380,6 +380,12 @@
                     <button class="sidebar-nav-item" data-view="dashboard-database">
                         <i data-lucide="users"></i> Competitor Database
                     </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-learning">
+                        <i data-lucide="book-open"></i> Learning Hub
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-roadmaps">
+                        <i data-lucide="map"></i> Learning Roadmaps
+                    </button>
                     <button class="sidebar-nav-item" data-view="dashboard-placeholders">
                         <i data-lucide="rocket"></i> Future Integrations
                     </button>
@@ -987,6 +993,172 @@
                             <div class="pagination-buttons">
                                 <button class="btn btn-secondary btn-sm" id="prev-page-btn">Previous</button>
                                 <button class="btn btn-secondary btn-sm" id="next-page-btn">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Learning Hub -->
+                <div id="view-dashboard-learning" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Mechanical Engineering Learning Hub</h1>
+                            <p>Master core disciplines and software packages using verified free educational lectures</p>
+                        </div>
+                    </header>
+
+                    <!-- Learning Stats Banner -->
+                    <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon blue"><i data-lucide="book-open"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Total Courses</span>
+                                <span class="metric-value">40 Subjects</span>
+                                <span class="metric-change">Sourced Curriculum</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon green"><i data-lucide="check-circle-2"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Courses Completed</span>
+                                <span class="metric-value" id="learn-stat-completed">0</span>
+                                <span class="metric-change" id="learn-stat-completed-pct">0% Complete</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon purple"><i data-lucide="clock"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Hours Studied</span>
+                                <span class="metric-value" id="learn-stat-hours">0 hrs</span>
+                                <span class="metric-change">Est. Lecture Blocks</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon orange"><i data-lucide="flame"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Learning Streak</span>
+                                <span class="metric-value" id="learn-stat-streak">1 Day</span>
+                                <span class="metric-change">Daily Check-ins</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="glass-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="db-controls-row" style="gap: 1.25rem;">
+                            <div class="search-input-wrapper" style="flex: 1.5; max-width: none;">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" id="learn-search-input" placeholder="Search courses by title, prerequisites, or skills gained...">
+                            </div>
+                            
+                            <div class="db-filters" style="flex: 1; justify-content: flex-end; gap: 1rem; flex-wrap: wrap;">
+                                <select id="learn-category-filter" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none;">
+                                    <option value="All">All Categories</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Core Mechanical Engineering">Core Mechanical Engineering</option>
+                                    <option value="CAD & Design">CAD & Design</option>
+                                    <option value="Simulation">Simulation</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Automation">Automation</option>
+                                    <option value="Programming">Programming</option>
+                                </select>
+
+                                <select id="learn-difficulty-filter" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none;">
+                                    <option value="All">All Difficulties</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+
+                                <button class="btn btn-outline" id="learn-btn-favorites" style="padding: 0.5rem 1rem;">
+                                    <i data-lucide="star" style="width: 16px; height: 16px;"></i> Bookmarked Only
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course grid -->
+                    <div class="features-grid" id="learning-course-grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.5rem;">
+                        <!-- Courses populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Learning Roadmaps -->
+                <div id="view-dashboard-roadmaps" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Mechanical Engineering Learning Roadmaps</h1>
+                            <p>Follow structured learning tracks customized for 12 core industrial engineering roles</p>
+                        </div>
+                        <button class="btn btn-primary" id="btn-download-study-plan">
+                            <i data-lucide="download"></i> Download Study Plan (.txt)
+                        </button>
+                    </header>
+
+                    <div class="dashboard-data-grid">
+                        <div class="grid-col-8">
+                            <!-- Roadmap Details Card -->
+                            <div class="glass-card element-card">
+                                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                                    <div>
+                                        <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Select Roadmap Specialty</label>
+                                        <select id="roadmap-selector" style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; outline: none; display:block; margin-top:0.3rem; font-size:1.1rem; font-weight:700; width: 280px;">
+                                            <option value="Mechanical Engineer">Mechanical Engineer</option>
+                                            <option value="Design Engineer">Design Engineer</option>
+                                            <option value="Manufacturing Engineer">Manufacturing Engineer</option>
+                                            <option value="Production Engineer">Production Engineer</option>
+                                            <option value="Quality Engineer">Quality Engineer</option>
+                                            <option value="Maintenance Engineer">Maintenance Engineer</option>
+                                            <option value="HVAC Engineer">HVAC Engineer</option>
+                                            <option value="Automotive Engineer">Automotive Engineer</option>
+                                            <option value="Aerospace Engineer">Aerospace Engineer</option>
+                                            <option value="Robotics Engineer">Robotics Engineer</option>
+                                            <option value="CFD Engineer">CFD Engineer</option>
+                                            <option value="FEA Engineer">FEA Engineer</option>
+                                        </select>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <span class="metric-label" style="display:block; margin-bottom:0.25rem;">Roadmap Progress</span>
+                                        <span class="metric-value" id="roadmap-progress-val" style="font-size:1.8rem; font-weight:800; color:var(--success);">0%</span>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Container -->
+                                <h4 style="margin-bottom: 1rem;"><i data-lucide="map-pin" style="color:var(--primary);"></i> Sequential Learning Order</h4>
+                                <div id="roadmap-steps-container" style="display: flex; flex-direction: column; gap: 1.5rem; position: relative; padding-left: 1.5rem;">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-col-4">
+                            <!-- Metrics Summary -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="info"></i> Roadmap Specifications</h3>
+                                <div style="display:flex; flex-direction:column; gap:1.25rem; font-size:0.85rem; margin-top:0.5rem;">
+                                    <div>
+                                        <strong>Estimated Study Duration:</strong>
+                                        <p style="color:var(--text-secondary); margin-top:0.2rem;" id="roadmap-est-time">120 Hours</p>
+                                    </div>
+                                    <div>
+                                        <strong>Required Software Packages:</strong>
+                                        <div id="roadmap-req-sw-wrapper" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;"></div>
+                                    </div>
+                                    <div>
+                                        <strong>Recommended Certifications:</strong>
+                                        <div id="roadmap-certs-wrapper" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;"></div>
+                                    </div>
+                                    <div>
+                                        <strong>Benchmark Portfolio Project:</strong>
+                                        <p style="color:var(--text-secondary); margin-top:0.2rem;" id="roadmap-project-desc"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plotly Progress Node -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="bar-chart-2"></i> Category Matches</h3>
+                                <div id="plotly-roadmap-bar-chart" class="plotly-chart-node" style="height: 200px;"></div>
                             </div>
                         </div>
                     </div>
