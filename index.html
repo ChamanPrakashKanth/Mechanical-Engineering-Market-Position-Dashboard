@@ -1,95 +1,335 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mechanical Engineering Market Position Dashboard</title>
+    <title>MechIntel AI — Mechanical Engineering Career Intelligence Platform</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Mozilla PDF.js library for client-side PDF text extraction -->
+    <!-- Charting & Icon libraries via CDNs -->
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
     <!-- Background Canvas Particles -->
     <canvas id="particle-canvas"></canvas>
 
-    <div class="container">
-        <!-- Main Application Header -->
-        <header>
-            <div class="brand">
-                <span class="brand-icon">⚛</span>
-                <div class="brand-text">
-                    <h1>MECH-ENG PATHFINDER</h1>
-                    <p>Anonymized Market-Position & Career Intelligence Dashboard</p>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-brand" id="nav-brand-logo">
+            <i data-lucide="atom" class="brand-icon"></i>
+            <span class="brand-text">MechIntel<span class="accent-dot">.ai</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#features-section" class="nav-item">Features</a>
+            <a href="#pricing-section" class="nav-item">Pricing</a>
+            <a href="#testimonials-section" class="nav-item">Testimonials</a>
+            <a href="#faq-section" class="nav-item">FAQ</a>
+        </div>
+        <div class="nav-actions">
+            <!-- Theme Toggle -->
+            <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme">
+                <i data-lucide="sun" id="theme-icon-sun"></i>
+                <i data-lucide="moon" id="theme-icon-moon" class="hidden"></i>
+            </button>
+            <button id="nav-cta-btn" class="btn btn-primary">Enter Dashboard</button>
+        </div>
+    </nav>
+
+    <!-- LANDING PAGE CONTAINER -->
+    <main id="landing-page-container" class="view-panel">
+        
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge animate-fade-in">
+                    <span class="pulse-dot"></span> Powered by MechIntel AI Engine v2.0
                 </div>
-            </div>
-            <div class="header-status">
-                <span class="badge badge-purple" id="db-status-badge">
-                    <span class="pulse-dot"></span> Database Loaded: 100,000 Profiles
-                </span>
-            </div>
-        </header>
-
-        <!-- SETUP SCREEN: Resume upload and manual profile constructor -->
-        <section id="setup-panel" class="setup-grid">
-            
-            <!-- Left Side: Paste Resume text -->
-            <div class="glass-card setup-left">
-                <h2>
-                    <span>📝</span> Paste Your Resume
-                </h2>
-                <div class="paste-container">
-                    <!-- PDF File Upload Component -->
-                    <div style="margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 10px; border: 1px dashed var(--border-color);">
-                        <label for="resume-file-input" style="font-weight: 600; display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
-                            <span>📄</span> Compare via PDF Upload:
-                        </label>
-                        <input type="file" id="resume-file-input" accept=".pdf" style="font-family: var(--font-body); font-size: 0.85rem; color: var(--text-secondary); width: 100%;">
-                        <div id="pdf-upload-status" style="font-size: 0.75rem; color: var(--info); display: none; font-weight: 500;"></div>
-                    </div>
-
-                    <textarea id="resume-paste-box" placeholder="Or paste the full text of your resume here...&#10;&#10;The smart keyword parser will automatically extract your:&#10;- Degree level & college tier heuristics&#10;- Core mechanical skills (GD&T, FEA, CFD, HVAC, etc.)&#10;- Software tools (SolidWorks, ANSYS, AutoCAD, MATLAB, etc.)&#10;- Certifications (CSWA, Six Sigma, etc.)&#10;- Project, internship, and publication counts"></textarea>
-                    
-                    <button type="button" class="btn" id="btn-parse-resume">
-                        <span>⚡</span> Auto-Parse Resume Text
+                <h1 class="hero-title animate-slide-up">
+                    Your Mechanical Engineering Career, <span class="gradient-text">Decoded by AI</span>.
+                </h1>
+                <p class="hero-subtitle animate-slide-up-delayed">
+                    Evaluate your credentials against 100,000+ mechanical graduates. Analyze skill gaps, estimate salary ranges, design custom portfolios, and chat with an AI Career Coach.
+                </p>
+                <div class="hero-ctas animate-slide-up-delayed2">
+                    <button class="btn btn-large btn-primary" id="hero-get-started-btn">
+                        Start Free Scan <i data-lucide="arrow-right"></i>
                     </button>
-                    
-                    <div class="parse-pulse hidden" id="parse-indicator">
-                        <span class="pulse-dot"></span> Scanning text & extracting professional attributes...
-                    </div>
-
-                    <!-- Parsed Resume Highlighter Card -->
-                    <div id="highlighted-resume-container" class="highlighted-resume-card hidden">
-                        <div class="highlighted-resume-title"><span>🔍</span> Extracted Professional Keywords</div>
-                        <div class="highlighted-resume-legend">
-                            <div class="legend-item"><span class="legend-dot legend-skill"></span> Skills</div>
-                            <div class="legend-item"><span class="legend-dot legend-software"></span> Software Tools</div>
-                            <div class="legend-item"><span class="legend-dot legend-cert"></span> Certifications</div>
-                        </div>
-                        <div id="highlighted-resume-box" class="highlight-box"></div>
-                    </div>
+                    <a href="#features-section" class="btn btn-large btn-secondary">Explore Features</a>
                 </div>
             </div>
             
-            <!-- Right Side: Profile Refinement Form -->
-            <div class="glass-card setup-right">
-                <h2>
-                    <span>🛠</span> Profile Builder & Refinement
-                </h2>
+            <!-- Quick Ingestion Panel embedded in Hero -->
+            <div class="hero-ingest-card glass-card animate-scale-in">
+                <div class="ingest-header">
+                    <h3>🚀 Instant AI Profile Analysis</h3>
+                    <p>Upload a resume PDF or paste text to build your ranking standing.</p>
+                </div>
+                <div class="drag-drop-zone" id="upload-dropzone">
+                    <i data-lucide="file-text" class="upload-icon"></i>
+                    <p class="upload-title">Drag & Drop Resume PDF</p>
+                    <p class="upload-subtitle">or click to browse local files</p>
+                    <input type="file" id="hero-file-input" accept=".pdf" class="hidden-file-input">
+                    <div id="hero-upload-status" class="upload-status-text"></div>
+                </div>
+                <div class="or-divider"><span>OR</span></div>
+                <button class="btn btn-outline" id="hero-manual-btn">
+                    <i data-lucide="edit-3"></i> Paste Resume Text / Manual Entry
+                </button>
+            </div>
+        </section>
+
+        <!-- STATS STRIP -->
+        <section class="stats-strip">
+            <div class="stat-item">
+                <span class="stat-number">100K+</span>
+                <span class="stat-label">Anonymized Candidate Profiles</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">11+</span>
+                <span class="stat-label">Engineering Domains Parsed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Recruiter Alignment Confidence</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0s</span>
+                <span class="stat-label">Server Latency (Edge Computing)</span>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="features-section" class="features-section">
+            <div class="section-header">
+                <h2>Comprehensive Career Intelligence</h2>
+                <p>Advanced diagnostic layers designed specifically for mechanical engineering disciplines.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper blue"><i data-lucide="bar-chart-3"></i></div>
+                    <h3>Competitiveness Benchmarking</h3>
+                    <p>Compare your credentials, college tier, and projects against national and global cohorts in 4 dimensions.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper purple"><i data-lucide="radar"></i></div>
+                    <h3>Interactive Skill Gap Radar</h3>
+                    <p>Compare your engineering skillset (GD&T, FEA, CFD, HVAC) against peers in your matched specialty.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper green"><i data-lucide="sparkles"></i></div>
+                    <h3>AI Career Coach & Mentor</h3>
+                    <p>Interactive chatbot offering personalized feedback, interview questions, and explaining all scoring heuristics.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper orange"><i data-lucide="map"></i></div>
+                    <h3>Learning Roadmaps & Certs</h3>
+                    <p>Acquire targeted recommendations for CSWP, ASHRAE, or ANSYS credentials with custom timeline guides.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper red"><i data-lucide="activity"></i></div>
+                    <h3>Recruiter Readiness Score</h3>
+                    <p>Find out exactly how visible your profile is to top employers and receive instructions to patch weaknesses.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper teal"><i data-lucide="dollar-sign"></i></div>
+                    <h3>Dynamic Salary Estimator</h3>
+                    <p>Leverage competitor distributions to project salary range curves based on your experience and skill matrix.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials-section" class="testimonials-section">
+            <div class="section-header">
+                <h2>Trusted by Engineers Worldwide</h2>
+                <p>How MechIntel has helped freshers land engineering placements.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p class="testimonial-text">"MechIntel identified that I was missing GD&T and RSS stack-up analysis. I added those to my CAD portfolio, did the mini-quiz, and landed a Design Engineer role at L&T!"</p>
+                    <div class="author-details">
+                        <div class="author-avatar"><i data-lucide="user"></i></div>
+                        <div>
+                            <h4 class="author-name">Aditya K.</h4>
+                            <p class="author-title">Design Engineer @ L&T</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p class="testimonial-text">"Coming from a Tier 3 college in India, I had no clue how to stand out. The offline networking strategies recommended here guided my outreach on LinkedIn. Highly recommended!"</p>
+                    <div class="author-details">
+                        <div class="author-avatar"><i data-lucide="user"></i></div>
+                        <div>
+                            <h4 class="author-name">Priyesh S.</h4>
+                            <p class="author-title">CFD Associate @ Energy Lab</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p class="testimonial-text">"The Plotly salary estimator gave me the confidence to negotiate my starting package. Knowing where my profile stood globally was a massive advantage."</p>
+                    <div class="author-details">
+                        <div class="author-avatar"><i data-lucide="user"></i></div>
+                        <div>
+                            <h4 class="author-name">Sarah M.</h4>
+                            <p class="author-title">Robotics Engineer @ Tesla</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="pricing-section" class="pricing-section">
+            <div class="section-header">
+                <h2>Simple, Transparent Plans</h2>
+                <p>Redesign your job search today. Start for free and upgrade as you grow.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card glass-card">
+                    <div class="pricing-header">
+                        <h3>Free Explorer</h3>
+                        <p>Core benchmarking for students and freshers</p>
+                        <div class="price"><span>$</span>0<span>/mo</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i data-lucide="check"></i> 100,000 Competitor Benchmark</li>
+                        <li><i data-lucide="check"></i> Skill Gap Analysis Checklist</li>
+                        <li><i data-lucide="check"></i> Basic Job Recommendations</li>
+                        <li><i data-lucide="check"></i> PDF Lecture Access</li>
+                    </ul>
+                    <button class="btn btn-outline launch-app-trigger" style="width: 100%;">Get Started Free</button>
+                </div>
+                <div class="pricing-card glass-card premium">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <div class="pricing-header">
+                        <h3>Pro Career Coach</h3>
+                        <p>Advanced AI-guided placement engine</p>
+                        <div class="price"><span>$</span>12<span>/mo</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i data-lucide="check"></i> Everything in Free Explorer</li>
+                        <li><i data-lucide="check"></i> Interactive Plotly Radar & Heatmaps</li>
+                        <li><i data-lucide="check"></i> Unlimited AI Career Coach Chat</li>
+                        <li><i data-lucide="check"></i> Instant Resume Analyzer & Score</li>
+                        <li><i data-lucide="check"></i> Custom Portfolio Blueprints & Quizzes</li>
+                        <li><i data-lucide="check"></i> LinkedIn & Outreach Script Generator</li>
+                    </ul>
+                    <button class="btn btn-primary launch-app-trigger" style="width: 100%;">Unlock Pro Features</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq-section" class="faq-section">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about the MechIntel benchmarking algorithm.</p>
+            </div>
+            <div class="faq-accordion-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How is the Employability Score calculated?</span>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our algorithm scores profiles out of 100 using a balanced weight matrix: Academics (25% based on college tier and degree), Skills & Tools (35% based on breadth and tool usage), Experience (30% based on internships, project counts, and FSAE/Baja engineering competitions), and Extras (10% based on publications and certificates).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my resume data safe?</span>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Your privacy is our priority. All parsing is done locally in your browser using pdf.js, and personally identifiable information (PII) like names, email addresses, phone numbers, and social URLs are automatically stripped out before running analysis. No resume data is saved on external databases.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How is the 100,000 competitor database sourced?</span>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The dataset represents entry-level mechanical engineering candidates, seeded and scaled deterministically in the client environment using a Linear Congruential Generator. It models real-world distributions of freshers in regions like India and major global hubs across college tiers and specialties.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="nav-brand">
+                    <i data-lucide="atom" class="brand-icon"></i>
+                    <span class="brand-text">MechIntel<span class="accent-dot">.ai</span></span>
+                </div>
+                <p>Decentralized Career Intelligence for Mechanical Engineers.</p>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 MechIntel.ai. All rights reserved.</span>
+                <span>Designed for Academic, Professional, and Recruiting Excellence.</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- MANUAL PROFILE SETUP MODAL / SECTION -->
+    <section id="manual-setup-panel" class="view-panel hidden container">
+        <div class="setup-header">
+            <button id="setup-back-btn" class="btn btn-secondary"><i data-lucide="chevron-left"></i> Back to Home</button>
+            <h2>📝 Design Your Engineering Profile</h2>
+            <p>Paste your resume text below or manually refine details to build your competitive benchmark profile.</p>
+        </div>
+        
+        <div class="setup-grid">
+            <!-- Text area copy-paste -->
+            <div class="glass-card setup-left">
+                <h3 class="card-section-title"><i data-lucide="clipboard-list"></i> Paste Resume Text</h3>
+                <textarea id="resume-paste-box" placeholder="Paste your raw resume text here...&#10;&#10;Our intelligent parser will automatically scan the content, redact sensitive details, and identify your mechanical engineering disciplines, CAD packages, and project metrics."></textarea>
+                <button type="button" class="btn btn-primary" id="btn-parse-resume" style="width: 100%; margin-top: 1rem;">
+                    <i data-lucide="cpu"></i> Auto-Parse Resume Text
+                </button>
                 
-                <!-- Quick Presets for fast testing -->
-                <div style="margin-bottom: 1.5rem;">
-                    <label>Quick Test Profiles:</label>
+                <div class="parse-pulse hidden" id="parse-indicator">
+                    <span class="pulse-dot"></span> Redacting PII & extracting keywords...
+                </div>
+
+                <!-- Parsed Highlighter -->
+                <div id="highlighted-resume-container" class="highlighted-resume-card hidden">
+                    <div class="highlighted-resume-title"><i data-lucide="shield-check"></i> Extracted Keywords (Anonymized)</div>
+                    <div class="highlighted-resume-legend">
+                        <div class="legend-item"><span class="legend-dot legend-skill"></span> Skills</div>
+                        <div class="legend-item"><span class="legend-dot legend-software"></span> Software</div>
+                        <div class="legend-item"><span class="legend-dot legend-cert"></span> Certs</div>
+                    </div>
+                    <div id="highlighted-resume-box" class="highlight-box"></div>
+                </div>
+            </div>
+            
+            <!-- Manual Form Refiner -->
+            <div class="glass-card setup-right">
+                <h3 class="card-section-title"><i data-lucide="sliders"></i> Refine Profile Parameters</h3>
+                
+                <div class="presets-section">
+                    <label>Test Profile Presets:</label>
                     <div class="preset-container">
-                        <span class="preset-chip" data-preset="entry-cad" id="preset-chip-entry">Entry-Level Design (India)</span>
-                        <span class="preset-chip" data-preset="cae-mid" id="preset-chip-mid">CAE Specialist (M.Tech India)</span>
-                        <span class="preset-chip" data-preset="global-robotics" id="preset-chip-robotics">Global Robotics (Tier 1 B.S.)</span>
+                        <span class="preset-chip" data-preset="entry-cad">Entry Design (India)</span>
+                        <span class="preset-chip" data-preset="cae-mid">CAE Specialist (M.Tech)</span>
+                        <span class="preset-chip" data-preset="global-robotics">Global Robotics (Tier 1 B.S.)</span>
                     </div>
                 </div>
                 
                 <form id="profile-refinement-form" onsubmit="event.preventDefault();">
                     <div class="form-grid">
-                        
-                        <!-- Region selection -->
                         <div class="form-group">
                             <label for="form-region">Target Benchmark Region</label>
                             <select id="form-region">
@@ -97,519 +337,662 @@
                                 <option value="Global">Global / Worldwide</option>
                             </select>
                         </div>
-                        
-                        <!-- College Tier selection -->
                         <div class="form-group">
                             <label for="form-tier">College / University Tier</label>
                             <select id="form-tier">
-                                <option value="Tier 1">Tier 1 (IITs, NITs, BITS, MIT, Stanford, Imperial)</option>
-                                <option value="Tier 2">Tier 2 (VIT, Manipal, DTU, State Universities, Purdue)</option>
-                                <option value="Tier 3">Tier 3 (Local Colleges, Regional Polytechnics)</option>
+                                <option value="Tier 1">Tier 1 (IIT, BITS, MIT, Stanford, Imperial)</option>
+                                <option value="Tier 2">Tier 2 (VIT, DTU, State Univ, Purdue)</option>
+                                <option value="Tier 3">Tier 3 (Local Colleges, Regional Polys)</option>
                             </select>
                         </div>
-                        
-                        <!-- Degree level selection -->
                         <div class="form-group">
                             <label for="form-degree">Degree Type</label>
                             <select id="form-degree">
                                 <option value="B.Tech/B.S.">B.Tech / B.E. / B.S.</option>
                                 <option value="M.Tech/M.S.">M.Tech / M.E. / M.S.</option>
-                                <option value="Ph.D.">Ph.D. / Doctoral Degree</option>
+                                <option value="Ph.D.">Ph.D. / Doctorate</option>
                             </select>
                         </div>
-                        
-                        <!-- Practical project count -->
                         <div class="form-group">
                             <label for="form-projects">Project Portfolio Count</label>
                             <input type="number" id="form-projects" min="0" max="10" value="2">
                         </div>
-                        
-                        <!-- Internship count -->
                         <div class="form-group">
                             <label for="form-internships">Completed Internships</label>
                             <input type="number" id="form-internships" min="0" max="5" value="0">
                         </div>
-                        
-                        <!-- Research papers count -->
                         <div class="form-group">
                             <label for="form-papers">Research Publications</label>
                             <input type="number" id="form-papers" min="0" max="10" value="0">
                         </div>
-                        
-                        <!-- Competitions count -->
                         <div class="form-group">
-                            <label for="form-competitions">Major Competitions (FSAE, Robo, etc.)</label>
+                            <label for="form-competitions">Major Competitions (FSAE, Baja, etc.)</label>
                             <input type="number" id="form-competitions" min="0" max="5" value="0">
                         </div>
                         
-                        <!-- Skills tags input -->
                         <div class="form-group form-group-full">
-                            <label>Professional Skills (Press Enter or comma to add)</label>
+                            <label>Domain Specialization Selector</label>
+                            <div class="domain-chips-wrapper" id="domain-chips-wrapper">
+                                <span class="domain-chip active" data-domain="CAD Design">CAD Design</span>
+                                <span class="domain-chip" data-domain="CAE/Simulation">CAE/Simulation</span>
+                                <span class="domain-chip" data-domain="Robotics/Mechatronics">Robotics/Mechatronics</span>
+                                <span class="domain-chip" data-domain="Manufacturing/Operations">Manufacturing/Operations</span>
+                                <span class="domain-chip" data-domain="HVAC/Thermal">HVAC/Thermal</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label>Professional Technical Skills</label>
                             <div class="tags-input-container" id="skills-input-wrapper">
-                                <input type="text" id="skills-text-input" placeholder="e.g. GD&T, FEA, HVAC, Product Design...">
+                                <input type="text" id="skills-text-input" placeholder="e.g. GD&T, FEA, HVAC (press Enter)...">
                             </div>
                         </div>
                         
-                        <!-- Software tools tags input -->
                         <div class="form-group form-group-full">
-                            <label>Software Tools (Press Enter or comma to add)</label>
+                            <label>Software Packages</label>
                             <div class="tags-input-container" id="tools-input-wrapper">
-                                <input type="text" id="tools-text-input" placeholder="e.g. SolidWorks, ANSYS, MATLAB, AutoCAD...">
+                                <input type="text" id="tools-text-input" placeholder="e.g. SolidWorks, ANSYS, MATLAB (press Enter)...">
                             </div>
                         </div>
                         
-                        <!-- Certifications tags input -->
                         <div class="form-group form-group-full">
-                            <label>Professional Certifications (Press Enter or comma to add)</label>
+                            <label>Professional Certifications</label>
                             <div class="tags-input-container" id="certs-input-wrapper">
-                                <input type="text" id="certs-text-input" placeholder="e.g. CSWA, Six Sigma Green Belt, Revit MEP...">
+                                <input type="text" id="certs-text-input" placeholder="e.g. CSWA, Six Sigma, ASHRAE (press Enter)...">
                             </div>
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-success" id="btn-run-analysis" style="width: 100%;">
-                        <span>📈</span> Compare & Compute Rankings
+                    <button type="button" class="btn btn-success" id="btn-run-analysis" style="width: 100%; margin-top: 1.5rem;">
+                        <i data-lucide="gauge"></i> Generate Dashboard & Analyze Profile
                     </button>
                 </form>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- RESULTS / ANALYTICS DASHBOARD SCREEN -->
-        <section id="dashboard-panel" class="hidden">
-            
-            <!-- Floating Navigation & Summary -->
-            <div class="back-header">
-                <div>
-                    <button type="button" class="btn btn-secondary" id="btn-back-to-input">
-                        <span>←</span> Adjust Profile
+    <!-- SAAS DASHBOARD VIEW PANEL -->
+    <section id="dashboard-panel" class="view-panel hidden">
+        <div class="dashboard-layout-wrapper">
+            <!-- DASHBOARD SIDEBAR -->
+            <aside class="dashboard-sidebar">
+                <div class="sidebar-header">
+                    <i data-lucide="atom" class="sidebar-brand-icon"></i>
+                    <span>MechIntel AI</span>
+                </div>
+                
+                <div class="sidebar-user-summary">
+                    <div class="user-avatar-circle" id="sb-avatar-letter">M</div>
+                    <div class="user-details">
+                        <div class="user-id" id="sb-candidate-id">Candidate #ME-49023</div>
+                        <div class="user-sub" id="sb-college-val">B.Tech | Tier 2 College</div>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <button class="sidebar-nav-item active" data-view="dashboard-overview">
+                        <i data-lucide="layout-dashboard"></i> Overview & Analytics
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-roles">
+                        <i data-lucide="briefcase"></i> Job Role Matcher
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-coach">
+                        <i data-lucide="message-square"></i> AI Career Coach
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-demands">
+                        <i data-lucide="trending-up"></i> Employer Benchmarks
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-courses">
+                        <i data-lucide="book-open"></i> Course Academy
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-database">
+                        <i data-lucide="users"></i> Competitor Database
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-placeholders">
+                        <i data-lucide="rocket"></i> Premium Features
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="sidebar-nav-item" id="sidebar-logout-btn">
+                        <i data-lucide="log-out"></i> Return to Home
                     </button>
                 </div>
-                <div class="dashboard-nav">
-                    <button type="button" class="tab-btn active" data-tab="dashboard" id="tab-dashboard-btn">Analytics Dashboard</button>
-                    <button type="button" class="tab-btn" data-tab="demand" id="tab-demand-btn">💼 Employer Insights</button>
-                    <button type="button" class="tab-btn" data-tab="courses" id="tab-courses-btn">📖 Written Courses</button>
-                    <button type="button" class="tab-btn" data-tab="database" id="tab-database-btn">Anonymized Candidate DB</button>
-                </div>
-            </div>
+            </aside>
 
-            <!-- VIEW 1: Dashboard analytics layout -->
-            <div id="tab-dashboard-view">
-                
-                <div class="dashboard-grid">
-                    
-                    <!-- Candidate Quick Info Header -->
-                    <div class="glass-card col-12" style="padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <!-- DASHBOARD MAIN PANEL CONTENT -->
+            <main class="dashboard-main-content">
+                <!-- Dashboard Sub-View: Overview & Analytics -->
+                <div id="view-dashboard-overview" class="dashboard-view-pane active">
+                    <!-- Dashboard Header -->
+                    <header class="dashboard-pane-header">
                         <div>
-                            <span class="badge" id="competitiveness-badge">Top 25% Competitiveness</span>
-                            <span style="margin-left: 1rem; font-size: 0.9rem; color: var(--text-secondary);" id="db-college-val">B.Tech | Tier 2 College</span>
+                            <h1>Career Competitiveness Dashboard</h1>
+                            <p>Anonymized global benchmarking & profile gap diagnostics</p>
                         </div>
-                        <div style="font-family: var(--font-heading); font-weight: 600; color: var(--text-primary);" id="db-candidate-id">
-                            Candidate #ME-49023
-                        </div>
-                    </div>
-                              <!-- Rankings summary card -->
-                    <div class="glass-card col-12">
-                        <div class="card-header">
-                            <div class="card-title">🏆 Freshers & Entry-Level Market Rank Percentiles (Benchmarked against 1 Lakh Candidates)</div>
-                        </div>
-                        <div class="rank-metrics">
-                            <!-- Global rank circle -->
-                            <div class="rank-metric-box">
-                                <svg class="circular-chart" viewBox="0 0 36 36">
-                                    <defs>
-                                        <linearGradient id="globalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="var(--primary)" />
-                                            <stop offset="100%" stop-color="var(--accent)" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle circle-global" id="global-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.3" class="percentage" id="global-pct-text">0%</text>
-                                </svg>
-                                <div>
-                                    <div class="percent-label">Worldwide Rank</div>
-                                    <div class="percent-sublabel" id="global-pct-sublabel">Rank #0 of 100k global freshers</div>
-                                </div>
-                            </div>
-                            <!-- India rank circle -->
-                            <div class="rank-metric-box">
-                                <svg class="circular-chart" viewBox="0 0 36 36">
-                                    <defs>
-                                        <linearGradient id="indiaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="var(--info)" />
-                                            <stop offset="100%" stop-color="var(--success)" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle circle-india" id="india-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.3" class="percentage" id="india-pct-text">0%</text>
-                                </svg>
-                                <div>
-                                    <div class="percent-label">National Rank (India)</div>
-                                    <div class="percent-sublabel" id="india-pct-sublabel">Rank #0 of 36k Indian freshers</div>
-                                </div>
-                            </div>
-                            <!-- Tier rank circle -->
-                            <div class="rank-metric-box">
-                                <svg class="circular-chart" viewBox="0 0 36 36">
-                                    <defs>
-                                        <linearGradient id="tierGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#f59e0b" />
-                                            <stop offset="100%" stop-color="#ef4444" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" style="stroke: url(#tierGrad);" id="tier-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.3" class="percentage" id="tier-pct-text">0%</text>
-                                </svg>
-                                <div>
-                                    <div class="percent-label">Institution Tier Rank</div>
-                                    <div class="percent-sublabel" id="tier-pct-sublabel">Rank #0 within your tier group</div>
-                                </div>
-                            </div>
-                            <!-- Cluster rank circle -->
-                            <div class="rank-metric-box">
-                                <svg class="circular-chart" viewBox="0 0 36 36">
-                                    <defs>
-                                        <linearGradient id="clusterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#6366f1" />
-                                            <stop offset="100%" stop-color="#06b6d4" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" style="stroke: url(#clusterGrad);" id="cluster-pct-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.3" class="percentage" id="cluster-pct-text">0%</text>
-                                </svg>
-                                <div>
-                                    <div class="percent-label">Technical Specialty Rank</div>
-                                    <div class="percent-sublabel" id="cluster-pct-sublabel">Rank #0 within your specialty</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Score Distribution Card -->
-                    <div class="glass-card col-12 distribution-card">
-                        <div class="distribution-title">
-                            <span>📊</span> Global Score Distribution Curve (Your Market Standing)
-                        </div>
-                        <div class="dist-svg-container">
-                            <svg id="distribution-curve-svg" viewBox="0 0 600 120" preserveAspectRatio="none">
-                                <!-- SVG path and elements generated dynamically -->
-                            </svg>
-                        </div>
-                        <div class="dist-axis-labels">
-                            <span>Entry Baseline (Score: 10)</span>
-                            <span style="color: var(--primary); font-weight: 600;" id="dist-your-score-label">Your Standing</span>
-                            <span>Expert Target (Score: 90)</span>
-                        </div>
-                    </div>
-
-                    <!-- Career Role Clustering Alignment -->
-                    <div class="glass-card col-6">
-                        <div class="card-header">
-                            <div class="card-title">🤖 Candidate Cluster Match</div>
-                            <span class="badge badge-green" id="matched-cluster-strength">90% Profile Alignment</span>
-                        </div>
-                        <div class="cluster-display">
-                            <div class="cluster-icon" id="matched-cluster-icon">💻</div>
-                            <div class="cluster-name" id="matched-cluster-name">CAE/Simulation Engineer</div>
-                            <div class="cluster-desc" id="matched-cluster-desc">Primary skills center around finite element analysis solvers, structural optimization models, and flow dynamics analysis.</div>
-                        </div>
-                    </div>
-
-                    <!-- Strengths Card -->
-                    <div class="glass-card col-6">
-                        <div class="card-header">
-                            <div class="card-title" style="color: var(--success)">✓ Strengths Diagnostic</div>
-                        </div>
-                        <ul class="data-list" id="strengths-list">
-                            <li>
-                                <span class="icon-bullet icon-bullet-green">✓</span>
-                                <div>Advanced degree (M.Tech/M.S.) signals deep technical competency.</div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Weaknesses Card -->
-                    <div class="glass-card col-6">
-                        <div class="card-header">
-                            <div class="card-title" style="color: var(--danger)">✗ Weaknesses / Disadvantages</div>
-                        </div>
-                        <ul class="data-list" id="weaknesses-list">
-                            <li>
-                                <span class="icon-bullet icon-bullet-red">✗</span>
-                                <div>Lack of physical engineering competitions (Formula SAE/BAJA) compared to top percentile candidates.</div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Skill Gap Card -->
-                    <div class="glass-card col-6">
-                        <div class="card-header">
-                            <div class="card-title">📊 Skill Frequency Gap Analysis</div>
-                            <span style="font-size: 0.75rem; color: var(--text-secondary);">Your Profile vs. Matched Cluster Peers</span>
-                        </div>
-                        <div class="chart-container" id="gap-chart-container">
-                            <!-- Dynamically loaded custom bars -->
-                        </div>
-                        <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 1rem; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><span style="display:inline-block; width:10px; height:10px; background:linear-gradient(to right, var(--primary), var(--accent)); border-radius: 2px;"></span> Peer Frequency</span>
-                            <span><span style="display:inline-block; width:10px; height:10px; background:var(--info); border-radius: 2px;"></span> Your Profile</span>
-                        </div>
-                    </div>
-
-                    <!-- High ROI Career Roadmap -->
-                    <div class="glass-card col-6">
-                        <div class="card-header">
-                            <div class="card-title">🚀 High-ROI Improvement Roadmap</div>
-                        </div>
-                        <div class="roadmap-timeline" id="roadmap-container">
-                            <!-- Dynamically loaded roadmap items -->
-                        </div>
-                    </div>
-
-                    <!-- Peer comparison table -->
-                    <div class="glass-card col-12">
-                        <div class="card-header">
-                            <div class="card-title">👥 Mathematically Similar Peer Candidates (Anonymized)</div>
-                            <span style="font-size: 0.8rem; color: var(--text-secondary);">Profiles closest to your experience and score range</span>
-                        </div>
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Candidate ID</th>
-                                        <th>Degree</th>
-                                        <th>College Tier</th>
-                                        <th>Specialty Cluster</th>
-                                        <th>Core Skills & Software</th>
-                                        <th>Employability Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="peer-table-body">
-                                    <!-- Dynamic content -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Final Assessment Box -->
-                    <div class="glass-card col-12 assessment-box">
-                        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-primary);">Career Intelligence Assessment</h3>
-                        <p>Based on 25,000 candidate profiles representing mechanical graduates globally and in India, this candidate demonstrates solid competitive metrics. Gaining specialized software certifications (e.g. CSWP, ANSYS) and increasing high-ROI design elements in your portfolio is estimated to yield a significant percentile improvement.</p>
-                        <div class="assessment-meta">
-                            <span>Analysis Confidence: High (95%)</span>
-                            <span>Calculated: June 2026</span>
-                            <span>Compliance: 100% Anonymized (No PII)</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- VIEW 3: Employer Insights -->
-            <div id="tab-demand-view" class="hidden">
-                <div class="glass-card" style="margin-bottom: 2rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem;">
-                        <div>
-                            <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem;">
-                                <span id="demand-cluster-icon">📐</span> <span id="demand-cluster-title">CAD Design</span> Employer Demands
-                            </h2>
-                            <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                                Target Role: <strong id="demand-cluster-role" style="color: var(--info);">Design Engineer</strong>
-                            </p>
-                        </div>
-                        <div class="badge badge-purple" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
-                            💼 Hiring Benchmarks
-                        </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                        <!-- Skills Card -->
-                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
-                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
-                                🎯 In-Demand Core Skills
-                            </h3>
-                            <div id="demand-skills-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <!-- Dynamic content -->
-                            </div>
-                        </div>
-
-                        <!-- Software Card -->
-                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
-                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--info); display: flex; align-items: center; gap: 0.5rem;">
-                                💻 Essential Software Packages
-                            </h3>
-                            <div id="demand-software-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <!-- Dynamic content -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                        <!-- Certifications Card -->
-                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
-                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
-                                📜 Valued Certifications
-                            </h3>
-                            <div id="demand-certs-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <!-- Dynamic content -->
-                            </div>
-                        </div>
-
-                        <!-- Projects Card -->
-                        <div class="glass-card" style="padding: 1.5rem; background: rgba(22, 30, 49, 0.4);">
-                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--success); display: flex; align-items: center; gap: 0.5rem;">
-                                📂 Portfolio & Project Expectations
-                            </h3>
-                            <div id="demand-portfolio-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <!-- Dynamic content -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Written Course Upsell Banner -->
-                    <div style="margin-top: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
-                        <div>
-                            <h4 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.25rem;">🚀 Boost Your Employability Standing!</h4>
-                            <p style="font-size: 0.9rem; color: var(--text-secondary);">Complete the written course notes and pass the quiz to earn an immediate <strong style="color: var(--primary);">+5 Employability Score boost</strong> and raise your rank standing!</p>
-                        </div>
-                        <button type="button" class="btn btn-success" id="btn-go-to-courses" style="font-size: 0.9rem; padding: 0.6rem 1.2rem;" onclick="document.getElementById('tab-courses-btn').click();">
-                            📖 View Courses & Take Quizzes
+                        <button class="btn btn-secondary" id="dashboard-refine-profile-btn">
+                            <i data-lucide="sliders"></i> Refine Profile
                         </button>
+                    </header>
+
+                    <!-- Score Cards Row -->
+                    <div class="metrics-grid">
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon blue"><i data-lucide="award"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Career Readiness Score</span>
+                                <span class="metric-value" id="val-career-readiness">0/100</span>
+                                <span class="metric-change positive" id="val-score-desc">Benchmark Score</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon purple"><i data-lucide="file-check"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Resume Strength Score</span>
+                                <span class="metric-value" id="val-resume-strength">0/100</span>
+                                <span class="metric-change" id="val-resume-desc">Based on parsed depth</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon green"><i data-lucide="users"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Recruiter Readiness</span>
+                                <span class="metric-value" id="val-recruiter-readiness">0%</span>
+                                <span class="metric-change positive" id="val-recruiter-desc">Placement Visibility</span>
+                            </div>
+                        </div>
+                        <div class="metric-card glass-card">
+                            <div class="metric-icon orange"><i data-lucide="compass"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-label">Matched Domain</span>
+                                <span class="metric-value" id="val-matched-domain">CAD Design</span>
+                                <span class="metric-change" id="val-domain-strength">Domain Cluster</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Analytics Dashboard Layout Grid -->
+                    <div class="dashboard-data-grid">
+                        <!-- Left Panel: Competitive Rankings Gauge & Salary Est -->
+                        <div class="grid-col-8">
+                            
+                            <!-- Rankings & Percentiles -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="trophy"></i> Benchmarked Ranking Standing</h3>
+                                <div class="dashboard-percentiles-strip">
+                                    <div class="pct-metric-item">
+                                        <span class="pct-rank" id="db-global-rank">#0</span>
+                                        <span class="pct-total" id="db-global-total">of 100,000 Global</span>
+                                        <div class="pct-progressbar"><div class="bar" id="db-global-progress"></div></div>
+                                        <span class="pct-label" id="db-global-pct">Top 0% Globally</span>
+                                    </div>
+                                    <div class="pct-metric-item">
+                                        <span class="pct-rank" id="db-india-rank">#0</span>
+                                        <span class="pct-total" id="db-india-total">of 36,000 National</span>
+                                        <div class="pct-progressbar"><div class="bar bar-success" id="db-india-progress"></div></div>
+                                        <span class="pct-label" id="db-india-pct">Top 0% Nationally</span>
+                                    </div>
+                                    <div class="pct-metric-item">
+                                        <span class="pct-rank" id="db-tier-rank">#0</span>
+                                        <span class="pct-total" id="db-tier-total">within Peer Tier</span>
+                                        <div class="pct-progressbar"><div class="bar bar-warning" id="db-tier-progress"></div></div>
+                                        <span class="pct-label" id="db-tier-pct">Top 0% Peer Tier</span>
+                                    </div>
+                                    <div class="pct-metric-item">
+                                        <span class="pct-rank" id="db-cluster-rank">#0</span>
+                                        <span class="pct-total" id="db-cluster-total">within Specialty</span>
+                                        <div class="pct-progressbar"><div class="bar bar-purple" id="db-cluster-progress"></div></div>
+                                        <span class="pct-label" id="db-cluster-pct">Top 0% Specialty</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plotly Grid row -->
+                            <div class="dashboard-plots-row">
+                                <div class="glass-card plot-card">
+                                    <h3 class="card-section-title"><i data-lucide="gauge"></i> Score Gauge</h3>
+                                    <div id="plotly-gauge-chart" class="plotly-chart-node"></div>
+                                </div>
+                                <div class="glass-card plot-card">
+                                    <h3 class="card-section-title"><i data-lucide="trending-up"></i> Salary Distribution Curve</h3>
+                                    <div id="plotly-salary-chart" class="plotly-chart-node"></div>
+                                </div>
+                            </div>
+
+                            <!-- Market Insights & Emerging Technologies -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="line-chart"></i> Market Insights & Forecasting</h3>
+                                <div class="market-insights-grid">
+                                    <div class="market-insight-column">
+                                        <h4>Employment Trend Forecast</h4>
+                                        <p>CFD and Robotics engineering show an estimated <strong>12% YoY hiring growth</strong> due to electric vehicle thermal management needs and industrial warehouse automation. Conventional manufacturing roles are transitioning towards CAD/CAM automation integration.</p>
+                                    </div>
+                                    <div class="market-insight-column">
+                                        <h4>Emerging Tech Watch</h4>
+                                        <p>Generative CAD design tools, digital twin simulation solvers, and robotic ROS2 frameworks represent the <strong>highest ROI tools for freshers</strong> to master. ASME certification boosts recruiter callbacks by 2.5x in competitive global markets.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Radar & Skill Gap -->
+                        <div class="grid-col-4">
+                            <!-- Plotly Skill Radar -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="radar"></i> Skill Gap Radar</h3>
+                                <div id="plotly-radar-chart" class="plotly-chart-node"></div>
+                            </div>
+
+                            <!-- Diagnostic Checklist -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="shield-alert"></i> Diagnostics</h3>
+                                <div class="diagnostic-box">
+                                    <h4 class="diagnostic-type positive">Strengths</h4>
+                                    <ul class="diag-list" id="overview-strengths">
+                                        <li>No strengths matched.</li>
+                                    </ul>
+                                    <h4 class="diagnostic-type negative">Critical Gaps</h4>
+                                    <ul class="diag-list" id="overview-weaknesses">
+                                        <li>No weaknesses parsed.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employability Booster Simulator -->
+                    <div class="glass-card element-card" style="margin-top: 1.5rem;">
+                        <div class="card-header">
+                            <h3 class="card-section-title"><i data-lucide="zap"></i> Employability Booster Simulator</h3>
+                            <span class="badge badge-purple">Gamified Standing Impact</span>
+                        </div>
+                        <p class="section-subtitle">Toggle candidate milestones below to simulate how acquiring certificates, publishing research, or doing internships raises your standings:</p>
+                        
+                        <div class="simulator-layout">
+                            <div class="simulator-controls">
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-intern" class="sim-checkbox">
+                                    <label for="sim-cb-intern">Complete 1 Industry Internship (+15 points)</label>
+                                </div>
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-proj" class="sim-checkbox">
+                                    <label for="sim-cb-proj">Build 1 Advanced Capstone Project (+10 points)</label>
+                                </div>
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-comp" class="sim-checkbox">
+                                    <label for="sim-cb-comp">Participate in BAJA/Formula SAE (+6 points)</label>
+                                </div>
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-paper" class="sim-checkbox">
+                                    <label for="sim-cb-paper">Publish 1 Research Paper (+5 points)</label>
+                                </div>
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-skill" class="sim-checkbox">
+                                    <label for="sim-cb-skill" id="sim-cb-skill-label">Acquire missing specialty skill</label>
+                                </div>
+                                <div class="sim-check-row">
+                                    <input type="checkbox" id="sim-cb-cert" class="sim-checkbox">
+                                    <label for="sim-cb-cert" id="sim-cb-cert-label">Obtain professional certificate</label>
+                                </div>
+                            </div>
+                            
+                            <div class="simulator-results-panel">
+                                <div class="sim-result-box">
+                                    <span class="sim-res-label">Simulated Score</span>
+                                    <span class="sim-res-value" id="sim-score-val">0/100</span>
+                                </div>
+                                <div class="sim-result-box">
+                                    <span class="sim-res-label">Simulated Global Rank</span>
+                                    <span class="sim-res-value" id="sim-global-rank-val">#0</span>
+                                </div>
+                                <div class="sim-result-box">
+                                    <span class="sim-res-label">Simulated National Rank</span>
+                                    <span class="sim-res-value" id="sim-india-rank-val">#0</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- VIEW 4: Written Courses & Interactive Quizzes -->
-            <div id="tab-courses-view" class="hidden">
-                <div class="glass-card" style="margin-bottom: 2rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                <!-- Dashboard Sub-View: Job Role Recommendations -->
+                <div id="view-dashboard-roles" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
                         <div>
-                            <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem;">
-                                📖 <span id="course-title-cluster">CAD Design</span> Skill Course
-                            </h2>
-                            <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                                Lesson: <strong id="course-lesson-name" style="color: var(--primary);">ASME Y14.5 Geometric Dimensioning & Tolerancing (GD&T) & Mechanical Design</strong>
-                            </p>
+                            <h1>Specialized Job Role Matcher</h1>
+                            <p>Match percentages, missing technical skills, salary expectations, and specialized career pathways</p>
                         </div>
-                        <div class="badge badge-purple" id="course-completion-badge" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                    </header>
+
+                    <div class="roles-recommendation-container" id="roles-recommendations-list">
+                        <!-- Recommended Roles dynamically loaded as cards -->
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: AI Career Coach Chat Assistant -->
+                <div id="view-dashboard-coach" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>AI Career Coach & Mentor</h1>
+                            <p>Ask about skill gaps, local and global hiring trends, resume improvements, and domain transitions</p>
+                        </div>
+                        <button class="btn btn-outline" id="coach-download-report-btn">
+                            <i data-lucide="download"></i> Download AI Career Report
+                        </button>
+                    </header>
+
+                    <div class="coach-layout">
+                        <!-- Chat area -->
+                        <div class="coach-chat-window glass-card">
+                            <div class="chat-header">
+                                <div class="coach-avatar-circle">AI</div>
+                                <div>
+                                    <span class="coach-name">Dr. Harris, AI Career Mentor</span>
+                                    <span class="coach-status"><span class="pulse-dot"></span> Ready to analyze</span>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-messages-box" id="coach-chat-messages">
+                                <div class="chat-msg coach-msg">
+                                    Hello! I am Dr. Harris, your AI Career Coach. I have analyzed your parsed resume profile and compared your credentials against our database of 100,000 candidates. How can I help you optimize your mechanical engineering career trajectory today?
+                                </div>
+                            </div>
+                            
+                            <!-- Prompt suggestions -->
+                            <div class="chat-presets-list">
+                                <button class="chat-preset-chip" data-prompt="Analyze my critical skill gaps for CFD roles.">Analyze CFD gaps</button>
+                                <button class="chat-preset-chip" data-prompt="Generate 5 tough technical interview questions for SolidWorks CAD design.">SolidWorks Interview</button>
+                                <button class="chat-preset-chip" data-prompt="How do I get a Design Engineer job coming from a Tier 3 college?">Tier 3 Strategy</button>
+                                <button class="chat-preset-chip" data-prompt="Explain why my Career Readiness score is at this level.">Explain My Score</button>
+                            </div>
+
+                            <div class="chat-input-row">
+                                <input type="text" id="coach-chat-input" placeholder="Type your career inquiry here (e.g. 'How do I bridge my ANSYS gap?')...">
+                                <button class="btn btn-primary" id="coach-chat-send-btn">
+                                    <i data-lucide="send"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar reference stats -->
+                        <div class="coach-reference-panel">
+                            <!-- Resume Improver recommendations -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="sparkles"></i> AI Resume Optimizer</h3>
+                                <ul class="diag-list" id="coach-resume-suggestions">
+                                    <li>Add GD&T and manufacturing fits (ASME Y14.5) to clear applicant filters.</li>
+                                    <li>Showcase numerical metrics in your project descriptions (e.g., 'reduced weight by 12%').</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Live interactive interview simulator triggers -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="message-square"></i> Interview Question Generator</h3>
+                                <p class="section-subtitle">Generate mock interview questions tailored directly to your matched domain.</p>
+                                <button class="btn btn-outline" style="width:100%; margin-top:0.75rem;" id="coach-gen-interview-btn">
+                                    <i data-lucide="help-circle"></i> Generate Questions
+                                </button>
+                                <div id="coach-questions-box" class="quiz-feedback-text" style="margin-top:0.75rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Employer Demands -->
+                <div id="view-dashboard-demands" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Employer Demands & Hiring Benchmarks</h1>
+                            <p>Essential competencies, software, certifications, and portfolio expectations matching industry benchmarks</p>
+                        </div>
+                    </header>
+
+                    <div class="glass-card" style="margin-bottom: 2rem; padding: 2rem;">
+                        <div class="demands-sub-header">
+                            <div>
+                                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem;">
+                                    <span id="demand-cluster-icon">📐</span> <span id="demand-cluster-title">CAD Design</span> Specialty
+                                </h2>
+                                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                                    Target Role: <strong id="demand-cluster-role" style="color: var(--primary);">Design Engineer</strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Industry demand heatmap Plotly chart -->
+                        <div class="glass-card plot-card" style="margin-bottom: 2rem;">
+                            <h3 class="card-section-title"><i data-lucide="flame"></i> Global Specialty Demand Heatmap</h3>
+                            <div id="plotly-heatmap-chart" class="plotly-chart-node"></div>
+                        </div>
+
+                        <div class="demands-flex-container">
+                            <!-- Skills Card -->
+                            <div class="glass-card inner-demand-card">
+                                <h3 class="demand-card-title blue"><i data-lucide="check-circle-2"></i> In-Demand Core Skills</h3>
+                                <div id="demand-skills-list" class="demands-list-wrapper"></div>
+                            </div>
+
+                            <!-- Software Card -->
+                            <div class="glass-card inner-demand-card">
+                                <h3 class="demand-card-title purple"><i data-lucide="monitor"></i> Essential Software Packages</h3>
+                                <div id="demand-software-list" class="demands-list-wrapper"></div>
+                            </div>
+                        </div>
+
+                        <div class="demands-flex-container" style="margin-top: 1.5rem;">
+                            <!-- Certifications Card -->
+                            <div class="glass-card inner-demand-card">
+                                <h3 class="demand-card-title orange"><i data-lucide="award"></i> Valued Certifications</h3>
+                                <div id="demand-certs-list" class="demands-list-wrapper"></div>
+                            </div>
+
+                            <!-- Projects Card -->
+                            <div class="glass-card inner-demand-card">
+                                <h3 class="demand-card-title green"><i data-lucide="folder"></i> Portfolio Expectations</h3>
+                                <div id="demand-portfolio-list" class="demands-list-wrapper"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Course Academy & Quizzes -->
+                <div id="view-dashboard-courses" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Course Academy & Micro-Credentials</h1>
+                            <p>Read lecture notes, check key formulas, and pass quizzes to boost your score (+5 employability points)</p>
+                        </div>
+                        <div class="badge badge-purple" id="course-academy-completion-badge" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
                             ⏳ Status: Incomplete
                         </div>
-                    </div>
+                    </header>
 
-                    <!-- Lecture Content Card -->
-                    <div class="glass-card" style="padding: 2rem; background: rgba(22, 30, 49, 0.4); margin-bottom: 2rem; max-height: 500px; overflow-y: auto;">
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--info); display: flex; align-items: center; gap: 0.5rem;">
-                            📝 Lecture Notes & Formula Sheet
-                        </h3>
-                        <div id="course-lecture-notes" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);">
-                            <!-- Dynamic Content -->
+                    <div class="course-layout-container">
+                        <!-- Course lecture sheet -->
+                        <div class="course-left-pane">
+                            <div class="glass-card" style="padding: 2rem;">
+                                <div class="course-selector-row">
+                                    <label for="course-domain-selector">Browse Specialty Course:</label>
+                                    <select id="course-domain-selector" class="course-dropdown">
+                                        <option value="CAD Design">CAD Design Academy</option>
+                                        <option value="CAE/Simulation">CAE/Simulation Academy</option>
+                                        <option value="Robotics/Mechatronics">Robotics/Mechatronics Academy</option>
+                                        <option value="Manufacturing/Operations">Manufacturing/Operations Academy</option>
+                                        <option value="HVAC/Thermal">HVAC/Thermal Academy</option>
+                                    </select>
+                                </div>
+                                
+                                <h2 class="course-lesson-title" id="course-lesson-name">GD&T & Tolerance Stackups</h2>
+                                <p class="course-lesson-desc" id="course-lesson-desc">ASME standard tolerance principles.</p>
+
+                                <div class="course-text-content" id="course-lecture-notes">
+                                    <!-- Written content loads here -->
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Interactive Quiz Card -->
-                    <div class="glass-card" style="padding: 1.8rem; background: rgba(22, 30, 49, 0.6); border: 1px solid rgba(99, 102, 241, 0.2);">
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
-                            ⚡ Quick Knowledge Check
-                        </h3>
-                        <p id="course-quiz-question" style="font-weight: 600; font-size: 1.05rem; color: var(--text-primary); margin-bottom: 1.25rem;">
-                            <!-- Question Text -->
-                        </p>
-                        <form id="course-quiz-form" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
-                            <!-- Dynamic Radios -->
-                        </form>
-                        <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
-                            <button type="button" class="btn btn-success" id="btn-submit-quiz" style="padding: 0.6rem 1.5rem;">
-                                Submit Quiz Answer
-                            </button>
-                            <div id="quiz-feedback-message" style="font-weight: 600; font-size: 0.95rem;">
-                                <!-- Feedback text -->
+                        <!-- Quiz and pathways sidebar -->
+                        <div class="course-right-pane">
+                            <!-- Quick Quiz card -->
+                            <div class="glass-card quiz-card">
+                                <h3><i data-lucide="zap"></i> Quick Knowledge Check</h3>
+                                <p id="course-quiz-question" class="quiz-question-text">Question text goes here?</p>
+                                <form id="course-quiz-form" class="quiz-options-list">
+                                    <!-- Radios loaded dynamically -->
+                                </form>
+                                <button type="button" class="btn btn-primary" id="btn-submit-quiz" style="width: 100%; margin-top: 1rem;">
+                                    Submit Answer
+                                </button>
+                                <div id="quiz-feedback-message" class="quiz-feedback-text" style="margin-top: 0.75rem; font-weight: 600;"></div>
+                            </div>
+
+                            <!-- External courses & cert roadmap recommendations -->
+                            <div class="glass-card element-card">
+                                <h3><i data-lucide="book-open"></i> External Courses</h3>
+                                <div id="course-recommendations-list" style="margin-top: 0.5rem;"></div>
+                            </div>
+                            
+                            <!-- Plotly Career Progression Timeline -->
+                            <div class="glass-card element-card">
+                                <h3><i data-lucide="milestone"></i> Career Progression Timeline</h3>
+                                <div id="plotly-timeline-chart" class="plotly-chart-node" style="height: 250px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- VIEW 2: Paginated Candidates DB Search and Filters -->
-            <div id="tab-database-view" class="hidden">
-                <div class="glass-card">
-                    <div class="card-header">
-                        <div class="card-title">📁 Public Anonymized Candidate Database</div>
-                    </div>
-                    
-                    <!-- Search and filters -->
-                    <div class="db-controls">
-                        <div class="search-box">
-                            <span class="search-icon">🔍</span>
-                            <input type="text" id="db-search" placeholder="Search by ID, college, degree, skills, software...">
+                <!-- Dashboard Sub-View: Competitor Database Explorer -->
+                <div id="view-dashboard-database" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Competitor Database Explorer</h1>
+                            <p>Filter, search, and paginate through the database of 100,000 anonymized mechanical engineers</p>
                         </div>
-                        
-                        <div style="display: flex; gap: 1rem;">
-                            <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
-                                <label for="db-region-filter">Region:</label>
-                                <select id="db-region-filter" style="padding: 0.4rem 0.8rem;">
+                    </header>
+
+                    <div class="glass-card" style="padding: 2rem;">
+                        <div class="db-controls-row">
+                            <div class="search-input-wrapper">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" id="db-search-input" placeholder="Search by ID, college, degree, or tools...">
+                            </div>
+                            
+                            <div class="db-filters">
+                                <select id="db-region-filter">
                                     <option value="All">All Regions</option>
                                     <option value="India">India Only</option>
                                     <option value="Global">Global Only</option>
                                 </select>
-                            </div>
-                            
-                            <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
-                                <label for="db-cluster-filter">Specialty:</label>
-                                <select id="db-cluster-filter" style="padding: 0.4rem 0.8rem;">
+                                
+                                <select id="db-cluster-filter">
                                     <option value="All">All Clusters</option>
                                     <option value="CAD Design">CAD Design</option>
-                                    <option value="CAE/Simulation">Simulation/CAE</option>
-                                    <option value="Robotics/Mechatronics">Mechatronics</option>
-                                    <option value="Manufacturing/Operations">Manufacturing</option>
+                                    <option value="CAE/Simulation">CAE/Simulation</option>
+                                    <option value="Robotics/Mechatronics">Robotics/Mechatronics</option>
+                                    <option value="Manufacturing/Operations">Manufacturing/Operations</option>
                                     <option value="HVAC/Thermal">HVAC/Thermal</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Candidate Table -->
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Candidate ID</th>
-                                    <th>Region</th>
-                                    <th>College (Tier)</th>
-                                    <th>Specialty Cluster</th>
-                                    <th>Core Skills & Software</th>
-                                    <th>Employability Score</th>
-                                </tr>
-                            </thead>
-                            <tbody id="db-table-body">
-                                <!-- Dynamic rows -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Pagination bar -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);" id="db-count-text">
-                            Showing 1-12 of 25,000 profiles
-                        </span>
-                        
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button type="button" class="btn btn-secondary" id="prev-page-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;" disabled>Previous</button>
-                            <button type="button" class="btn btn-secondary" id="next-page-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Next</button>
+
+                        <!-- Interactive Table -->
+                        <div class="table-container">
+                            <table class="db-table">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate ID</th>
+                                        <th>Region</th>
+                                        <th>College Brand (Tier)</th>
+                                        <th>Domain Cluster</th>
+                                        <th>Skills & Tools</th>
+                                        <th>Employability Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="db-table-body">
+                                    <!-- Loaded dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Table Pagination controls -->
+                        <div class="db-pagination-row">
+                            <span class="db-showing-text" id="db-count-text">Showing 1-12 of 100,000 records</span>
+                            <div class="pagination-buttons">
+                                <button class="btn btn-secondary btn-sm" id="prev-page-btn">Previous</button>
+                                <button class="btn btn-secondary btn-sm" id="next-page-btn">Next</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </section>
-    </div>
+                <!-- Dashboard Sub-View: Settings & Placeholders -->
+                <div id="view-dashboard-placeholders" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Premium Integrations & Advanced Features</h1>
+                            <p>Design placeholders for advanced enterprise integrations, AI portfolios, and recruiter dashboards</p>
+                        </div>
+                    </header>
 
-    <!-- Scanner Overlay Modal -->
+                    <div class="placeholders-grid">
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="linkedin" class="card-icon"></i>
+                            <h3>LinkedIn Profile Integration</h3>
+                            <p>Sync your LinkedIn profile, recommendations, and job experience directly into MechIntel to bypass manual entry. (Available in Phase 2)</p>
+                            <span class="badge badge-medium">Coming Soon</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="github" class="card-icon"></i>
+                            <h3>GitHub & GrabCAD Sync</h3>
+                            <p>Automatically extract CAD geometries from GrabCAD and code scripts from GitHub to build a verified visual project catalog. (Available in Phase 2)</p>
+                            <span class="badge badge-medium">Coming Soon</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="layout-template" class="card-icon"></i>
+                            <h3>3D Portfolio Builder</h3>
+                            <p>Generate a customized, professional static portfolio page displaying your 3D CAD files, calculations, and stress curves. (Available in Phase 2)</p>
+                            <span class="badge badge-medium">Coming Soon</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="video" class="card-icon"></i>
+                            <h3>AI Mock Interviews</h3>
+                            <p>Participate in simulated audio/video technical interviews. Dr. Harris will quiz you on shear stress limits or thermofluid loops. (Available in Phase 3)</p>
+                            <span class="badge badge-low">Future Vision</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="briefcase" class="card-icon"></i>
+                            <h3>Recruiter Dashboard</h3>
+                            <p>Allow hiring managers from Tesla, L&T, and Boeing to query anonymized profiles, filter by score, and contact matching freshers. (Available in Phase 3)</p>
+                            <span class="badge badge-low">Future Vision</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="award" class="card-icon"></i>
+                            <h3>Certification & Verification Tracker</h3>
+                            <p>Validate your SolidWorks CSWP or Six Sigma Green Belt credentials directly with ASME using cryptographic hashes. (Available in Phase 2)</p>
+                            <span class="badge badge-medium">Coming Soon</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="users" class="card-icon"></i>
+                            <h3>Community Leaderboard</h3>
+                            <p>Compare quiz scores and dashboard rankings with peers from your engineering department or global region. (Available in Phase 2)</p>
+                            <span class="badge badge-medium">Coming Soon</span>
+                        </div>
+                        <div class="placeholder-card glass-card">
+                            <i data-lucide="sparkles" class="card-icon"></i>
+                            <h3>AI Industry Mentorship</h3>
+                            <p>Schedule one-on-one virtual alignment sessions with verified senior consultants in aerospace, HVAC, or CFD. (Available in Phase 3)</p>
+                            <span class="badge badge-low">Future Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- SCANNER MODAL OVERLAY -->
     <div id="scanner-overlay" class="scanner-modal-overlay">
-        <div class="scanner-modal-card">
-            <div class="scanner-modal-title">Smart Resume Scanner</div>
+        <div class="scanner-modal-card glass-card">
+            <div class="scanner-modal-title">Smart Resume Parser (Client-Side)</div>
+            
             <div class="scanner-doc-viewport">
                 <div class="scanner-doc-laser"></div>
                 <div class="scanner-doc-line med"></div>
@@ -618,28 +1001,29 @@
                 <div class="scanner-doc-line med"></div>
                 <div class="scanner-doc-line short"></div>
             </div>
+
             <div class="scanner-steps-list">
                 <div class="scanner-step-row" id="scan-step-1">
                     <span class="scanner-step-icon">1</span>
-                    <span>Reading document text & removing PII...</span>
+                    <span>Extracting PDF metadata & removing PII handles...</span>
                 </div>
                 <div class="scanner-step-row" id="scan-step-2">
                     <span class="scanner-step-icon">2</span>
-                    <span>Extracting mechanical skills and tools...</span>
+                    <span>Resolving engineering skills (GD&T, FEA, CFD)...</span>
                 </div>
                 <div class="scanner-step-row" id="scan-step-3">
                     <span class="scanner-step-icon">3</span>
-                    <span>Verifying industry certifications...</span>
+                    <span>Parsing CAD/CAE tools (SolidWorks, ANSYS, Creo)...</span>
                 </div>
                 <div class="scanner-step-row" id="scan-step-4">
                     <span class="scanner-step-icon">4</span>
-                    <span>Running market benchmarking algorithms...</span>
+                    <span>Running global benchmarking standing model...</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Load scripts -->
+    <!-- Application Script -->
     <script src="app.js"></script>
 </body>
 </html>

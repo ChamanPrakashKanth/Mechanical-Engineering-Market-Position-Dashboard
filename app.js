@@ -1,208 +1,22 @@
-// Application Logic for ME Market Position Dashboard
+// MechIntel AI — Application Logic Engine
 
-// Seeded Random Generator for deterministic dataset generation
+// Seeded LCG Random Generator for deterministic candidate dataset
 function createRandom(seed) {
     let currentSeed = seed;
     return function() {
-        // Linear Congruential Generator (LCG)
         currentSeed = (currentSeed * 9301 + 49297) % 233280;
         return currentSeed / 233280;
     };
 }
 
-// Global variables
+// Global Variables
 let candidates = [];
 let targetProfile = null;
-let filteredCandidates = [];
-let currentPage = 1;
-const pageSize = 12;
+let activeTheme = 'dark';
+let activeDomain = 'CAD Design';
 let completedCourses = [];
 
-const COURSE_CATALOG = {
-    "CAD Design": {
-        title: "ASME Y14.5 Geometric Dimensioning & Tolerancing (GD&T) & Mechanical Design",
-        slug: "cad-lewis-gear-bending",
-        description: "Learn standard dimensioning constraints, DFM rules, and tolerance stack-up analysis for mechanical systems.",
-        written_content: `
-            <h4>1. Geometric Dimensioning & Tolerancing (GD&T) - ASME Y14.5</h4>
-            <p>GD&T is a system of symbols used to specify the exact allowable variation of geometric features. Instead of relying solely on linear dimensions (which create square tolerance zones), GD&T uses circular or cylindrical tolerance zones.</p>
-            <ul>
-                <li><strong>Datum Reference Frame (DRF):</strong> A coordinate system that restricts the 6 degrees of freedom of a part during machining and inspection. Datums are established in order of priority: Primary (constrains 3 DOF), Secondary (constrains 2 DOF), and Tertiary (constrains 1 DOF).</li>
-                <li><strong>Geometric Controls:</strong> Position (controls centers/axes from True Position), Profile (controls shape/size of surfaces), and Runout (controls coaxiality of rotating features).</li>
-                <li><strong>Material Modifiers:</strong> Maximum Material Condition (MMC - Ⓜ) represents the state containing the maximum amount of material (smallest hole, largest pin). Selecting MMC grants additional 'bonus tolerance' as the feature size departs from MMC.</li>
-            </ul>
-
-            <h4>2. Design for Manufacturing (DFM) Guidelines</h4>
-            <p>Designing components without considering manufacturing constraints leads to high production rejection rates.</p>
-            <ul>
-                <li><strong>Plastic Injection Molding:</strong> Maintain uniform wall thickness (2.0 - 3.0 mm) to prevent sink marks and warpage. Add draft angles of 1.0° - 2.0° to vertical faces for easy ejection from the mold core/cavity.</li>
-                <li><strong>Sheet Metal Design:</strong> Minimum bend radius must satisfy R ≥ t (sheet thickness). Design bend reliefs of width w ≥ 1.5t and depth d ≥ 1.5t at corners to prevent tearing.</li>
-                <li><strong>Machined Fits (ASME B4.1):</strong> Clearance Fits (RC - free rotation), Transition Fits (LT - overlap), and Interference/Press Fits (LN - require force to assemble).</li>
-            </ul>
-
-            <h4>3. Step-by-Step Tolerance Stack-Up Calculation</h4>
-            <p>In a linear shaft assembly with components stacked end-to-end, we calculate clearances to ensure fitment:</p>
-            <ul>
-                <li><strong>Worst-Case Method:</strong> Sums the absolute limits of tolerances: T<sub>c</sub> = Σ T<sub>i</sub>.</li>
-                <li><strong>Statistical (Root-Sum-Square - RSS) Method:</strong> Assumes normal distribution of components: T<sub>RSS</sub> = √Σ T<sub>i</sub><sup>2</sup>.</li>
-                <li><strong>Lewis Bending Equation:</strong> Root bending stress in gear design (modeled as a cantilever beam under tangential load W<sub>t</sub>): σ = W<sub>t</sub> / (F · m · Y) ≤ [σ]<sub>all</sub>, where F is face width, m is module, and Y is the Lewis Form Factor.</li>
-            </ul>
-        `,
-        quiz_question: "What is the primary benefit of designing parts using the Maximum Material Condition (MMC) modifier?",
-        quiz_options: [
-            "It eliminates the need for any datum reference frames",
-            "It grants additional 'bonus tolerance' as the feature size departs from MMC",
-            "It guarantees zero friction in rotating shaft bearings"
-        ],
-        quiz_answer: "It grants additional 'bonus tolerance' as the feature size departs from MMC"
-    },
-    "CAE/Simulation": {
-        title: "Computational Finite Element Analysis (FEA) & Fluid Solvers",
-        slug: "cae-stiffness-matrix",
-        description: "Understand element stiffness formulations, boundary conditions, meshing metrics, and Navier-Stokes equations.",
-        written_content: `
-            <h4>1. Element Types & Formulations in FEA</h4>
-            <p>FEA discretizes solid continuous structures into discrete finite elements.</p>
-            <ul>
-                <li><strong>1D Elements (Truss/Beam):</strong> Truss elements only support axial loads. Beam elements support bending, torsion, and axial loads.</li>
-                <li><strong>2D Elements (Shell):</strong> Used for thin-walled parts (thickness is small compared to other dimensions). Mid-surfaces are extracted to solve elements.</li>
-                <li><strong>3D Elements (Solid/Tetrahedral/Hexahedral):</strong> Used for bulky, complex 3D parts. Hexahedral (brick) elements provide higher accuracy and faster convergence than tetrahedral elements.</li>
-            </ul>
-
-            <h4>2. Stiffness Matrices & Deflection Mechanics</h4>
-            <p>For a discretized system under loading, the nodal displacement vector <strong>u</strong> is solved using the system stiffness matrix <strong>K</strong> and force vector <strong>f</strong>:</p>
-            <pre><strong>K</strong> <strong>u</strong> = <strong>f</strong></pre>
-            <ul>
-                <li><strong>Cantilever Deflection Formula:</strong> The maximum tip deflection δ<sub>max</sub> under a point load P at the free end is: δ<sub>max</sub> = P L<sup>3</sup> / (3 E I), where E is Young's Modulus and I is the Area Moment of Inertia.</li>
-                <li><strong>Von Mises Yield Criterion:</strong> In multi-axial stress states, the equivalent Von Mises stress σ<sub>v</sub> is calculated to predict ductile yield failure: σ<sub>v</sub> = √[0.5 · ((σ<sub>1</sub>-σ<sub>2</sub>)<sup>2</sup> + (σ<sub>2</sub>-σ<sub>3</sub>)<sup>2</sup> + (σ<sub>3</sub>-σ<sub>1</sub>)<sup>2</sup>)] ≤ S<sub>y</sub>.</li>
-            </ul>
-
-            <h4>3. Mesh Quality & CFD Boundary Layer Modeling</h4>
-            <p>In Computational Fluid Dynamics (CFD), fluid flow is solved using the discretized Navier-Stokes momentum equations:</p>
-            <pre>ρ (∂<strong>u</strong>/∂t + <strong>u</strong> · ∇<strong>u</strong>) = -∇p + μ ∇<sup>2</sup><strong>u</strong> + <strong>f</strong></pre>
-            <ul>
-                <li><strong>Mesh Quality Metrics:</strong> Aspect Ratio (should be close to 1.0), Skewness (deviation from equilateral shape; high skewness degrades solver accuracy), and Jacobian (element distortion; must be positive).</li>
-                <li><strong>Turbulence Models & y+ Calculation:</strong> SST k-omega (k-ω SST) integrates near-wall k-ω and free-stream k-ε, making it the industry standard for boundary layers. The dimensionless wall distance y<sup>+</sup> = u<sub>*</sub> y / ν is targeted near 1.0 to resolve the viscous sublayer directly.</li>
-            </ul>
-        `,
-        quiz_question: "Why is a y+ value near 1.0 targeted when setting up boundary layer meshes for aerodynamic simulations?",
-        quiz_options: [
-            "It allows the solver to bypass Navier-Stokes computations completely",
-            "It resolves the viscous sublayer directly without relying on wall functions",
-            "It automatically increases the material's structural yield strength"
-        ],
-        quiz_answer: "It resolves the viscous sublayer directly without relying on wall functions"
-    },
-    "Robotics/Mechatronics": {
-        title: "Closed-Loop Feedforward Control Systems & PID Tuning",
-        slug: "robotics-pid-control",
-        description: "Explore the mathematics behind closed-loop PID control tuning, microcontrollers, and kinematics.",
-        written_content: `
-            <h4>1. Proportional-Integral-Derivative (PID) Control Theory</h4>
-            <p>PID controllers regulate the error e(t) = r(t) - y(t) between a desired setpoint r(t) and measured process output y(t):</p>
-            <pre>u(t) = K<sub>p</sub> e(t) + K<sub>i</sub> ∫ e(τ)dτ + K<sub>d</sub> de(t)/dt</pre>
-            <ul>
-                <li><strong>K<sub>p</sub> (Proportional Gain):</strong> Corrects current error; higher gain speeds up response but causes overshoot.</li>
-                <li><strong>K<sub>i</sub> (Integral Gain):</strong> Corrects past accumulated errors; eliminates steady-state offset but can lead to windup.</li>
-                <li><strong>K<sub>d</sub> (Derivative Gain):</strong> Predicts future error; dampens oscillations and stabilizes settling time.</li>
-                <li><strong>Laplace transfer function G<sub>c</sub>(s):</strong> G<sub>c</sub>(s) = K<sub>p</sub> + K<sub>i</sub>/s + K<sub>d</sub> s = (K<sub>d</sub> s<sup>2</sup> + K<sub>p</sub> s + K<sub>i</sub>) / s.</li>
-            </ul>
-
-            <h4>2. Embedded Controller Interfaces & Filtering</h4>
-            <p>Microcontrollers interface with analog sensors (thermistors, strain gages) through Analog-to-Digital Converters (ADCs).</p>
-            <ul>
-                <li><strong>ADC Resolution Step Voltage:</strong> The smallest change in input voltage that can be resolved by an N-bit ADC with reference voltage V<sub>ref</sub>: ΔV = V<sub>ref</sub> / (2<sup>N</sup> - 1). For a 10-bit ADC at 5.0V, resolution is 5.0V / 1023 ≈ 4.88 mV.</li>
-                <li><strong>Active RC Low-Pass Filter:</strong> Used to filter out high-frequency noise from sensors: f<sub>c</sub> = 1 / (2π R C), where f<sub>c</sub> is the cutoff frequency in Hertz.</li>
-            </ul>
-
-            <h4>3. Robotic Kinematics Equations</h4>
-            <ul>
-                <li><strong>Homogeneous Transformation Matrix (T):</strong> Links a robot joint coordinate frame to the next frame: T = [[R, d], [0, 1]], where R is rotation matrix and d is translation vector.</li>
-                <li><strong>Denavit-Hartenberg (D-H) Parameters:</strong> Standard convention utilizing link parameters (length a, twist α, offset d, joint angle θ) to define joint coordinate frames.</li>
-            </ul>
-        `,
-        quiz_question: "For a 10-bit Analog-to-Digital Converter (ADC) operating with a 5.0V reference, what is the smallest step voltage resolution?",
-        quiz_options: [
-            "Approximately 4.88 mV",
-            "Exactly 5.00 mV",
-            "Approximately 9.77 mV"
-        ],
-        quiz_answer: "Approximately 4.88 mV"
-    },
-    "Manufacturing/Operations": {
-        title: "Statistical Quality Control & Six Sigma Process Capability",
-        slug: "manufacturing-cpk-capability",
-        description: "Learn to calculate quality capability indices and analyze production deviation from specification limits.",
-        written_content: `
-            <h4>1. Process Capability Indices (C<sub>p</sub> and C<sub>pk</sub>)</h4>
-            <p>In manufacturing, components must stay within Upper (USL) and Lower (LSL) Specification Limits.</p>
-            <ul>
-                <li><strong>C<sub>p</sub> (Potential Capability):</strong> Represents potential performance assuming a centered mean: C<sub>p</sub> = (USL - LSL) / (6σ), where σ is standard deviation.</li>
-                <li><strong>C<sub>pk</sub> (Actual Capability):</strong> Accounts for shifts in the process mean μ: C<sub>pk</sub> = min((USL - μ)/(3σ), (μ - LSL)/(3σ)).</li>
-                <li><strong>Capability Thresholds:</strong> C<sub>pk</sub> < 1.0 means process is incapable; C<sub>pk</sub> ≥ 1.33 is the industry standard threshold; C<sub>pk</sub> ≥ 2.0 achieves Six Sigma quality.</li>
-            </ul>
-
-            <h4>2. Step-by-Step Cp/Cpk Calculation Example</h4>
-            <p><strong>Scenario:</strong> A shaft production line has LSL = 9.5 mm and USL = 10.5 mm. Measurements show sample mean μ = 10.1 mm and standard deviation σ = 0.1 mm.</p>
-            <ol>
-                <li><strong>Calculate C<sub>p</sub>:</strong> C<sub>p</sub> = (10.5 - 9.5) / (6 · 0.1) = 1.0 / 0.6 ≈ 1.67</li>
-                <li><strong>Calculate C<sub>pk</sub>:</strong>
-                    <ul>
-                        <li>Upper side: (10.5 - 10.1) / (3 · 0.1) = 0.4 / 0.3 ≈ 1.33</li>
-                        <li>Lower side: (10.1 - 9.5) / (3 · 0.1) = 0.6 / 0.3 = 2.0</li>
-                        <li>C<sub>pk</sub> = min(1.33, 2.0) = 1.33</li>
-                    </ul>
-                </li>
-                <li><strong>Conclusion:</strong> The process is capable (C<sub>pk</sub> ≥ 1.33), but off-center. Adjusting the tooling center will improve C<sub>pk</sub>.</li>
-            </ol>
-
-            <h4>3. Machining Calculations (CNC Parameters)</h4>
-            <ul>
-                <li><strong>Cutting Speed (V<sub>c</sub>):</strong> Surface speed in m/min: V<sub>c</sub> = (π · D · N) / 1000, where D is diameter (mm) and N is spindle speed (RPM).</li>
-                <li><strong>Feed Rate (V<sub>f</sub>):</strong> Tool feed speed in mm/min: V<sub>f</sub> = f<sub>z</sub> · z · N, where f<sub>z</sub> is feed per tooth and z is number of teeth.</li>
-                <li><strong>Material Removal Rate (MRR):</strong> Volume removed per minute: MRR = a<sub>p</sub> · a<sub>e</sub> · V<sub>f</sub>, where a<sub>p</sub> is axial depth of cut and a<sub>e</sub> is radial width of cut.</li>
-            </ul>
-        `,
-        quiz_question: "If a process has a mean of 10.0, standard deviation of 0.1, and specification limits of 9.5 to 10.5, what is the process capability Cp?",
-        quiz_options: [
-            "Cp = 0.83",
-            "Cp = 1.67",
-            "Cp = 1.33"
-        ],
-        quiz_answer: "Cp = 1.67"
-    },
-    "HVAC/Thermal": {
-        title: "Thermodynamics & Psychrometric HVAC Heat Load Calculation",
-        slug: "hvac-sensible-latent-loads",
-        description: "Study energy transfer boundaries, refrigeration cycles, and sensible vs. latent load sizing.",
-        written_content: `
-            <h4>1. Sensible Heat Transfer Rate</h4>
-            <p>In HVAC systems, cooling load calculations depend on sensible heat (temperature change) and latent heat (humidity/phase change):</p>
-            <pre>q<sub>s</sub> = m · C<sub>p</sub> · ΔT</pre>
-            <p>Where q<sub>s</sub> is sensible heat rate (kW), m is air mass flow rate (kg/s), C<sub>p</sub> is specific heat of air (≈1.005 kJ/kg·K), and ΔT is the temperature difference (K).</p>
-
-            <h4>2. Latent Heat Transfer Rate</h4>
-            <p>Latent heat exchange accounts for water vapor density change (dehumidification):</p>
-            <pre>q<sub>l</sub> = m · h<sub>fg</sub> · Δw</pre>
-            <p>Where h<sub>fg</sub> is the latent heat of vaporization of water (≈2501 kJ/kg) and Δw is the humidity ratio difference (kg water / kg dry air).</p>
-
-            <h4>3. Piping & Duct Friction Head Loss (Fluid Flow)</h4>
-            <ul>
-                <li><strong>Darcy-Weisbach Equation:</strong> Friction head loss h<sub>f</sub> in meters of fluid: h<sub>f</sub> = f · (L/D) · (v<sup>2</sup> / 2g), where f is friction factor, L is length, D is pipe internal diameter, v is velocity, and g is gravity.</li>
-                <li><strong>Equivalent Duct Diameter (D<sub>e</sub>):</strong> For rectangular ducts of width a and height b (Huebscher formula): D<sub>e</sub> = 1.30 · (a · b)<sup>0.625</sup> / (a + b)<sup>0.25</sup>.</li>
-            </ul>
-        `,
-        quiz_question: "Which cooling load component accounts for the heat required to condense moisture out of the air?",
-        quiz_options: [
-            "Sensible cooling load",
-            "Latent cooling load",
-            "Radiation heat gain"
-        ],
-        quiz_answer: "Latent cooling load"
-    }
-};
-
-// Standard Mechanical Engineering taxonomy for normalization and parsing
+// Mechanical Engineering Taxonomy definitions
 const SKILLS_DICT = {
     "gd&t": "GD&T (Geometric Dimensioning & Tolerancing)",
     "geometric dimensioning": "GD&T (Geometric Dimensioning & Tolerancing)",
@@ -232,7 +46,7 @@ const SKILLS_DICT = {
     "vibration analysis": "Vibration Analysis",
     "cnc programming": "CNC Programming",
     "embedded systems": "Embedded Systems",
-    "robotics": "Robotics",
+    "robotics": "Robotics"
 };
 
 const SOFTWARE_DICT = {
@@ -254,7 +68,6 @@ const SOFTWARE_DICT = {
     "inventor": "Autodesk Inventor",
     "creo": "PTC Creo",
     "pro-e": "PTC Creo",
-    "pro/engineer": "PTC Creo",
     "nx": "Siemens NX",
     "nastran": "Nastran",
     "hypermesh": "HyperMesh",
@@ -266,1937 +79,1804 @@ const SOFTWARE_DICT = {
 const CERTS_DICT = {
     "cswa": "Certified SolidWorks Associate (CSWA)",
     "cswp": "Certified SolidWorks Professional (CSWP)",
-    "cswpe": "Certified SolidWorks Professional (CSWP)",
-    "cswpa": "Certified SolidWorks Advanced (CSWPA)",
     "six sigma green": "Lean Six Sigma Green Belt",
     "six sigma yellow": "Lean Six Sigma Yellow Belt",
     "six sigma black": "Lean Six Sigma Black Belt",
-    "autodesk certified": "Autodesk Certified Professional",
-    "hvac design": "HVAC Design Certificate",
     "ashrae": "ASHRAE Member Certification",
+    "hvac design": "HVAC Design Certificate",
     "asme": "ASME Member / Cert",
-    "fea specialist": "FEA Specialist Certification",
-    "labview associate": "CLAD (Certified LabVIEW Associate Developer)",
-    "pmp": "Project Management Professional (PMP)"
+    "ansys": "ANSYS Certified Professional"
 };
 
-// College lists for dataset generation
-const COLLEGES = {
-    "India": {
-        "Tier 1": ["IIT Bombay", "IIT Madras", "IIT Delhi", "IIT Kharagpur", "NIT Trichy", "NIT Surathkal", "BITS Pilani"],
-        "Tier 2": ["VIT Vellore", "Manipal MIT", "Anna University", "Delhi Technological University (DTU)", "RV College of Engineering", "PSG College of Technology", "COEP Pune"],
-        "Tier 3": ["Mumbai University", "Pune University", "VTU Belgaum", "GTU Ahmedabad", "Anna Univ Affiliated Colleges", "JNTU Hyderabad", "Local Engineering College"]
+// Domain Specialties & Keywords mapping
+const CLUSTERS = ["CAD Design", "CAE/Simulation", "Robotics/Mechatronics", "Manufacturing/Operations", "HVAC/Thermal"];
+
+const CLUSTER_KEYWORDS = {
+    "CAD Design": [
+        "GD&T (Geometric Dimensioning & Tolerancing)", "Product Design", "Sheet Metal Design", 
+        "DFM (Design for Manufacturing)", "Tolerance Analysis", "Injection Molding Design", 
+        "SolidWorks", "AutoCAD", "CATIA", "Fusion 360", "PTC Creo", "Autodesk Inventor", 
+        "Certified SolidWorks Associate (CSWA)", "Certified SolidWorks Professional (CSWP)"
+    ],
+    "CAE/Simulation": [
+        "Finite Element Analysis (FEA)", "Computational Fluid Dynamics (CFD)", "Structural Analysis", 
+        "Thermal Analysis", "Vibration Analysis", "ANSYS", "Abaqus", "MATLAB", "Fluent", 
+        "COMSOL", "HyperMesh", "Nastran", "ANSYS Certified Professional"
+    ],
+    "Robotics/Mechatronics": [
+        "Mechatronics", "Control Systems", "Robotics", "Embedded Systems", "Kinematics & Dynamics", 
+        "MATLAB", "Simulink", "Python", "C++", "LabVIEW", "Arduino"
+    ],
+    "Manufacturing/Operations": [
+        "Lean Manufacturing", "Six Sigma", "Quality Control & Assurance", "CNC Programming", 
+        "AutoCAD", "SolidCAM", "Minitab", "Mastercam", "Lean Six Sigma Yellow Belt", 
+        "Lean Six Sigma Green Belt", "Lean Six Sigma Black Belt"
+    ],
+    "HVAC/Thermal": [
+        "HVAC Design", "Thermodynamics", "Heat Transfer", "Fluid Mechanics", "Piping Design", 
+        "AutoCAD", "Revit", "HVAC Design Certificate", "ASHRAE Member Certification"
+    ]
+};
+
+// Employer demand benchmarks
+const EMPLOYER_DEMANDS = {
+    "CAD Design": {
+        role: "Design Engineer / CAD Analyst",
+        skills: [
+            { name: "Geometric Dimensioning & Tolerancing (GD&T)", desc: "Applying ASME Y14.5 rules for datum definitions and tolerance zones.", priority: "Critical" },
+            { name: "Design for Manufacturing & Assembly (DFM/DFMA)", desc: "Optimizing models for injection molding, casting, and sheet metal.", priority: "High" }
+        ],
+        software: [
+            { name: "SolidWorks", desc: "Industry-standard parametric 3D modeling and sheet metal design.", priority: "Critical" },
+            { name: "CATIA", desc: "Surface frame modeling dominant in automotive and aerospace.", priority: "High" }
+        ],
+        certs: [
+            { name: "Certified SolidWorks Professional (CSWP)", desc: "Validates complex solid modeling competencies.", priority: "High" }
+        ],
+        portfolio: [
+            { title: "Parametric Gearbox Assembly", desc: "Constrained gear system showing tooth bending calculations." }
+        ]
     },
-    "Global": {
-        "Tier 1": ["MIT", "Stanford University", "UC Berkeley", "Georgia Institute of Technology", "Imperial College London", "ETH Zurich", "TU Munich"],
-        "Tier 2": ["Penn State University", "Purdue University", "University of Michigan", "TU Delft", "University of Toronto", "UNSW Sydney", "KTH Royal Institute"],
-        "Tier 3": ["State University System", "Regional Technical College", "City College of Technology", "International Polytechnic", "National Institute of Science"]
+    "CAE/Simulation": {
+        role: "Simulation Analyst / FEA Specialist / CFD Engineer",
+        skills: [
+            { name: "Finite Element Method (FEM) Fundamentals", desc: "Understanding formulations, convergence, and element shapes.", priority: "Critical" },
+            { name: "Computational Fluid Dynamics (CFD)", desc: "Applying turbulence models (SST k-omega) and viscous wall cell mesh treatment.", priority: "Critical" }
+        ],
+        software: [
+            { name: "ANSYS Workbench", desc: "Static structural, thermal, and Fluent CFD solver suites.", priority: "Critical" },
+            { name: "Abaqus / Nastran", desc: "Solver standard for non-linear dynamic crashes and stress fatigue.", priority: "High" }
+        ],
+        certs: [
+            { name: "ANSYS Certified Professional", desc: "Validates simulation setup, solver configurations, and precision boundary conditions.", priority: "High" }
+        ],
+        portfolio: [
+            { title: "Aerodynamic NACA Wing CFD", desc: "Boundary layer grids independence validating lift/drag coefficient maps." }
+        ]
+    },
+    "Robotics/Mechatronics": {
+        role: "Robotics & Automation Engineer",
+        skills: [
+            { name: "Control Systems & PID Tuning", desc: "Designing closed-loop feedback controllers for speed/position tracking.", priority: "Critical" },
+            { name: "Embedded Firmware Programming", desc: "Writing C/C++ scripts for I2C, SPI hardware sensor loops.", priority: "High" }
+        ],
+        software: [
+            { name: "MATLAB & Simulink", desc: "Dynamic physical models simulation and root-locus controller design.", priority: "Critical" },
+            { name: "ROS (Robot Operating System)", desc: "Messaging framework for hardware abstraction and path planners.", priority: "High" }
+        ],
+        certs: [
+            { name: "ASME Robotics Specialist", desc: "Verifies automation safety standards and mechanism design rules.", priority: "Medium" }
+        ],
+        portfolio: [
+            { title: "PID Self-Balancing Bot", desc: "Two-wheeled balancing robot using IMU feedback loops." }
+        ]
+    },
+    "Manufacturing/Operations": {
+        role: "Production Engineer / Quality Manager",
+        skills: [
+            { name: "Lean Six Sigma (DMAIC)", desc: "Statistical process control, Cp/Cpk indices, and waste removal audits.", priority: "Critical" },
+            { name: "CNC Machining & CAM Fixtures", desc: "Generating coordinate paths (G-code) and designing locating fixtures.", priority: "High" }
+        ],
+        software: [
+            { name: "SolidCAM / Mastercam", desc: "CNC milling/turning toolpath simulation programs.", priority: "Critical" },
+            { name: "Minitab", desc: "Process variance analysis and statistical quality control graphing.", priority: "High" }
+        ],
+        certs: [
+            { name: "Lean Six Sigma Green Belt", desc: "Validates process capability variance reduction methodologies.", priority: "Critical" }
+        ],
+        portfolio: [
+            { title: "Six Sigma DMAIC Yield Audit", desc: "Process improvement study analyzing parts variation limits." }
+        ]
+    },
+    "HVAC/Thermal": {
+        role: "HVAC Project / MEP Design Engineer",
+        skills: [
+            { name: "Cooling & Heating Load Sizing", desc: "Conducting heat transfer rates sizing using psychrometrics.", priority: "Critical" },
+            { name: "Duct & Piping Static Sizing", desc: "Determining friction head losses in building networks.", priority: "Critical" }
+        ],
+        software: [
+            { name: "Autodesk Revit MEP", desc: "3D duct routing, plumbing coordination layouts, and BIM checklists.", priority: "Critical" },
+            { name: "Carrier HAP", desc: "Hourly cooling thermal load simulator for commercial projects.", priority: "High" }
+        ],
+        certs: [
+            { name: "HVAC Design Certificate", desc: "Accredited validation of ventilation compliance standards.", priority: "High" }
+        ],
+        portfolio: [
+            { title: "Office Building VRF Design", desc: "Full thermal layout in Revit detailing duct pressure sizing." }
+        ]
     }
 };
 
-// Helper: Seeded candidate dataset generator
-function generateDataset(size = 100000) {
-    const random = createRandom(42); // Fixed seed
+// Course catalog
+const COURSE_CATALOG = {
+    "CAD Design": {
+        title: "ASME Y14.5 GD&T & Mechanical Design Essentials",
+        slug: "cad-lewis-gear-bending",
+        skill_tags: ["GD&T", "Product Design", "SolidWorks"],
+        score_boost: 5.0,
+        description: "Learn dimensioning standards, DFM rules, and tolerance stackup analyses.",
+        written_content: `
+            <h4>1. Geometric Dimensioning & Tolerancing (GD&T) - ASME Y14.5</h4>
+            <p>GD&T restricts the 6 degrees of freedom of a component relative to a Datum Reference Frame (DRF). Rather than linear tolerances which form square zones, GD&T defines cylindrical zones to decrease costs and increase assembly success rates.</p>
+            <ul>
+                <li><strong>MMC (Maximum Material Condition - Ⓜ):</strong> The feature size representing the maximum volume of material (smallest hole, largest pin). Departures from MMC grant bonus tolerance.</li>
+                <li><strong>LMC (Least Material Condition - Ⓛ):</strong> The state containing the minimum volume of material.</li>
+            </ul>
+
+            <h4>2. Worst-Case vs. RSS Tolerance Stackup</h4>
+            <p>To compute the gap limits in a stack of mechanical components:</p>
+            <pre>Worst-Case: T_wc = Σ T_i&#10;Statistical (Root-Sum-Square): T_rss = √(Σ T_i²)</pre>
+            <p>Statistical stackups assume parts follow a normal distribution, preventing over-tolerancing and lowering manufacturing costs.</p>
+        `,
+        quiz_question: "Which modifier grants additional 'bonus tolerance' as the feature size departs from its limit?",
+        quiz_options: ["Maximum Material Condition (MMC)", "Least Material Condition (LMC)", "Regardless of Feature Size (RFS)"],
+        quiz_answer: "Maximum Material Condition (MMC)"
+    },
+    "CAE/Simulation": {
+        title: "Practical FEM, Meshing & Fluid Solver Mechanics",
+        slug: "cae-stiffness-matrix",
+        skill_tags: ["FEA", "CFD", "ANSYS"],
+        score_boost: 5.0,
+        description: "Study element formulations, mesh quality, and turbulence near-wall boundary layers.",
+        written_content: `
+            <h4>1. Finite Element Stiffness Matrix</h4>
+            <p>Solid structures are discretized into element matrices combined into a global solver formula:</p>
+            <pre>K u = f</pre>
+            <p>Where <strong>K</strong> is structural stiffness, <strong>u</strong> is displacement vectors, and <strong>f</strong> represents loads. Cantilever deflection is solved via tip displacement:</p>
+            <pre>δ = P L³ / (3 E I)</pre>
+
+            <h4>2. Near-Wall y+ Cell Sizing in CFD</h4>
+            <p>Fluid boundary layer meshes require a dimensionless wall distance (y+) target near <strong>1.0</strong> to resolve the viscous sublayer directly using k-omega SST solvers without relying on log-law wall calculations.</p>
+        `,
+        quiz_question: "What dimensionless wall distance y+ is targeted to resolve the viscous sublayer directly?",
+        quiz_options: ["y+ ≈ 1.0", "y+ ≈ 30.0", "y+ ≈ 100.0"],
+        quiz_answer: "y+ ≈ 1.0"
+    },
+    "Robotics/Mechatronics": {
+        title: "Closed-loop Feedbacks & PID Microcontroller Programming",
+        slug: "robotics-pid-control",
+        skill_tags: ["Control Systems", "Robotics", "MATLAB"],
+        score_boost: 5.0,
+        description: "Solve closed-loop Laplace controller matrices and ADC voltage resolutions.",
+        written_content: `
+            <h4>1. PID Control Formulation</h4>
+            <p>A controller regulates joints by minimizing tracking error e(t):</p>
+            <pre>u(t) = Kp e(t) + Ki ∫ e(τ)dτ + Kd de(t)/dt</pre>
+            <p>Kp reduces rise time but increases overshoot, Ki eliminates steady-state offset, and Kd stabilizes oscillation settling bounds.</p>
+
+            <h4>2. ADC Step Voltage Resolution</h4>
+            <p>An N-bit analog converter reference voltage V_ref defines the step resolution:</p>
+            <pre>ΔV = V_ref / (2^N - 1)</pre>
+            <p>For a 10-bit converter at 5V reference: 5.0V / 1023 ≈ 4.88 mV.</p>
+        `,
+        quiz_question: "For a 10-bit ADC operating at 5.0V, what is the step voltage resolution?",
+        quiz_options: ["4.88 mV", "5.00 mV", "9.77 mV"],
+        quiz_answer: "4.88 mV"
+    },
+    "Manufacturing/Operations": {
+        title: "Statistical Quality & Process Capability (Cp/Cpk)",
+        slug: "manufacturing-cpk-capability",
+        skill_tags: ["Six Sigma", "Quality", "Operations"],
+        score_boost: 5.0,
+        description: "Calculate standard process deviation margins and Six Sigma thresholds.",
+        written_content: `
+            <h4>1. Process Capability Indices (Cp/Cpk)</h4>
+            <p>Cp measures process potential, while Cpk accounts for centered mean offset relative to specification limits:</p>
+            <pre>Cp = (USL - LSL) / (6σ)&#10;Cpk = min((USL - μ)/(3σ), (μ - LSL)/(3σ))</pre>
+            <ul>
+                <li><strong>Cpk < 1.0:</strong> Process is incapable (defective parts are produced).</li>
+                <li><strong>Cpk ≥ 1.33:</strong> Standard industrial capability boundary.</li>
+                <li><strong>Cpk ≥ 2.0:</strong> Six Sigma quality levels (3.4 defects per million).</li>
+            </ul>
+        `,
+        quiz_question: "If a centered process has spec limits 9.5 to 10.5 mm and standard deviation 0.1 mm, what is Cp?",
+        quiz_options: ["Cp = 1.67", "Cp = 1.33", "Cp = 0.83"],
+        quiz_answer: "Cp = 1.67"
+    },
+    "HVAC/Thermal": {
+        title: "Psychrometric Heat Load Sizing & Darcy Head Loss Sizing",
+        slug: "hvac-sensible-latent-loads",
+        skill_tags: ["HVAC Design", "Thermodynamics", "Revit"],
+        score_boost: 5.0,
+        description: "Conduct sensible/latent building heat loads calculations and friction loss curves.",
+        written_content: `
+            <h4>1. Sensible vs. Latent Cooling Sizing</h4>
+            <p>Sensible loads change temperature, while latent loads remove air moisture:</p>
+            <pre>Sensible: qs = m · Cp · ΔT&#10;Latent: ql = m · h_fg · Δw</pre>
+            <p>Where h_fg is the latent heat of vaporization of water (≈2501 kJ/kg).</p>
+            
+            <h4>2. Darcy-Weisbach Friction Sizing</h4>
+            <pre>hf = f · (L/D) · (v² / 2g)</pre>
+            <p>Determines pump static pressures required to overcome system pipe friction.</p>
+        `,
+        quiz_question: "Which load represents the heat energy required to condense water vapor out of ventilation air?",
+        quiz_options: ["Latent cooling load", "Sensible cooling load", "Radiation thermal gain"],
+        quiz_answer: "Latent cooling load"
+    }
+};
+
+// Seeded dataset generator (Generates 100,000 anonymized competitor profiles deterministically)
+function generateDataset() {
+    const random = createRandom(42);
     const data = [];
+    const regions = ["India", "Global"];
+    const tiers = ["Tier 1", "Tier 2", "Tier 3"];
+    const degrees = ["B.Tech/B.S.", "M.Tech/M.S.", "Ph.D."];
     
-    // Five main career clusters
-    const clusters = ["CAD Design", "CAE/Simulation", "Robotics/Mechatronics", "Manufacturing/Operations", "HVAC/Thermal"];
-    
-    // Probability configurations for clusters
-    const clusterProb = {
-        "CAD Design": {
-            skills: ["GD&T (Geometric Dimensioning & Tolerancing)", "Product Design", "Sheet Metal Design", "DFM (Design for Manufacturing)", "Tolerance Analysis", "Injection Molding Design"],
-            software: ["SolidWorks", "AutoCAD", "CATIA", "Fusion 360", "PTC Creo", "Autodesk Inventor"],
-            certs: ["Certified SolidWorks Associate (CSWA)", "Certified SolidWorks Professional (CSWP)", "Autodesk Certified Professional"]
+    const collegesDb = {
+        "India": {
+            "Tier 1": ["IIT Bombay", "IIT Madras", "IIT Delhi", "IIT Kharagpur", "NIT Trichy", "BITS Pilani"],
+            "Tier 2": ["VIT Vellore", "Manipal MIT", "Anna University", "DTU Delhi", "RVCE Bangalore"],
+            "Tier 3": ["Mumbai University", "Pune University", "VTU Belgaum", "GTU Ahmedabad", "Local Engineering College"]
         },
-        "CAE/Simulation": {
-            skills: ["Finite Element Analysis (FEA)", "Computational Fluid Dynamics (CFD)", "Structural Analysis", "Thermal Analysis", "Vibration Analysis"],
-            software: ["ANSYS", "Abaqus", "MATLAB", "Fluent", "COMSOL", "HyperMesh", "Nastran"],
-            certs: ["FEA Specialist Certification", "ANSYS Certified Professional"]
-        },
-        "Robotics/Mechatronics": {
-            skills: ["Mechatronics", "Control Systems", "Robotics", "Embedded Systems", "Kinematics & Dynamics"],
-            software: ["MATLAB", "Simulink", "Python", "C++", "LabVIEW", "Arduino"],
-            certs: ["CLAD (Certified LabVIEW Associate Developer)", "ASME Member / Cert"]
-        },
-        "Manufacturing/Operations": {
-            skills: ["Lean Manufacturing", "Six Sigma", "Quality Control & Assurance", "CNC Programming"],
-            software: ["AutoCAD", "SolidCAM", "Minitab", "Mastercam"],
-            certs: ["Lean Six Sigma Yellow Belt", "Lean Six Sigma Green Belt", "Lean Six Sigma Black Belt"]
-        },
-        "HVAC/Thermal": {
-            skills: ["HVAC Design", "Thermodynamics", "Heat Transfer", "Fluid Mechanics", "Piping Design"],
-            software: ["AutoCAD", "Revit"],
-            certs: ["HVAC Design Certificate", "ASHRAE Member Certification"]
+        "Global": {
+            "Tier 1": ["MIT", "Stanford University", "UC Berkeley", "Imperial College London", "ETH Zurich"],
+            "Tier 2": ["Penn State", "Purdue University", "University of Michigan", "TU Delft", "University of Toronto"],
+            "Tier 3": ["State University", "Regional Tech College", "City College of Technology", "International Poly"]
         }
     };
 
-    for (let i = 0; i < size; i++) {
-        // 1. Geography and College
-        const isIndia = random() < 0.60; // 60% India, 40% Global
-        const region = isIndia ? "India" : "Global";
-        
-        let tier;
+    for (let i = 1; i <= 100000; i++) {
+        const region = random() < 0.60 ? "India" : "Global";
         const tierRoll = random();
-        if (tierRoll < 0.15) tier = "Tier 1";
-        else if (tierRoll < 0.60) tier = "Tier 2";
-        else tier = "Tier 3";
+        const tier = tierRoll < 0.15 ? "Tier 1" : (tierRoll < 0.60 ? "Tier 2" : "Tier 3");
         
-        const collegeList = COLLEGES[region][tier];
+        const collegeList = collegesDb[region][tier];
         const college = collegeList[Math.floor(random() * collegeList.length)];
         
-        // 2. Degree & Grad Year
-        let degree;
         const degRoll = random();
-        if (degRoll < 0.75) degree = "B.Tech/B.S.";
-        else if (degRoll < 0.95) degree = "M.Tech/M.S.";
-        else degree = "Ph.D.";
+        const degree = degRoll < 0.80 ? "B.Tech/B.S." : (degRoll < 0.98 ? "M.Tech/M.S." : "Ph.D.");
         
-        const gradYear = 2022 + Math.floor(random() * 5); // 2022 to 2026
+        const cluster = CLUSTERS[Math.floor(random() * CLUSTERS.length)];
         
-        // 3. Cluster and Skills/Software/Certs
-        const cluster = clusters[Math.floor(random() * clusters.length)];
-        const config = clusterProb[cluster];
+        // Generate skill intersections
+        const skillsPool = CLUSTER_KEYWORDS[cluster].filter(k => SKILLS_DICT[k.toLowerCase()] || false);
+        const toolsPool = CLUSTER_KEYWORDS[cluster].filter(k => SOFTWARE_DICT[k.toLowerCase()] || false);
+        const certsPool = CLUSTER_KEYWORDS[cluster].filter(k => CERTS_DICT[k.toLowerCase()] || false);
         
-        // Add random items from cluster pools
+        const skillsCount = Math.floor(random() * 4) + 1;
+        const toolsCount = Math.floor(random() * 3) + 1;
+        const certsCount = random() < 0.20 ? 1 : 0;
+        
         const skills = [];
-        config.skills.forEach(s => {
-            if (random() < 0.7) skills.push(s);
-        });
-        // 15% chance to have a cross-discipline skill
-        if (random() < 0.15) {
-            const otherCluster = clusters.find(c => c !== cluster);
-            const otherSkill = clusterProb[otherCluster].skills[0];
-            if (!skills.includes(otherSkill)) skills.push(otherSkill);
+        for(let s=0; s<skillsCount; s++) {
+            const item = skillsPool[Math.floor(random() * skillsPool.length)];
+            if(item && !skills.includes(item)) skills.push(item);
         }
         
-        const software_tools = [];
-        config.software.forEach(sw => {
-            if (random() < 0.65) software_tools.push(sw);
-        });
-        
-        const certifications = [];
-        config.certs.forEach(cert => {
-            if (random() < 0.25) certifications.push(cert);
-        });
-        
-        // 4. Counts (Projects, Internships, Research, Competitions)
-        // Adjust counts probabilistically based on college tier and degree
-        let projects = 1 + Math.floor(random() * 3); // base 1-3
-        if (tier === "Tier 1") projects += Math.floor(random() * 3);
-        else if (tier === "Tier 2") projects += Math.floor(random() * 2);
-        
-        let internships = 0;
-        const internRoll = random();
-        if (tier === "Tier 1") {
-            internships = internRoll < 0.2 ? 0 : (internRoll < 0.7 ? 1 : 2);
-        } else if (tier === "Tier 2") {
-            internships = internRoll < 0.4 ? 0 : (internRoll < 0.9 ? 1 : 2);
-        } else {
-            internships = internRoll < 0.7 ? 0 : 1;
+        const tools = [];
+        for(let t=0; t<toolsCount; t++) {
+            const item = toolsPool[Math.floor(random() * toolsPool.length)];
+            if(item && !tools.includes(item)) tools.push(item);
         }
-        
-        let research_papers = 0;
-        if (degree === "Ph.D.") {
-            research_papers = 2 + Math.floor(random() * 4);
-        } else if (degree === "M.Tech/M.S.") {
-            research_papers = random() < 0.4 ? 1 : 0;
-        } else {
-            research_papers = random() < 0.05 ? 1 : 0;
-        }
-        
-        let competitions = 0;
-        const compRoll = random();
-        if (tier === "Tier 1" || tier === "Tier 2") {
-            competitions = compRoll < 0.75 ? 0 : (compRoll < 0.95 ? 1 : 2);
-        } else {
-            competitions = compRoll < 0.95 ? 0 : 1;
-        }
-        
-        // Calculate composite score for ranking
-        const score = calculateScore({
-            tier,
-            degree,
-            skills,
-            software_tools,
-            certifications,
-            projects,
-            internships,
-            research_papers,
-            competitions
-        });
 
+        const certs = [];
+        if (certsCount > 0) {
+            const item = certsPool[Math.floor(random() * certsPool.length)];
+            if(item) certs.push(item);
+        }
+
+        const internships = random() < 0.35 ? 1 : (random() < 0.10 ? 2 : 0);
+        const projects = Math.floor(random() * 4) + 1;
+        const publications = degree === "Ph.D." ? Math.floor(random() * 4) + 2 : (random() < 0.15 ? 1 : 0);
+        const competitions = random() < 0.15 ? 1 : 0;
+        
+        // Calculate competitive score
+        const acadScore = tier === "Tier 1" ? 100 : (tier === "Tier 2" ? 70 : 40);
+        const degScore = degree === "B.Tech/B.S." ? 70 : (degree === "M.Tech/M.S." ? 85 : 100);
+        const acadWeighted = (acadScore * 0.6 + degScore * 0.4) * 0.25;
+        
+        const skillVal = Math.min(skills.length * 20, 100);
+        const toolVal = Math.min(tools.length * 25, 100);
+        const skillsWeighted = (skillVal * 0.5 + toolVal * 0.5) * 0.35;
+        
+        const internVal = Math.min(internships * 50, 100);
+        const projVal = Math.min(projects * 33, 100);
+        const compVal = Math.min(competitions * 50, 100);
+        const expWeighted = (internVal * 0.4 + projVal * 0.4 + compVal * 0.2) * 0.30;
+        
+        const paperVal = Math.min(publications * 50, 100);
+        const certVal = Math.min(certs.length * 50, 100);
+        const extraWeighted = (paperVal * 0.5 + certVal * 0.5) * 0.10;
+        
+        const score = Math.round((acadWeighted + skillsWeighted + expWeighted + extraWeighted) * 10);
+        
         data.push({
-            id: `ME-${i+10000}`,
-            region,
-            college,
-            tier,
-            degree,
-            gradYear,
-            cluster,
-            skills,
-            software_tools,
-            certifications,
-            projects,
-            internships,
-            research_papers,
-            competitions,
-            score
+            id: `Candidate #ME-${10000 + i}`,
+            region: region,
+            tier: tier,
+            college: college,
+            degree: degree,
+            cluster: cluster,
+            skills: skills,
+            software_tools: tools,
+            certifications: certs,
+            internships: internships,
+            projects: projects,
+            research_papers: publications,
+            competitions: competitions,
+            score: score / 10
         });
     }
-    
     return data;
 }
 
-// Calculate composite score (0-100) based on profile attributes
-function calculateScore(profile) {
-    let academicScore = 0;
-    if (profile.tier === "Tier 1") academicScore = 100;
-    else if (profile.tier === "Tier 2") academicScore = 70;
-    else academicScore = 40;
-    
-    let degreeVal = 0;
-    if (profile.degree === "Ph.D.") degreeVal = 100;
-    else if (profile.degree === "M.Tech/M.S." || profile.degree === "M.S.") degreeVal = 85;
-    else degreeVal = 70;
-    
-    const academicWeighted = (academicScore * 0.6 + degreeVal * 0.4) * 0.25; // 25% weight
-    
-    // Skills and tools (35% weight)
-    const skillCount = profile.skills ? profile.skills.length : 0;
-    const toolCount = profile.software_tools ? profile.software_tools.length : 0;
-    const skillScore = Math.min(skillCount * 12, 100);
-    const toolScore = Math.min(toolCount * 15, 100);
-    const skillsWeighted = (skillScore * 0.5 + toolScore * 0.5) * 0.35;
-    
-    // Practical experience (30% weight)
-    const internships = profile.internships || 0;
-    const projects = profile.projects || 0;
-    const competitions = profile.competitions || 0;
-    
-    const internScore = Math.min(internships * 50, 100);
-    const projectScore = Math.min(projects * 33, 100);
-    const compScore = Math.min(competitions * 50, 100);
-    
-    const experienceWeighted = (internScore * 0.4 + projectScore * 0.4 + compScore * 0.2) * 0.30;
-    
-    // Research and certs (10% weight)
-    const papers = profile.research_papers || 0;
-    const certsCount = profile.certifications ? profile.certifications.length : 0;
-    
-    const paperScore = Math.min(papers * 50, 100);
-    const certScore = Math.min(certsCount * 50, 100);
-    
-    const academicExtrasWeighted = (paperScore * 0.5 + certScore * 0.5) * 0.10;
-    let totalScore = academicWeighted + skillsWeighted + experienceWeighted + academicExtrasWeighted;
-    
-    // Add course completion boost of 5 points if they have completed the course for their matched cluster
-    if (profile.cluster && completedCourses.includes(profile.cluster)) {
-        totalScore = Math.min(totalScore + 5.0, 100.0);
-    }
-    
-    return Math.round(totalScore * 10) / 10;
-}
-
-// Parse raw resume text and extract known skills, software, certs
+// Strip PII and parse attributes
 function parseResumeText(text) {
     const textLower = text.toLowerCase();
-    const skills = new Set();
-    const software = new Set();
-    const certs = new Set();
     
-    // 1. Extract Skills
-    for (const [key, value] of Object.entries(SKILLS_DICT)) {
+    // Remove PII
+    let cleaned = text;
+    cleaned = cleaned.replace(/\b[\w\.-]+@[\w\.-]+\.\w{2,}\b/g, '[REDACTED_EMAIL]');
+    cleaned = cleaned.replace(/\b(?:\+?\d{1,3}[- ]?)?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}\b/g, '[REDACTED_PHONE]');
+    cleaned = cleaned.replace(/\b(?:linkedin\.com/in|github\.com)/[a-zA-Z0-9_-]+\b/g, '[REDACTED_SOCIAL]');
+    
+    // Skills extraction
+    const skills = [];
+    for (let key in SKILLS_DICT) {
         if (textLower.includes(key)) {
-            skills.add(value);
+            const skillName = SKILLS_DICT[key];
+            if (!skills.includes(skillName)) skills.push(skillName);
         }
     }
     
-    // 2. Extract Software Tools
-    for (const [key, value] of Object.entries(SOFTWARE_DICT)) {
-        // Escape special characters (like + in c++) to prevent regex compilation syntax errors
-        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        // Word boundary match to prevent matching partial words
-        const regex = new RegExp(`\\b${escapedKey}\\b`, 'i');
-        if (regex.test(textLower)) {
-            software.add(value);
-        }
-    }
-    
-    // 3. Extract Certifications
-    for (const [key, value] of Object.entries(CERTS_DICT)) {
+    // Software extraction
+    const software = [];
+    for (let key in SOFTWARE_DICT) {
         if (textLower.includes(key)) {
-            certs.add(value);
+            const swName = SOFTWARE_DICT[key];
+            if (!software.includes(swName)) software.push(swName);
+        }
+    }
+
+    // Certs extraction
+    const certs = [];
+    for (let key in CERTS_DICT) {
+        if (textLower.includes(key)) {
+            const certName = CERTS_DICT[key];
+            if (!certs.includes(certName)) certs.push(certName);
         }
     }
     
-    // 4. Heuristics for counts
-    // Projects
-    let projectCount = 2; // Default
-    const projMatches = textLower.match(/project|capstone|design challenge/g);
-    if (projMatches) {
-        projectCount = Math.min(Math.max(Math.floor(projMatches.length / 2), 1), 6);
+    // Heuristic counts
+    const projects = Math.min(Math.max(Math.round((textLower.match(/project|design/g) || []).length / 2), 1), 5);
+    const internships = Math.min((textLower.match(/internship|intern\b|trainee/g) || []).length, 2);
+    const research_papers = (textLower.includes("publication") || textLower.includes("published") || textLower.includes("ieee")) ? 1 : 0;
+    const competitions = (textLower.includes("baja") || textLower.includes("fsae") || textLower.includes("formula sae") || textLower.includes("robocon")) ? 1 : 0;
+    
+    let parsedRegion = "India";
+    if (textLower.includes("mit") || textLower.includes("stanford") || textLower.includes("berkeley") || textLower.includes("purdue") || textLower.includes("california") || textLower.includes("london")) {
+        parsedRegion = "Global";
+    }
+
+    let parsedTier = "Tier 3";
+    if (textLower.includes("iit") || textLower.includes("bits pilani") || textLower.includes("nit trichy") || textLower.includes("mit") || textLower.includes("stanford")) {
+        parsedTier = "Tier 1";
+    } else if (textLower.includes("vit") || textLower.includes("manipal") || textLower.includes("dtu") || textLower.includes("purdue")) {
+        parsedTier = "Tier 2";
     }
     
-    // Internships
-    let internCount = 0;
-    const internMatches = textLower.match(/internship|intern\b|trainee/g);
-    if (internMatches) {
-        internCount = Math.min(Math.max(Math.floor(internMatches.length / 2), 0), 3);
-    }
-    
-    // Research papers
-    let paperCount = 0;
-    if (textLower.includes("publication") || textLower.includes("published") || textLower.includes("journal") || textLower.includes("conference paper")) {
-        paperCount = 1;
-        const pubMatches = textLower.match(/journal|conference|ieee|asme/g);
-        if (pubMatches) {
-            paperCount = Math.min(Math.floor(pubMatches.length / 2) + 1, 4);
-        }
-    }
-    
-    // Competitions
-    let competitionCount = 0;
-    if (textLower.includes("formula sae") || textLower.includes("fsae") || textLower.includes("baja") || textLower.includes("robocon") || textLower.includes("go-kart") || textLower.includes("competition")) {
-        competitionCount = 1;
-    }
-    
-    // Determine college tier / region heuristics
-    let region = "India";
-    if (textLower.includes("mit") || textLower.includes("stanford") || textLower.includes("berkeley") || textLower.includes("university of") || textLower.includes("college") && !textLower.includes("india")) {
-        // Simple heuristic: if university name doesn't sound Indian, guess Global
-        if (!textLower.includes("iit") && !textLower.includes("nit") && !textLower.includes("pune") && !textLower.includes("mumbai") && !textLower.includes("delhi")) {
-            region = "Global";
-        }
-    }
-    
-    let tier = "Tier 3";
-    if (textLower.includes("iit ") || textLower.includes("indian institute of technology") || textLower.includes("bits pilani") || textLower.includes("mit ") || textLower.includes("stanford")) {
-        tier = "Tier 1";
-    } else if (textLower.includes("nit ") || textLower.includes("vit ") || textLower.includes("vellore") || textLower.includes("delhi technological") || textLower.includes("dtu") || textLower.includes("purdue") || textLower.includes("delft")) {
-        tier = "Tier 2";
-    }
-    
-    let degree = "B.Tech/B.S.";
-    if (textLower.includes("m.tech") || textLower.includes("master of technology") || textLower.includes("master of science") || textLower.includes("m.s.")) {
-        degree = "M.Tech/M.S.";
-    } else if (textLower.includes("ph.d") || textLower.includes("doctor of philosophy")) {
-        degree = "Ph.D.";
+    let parsedDegree = "B.Tech/B.S.";
+    if (textLower.includes("m.tech") || textLower.includes("m.s.") || textLower.includes("master")) {
+        parsedDegree = "M.Tech/M.S.";
+    } else if (textLower.includes("ph.d") || textLower.includes("doctor")) {
+        parsedDegree = "Ph.D.";
     }
 
     return {
-        region,
-        tier,
-        degree,
-        graduation_year: 2026,
-        skills: Array.from(skills),
-        software_tools: Array.from(software),
-        certifications: Array.from(certs),
-        projects: projectCount,
-        internships: internCount,
-        research_papers: paperCount,
-        competitions: competitionCount
+        region: parsedRegion,
+        tier: parsedTier,
+        degree: parsedDegree,
+        projects: projects,
+        internships: internships,
+        research_papers: research_papers,
+        competitions: competitions,
+        skills: skills,
+        software_tools: software,
+        certifications: certs,
+        raw_text: cleaned
     };
 }
 
-// Perform Market Position Analysis
-function runAnalysis(profile) {
-    targetProfile = profile;
-    targetProfile.score = calculateScore(targetProfile);
+// Calculate score values
+function calculateCompetitivenessScore(profile) {
+    const acadScore = profile.tier === "Tier 1" ? 100 : (profile.tier === "Tier 2" ? 70 : 40);
+    const degScore = profile.degree === "B.Tech/B.S." ? 70 : (profile.degree === "M.Tech/M.S." ? 85 : 100);
+    const acadWeighted = (acadScore * 0.6 + degScore * 0.4) * 0.25;
     
-    // 1. Identify Match Cluster first to enable specialty percentile
-    const clusters = ["CAD Design", "CAE/Simulation", "Robotics/Mechatronics", "Manufacturing/Operations", "HVAC/Thermal"];
-    const clusterKeywords = {
-        "CAD Design": ["GD&T (Geometric Dimensioning & Tolerancing)", "Product Design", "Sheet Metal Design", "DFM (Design for Manufacturing)", "Tolerance Analysis", "Injection Molding Design", "SolidWorks", "AutoCAD", "CATIA", "Fusion 360", "PTC Creo", "Autodesk Inventor", "Certified SolidWorks Associate (CSWA)", "Certified SolidWorks Professional (CSWP)", "Autodesk Certified Professional"],
-        "CAE/Simulation": ["Finite Element Analysis (FEA)", "Computational Fluid Dynamics (CFD)", "Structural Analysis", "Thermal Analysis", "Vibration Analysis", "ANSYS", "Abaqus", "MATLAB", "Fluent", "COMSOL", "HyperMesh", "Nastran", "FEA Specialist Certification", "ANSYS Certified Professional"],
-        "Robotics/Mechatronics": ["Mechatronics", "Control Systems", "Robotics", "Embedded Systems", "Kinematics & Dynamics", "MATLAB", "Simulink", "Python", "C++", "LabVIEW", "Arduino", "CLAD (Certified LabVIEW Associate Developer)", "ASME Member / Cert"],
-        "Manufacturing/Operations": ["Lean Manufacturing", "Six Sigma", "Quality Control & Assurance", "CNC Programming", "AutoCAD", "SolidCAM", "Minitab", "Mastercam", "Lean Six Sigma Yellow Belt", "Lean Six Sigma Green Belt", "Lean Six Sigma Black Belt"],
-        "HVAC/Thermal": ["HVAC Design", "Thermodynamics", "Heat Transfer", "Fluid Mechanics", "Piping Design", "AutoCAD", "Revit", "HVAC Design Certificate", "ASHRAE Member Certification"]
-    };
+    const skillVal = Math.min(profile.skills.length * 15, 100);
+    const toolVal = Math.min(profile.software_tools.length * 20, 100);
+    const skillsWeighted = (skillVal * 0.5 + toolVal * 0.5) * 0.35;
     
-    let bestCluster = "CAD Design";
-    let maxIntersection = 0;
-    let clusterMatches = {};
+    const internVal = Math.min(profile.internships * 50, 100);
+    const projVal = Math.min(profile.projects * 33, 100);
+    const compVal = Math.min(profile.competitions * 50, 100);
+    const expWeighted = (internVal * 0.4 + projVal * 0.4 + compVal * 0.2) * 0.30;
     
-    const targetAttrs = [...(targetProfile.skills || []), ...(targetProfile.software_tools || []), ...(targetProfile.certifications || [])];
+    const paperVal = Math.min(profile.research_papers * 50, 100);
+    const certVal = Math.min(profile.certifications.length * 50, 100);
+    const extraWeighted = (paperVal * 0.5 + certVal * 0.5) * 0.10;
     
-    clusters.forEach(c => {
-        const intersection = targetAttrs.filter(x => clusterKeywords[c].includes(x)).length;
-        clusterMatches[c] = intersection;
-        if (intersection > maxIntersection) {
-            maxIntersection = intersection;
-            bestCluster = c;
-        }
-    });
+    let baseScore = Math.round((acadWeighted + skillsWeighted + expWeighted + extraWeighted) * 10) / 10;
     
-    targetProfile.cluster = bestCluster;
-    targetProfile.score = calculateScore(targetProfile);
-    
-    // Calculate match strength as percentage of target cluster keywords matched (capped/scaled)
-    const matchStrength = Math.min(Math.round((maxIntersection / Math.max(targetAttrs.length, 3)) * 100), 100);
-    
-    // 2. Calculate absolute ordinal ranks (descending sort, highest score first)
-    const allScoresSorted = candidates.map(c => c.score).sort((a, b) => b - a);
-    const indiaCandidates = candidates.filter(c => c.region === "India");
-    const indiaScoresSorted = indiaCandidates.map(c => c.score).sort((a, b) => b - a);
-    
-    // Filter for same region and same college tier group
-    const tierCandidates = candidates.filter(c => c.region === targetProfile.region && c.tier === targetProfile.tier);
-    const tierScoresSorted = tierCandidates.map(c => c.score).sort((a, b) => b - a);
-    
-    // Filter for same cluster specialization (globally)
-    const clusterCandidates = candidates.filter(c => c.cluster === bestCluster);
-    const clusterScoresSorted = clusterCandidates.map(c => c.score).sort((a, b) => b - a);
-    
-    // Helper function for ordinal rank calculation
-    function getOrdinalRank(scoreList, score) {
-        if (scoreList.length === 0) return 1;
-        let countHigher = 0;
-        for (let i = 0; i < scoreList.length; i++) {
-            if (scoreList[i] > score) {
-                countHigher++;
-            } else {
-                break; // Because list is sorted descending
-            }
-        }
-        return countHigher + 1; // 1-based rank
+    // Add quiz active boost
+    if (completedCourses.includes(activeDomain)) {
+        baseScore = Math.min(baseScore + 5.0, 100.0);
     }
     
-    const globalRank = getOrdinalRank(allScoresSorted, targetProfile.score);
-    const indiaRank = getOrdinalRank(indiaScoresSorted, targetProfile.score);
-    const tierRank = getOrdinalRank(tierScoresSorted, targetProfile.score);
-    const clusterRank = getOrdinalRank(clusterScoresSorted, targetProfile.score);
-    
-    const globalTotal = allScoresSorted.length;
-    const indiaTotal = indiaScoresSorted.length;
-    const tierTotal = tierScoresSorted.length;
-    const clusterTotal = clusterScoresSorted.length;
-    
-    // Convert ranks to percentile percentages for animating SVG circles (0 to 100)
-    const globalPercentile = Math.round((1 - (globalRank - 1) / globalTotal) * 100);
-    const indiaPercentile = Math.round((1 - (indiaRank - 1) / indiaTotal) * 100);
-    const tierPercentile = Math.round((1 - (tierRank - 1) / tierTotal) * 100);
-    const clusterPercentile = Math.round((1 - (clusterRank - 1) / clusterTotal) * 100);
-    
-    const ranks = {
-        global: { pct: globalPercentile, rank: globalRank, total: globalTotal },
-        india: { pct: indiaPercentile, rank: indiaRank, total: indiaTotal },
-        tier: { pct: tierPercentile, rank: tierRank, total: tierTotal },
-        cluster: { pct: clusterPercentile, rank: clusterRank, total: clusterTotal }
-    };
-    
-    // 3. Strengths & Weaknesses
-    const strengths = [];
-    const weaknesses = [];
-    
-    // Academic & Credentials checks
-    if (targetProfile.tier === "Tier 1") {
-        strengths.push("Graduate of a Tier 1 Elite institution, highly valued by top engineering employers.");
-    } else if (targetProfile.tier === "Tier 3") {
-        weaknesses.push("Tier 3 college background. Academic brand visibility is low; require stronger project/certification offsets.");
-    }
-    
-    // Degree level check
-    if (targetProfile.degree === "Ph.D." || targetProfile.degree === "M.Tech/M.S." || targetProfile.degree === "M.S.") {
-        strengths.push(`Advanced degree (${targetProfile.degree}) signals deep theoretical and technical specialization.`);
-    }
-    
-    // Skills count check
-    const totalSkillsCount = (targetProfile.skills?.length || 0) + (targetProfile.software_tools?.length || 0);
-    if (totalSkillsCount >= 8) {
-        strengths.push(`Diverse skill and toolset (${totalSkillsCount} items), placing you in the top 20% for raw tool breadth.`);
-    } else if (totalSkillsCount <= 3) {
-        weaknesses.push("Limited skill list. Most mechanical engineers demonstrate competence in at least 5-6 tools and skills.");
-    }
-    
-    // Project & Internship benchmarks
-    if ((targetProfile.internships || 0) >= 2) {
-        strengths.push(`Excellent internship record (${targetProfile.internships} roles), demonstrating strong industry readiness.`);
-    } else if ((targetProfile.internships || 0) === 0) {
-        weaknesses.push("Lack of industry internship experience. Highly recommended to pursue industrial training or co-ops.");
-    }
-    
-    if ((targetProfile.projects || 0) >= 4) {
-        strengths.push(`Strong portfolio build with ${targetProfile.projects} projects, showing practical engineering capabilities.`);
-    } else if ((targetProfile.projects || 0) <= 1) {
-        weaknesses.push("Sparse project portfolio. Entry-level hiring depends heavily on capstone projects and design builds.");
-    }
-    
-    if ((targetProfile.competitions || 0) >= 1) {
-        strengths.push("Participation in engineering competitions (e.g. Formula SAE / BAJA) demonstrates teamwork and design compliance.");
-    }
-    
-    if ((targetProfile.research_papers || 0) >= 1) {
-        strengths.push(`Research contribution (${targetProfile.research_papers} papers) showcases scholarly capability and R&D competence.`);
-    }
-    
-    if (targetProfile.certifications?.length >= 2) {
-        strengths.push("Professional certifications indicate verified software skillsets beyond academic syllabus.");
-    } else if ((targetProfile.certifications?.length || 0) === 0) {
-        weaknesses.push("Zero professional certifications. Software credentials like CSWA/CSWP or Six Sigma significantly boost resume validation.");
-    }
-    
-    // Add default feedback if lists are empty
-    if (strengths.length === 0) strengths.push("Basic academic baseline established.");
-    if (weaknesses.length === 0) weaknesses.push("No immediate red flags detected in candidate profile.");
-    
-    // 4. Skill Gap Analysis
-    // Compile frequencies of skills, tools, certs for candidates in the SAME cluster in the database
-    const clusterPeers = candidates.filter(c => c.cluster === bestCluster);
-    const totalPeers = clusterPeers.length;
-    
-    const peerSkillsFreq = {};
-    const peerToolsFreq = {};
-    const peerCertsFreq = {};
-    
-    clusterPeers.forEach(p => {
-        p.skills.forEach(s => peerSkillsFreq[s] = (peerSkillsFreq[s] || 0) + 1);
-        p.software_tools.forEach(t => peerToolsFreq[t] = (peerToolsFreq[t] || 0) + 1);
-        p.certifications.forEach(c => peerCertsFreq[c] = (peerCertsFreq[c] || 0) + 1);
-    });
-    
-    // Create lists sorted by frequency
-    const gapAnalysis = [];
-    const allKeywords = [...clusterKeywords[bestCluster]];
-    
-    allKeywords.forEach(kw => {
-        let freq = 0;
-        let category = "Skill";
-        
-        if (Object.values(SKILLS_DICT).includes(kw)) {
-            freq = peerSkillsFreq[kw] || 0;
-            category = "Skill";
-        } else if (Object.values(SOFTWARE_DICT).includes(kw)) {
-            freq = peerToolsFreq[kw] || 0;
-            category = "Software Tool";
-        } else if (Object.values(CERTS_DICT).includes(kw)) {
-            freq = peerCertsFreq[kw] || 0;
-            category = "Certification";
-        }
-        
-        const pct = Math.round((freq / totalPeers) * 100);
-        const hasIt = (targetProfile.skills?.includes(kw) || 
-                      targetProfile.software_tools?.includes(kw) || 
-                      targetProfile.certifications?.includes(kw)) ? true : false;
-        
-        gapAnalysis.push({ keyword: kw, category, peerPercentage: pct, targetHasIt: hasIt });
-    });
-    
-    // Sort gap analysis by peer percentage descending
-    gapAnalysis.sort((a, b) => b.peerPercentage - a.peerPercentage);
-    
-    // 5. High-ROI Roadmap
-    // Identify top 3 missing items with highest peer percentage (highest demand)
-    const missingHighDemand = gapAnalysis.filter(g => !g.targetHasIt);
-    const roadmap = [];
-    
-    const roadmapTemplates = {
-        "CAD Design": {
-            skills: {
-                "GD&T (Geometric Dimensioning & Tolerancing)": { title: "Master GD&T Standards", desc: "Learn ASME Y14.5 dimensioning rules. Focus on feature control frames, datums, and tolerance stack-up analysis.", roi: "High ROI (Featured in 80% of design roles)" },
-                "DFM (Design for Manufacturing)": { title: "Study DFM/DFMA Guidelines", desc: "Understand draft angles, wall thickness, and assembly constraints for CNC, sheet metal, and injection molding.", roi: "High ROI" },
-                "Sheet Metal Design": { title: "Build Sheet Metal Portfolio", desc: "Design a complex electronics enclosure in SolidWorks. Learn bend allowance, K-factor, and flat pattern exports.", roi: "Medium ROI" }
-            },
-            software: {
-                "SolidWorks": { title: "Learn SolidWorks Advanced Modeling", desc: "Complete surface modeling and structural weldment tutorials. Create a parametric CAD assembly of a machine tool.", roi: "Critical ROI (Standard design tool)" },
-                "CATIA": { title: "CATIA Surface Modeling", desc: "Focus on generative shape design, widely used in Automotive and Aerospace structural skin design.", roi: "High ROI" },
-                "AutoCAD": { title: "Master 2D AutoCAD Layouts", desc: "Focus on drafting standards, layer management, and plant piping/P&ID layouts.", roi: "High ROI" }
-            },
-            certs: {
-                "Certified SolidWorks Associate (CSWA)": { title: "Obtain SolidWorks CSWA", desc: "Take the official exam to verify core parts, assemblies, and drawing comprehension.", roi: "High ROI (Instant resume validation)" },
-                "Certified SolidWorks Professional (CSWP)": { title: "Obtain SolidWorks CSWP", desc: "Pass the professional certification to prove complex multi-stage modeling and configuration management.", roi: "Very High ROI" }
-            }
-        },
-        "CAE/Simulation": {
-            skills: {
-                "Finite Element Analysis (FEA)": { title: "Learn FEA Fundamentals", desc: "Master meshing techniques, element selection (shell, solid, beam), boundary conditions, and convergence analysis.", roi: "Critical ROI" },
-                "Computational Fluid Dynamics (CFD)": { title: "Study CFD Modeling", desc: "Learn turbulence models (k-epsilon, k-omega), boundary layers, wall functions, and mesh independence.", roi: "High ROI" },
-                "Structural Analysis": { title: "Perform Static & Dynamic Analyses", desc: "Analyze buckling, modal frequencies, and fatigue life under cyclic loading.", roi: "High ROI" }
-            },
-            software: {
-                "ANSYS": { title: "Master ANSYS Workbench", desc: "Focus on Static Structural, Modal, and Fluent solver setup. Build a thermal-mechanical analysis case study.", roi: "Critical ROI" },
-                "MATLAB": { title: "MATLAB for Numerical Analysis", desc: "Write scripts for matrix operations, differential equations, and data optimization loops.", roi: "High ROI" }
-            },
-            certs: {
-                "ANSYS Certified Professional": { title: "Target ANSYS Certification", desc: "Earn official ANSYS certification in Structural Mechanics or Fluid Dynamics to verify simulation rigor.", roi: "Very High ROI" },
-                "FEA Specialist Certification": { title: "FEA Specialization", desc: "Complete NAFEMS-aligned or ASME-aligned courses on finite element code validation.", roi: "High ROI" }
-            }
-        },
-        "Robotics/Mechatronics": {
-            skills: {
-                "Mechatronics": { title: "Integrate Mechanical & Electronic Systems", desc: "Build systems linking microcontrollers, sensors, and motor drivers (H-bridges, stepper drivers).", roi: "Critical ROI" },
-                "Control Systems": { title: "Study PID Control Tuning", desc: "Model transfer functions and design close-loop feedback controllers for speed/position systems.", roi: "High ROI" }
-            },
-            software: {
-                "MATLAB": { title: "Learn Control Systems with MATLAB", desc: "Use root locus, Bode plots, and state-space models for robotics system synthesis.", roi: "High ROI" },
-                "Simulink": { title: "Model Dynamic Systems in Simulink", desc: "Run block-diagram simulations of vehicle dynamics or robotic arms.", roi: "High ROI" },
-                "Python": { title: "Python for Robotics & Automation", desc: "Learn NumPy, SciPy, and OpenCV for robot vision and kinematics computations.", roi: "Very High ROI" }
-            },
-            certs: {
-                "CLAD (Certified LabVIEW Associate Developer)": { title: "Pursue NI CLAD Certification", desc: "Certify your capability in automated testing, DAQ hardware configuration, and virtual instruments.", roi: "High ROI" }
-            }
-        },
-        "Manufacturing/Operations": {
-            skills: {
-                "Six Sigma": { title: "Learn Six Sigma DMAIC Framework", desc: "Understand Define, Measure, Analyze, Improve, Control phases. Study control charts and Gage R&R.", roi: "Very High ROI" },
-                "Lean Manufacturing": { title: "Master Lean Engineering Principles", desc: "Study 5S, Kaizen, Value Stream Mapping (VSM), Kanban, and SMED setups.", roi: "High ROI" }
-            },
-            software: {
-                "Minitab": { title: "Minitab for Statistical QC", desc: "Perform ANOVA, regression, capability analysis (Cp/Cpk), and Hypothesis Testing.", roi: "High ROI" }
-            },
-            certs: {
-                "Lean Six Sigma Green Belt": { title: "Acquire Six Sigma Green Belt", desc: "Provides concrete proof of process improvement and quality control knowledge.", roi: "Critical ROI (Highly requested in ops)" }
-            }
-        },
-        "HVAC/Thermal": {
-            skills: {
-                "HVAC Design": { title: "Master HVAC Duct & Piping Design", desc: "Learn duct sizing (equal friction method), cooling/heating load calculations, and psychrometrics.", roi: "Critical ROI" },
-                "Piping Design": { title: "Study Piping Layout & ASME B31.3", desc: "Learn piping routing, pump head calculations, valve selections, and pipe stress analysis.", roi: "High ROI" }
-            },
-            software: {
-                "Revit": { title: "Learn Revit MEP for HVAC Modeling", desc: "Build 3D BIM models of duct networks, piping, and mechanical equipment rooms.", roi: "Critical ROI" },
-                "AutoCAD": { title: "Standardize on 2D HVAC Layouts", desc: "Draft schematic double-line and single-line duct plans and schematic P&IDs.", roi: "High ROI" }
-            },
-            certs: {
-                "HVAC Design Certificate": { title: "Obtain HVAC Professional Certificate", desc: "Verify HVAC engineering core knowledge from industry training centers.", roi: "Very High ROI" },
-                "ASHRAE Member Certification": { title: "ASHRAE Credentials", desc: "Join ASHRAE and target certifications like HFDP (HVAC Design) or BEMP (Energy Modeling).", roi: "High ROI" }
-            }
-        }
-    };
-    
-    // Build specific roadmap items based on top missing items
-    let roadmapCount = 0;
-    for (let i = 0; i < missingHighDemand.length && roadmapCount < 3; i++) {
-        const item = missingHighDemand[i];
-        const cat = item.category === "Skill" ? "skills" : (item.category === "Software Tool" ? "software" : "certs");
-        const clusterMap = roadmapTemplates[bestCluster] || roadmapTemplates["CAD Design"];
-        
-        if (clusterMap[cat] && clusterMap[cat][item.keyword]) {
-            const detail = clusterMap[cat][item.keyword];
-            roadmap.push({
-                type: item.category,
-                name: item.keyword,
-                title: detail.title,
-                desc: detail.desc,
-                roi: detail.roi,
-                priority: roadmapCount === 0 ? "Highest Priority" : (roadmapCount === 1 ? "Medium Priority" : "Recommended")
-            });
-            roadmapCount++;
-        }
-    }
-    
-    // Fallback roadmap items if candidate is already fully matched
-    if (roadmap.length === 0) {
-        roadmap.push({
-            type: "Project / Experience",
-            name: "Industrial Project Integration",
-            title: "Launch a Complex Multidisciplinary Project",
-            desc: "Combine mechanical design, structural FEA simulation, and microcontrollers. Create a portfolio page detailing the design choices and engineering validations.",
-            roi: "High ROI",
-            priority: "Highest Priority"
-        });
-    }
-    
-    // 6. Closest Candidates
-    // Find top 5 candidate profiles that are mathematically closest in score and cluster
-    const peersSortedBySim = clusterPeers
-        .map(p => {
-            // Simple distance: academic tier distance + score distance
-            let dist = Math.abs(p.score - targetProfile.score);
-            if (p.tier !== targetProfile.tier) dist += 15;
-            return { peer: p, distance: dist };
-        })
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, 5)
-        .map(x => x.peer);
-
-    // Render results on Dashboard
-    renderDashboard(ranks, bestCluster, matchStrength, strengths, weaknesses, gapAnalysis, roadmap, peersSortedBySim);
+    return baseScore;
 }
 
-// Display results in HTML
-function renderDashboard(ranks, cluster, strength, strengths, weaknesses, gaps, roadmap, peers) {
-    document.getElementById("setup-panel").classList.add("hidden");
-    document.getElementById("dashboard-panel").classList.remove("hidden");
-    
-    // Update labels
-    document.getElementById("db-candidate-id").innerText = `Candidate #${Math.floor(1000 + Math.random() * 9000)}`;
-    document.getElementById("db-college-val").innerText = `${targetProfile.degree} | ${targetProfile.college} (${targetProfile.tier})`;
-    
-    // Percentile progress rings and absolute ranks
-    animateCircle("global-pct-circle", ranks.global.pct);
-    animateCircleText("global-pct-text", ranks.global.rank);
-    document.getElementById("global-pct-sublabel").innerText = `Rank #${ranks.global.rank.toLocaleString()} of ${ranks.global.total.toLocaleString()} global freshers`;
-    
-    animateCircle("india-pct-circle", ranks.india.pct);
-    animateCircleText("india-pct-text", ranks.india.rank);
-    document.getElementById("india-pct-sublabel").innerText = `Rank #${ranks.india.rank.toLocaleString()} of ${ranks.india.total.toLocaleString()} Indian freshers`;
+function calculateResumeStrength(profile) {
+    let score = 0;
+    if (profile.projects > 0) score += Math.min(profile.projects * 15, 45);
+    if (profile.internships > 0) score += Math.min(profile.internships * 20, 30);
+    if (profile.skills.length > 2) score += 10;
+    if (profile.software_tools.length > 2) score += 10;
+    if (profile.certifications.length > 0) score += 5;
+    return Math.min(score, 100);
+}
 
-    animateCircle("tier-pct-circle", ranks.tier.pct);
-    animateCircleText("tier-pct-text", ranks.tier.rank);
-    document.getElementById("tier-pct-sublabel").innerText = `Rank #${ranks.tier.rank.toLocaleString()} of ${ranks.tier.total.toLocaleString()} in your tier group`;
-
-    animateCircle("cluster-pct-circle", ranks.cluster.pct);
-    animateCircleText("cluster-pct-text", ranks.cluster.rank);
-    document.getElementById("cluster-pct-sublabel").innerText = `Rank #${ranks.cluster.rank.toLocaleString()} of ${ranks.cluster.total.toLocaleString()} in your specialty`;
+function calculateRecruiterVisibility(profile) {
+    let visibility = 20; // baseline
+    if (profile.tier === "Tier 1") visibility += 30;
+    else if (profile.tier === "Tier 2") visibility += 15;
     
-    // Competitiveness level text
-    let compLevel = "Developing Candidate";
-    let compClass = "badge-purple";
-    if (ranks.global.pct >= 90) {
-        compLevel = "Highly Competitive (Top 10%)";
-        compClass = "badge-green";
-    } else if (ranks.global.pct >= 75) {
-        compLevel = "Competitive (Top 25%)";
-        compClass = "badge-green";
-    } else if (ranks.global.pct >= 50) {
-        compLevel = "Moderate Competitiveness";
-        compClass = "badge";
+    if (profile.internships > 0) visibility += 20;
+    if (profile.certifications.length > 0) visibility += 15;
+    if (profile.projects > 1) visibility += 15;
+    
+    return Math.min(visibility, 100);
+}
+
+// Calculate percentiles and ordinal ranks
+function getRanks(score, matchedDomain, region, tier) {
+    const allScores = candidates.map(c => c.score).sort((a,b) => b-a);
+    const nationalScores = candidates.filter(c => c.region === region).map(c => c.score).sort((a,b) => b-a);
+    const tierScores = candidates.filter(c => c.region === region && c.tier === tier).map(c => c.score).sort((a,b) => b-a);
+    const clusterScores = candidates.filter(c => c.cluster === matchedDomain).map(c => c.score).sort((a,b) => b-a);
+    
+    const globalCountHigher = allScores.filter(s => s > score).length;
+    const nationalCountHigher = nationalScores.filter(s => s > score).length;
+    const tierCountHigher = tierScores.filter(s => s > score).length;
+    const clusterCountHigher = clusterScores.filter(s => s > score).length;
+    
+    return {
+        globalRank: globalCountHigher + 1,
+        globalTotal: allScores.length,
+        globalPercentile: Math.max(Math.round(((allScores.length - globalCountHigher) / allScores.length) * 100), 1),
+        
+        indiaRank: nationalCountHigher + 1,
+        indiaTotal: nationalScores.length,
+        indiaPercentile: Math.max(Math.round(((nationalScores.length - nationalCountHigher) / nationalScores.length) * 100), 1),
+        
+        tierRank: tierCountHigher + 1,
+        tierTotal: tierScores.length,
+        tierPercentile: Math.max(Math.round(((tierScores.length - tierCountHigher) / tierScores.length) * 100), 1),
+        
+        clusterRank: clusterCountHigher + 1,
+        clusterTotal: clusterScores.length,
+        clusterPercentile: Math.max(Math.round(((clusterScores.length - clusterCountHigher) / clusterScores.length) * 100), 1)
+    };
+}
+
+// Plotly visualization functions
+function drawGaugeChart(score) {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const trace = {
+        type: "indicator",
+        mode: "gauge+number",
+        value: score,
+        title: { text: "Employability Rating", font: { color: textTheme, size: 14 } },
+        gauge: {
+            axis: { range: [0, 100], tickcolor: textTheme },
+            bar: { color: "#2563eb" },
+            bgcolor: "rgba(0,0,0,0)",
+            borderwidth: 2,
+            bordercolor: "rgba(255,255,255,0.08)",
+            steps: [
+                { range: [0, 50], color: "rgba(239, 68, 68, 0.15)" },
+                { range: [50, 80], color: "rgba(245, 158, 11, 0.15)" },
+                { range: [80, 100], color: "rgba(16, 185, 129, 0.15)" }
+            ],
+            threshold: {
+                line: { color: "red", width: 4 },
+                thickness: 0.75,
+                value: score
+            }
+        }
+    };
+    
+    const layout = {
+        width: 250,
+        height: 180,
+        margin: { t: 30, r: 30, l: 30, b: 30 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: textTheme }
+    };
+    
+    Plotly.newPlot("plotly-gauge-chart", [trace], layout, {responsive: true, displayModeBar: false});
+}
+
+function drawRadarChart(profile, matchedDomain) {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+    const keywords = CLUSTER_KEYWORDS[matchedDomain].slice(0, 6);
+    
+    // User profile status mapping
+    const userValues = keywords.map(kw => {
+        const hasIt = profile.skills.includes(kw) || profile.software_tools.includes(kw) || profile.certifications.includes(kw);
+        return hasIt ? 100 : 20;
+    });
+
+    // Top 10% benchmark peer statistics
+    const peerValues = keywords.map((kw, i) => {
+        // Average benchmark weights for top-tier freshers
+        return [90, 85, 80, 95, 75, 70][i];
+    });
+
+    const data = [
+        {
+            type: 'scatterpolar',
+            r: userValues,
+            theta: keywords,
+            fill: 'toself',
+            name: 'Your Profile',
+            fillcolor: 'rgba(37, 99, 235, 0.25)',
+            line: { color: '#2563eb' }
+        },
+        {
+            type: 'scatterpolar',
+            r: peerValues,
+            theta: keywords,
+            fill: 'toself',
+            name: 'Top 10% Peers',
+            fillcolor: 'rgba(139, 92, 246, 0.2)',
+            line: { color: '#8b5cf6', dash: 'dash' }
+        }
+    ];
+
+    const layout = {
+        polar: {
+            radialaxis: { visible: true, range: [0, 100], color: textTheme, gridcolor: gridTheme },
+            angularaxis: { color: textTheme, gridcolor: gridTheme },
+            bgcolor: 'rgba(0,0,0,0)'
+        },
+        width: 320,
+        height: 250,
+        margin: { t: 30, b: 30, l: 40, r: 40 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        showlegend: false,
+        font: { color: textTheme, size: 8 }
+    };
+
+    Plotly.newPlot("plotly-radar-chart", data, layout, {responsive: true, displayModeBar: false});
+}
+
+function drawHeatmapChart(matchedDomain) {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const sectors = ["Automotive", "Aerospace", "Energy/EV", "MEP/HVAC", "Manufacturing"];
+    const domains = CLUSTERS;
+    
+    // Core demand distribution matrix
+    // rows: domains, cols: sectors
+    const values = [
+        [90, 75, 60, 40, 95], // CAD Design
+        [95, 90, 85, 50, 60], // CAE/Simulation
+        [85, 80, 90, 30, 95], // Robotics
+        [70, 60, 65, 30, 98], // Manufacturing
+        [30, 40, 50, 98, 45]  // HVAC/Thermal
+    ];
+
+    const data = [{
+        z: values,
+        x: sectors,
+        y: domains,
+        type: 'heatmap',
+        colorscale: 'Blues',
+        showscale: false
+    }];
+
+    const layout = {
+        width: 700,
+        height: 220,
+        margin: { t: 20, b: 40, l: 150, r: 20 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme, size: 9 },
+        xaxis: { gridcolor: 'rgba(0,0,0,0)', tickcolor: textTheme },
+        yaxis: { gridcolor: 'rgba(0,0,0,0)', tickcolor: textTheme }
+    };
+
+    Plotly.newPlot("plotly-heatmap-chart", data, layout, {responsive: true, displayModeBar: false});
+}
+
+function drawSalaryChart(score) {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    
+    const xValues = [];
+    const yValues = [];
+    
+    // Generate salary bell curve coordinates
+    for (let x = 3; x <= 22; x += 0.5) {
+        xValues.push(x);
+        // Bell distribution centering around 7.5 LPA
+        const y = Math.exp(-0.5 * Math.pow((x - 7.5) / 2.5, 2)) / (2.5 * Math.sqrt(2 * Math.PI));
+        yValues.push(y);
     }
     
-    const compBadge = document.getElementById("competitiveness-badge");
-    compBadge.className = `badge ${compClass}`;
-    compBadge.innerHTML = `<span class="pulse-dot" style="background-color: currentColor"></span> ${compLevel}`;
+    // Estimate user salary based on readiness score
+    const estimatedUserSalary = 3.5 + (score / 100) * 16.5; 
+
+    const data = [
+        {
+            x: xValues,
+            y: yValues,
+            type: 'scatter',
+            mode: 'lines',
+            fill: 'tozeroy',
+            name: 'Salary Curve',
+            fillcolor: 'rgba(37, 99, 235, 0.15)',
+            line: { color: '#2563eb', width: 2 }
+        },
+        {
+            x: [estimatedUserSalary],
+            y: [Math.exp(-0.5 * Math.pow((estimatedUserSalary - 7.5) / 2.5, 2)) / (2.5 * Math.sqrt(2 * Math.PI))],
+            type: 'scatter',
+            mode: 'markers+text',
+            name: 'Your Range',
+            marker: { color: '#8b5cf6', size: 10 },
+            text: [`₹${estimatedUserSalary.toFixed(1)} LPA`],
+            textposition: 'top center',
+            font: { color: textTheme, weight: 'bold' }
+        }
+    ];
+
+    const layout = {
+        width: 250,
+        height: 180,
+        margin: { t: 40, b: 30, l: 30, r: 30 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme },
+        xaxis: { title: "Salary (LPA)", gridcolor: gridTheme, color: textTheme },
+        yaxis: { showgrid: false, showline: false, showticklabels: false },
+        showlegend: false
+    };
+
+    Plotly.newPlot("plotly-salary-chart", data, layout, {responsive: true, displayModeBar: false});
+}
+
+function drawTimelineChart() {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
     
-    // Match Cluster details
-    document.getElementById("matched-cluster-icon").innerText = getClusterIcon(cluster);
-    document.getElementById("matched-cluster-name").innerText = cluster;
-    document.getElementById("matched-cluster-desc").innerText = getClusterDescription(cluster);
-    document.getElementById("matched-cluster-strength").innerText = `${strength}% Profile Alignment`;
-    
-    // Strengths
-    const strengthList = document.getElementById("strengths-list");
-    strengthList.innerHTML = strengths.map(s => `
-        <li>
-            <span class="icon-bullet icon-bullet-green">✓</span>
-            <div>${s}</div>
-        </li>
-    `).join("");
-    
-    // Weaknesses
-    const weaknessList = document.getElementById("weaknesses-list");
-    weaknessList.innerHTML = weaknesses.map(w => `
-        <li>
-            <span class="icon-bullet icon-bullet-red">✗</span>
-            <div>${w}</div>
-        </li>
-    `).join("");
-    
-    // Gap Analysis (Render top 6 gaps)
-    const gapChart = document.getElementById("gap-chart-container");
-    gapChart.innerHTML = gaps.slice(0, 6).map(g => `
-        <div class="bar-row">
-            <div class="bar-label">${g.keyword}</div>
-            <div class="bar-wrapper">
-                <div class="bar-fill" style="width: ${g.peerPercentage}%"></div>
-                <div class="bar-fill-target" style="width: ${g.targetHasIt ? '100%' : '0%'}; opacity: 0.8;"></div>
-            </div>
-            <div class="bar-value">
-                <span style="color: ${g.targetHasIt ? 'var(--info)' : 'var(--text-muted)'}">
-                    ${g.targetHasIt ? '✓' : 'Gap'}
-                </span>
-                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">
-                    ${g.peerPercentage}% peers
-                </span>
-            </div>
-        </div>
-    `).join("");
-    
-    // Roadmap
-    const roadmapContainer = document.getElementById("roadmap-container");
-    roadmapContainer.innerHTML = roadmap.map(r => `
-        <div class="roadmap-item">
-            <div class="roadmap-dot"></div>
-            <div class="roadmap-content">
-                <h4>${r.title}</h4>
-                <p>${r.desc}</p>
-                <div style="display: flex; gap: 0.75rem; align-items: center;">
-                    <span class="roadmap-roi">${r.roi}</span>
-                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">(${r.type})</span>
+    const stages = ["Entry Intern", "Associate Engineer", "Senior Analyst", "Engineering Lead"];
+    const timelineYears = [0.5, 2.5, 5.5, 9.0];
+
+    const data = [{
+        x: timelineYears,
+        y: stages,
+        type: 'bar',
+        orientation: 'h',
+        marker: {
+            color: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'],
+            width: 0.6
+        }
+    }];
+
+    const layout = {
+        width: 320,
+        height: 200,
+        margin: { t: 10, b: 40, l: 110, r: 20 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme, size: 8 },
+        xaxis: { title: "Target Time Frame (Years)", gridcolor: gridTheme, color: textTheme },
+        yaxis: { gridcolor: 'rgba(0,0,0,0)', color: textTheme }
+    };
+
+    Plotly.newPlot("plotly-timeline-chart", data, layout, {responsive: true, displayModeBar: false});
+}
+
+// 11 Core Job Roles recommendations data model
+const ROLES_LIST = [
+    { name: "Design Engineer", domain: "CAD Design", baseSalary: "₹6.2 LPA", demand: "Critical", reqs: ["GD&T (Geometric Dimensioning & Tolerancing)", "SolidWorks", "Tolerance Analysis"] },
+    { name: "CFD Engineer", domain: "CAE/Simulation", baseSalary: "₹8.0 LPA", demand: "Critical", reqs: ["Computational Fluid Dynamics (CFD)", "Fluent", "Heat Transfer"] },
+    { name: "Robotics Engineer", domain: "Robotics/Mechatronics", baseSalary: "₹8.5 LPA", demand: "Critical", reqs: ["Robotics", "Control Systems", "Python"] },
+    { name: "HVAC Engineer", domain: "HVAC/Thermal", baseSalary: "₹5.8 LPA", demand: "High", reqs: ["HVAC Design", "Revit", "Thermodynamics"] },
+    { name: "Manufacturing Engineer", domain: "Manufacturing/Operations", baseSalary: "₹6.0 LPA", demand: "High", reqs: ["Lean Manufacturing", "SolidCAM", "CNC Programming"] },
+    { name: "Aerospace Engineer", domain: "CAE/Simulation", baseSalary: "₹9.2 LPA", demand: "High", reqs: ["Finite Element Analysis (FEA)", "CATIA", "Structural Analysis"] },
+    { name: "Automotive Engineer", domain: "CAD Design", baseSalary: "₹7.5 LPA", demand: "High", reqs: ["DFM (Design for Manufacturing)", "SolidWorks", "Vibration Analysis"] },
+    { name: "Production Engineer", domain: "Manufacturing/Operations", baseSalary: "₹5.5 LPA", demand: "Medium", reqs: ["Quality Control & Assurance", "Six Sigma", "CNC Programming"] },
+    { name: "Maintenance Engineer", domain: "Manufacturing/Operations", baseSalary: "₹5.2 LPA", demand: "Medium", reqs: ["Quality Control & Assurance", "Embedded Systems", "Lean Manufacturing"] },
+    { name: "Quality Engineer", domain: "Manufacturing/Operations", baseSalary: "₹5.8 LPA", demand: "Medium", reqs: ["Six Sigma", "Minitab", "Quality Control & Assurance"] },
+    { name: "Project Engineer", domain: "CAD Design", baseSalary: "₹7.0 LPA", demand: "Medium", reqs: ["Product Design", "ASME Member / Cert", "Tolerance Analysis"] }
+];
+
+function generateRoleRecommendations(profile) {
+    const container = document.getElementById("roles-recommendations-list");
+    container.innerHTML = "";
+
+    const userKeywords = profile.skills.concat(profile.software_tools).concat(profile.certifications);
+
+    ROLES_LIST.forEach(role => {
+        const intersection = role.reqs.filter(r => userKeywords.includes(r));
+        const missing = role.reqs.filter(r => !userKeywords.includes(r));
+        const matchPct = Math.round((intersection.length / role.reqs.length) * 100);
+        
+        let demandClass = 'badge-green';
+        if (role.demand === 'Medium') demandClass = 'badge-medium';
+        else if (role.demand === 'Critical') demandClass = 'badge-purple';
+
+        const card = document.createElement("div");
+        card.className = "role-recommendation-card glass-card";
+        card.innerHTML = `
+            <div class="role-card-header">
+                <div class="role-name-wrapper">
+                    <h2>${role.name}</h2>
+                    <p>Core Domain Cluster: <strong>${role.domain}</strong></p>
+                </div>
+                <div class="role-stats-badge-row">
+                    <span class="badge ${demandClass}">${role.demand} Demand</span>
+                    <span class="badge badge-purple">${matchPct}% Match</span>
                 </div>
             </div>
-        </div>
-    `).join("");
-    
-    // Peer table
-    const peerTable = document.getElementById("peer-table-body");
-    peerTable.innerHTML = peers.map(p => `
-        <tr>
-            <td><code style="color: var(--text-secondary)">${p.id}</code></td>
-            <td>${p.degree}</td>
-            <td>${p.college} <span style="font-size: 0.7rem; color: var(--text-muted);">(${p.tier})</span></td>
-            <td><span class="badge" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;">${p.cluster}</span></td>
-            <td>
-                <div class="profile-capsule-list">
-                    ${p.skills.slice(0, 3).map(s => `<span class="capsule">${s}</span>`).join("")}
-                    ${p.software_tools.slice(0, 2).map(t => `<span class="capsule capsule-active">${t}</span>`).join("")}
-                    ${p.skills.length + p.software_tools.length > 5 ? `<span class="capsule">+${p.skills.length + p.software_tools.length - 5}</span>` : ''}
+            
+            <div class="role-card-body-grid">
+                <div class="role-body-col">
+                    <h4><i data-lucide="info" style="width:14px; height:14px;"></i> Salary & Economics</h4>
+                    <p>Average Fresher Package: <strong>${role.baseSalary}</strong></p>
+                    <p style="margin-top:0.4rem;">Market Hiring Index: <strong>Robust growth trends in Tier-1 aerospace and EV sectors.</strong></p>
                 </div>
-            </td>
-            <td>
-                <div class="score-indicator">
-                    <span style="font-weight: 600;">${p.score}</span>
-                    <div class="score-bar">
-                        <div class="score-fill" style="width: ${p.score}%"></div>
-                    </div>
+                <div class="role-body-col">
+                    <h4><i data-lucide="alert-triangle" style="width:14px; height:14px;"></i> Skills Gap</h4>
+                    ${missing.length > 0 ? `
+                        <p>Missing requirements to close profile gap:</p>
+                        <div class="missing-skills-pills">
+                            ${missing.map(m => `<span class="missing-pill">${m}</span>`).join('')}
+                        </div>
+                    ` : `<p class="badge-green" style="padding:0.25rem; border-radius:4px; font-weight:700; color:var(--success);"><i data-lucide="check" style="width:14px; height:14px;"></i> Technical Requirements Met!</p>`}
                 </div>
-            </td>
-        </tr>
-    `).join("");
-    
-    // Draw the distribution curve
-    renderDistributionCurve(targetProfile.score);
-    
-    // Render employer insights for the matched cluster
-    renderEmployerInsights(cluster);
+                <div class="role-body-col">
+                    <h4><i data-lucide="map" style="width:14px; height:14px;"></i> Quick Learning Path</h4>
+                    <p>${missing.length > 0 ? `Complete MechIntel course academy checks for <strong>${role.domain}</strong> to master <strong>${missing[0]}</strong>.` : `Maintain certifications and apply for senior roles.`}</p>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+    lucide.createIcons();
 }
 
-// Animate the circular SVG rankings rings
-function animateCircle(elementId, targetPct) {
-    const circle = document.getElementById(elementId);
-    if (!circle) return;
-    
-    // Formula: stroke-dasharray = (percentage / 100) * circumference
-    // Circumference of r=36 is 2 * pi * 36 = 226.2
-    const circumference = 226.2;
-    const offset = circumference - (targetPct / 100) * circumference;
-    
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = circumference;
-    
-    // Trigger layout reflow for animation
-    circle.getBoundingClientRect();
-    
-    circle.style.transition = "stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
-    circle.style.strokeDashoffset = offset;
+// UI Event Handlers and view switching
+function showPane(paneId) {
+    document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
+    document.getElementById(paneId).classList.remove("hidden");
+    window.scrollTo(0,0);
 }
 
-// Helper: format and scale text inside progress rings to fit ordinal ranks
-function setCircleText(elementId, rank) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
+function showDashboardView(viewId) {
+    document.querySelectorAll(".dashboard-view-pane").forEach(pane => pane.classList.remove("active"));
+    document.getElementById(`view-${viewId}`).classList.add("active");
     
-    const text = "#" + rank.toLocaleString();
-    el.textContent = text;
+    document.querySelectorAll(".sidebar-nav-item").forEach(item => {
+        if(item.getAttribute("data-view") === viewId) {
+            item.classList.add("active");
+        } else {
+            item.classList.remove("active");
+        }
+    });
+}
+
+// Simulated Intelligent AI Chat Coach responses
+function handleCoachChat(message) {
+    const msgLower = message.toLowerCase();
+    const chatBox = document.getElementById("coach-chat-messages");
     
-    // Dynamically scale font-size based on character length to prevent overflow in the 36x36 SVG
-    if (text.length >= 7) {
-        el.style.fontSize = "4.2px";
-        el.setAttribute("y", "19.5");
-    } else if (text.length >= 5) {
-        el.style.fontSize = "5.5px";
-        el.setAttribute("y", "20.0");
+    // User bubble
+    const userBubble = document.createElement("div");
+    userBubble.className = "chat-msg user-msg";
+    userBubble.innerText = message;
+    chatBox.appendChild(userBubble);
+    
+    // Scroll
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    // Formulate intelligent advice based on active profile gaps
+    let coachReply = "";
+    const activeCluster = targetProfile.cluster || activeDomain;
+    const userCerts = targetProfile.certifications || [];
+    
+    if (msgLower.includes("cfd") || msgLower.includes("gap")) {
+        coachReply = `Based on your profile matching **${activeCluster}**, you show key technical competencies in CAD design. However, CFD roles require mastery of Navier-Stokes boundary layers (y+ wall distance ≈ 1.0) and turbulence formulations. 
+        \nI recommend:
+        \n1. Enrolling in the CAE/Simulation Academy lecture on near-wall meshes.
+        \n2. Completing a CFD wing section lift/drag Fluent model.
+        \n3. Targeting the **ANSYS Certified Professional** credential.`;
+    } else if (msgLower.includes("interview") || msgLower.includes("question")) {
+        coachReply = `Here are 3 tough technical interview questions matching your **${activeCluster}** focus:
+        \n1. *Explain the difference between Worst-Case and Root-Sum-Square (RSS) tolerance stackup methods. Under what manufacturing conditions is RSS preferred?*
+        \n2. *For an injection-molded plastic cover, why is uniform wall thickness critical, and what draft angle range do you specify to ensure clean core ejection?*
+        \n3. *Explain the physical meaning of the Von Mises yield criterion and its calculation under multi-axial principal stresses.*`;
+    } else if (msgLower.includes("tier 3") || msgLower.includes("college") || msgLower.includes("placement")) {
+        coachReply = `As a Tier 3 college graduate, on-campus placements are limited. You need to leverage **proof of skills**:
+        \n1. **Build a GrabCAD Portfolio:** Upload parametric, fully-constrained designs like gearboxes or sheet-metal assemblies. Include calculations (e.g. Lewis formula stress limits).
+        \n2. **Network with Engineering Managers:** Search LinkedIn for Lead Engineers (not HR) in design companies. Send a short note showcasing a model you ran, asking for technical critique.
+        \n3. **Certificates:** Proving CSWP or Lean Six Sigma credentials instantly validates your profile past HR automated keyword filters.`;
+    } else if (msgLower.includes("score") || msgLower.includes("readiness")) {
+        const score = calculateCompetitivenessScore(targetProfile);
+        coachReply = `Your Career Readiness Score is currently **${score}/100**. This score is parsed from:
+        \n- **Academics:** Tier ${targetProfile.tier === "Tier 1" ? "1" : (targetProfile.tier === "Tier 2" ? "2" : "3")} College brand and degree impact.
+        \n- **Skills & Software:** Breadth of CAD/CAE tools parsed.
+        \n- **Experience:** Completed internships (${targetProfile.internships}) and project count (${targetProfile.projects}).
+        \n*Tip:* Complete our mini-quizzes in the Course Academy to earn an immediate **+5.0 boost**!`;
     } else {
-        el.style.fontSize = "7.5px";
-        el.setAttribute("y", "20.3");
+        coachReply = `I have logged your request. Regarding mechanical engineering development within **${activeCluster}**, acquiring certified credentials like **ASME** or **CSWP**, publishing process improvement papers, and designing structural assemblies represents the highest ROI strategy to boost your standing. Let me know if you need specific interview question sheets or resume optimization checklists!`;
     }
+    
+    // Simulate AI response delay
+    setTimeout(() => {
+        const coachBubble = document.createElement("div");
+        coachBubble.className = "chat-msg coach-msg";
+        coachBubble.innerText = coachReply;
+        chatBox.appendChild(coachBubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 600);
 }
 
-// Visual count-down rank animation matching circular progress transitions
-function animateCircleText(elementId, targetRank) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
+// Generate beautiful formatted TXT report for download
+function downloadCareerReport() {
+    const score = calculateCompetitivenessScore(targetProfile);
+    const ranks = getRanks(score, targetProfile.cluster || activeDomain, targetProfile.region, targetProfile.tier);
     
-    const duration = 1200; // 1.2s matching transition duration
-    const startTime = performance.now();
-    
-    // Start from a lower rank (higher rank number)
-    const startRank = Math.min(targetRank * 4 + 100, 60000);
-    
-    function update(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Quad ease out
-        const ease = 1 - Math.pow(1 - progress, 2);
-        const currentRank = Math.round(startRank - (startRank - targetRank) * ease);
-        
-        const text = "#" + currentRank.toLocaleString();
-        el.textContent = text;
-        
-        if (text.length >= 7) {
-            el.style.fontSize = "4.2px";
-            el.setAttribute("y", "19.5");
-        } else if (text.length >= 5) {
-            el.style.fontSize = "5.5px";
-            el.setAttribute("y", "20.0");
-        } else {
-            el.style.fontSize = "7.5px";
-            el.setAttribute("y", "20.3");
-        }
-        
-        if (progress < 1) {
-            requestAnimationFrame(update);
-        } else {
-            el.textContent = "#" + targetRank.toLocaleString();
-        }
-    }
-    requestAnimationFrame(update);
+    const content = `===========================================================
+MECHINTEL AI CAREER INTELLIGENCE PLATFORM REPORT
+===========================================================
+Calculated Standings: June 2026
+Candidate ID: ${targetProfile.id || "Candidate #ME-49023"}
+Region: ${targetProfile.region} | Institution Tier: ${targetProfile.tier}
+Matched Specialization: ${targetProfile.cluster || activeDomain}
+
+-----------------------------------------------------------
+BENCHMARKED RANKINGS (100,000 Cohort)
+-----------------------------------------------------------
+- Career Readiness Score: ${score}/100
+- Worldwide Rank: #${ranks.globalRank.toLocaleString()} (Top ${ranks.globalPercentile}%)
+- National Rank (${targetProfile.region}): #${ranks.indiaRank.toLocaleString()} (Top ${ranks.indiaPercentile}%)
+- Peer Institution Tier Rank: #${ranks.tierRank.toLocaleString()} (Top ${ranks.tierPercentile}%)
+- Specialty Cluster Rank: #${ranks.clusterRank.toLocaleString()} (Top ${ranks.clusterPercentile}%)
+
+-----------------------------------------------------------
+DIAGNOSTICS & RECOMMENDATIONS
+-----------------------------------------------------------
+- Technical Skills Breadth: ${targetProfile.skills.join(', ') || "None"}
+- Software Packages mastered: ${targetProfile.software_tools.join(', ') || "None"}
+- Verified Certifications: ${targetProfile.certifications.join(', ') || "None"}
+
+AI COACH DEVELOPMENT ACTION PATH:
+1. Target professional certifications matching your domain (e.g. CSWP or ANSYS Certified Professional) to bypass automated screening filters.
+2. Formulate dedicated portfolio blueprints showing mechanical calculations.
+3. Network via GrabCAD and LinkedIn directly targeting design leads.
+
+===========================================================
+End of MechIntel AI Evaluation Report
+===========================================================`;
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `MechIntel_Career_Report_${targetProfile.id || "ME-49023"}.txt`;
+    link.click();
 }
 
-// Generate dynamic SVG bell curve and mark user standing
-function renderDistributionCurve(userScore) {
-    const svg = document.getElementById("distribution-curve-svg");
-    if (!svg) return;
-    
-    svg.innerHTML = "";
-    
-    const width = 600;
-    const height = 120;
-    const paddingBottom = 15;
-    const graphHeight = height - paddingBottom;
-    
-    const mean = 50;
-    const stdDev = 16;
-    
-    // Build distribution curve points
-    let points = [];
-    for (let x = 0; x <= width; x++) {
-        const scoreVal = (x / width) * 100;
-        const exponent = -Math.pow(scoreVal - mean, 2) / (2 * Math.pow(stdDev, 2));
-        const yVal = graphHeight - (Math.exp(exponent) * (graphHeight - 12));
-        points.push(`${x},${yVal}`);
+// Populate Course Lecture details based on dropdown selection
+function loadCourseAcademy(domainName) {
+    const course = COURSE_CATALOG[domainName];
+    if (!course) return;
+
+    document.getElementById("course-lesson-name").innerText = course.title;
+    document.getElementById("course-lesson-desc").innerText = course.description;
+    document.getElementById("course-lecture-notes").innerHTML = course.written_content;
+    document.getElementById("course-quiz-question").innerText = course.quiz_question;
+
+    // Reset status badge
+    const badge = document.getElementById("course-academy-completion-badge");
+    if (completedCourses.includes(domainName)) {
+        badge.innerText = "✨ Completed (+5 Boost Active)";
+        badge.className = "badge badge-green";
+        document.getElementById("quiz-feedback-message").innerText = "🎉 Quiz completed! Score boosted.";
+    } else {
+        badge.innerText = "⏳ Status: Incomplete";
+        badge.className = "badge badge-medium";
+        document.getElementById("quiz-feedback-message").innerText = "";
     }
-    
-    const pathD = `M 0,${graphHeight} L ${points.join(" L ")} L ${width},${graphHeight} Z`;
-    
-    // Fill path
-    const pathFill = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    pathFill.setAttribute("d", pathD);
-    pathFill.setAttribute("fill", "url(#curveGrad)");
-    pathFill.setAttribute("opacity", "0.15");
-    
-    // Stroke path
-    const pathStroke = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    pathStroke.setAttribute("d", `M 0,${graphHeight} L ${points.join(" L ")}`);
-    pathStroke.setAttribute("fill", "none");
-    pathStroke.setAttribute("stroke", "url(#curveGradStroke)");
-    pathStroke.setAttribute("stroke-width", "2");
-    
-    // Gradients definitions
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    defs.innerHTML = `
-        <linearGradient id="curveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.8" />
-            <stop offset="100%" stop-color="transparent" stop-opacity="0" />
-        </linearGradient>
-        <linearGradient id="curveGradStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="var(--info)" />
-            <stop offset="50%" stop-color="var(--primary)" />
-            <stop offset="100%" stop-color="var(--accent)" />
-        </linearGradient>
+
+    // Load quiz options
+    const form = document.getElementById("course-quiz-form");
+    form.innerHTML = "";
+    course.quiz_options.forEach((opt, idx) => {
+        const row = document.createElement("div");
+        row.className = "quiz-opt-row";
+        row.innerHTML = `
+            <input type="radio" name="academy_quiz_opt" id="quiz_opt_${idx}" value="${opt}">
+            <label for="quiz_opt_${idx}">${opt}</label>
+        `;
+        form.appendChild(row);
+    });
+
+    // Populate recommendation list
+    const recsList = document.getElementById("course-recommendations-list");
+    recsList.innerHTML = `
+        <p>Recommended certificates to acquire:</p>
+        <p style="margin-top:0.4rem; font-size:0.8rem;"><strong>${domainName === 'CAD Design' ? 'SolidWorks CSWP / CSWA' : (domainName === 'CAE/Simulation' ? 'ANSYS Certified Specialist' : 'ASME Robotics / Lean Six Sigma')}</strong></p>
     `;
     
-    svg.appendChild(defs);
-    svg.appendChild(pathFill);
-    svg.appendChild(pathStroke);
-    
-    // Compute User Coordinates
-    const userX = (userScore / 100) * width;
-    const userExponent = -Math.pow(userScore - mean, 2) / (2 * Math.pow(stdDev, 2));
-    const userY = graphHeight - (Math.exp(userExponent) * (graphHeight - 12));
-    
-    // Vertical dashed marker line
-    const markerLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    markerLine.setAttribute("x1", userX);
-    markerLine.setAttribute("y1", graphHeight);
-    markerLine.setAttribute("x2", userX);
-    markerLine.setAttribute("y2", userY);
-    markerLine.setAttribute("stroke", "var(--primary)");
-    markerLine.setAttribute("stroke-width", "1.5");
-    markerLine.setAttribute("stroke-dasharray", "3,3");
-    markerLine.className.baseVal = "dist-user-marker";
-    
-    // Glowing outer circle
-    const glowCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    glowCircle.setAttribute("cx", userX);
-    glowCircle.setAttribute("cy", userY);
-    glowCircle.setAttribute("r", "8");
-    glowCircle.setAttribute("fill", "rgba(99, 102, 241, 0.3)");
-    glowCircle.setAttribute("stroke", "var(--primary)");
-    glowCircle.setAttribute("stroke-width", "1.5");
-    glowCircle.className.baseVal = "dist-user-marker";
-    
-    // Inner solid dot
-    const solidCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    solidCircle.setAttribute("cx", userX);
-    solidCircle.setAttribute("cy", userY);
-    solidCircle.setAttribute("r", "4");
-    solidCircle.setAttribute("fill", "#ffffff");
-    
-    svg.appendChild(markerLine);
-    svg.appendChild(glowCircle);
-    svg.appendChild(solidCircle);
-    
-    // Align score label text positioning
-    const label = document.getElementById("dist-your-score-label");
-    if (label) {
-        label.innerText = `Your Standing (Score: ${userScore})`;
-        const pctPos = Math.min(Math.max((userScore / 100) * 100 - 15, 2), 78);
-        label.style.marginLeft = `${pctPos}%`;
-    }
+    // Draw timeline chart
+    drawTimelineChart();
 }
 
-// Canvas particle network background creator
-function initParticles() {
-    const canvas = document.getElementById("particle-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let particles = [];
+// Competitor Database paging & filtering
+let dbFiltered = [];
+let dbPage = 1;
+const dbPageSize = 12;
+
+function renderDatabaseTable() {
+    const search = document.getElementById("db-search-input").value.toLowerCase();
+    const region = document.getElementById("db-region-filter").value;
+    const cluster = document.getElementById("db-cluster-filter").value;
     
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    let filtered = candidates;
+    if (region !== "All") filtered = filtered.filter(c => c.region === region);
+    if (cluster !== "All") filtered = filtered.filter(c => c.cluster === cluster);
+    if (search) {
+        filtered = filtered.filter(c => 
+            c.id.toLowerCase().includes(search) ||
+            c.college.toLowerCase().includes(search) ||
+            c.degree.toLowerCase().includes(search) ||
+            c.skills.some(s => s.toLowerCase().includes(search)) ||
+            c.software_tools.some(s => s.toLowerCase().includes(search))
+        );
     }
-    resize();
-    window.addEventListener("resize", resize);
+    
+    dbFiltered = filtered;
+    
+    const totalRecords = dbFiltered.length;
+    const startIdx = (dbPage - 1) * dbPageSize;
+    const endIdx = Math.min(startIdx + dbPageSize, totalRecords);
+    
+    const pageRecords = dbFiltered.slice(startIdx, endIdx);
+    
+    const tbody = document.getElementById("db-table-body");
+    tbody.innerHTML = "";
+    
+    pageRecords.forEach(c => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><strong>${c.id}</strong></td>
+            <td>${c.region}</td>
+            <td>${c.college} (${c.tier})</td>
+            <td>${c.cluster}</td>
+            <td>${c.skills.slice(0,2).concat(c.software_tools.slice(0,2)).join(', ')}</td>
+            <td><strong>${c.score}</strong></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("db-count-text").innerText = `Showing ${totalRecords > 0 ? startIdx + 1 : 0}-${endIdx} of ${totalRecords.toLocaleString()} profiles`;
+    
+    document.getElementById("prev-page-btn").disabled = (dbPage === 1);
+    document.getElementById("next-page-btn").disabled = (endIdx >= totalRecords);
+}
+
+// Initialize Particle Canvas
+function initParticles() {
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let particles = [];
+    const colorTheme = activeTheme === 'dark' ? 'rgba(37, 99, 235, 0.05)' : 'rgba(37, 99, 235, 0.03)';
     
     class Particle {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = Math.random() * 2 + 1;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 0.4 - 0.2;
+            this.speedY = Math.random() * 0.4 - 0.2;
         }
         update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            if (this.x > canvas.width) this.x = 0;
+            else if (this.x < 0) this.x = canvas.width;
+            
+            if (this.y > canvas.height) this.y = 0;
+            else if (this.y < 0) this.y = canvas.height;
         }
         draw() {
+            ctx.fillStyle = activeTheme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(99, 102, 241, 0.2)";
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
         }
     }
     
-    const count = Math.min(Math.floor((canvas.width * canvas.height) / 25000), 75);
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < 60; i++) {
         particles.push(new Particle());
     }
     
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        for (let i = 0; i < particles.length; i++) {
-            const p1 = particles[i];
-            p1.update();
-            p1.draw();
-            for (let j = i + 1; j < particles.length; j++) {
-                const p2 = particles[j];
-                const dx = p1.x - p2.x;
-                const dy = p1.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - dist / 120)})`;
-                    ctx.lineWidth = 0.8;
-                    ctx.stroke();
-                }
-            }
-        }
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
         requestAnimationFrame(animate);
     }
+    
     animate();
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
 }
 
-// Highlights professional keywords extracted from the pasted text
-function renderHighlightedText(text, parsed) {
-    const container = document.getElementById("highlighted-resume-container");
-    const box = document.getElementById("highlighted-resume-box");
-    if (!container || !box) return;
+// Simulator computations
+function updateSimulatorImpact() {
+    if (!targetProfile) return;
     
-    const skillsToHighlight = parsed.skills || [];
-    const softwareToHighlight = parsed.software_tools || [];
-    const certsToHighlight = parsed.certifications || [];
+    let simScore = calculateCompetitivenessScore(targetProfile);
     
-    let replacements = [];
+    // Toggle impact metrics
+    const addIntern = document.getElementById("sim-cb-intern").checked;
+    const addProj = document.getElementById("sim-cb-proj").checked;
+    const addComp = document.getElementById("sim-cb-comp").checked;
+    const addPaper = document.getElementById("sim-cb-paper").checked;
+    const addSkill = document.getElementById("sim-cb-skill").checked;
+    const addCert = document.getElementById("sim-cb-cert").checked;
     
-    function findMatches(dict, parsedValues, className) {
-        for (const [key, normalizedValue] of Object.entries(dict)) {
-            if (parsedValues.includes(normalizedValue)) {
-                const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regexStr = key.match(/^\w/) ? `\\b${escapedKey}\\b` : escapedKey;
-                const regex = new RegExp(regexStr, 'gi');
-                
-                let match;
-                while ((match = regex.exec(text)) !== null) {
-                    replacements.push({
-                        start: match.index,
-                        end: match.index + match[0].length,
-                        className: className,
-                        origText: match[0]
-                    });
-                }
-            }
-        }
-    }
+    if (addIntern) simScore = Math.min(simScore + 15, 100);
+    if (addProj) simScore = Math.min(simScore + 10, 100);
+    if (addComp) simScore = Math.min(simScore + 6, 100);
+    if (addPaper) simScore = Math.min(simScore + 5, 100);
+    if (addSkill) simScore = Math.min(simScore + 5, 100);
+    if (addCert) simScore = Math.min(simScore + 5, 100);
     
-    findMatches(SKILLS_DICT, skillsToHighlight, 'hl-skill');
-    findMatches(SOFTWARE_DICT, softwareToHighlight, 'hl-software');
-    findMatches(CERTS_DICT, certsToHighlight, 'hl-cert');
+    simScore = Math.round(simScore * 10) / 10;
     
-    // Sort and remove overlaps
-    replacements.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+    const ranks = getRanks(simScore, targetProfile.cluster || activeDomain, targetProfile.region, targetProfile.tier);
     
-    let filteredReplacements = [];
-    let lastEnd = 0;
-    for (const r of replacements) {
-        if (r.start >= lastEnd) {
-            filteredReplacements.push(r);
-            lastEnd = r.end;
-        }
-    }
-    
-    let resultHtml = "";
-    let lastIndex = 0;
-    for (const r of filteredReplacements) {
-        resultHtml += escapeHtml(text.slice(lastIndex, r.start));
-        resultHtml += `<span class="${r.className}">${escapeHtml(r.origText)}</span>`;
-        lastIndex = r.end;
-    }
-    resultHtml += escapeHtml(text.slice(lastIndex));
-    
-    box.innerHTML = resultHtml;
-    container.classList.remove("hidden");
+    document.getElementById("sim-score-val").innerText = `${simScore}/100`;
+    document.getElementById("sim-global-rank-val").innerText = `#${ranks.globalRank.toLocaleString()}`;
+    document.getElementById("sim-india-rank-val").innerText = `#${ranks.indiaRank.toLocaleString()}`;
 }
 
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-// Map cluster to visual icon
-function getClusterIcon(cluster) {
-    switch (cluster) {
-        case "CAD Design": return "📐";
-        case "CAE/Simulation": return "💻";
-        case "Robotics/Mechatronics": return "🤖";
-        case "Manufacturing/Operations": return "⚙️";
-        case "HVAC/Thermal": return "🔥";
-        default: return "🔧";
-    }
-}
-
-// Map cluster to description
-function getClusterDescription(cluster) {
-    switch (cluster) {
-        case "CAD Design":
-            return "Specializes in geometric drafting, 3D modeling, technical tolerances (GD&T), and design blueprints for manufacturing (DFM).";
-        case "CAE/Simulation":
-            return "Applies computational solvers (FEA/CFD) to analyze stress, thermodynamics, fluid flows, and vibration profiles in assemblies.";
-        case "Robotics/Mechatronics":
-            return "Integrates mechanical link structures with electrical controllers, microcontrollers (Arduino/STM), and automated programming.";
-        case "Manufacturing/Operations":
-            return "Focuses on assembly line automation, Lean Six Sigma processes, CNC G-code routing, and quality assurance systems.";
-        case "HVAC/Thermal":
-            return "Specializes in ductwork, cooling systems load sizing, piping layout compliant with codes, and heat exchanger mechanisms.";
-        default:
-            return "General mechanical engineering studies and research.";
-    }
-}
-
-// Update Candidate DB Table with pagination, search, filters
-function updateCandidatesTable() {
-    const searchVal = document.getElementById("db-search").value.toLowerCase();
-    const regionVal = document.getElementById("db-region-filter").value;
-    const clusterVal = document.getElementById("db-cluster-filter").value;
+// Build and show the high-fidelity SaaS dashboard
+function buildDashboard(profile) {
+    targetProfile = profile;
     
-    filteredCandidates = candidates.filter(c => {
-        const matchesSearch = searchVal === "" || 
-            c.id.toLowerCase().includes(searchVal) ||
-            c.college.toLowerCase().includes(searchVal) ||
-            c.degree.toLowerCase().includes(searchVal) ||
-            c.skills.some(s => s.toLowerCase().includes(searchVal)) ||
-            c.software_tools.some(t => t.toLowerCase().includes(searchVal));
-            
-        const matchesRegion = regionVal === "All" || c.region === regionVal;
-        const matchesCluster = clusterVal === "All" || c.cluster === clusterVal;
+    // Save to session state
+    sessionStorage.setItem("userProfile", JSON.stringify(profile));
+    
+    const score = calculateCompetitivenessScore(profile);
+    const resumeStrength = calculateResumeStrength(profile);
+    const recruiterVisibility = calculateRecruiterVisibility(profile);
+    
+    // Update overview metrics
+    document.getElementById("val-career-readiness").innerText = `${score}/100`;
+    document.getElementById("val-resume-strength").innerText = `${resumeStrength}/100`;
+    document.getElementById("val-recruiter-readiness").innerText = `${recruiterVisibility}%`;
+    
+    activeDomain = profile.cluster || "CAD Design";
+    document.getElementById("val-matched-domain").innerText = activeDomain;
+    
+    // Load ranks
+    const ranks = getRanks(score, activeDomain, profile.region, profile.tier);
+    
+    document.getElementById("db-global-rank").innerText = `#${ranks.globalRank.toLocaleString()}`;
+    document.getElementById("db-global-pct").innerText = `Top ${ranks.globalPercentile}% Globally`;
+    document.getElementById("db-global-progress").style.width = `${100 - ranks.globalPercentile}%`;
+
+    document.getElementById("db-india-rank").innerText = `#${ranks.indiaRank.toLocaleString()}`;
+    document.getElementById("db-india-pct").innerText = `Top ${ranks.indiaPercentile}% Nationally`;
+    document.getElementById("db-india-progress").style.width = `${100 - ranks.indiaPercentile}%`;
+
+    document.getElementById("db-tier-rank").innerText = `#${ranks.tierRank.toLocaleString()}`;
+    document.getElementById("db-tier-pct").innerText = `Top ${ranks.tierPercentile}% in Tier`;
+    document.getElementById("db-tier-progress").style.width = `${100 - ranks.tierPercentile}%`;
+
+    document.getElementById("db-cluster-rank").innerText = `#${ranks.clusterRank.toLocaleString()}`;
+    document.getElementById("db-cluster-pct").innerText = `Top ${ranks.clusterPercentile}% in Specialty`;
+    document.getElementById("db-cluster-progress").style.width = `${100 - ranks.clusterPercentile}%`;
+    
+    // Populate user profile info in sidebar
+    document.getElementById("sb-candidate-id").innerText = profile.id || "Candidate #ME-49023";
+    document.getElementById("sb-college-val").innerText = `${profile.degree} | ${profile.tier}`;
+    document.getElementById("sb-avatar-letter").innerText = profile.degree.charAt(0);
+    
+    // Render Diagnostics checklists
+    const strengthsUl = document.getElementById("overview-strengths");
+    strengthsUl.innerHTML = "";
+    if (profile.tier === "Tier 1") {
+        strengthsUl.innerHTML += `<li>Premium tier institution background unlocks competitive baseline listings.</li>`;
+    }
+    if (profile.internships > 0) {
+        strengthsUl.innerHTML += `<li>Industrial exposure (${profile.internships} internships) signals workplace readiness.</li>`;
+    }
+    if (profile.projects >= 3) {
+        strengthsUl.innerHTML += `<li>Robust project counts demonstrate design implementation capability.</li>`;
+    }
+    if (profile.certifications.length > 0) {
+        strengthsUl.innerHTML += `<li>Verified software certifications increase technical trust.</li>`;
+    }
+    if (strengthsUl.innerHTML === "") {
+        strengthsUl.innerHTML = `<li>Basic credentials loaded. Target micro-projects to establish portfolio strengths.</li>`;
+    }
+
+    const weaknessesUl = document.getElementById("overview-weaknesses");
+    weaknessesUl.innerHTML = "";
+    if (profile.tier === "Tier 3") {
+        weaknessesUl.innerHTML += `<li>Tier 3 credentials lack active campus hiring. Focus on off-campus portfolio channels.</li>`;
+    }
+    if (profile.internships === 0) {
+        weaknessesUl.innerHTML += `<li>Zero internships reported. Target virtual internships or research assistant roles.</li>`;
+    }
+    if (profile.projects <= 1) {
+        weaknessesUl.innerHTML += `<li>Insufficient capstone designs. Recruiters evaluate freshers based on design portfolios.</li>`;
+    }
+    if (profile.certifications.length === 0) {
+        weaknessesUl.innerHTML += `<li>Missing verified CAD/CAE certifications (e.g. CSWA, CSWP).</li>`;
+    }
+    if (weaknessesUl.innerHTML === "") {
+        weaknessesUl.innerHTML = `<li>No critical technical gaps detected compared to benchmark peers!</li>`;
+    }
+
+    // Set simulator label targets
+    const missingSkills = CLUSTER_KEYWORDS[activeDomain].filter(k => SKILLS_DICT[k.toLowerCase()] && !profile.skills.includes(k));
+    const missingCerts = CLUSTER_KEYWORDS[activeDomain].filter(k => CERTS_DICT[k.toLowerCase()] && !profile.certifications.includes(k));
+    
+    document.getElementById("sim-cb-skill-label").innerText = missingSkills.length > 0 ? `Master missing Skill: "${missingSkills[0]}" (+5)` : "All core skills acquired!";
+    document.getElementById("sim-cb-cert-label").innerText = missingCerts.length > 0 ? `Obtain missing Cert: "${missingCerts[0]}" (+5)` : "All core certs verified!";
+    
+    // Draw Plotly charts
+    drawGaugeChart(score);
+    drawRadarChart(profile, activeDomain);
+    drawHeatmapChart(activeDomain);
+    drawSalaryChart(score);
+    
+    // Populate role recommendations
+    generateRoleRecommendations(profile);
+    
+    // Setup Employer demands
+    document.getElementById("demand-cluster-icon").innerText = activeDomain === "CAD Design" ? "📐" : (activeDomain === "CAE/Simulation" ? "💻" : (activeDomain === "Robotics/Mechatronics" ? "🤖" : (activeDomain === "Manufacturing/Operations" ? "⚙️" : "🔥")));
+    document.getElementById("demand-cluster-title").innerText = activeDomain;
+    
+    const demands = EMPLOYER_DEMANDS[activeDomain];
+    document.getElementById("demand-cluster-role").innerText = demands.role;
+    
+    document.getElementById("demand-skills-list").innerHTML = demands.skills.map(s => `
+        <div class="demand-list-item">
+            <h5>${s.name} <span class="badge badge-low">${s.priority}</span></h5>
+            <p>${s.desc}</p>
+        </div>
+    `).join('');
+    
+    document.getElementById("demand-software-list").innerHTML = demands.software.map(sw => `
+        <div class="demand-list-item">
+            <h5>${sw.name} <span class="badge badge-medium">${sw.priority}</span></h5>
+            <p>${sw.desc}</p>
+        </div>
+    `).join('');
+
+    document.getElementById("demand-certs-list").innerHTML = demands.certs.map(c => `
+        <div class="demand-list-item">
+            <h5>${c.name} <span class="badge badge-purple">${c.priority}</span></h5>
+            <p>${c.desc}</p>
+        </div>
+    `).join('');
+
+    document.getElementById("demand-portfolio-list").innerHTML = demands.portfolio.map(p => `
+        <div class="demand-list-item">
+            <h5>${p.title}</h5>
+            <p>${p.desc}</p>
+        </div>
+    `).join('');
+    
+    // Setup Course Academy dropdown and contents
+    document.getElementById("course-domain-selector").value = activeDomain;
+    loadCourseAcademy(activeDomain);
+
+    // Initial table render
+    renderDatabaseTable();
+    
+    // AI Optimizer recommendations block
+    document.getElementById("coach-resume-suggestions").innerHTML = `
+        <li>Acquire verified <strong>${activeDomain === 'CAD Design' ? 'ASME GD&T positioning constraints' : 'ANSYS structural mesh criteria'}</strong>.</li>
+        <li>Format your capstone portfolio detailing mechanical load calculations (e.g. Lewis gear bending forces).</li>
+    `;
+
+    // Final dashboard transition
+    showPane("dashboard-panel");
+    lucide.createIcons();
+    updateSimulatorImpact();
+}
+
+// Local PDF reader text extractor
+async function handlePdfUpload(file) {
+    const statusDiv = document.getElementById("hero-upload-status") || document.getElementById("pdf-upload-status");
+    if (statusDiv) {
+        statusDiv.style.display = "block";
+        statusDiv.innerText = "Initializing PDF reader...";
+    }
+    
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        let text = "";
         
-        return matchesSearch && matchesRegion && matchesCluster;
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            const strings = content.items.map(item => item.str);
+            text += strings.join(" ") + "\n";
+        }
+        
+        if (text.trim()) {
+            if (statusDiv) statusDiv.innerText = "PDF successfully extracted! Initializing parser overlay...";
+            
+            // Show scanning overlay modal
+            const overlay = document.getElementById("scanner-overlay");
+            overlay.classList.add("active");
+            
+            setTimeout(() => { document.getElementById("scan-step-1").className = "scanner-step-row completed"; }, 600);
+            setTimeout(() => { document.getElementById("scan-step-2").className = "scanner-step-row completed"; }, 1200);
+            setTimeout(() => { document.getElementById("scan-step-3").className = "scanner-step-row completed"; }, 1800);
+            setTimeout(() => { 
+                document.getElementById("scan-step-4").className = "scanner-step-row completed"; 
+                overlay.classList.remove("active");
+                
+                // Parse attributes
+                const parsed = parseResumeText(text);
+                
+                // Refine Manual Form values
+                document.getElementById("form-region").value = parsed.region;
+                document.getElementById("form-tier").value = parsed.tier;
+                document.getElementById("form-degree").value = parsed.degree;
+                document.getElementById("form-projects").value = parsed.projects;
+                document.getElementById("form-internships").value = parsed.internships;
+                document.getElementById("form-papers").value = parsed.research_papers;
+                document.getElementById("form-competitions").value = parsed.competitions;
+                
+                // Set chips
+                const matchedCluster = getBestMatchedCluster(parsed.skills.concat(parsed.software_tools));
+                document.querySelectorAll(".domain-chip").forEach(chip => {
+                    if (chip.getAttribute("data-domain") === matchedCluster) chip.classList.add("active");
+                    else chip.classList.remove("active");
+                });
+
+                // Clear tags
+                document.querySelectorAll(".tag-pill").forEach(tag => tag.remove());
+                
+                // Add extracted skills/sw tags to input fields
+                parsed.skills.forEach(s => addTag("skills-input-wrapper", s, "tag-skill"));
+                parsed.software_tools.forEach(sw => addTag("tools-input-wrapper", sw, "tag-sw"));
+                parsed.certifications.forEach(c => addTag("certs-input-wrapper", c, "tag-cert"));
+                
+                // Build Highlight
+                const hlBox = document.getElementById("highlighted-resume-box");
+                let highlightedText = parsed.raw_text;
+                parsed.skills.forEach(s => {
+                    highlightedText = highlightedText.replace(new RegExp(s, 'gi'), `<span class="highlight-skill">${s}</span>`);
+                });
+                parsed.software_tools.forEach(sw => {
+                    highlightedText = highlightedText.replace(new RegExp(sw, 'gi'), `<span class="highlight-software">${sw}</span>`);
+                });
+                parsed.certifications.forEach(c => {
+                    highlightedText = highlightedText.replace(new RegExp(c, 'gi'), `<span class="highlight-cert">${c}</span>`);
+                });
+                hlBox.innerHTML = highlightedText;
+                document.getElementById("highlighted-resume-container").classList.remove("hidden");
+                
+                // Build profile model
+                const profile = {
+                    id: `Candidate #ME-${Math.floor(10000 + Math.random() * 90000)}`,
+                    region: parsed.region,
+                    tier: parsed.tier,
+                    degree: parsed.degree,
+                    projects: parsed.projects,
+                    internships: parsed.internships,
+                    research_papers: parsed.research_papers,
+                    competitions: parsed.competitions,
+                    skills: parsed.skills,
+                    software_tools: parsed.software_tools,
+                    certifications: parsed.certifications,
+                    cluster: matchedCluster
+                };
+                
+                // Redirect to Setup panel first to let user refine
+                showPane("manual-setup-panel");
+                document.getElementById("resume-paste-box").value = parsed.raw_text;
+            }, 2400);
+
+        } else {
+            if (statusDiv) statusDiv.innerText = "Error: PDF seems to be scanned/image-only.";
+        }
+    } catch(e) {
+        if (statusDiv) statusDiv.innerText = `Error: ${e.message}`;
+    }
+}
+
+// Find matched specialty based on keyword intersections
+function getBestMatchedCluster(attrs) {
+    let bestCluster = "CAD Design";
+    let maxIntersect = 0;
+    
+    CLUSTERS.forEach(c => {
+        const intersection = attrs.filter(a => CLUSTER_KEYWORDS[c].includes(a));
+        if (intersection.length > maxIntersect) {
+            maxIntersect = intersection.length;
+            bestCluster = c;
+        }
+    });
+    return bestCluster;
+}
+
+// Tag helpers
+function addTag(wrapperId, text, className) {
+    const wrapper = document.getElementById(wrapperId);
+    const input = wrapper.querySelector("input");
+    
+    // Check if tag already exists
+    const existing = Array.from(wrapper.querySelectorAll(".tag-pill")).map(pill => pill.innerText.trim());
+    if (existing.includes(text)) return;
+    
+    const pill = document.createElement("span");
+    pill.className = `tag-pill ${className}`;
+    pill.innerHTML = `${text} <i data-lucide="x" class="remove-tag-icon"></i>`;
+    
+    pill.querySelector("i").addEventListener("click", () => {
+        pill.remove();
     });
     
-    // Reset page if out of bounds
-    const totalPages = Math.ceil(filteredCandidates.length / pageSize);
-    if (currentPage > totalPages) currentPage = Math.max(totalPages, 1);
-    
-    const startIdx = (currentPage - 1) * pageSize;
-    const endIdx = startIdx + pageSize;
-    const pageCandidates = filteredCandidates.slice(startIdx, endIdx);
-    
-    // Render count text
-    document.getElementById("db-count-text").innerText = 
-        `Showing ${filteredCandidates.length === 0 ? 0 : startIdx + 1} - ${Math.min(endIdx, filteredCandidates.length)} of ${filteredCandidates.length} profiles (Dataset seeded with 100,000 records)`;
-        
-    // Render Table Rows
-    const tableBody = document.getElementById("db-table-body");
-    if (pageCandidates.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 3rem;">No candidates found matching the filters.</td></tr>`;
-    } else {
-        tableBody.innerHTML = pageCandidates.map(c => `
-            <tr>
-                <td><code style="color: var(--text-secondary)">${c.id}</code></td>
-                <td>${c.region}</td>
-                <td>${c.college} <span style="font-size: 0.75rem; color: var(--text-muted);">(${c.tier})</span></td>
-                <td><span class="badge" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;">${c.cluster}</span></td>
-                <td>
-                    <div class="profile-capsule-list">
-                        ${c.skills.slice(0, 3).map(s => `<span class="capsule">${s}</span>`).join("")}
-                        ${c.software_tools.slice(0, 2).map(t => `<span class="capsule capsule-active">${t}</span>`).join("")}
-                        ${c.skills.length + c.software_tools.length > 5 ? `<span class="capsule">+${c.skills.length + c.software_tools.length - 5}</span>` : ''}
-                    </div>
-                </td>
-                <td>
-                    <div class="score-indicator">
-                        <span style="font-weight: 600;">${c.score}</span>
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: ${c.score}%"></div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        `).join("");
-    }
-    
-    // Enable/Disable Pagination buttons
-    document.getElementById("prev-page-btn").disabled = currentPage === 1;
-    document.getElementById("next-page-btn").disabled = currentPage >= totalPages;
+    wrapper.insertBefore(pill, input);
+    lucide.createIcons();
 }
 
-// DOM Setup on load
+// Presets loader
+function loadPreset(presetName) {
+    document.querySelectorAll(".tag-pill").forEach(pill => pill.remove());
+    
+    if (presetName === "entry-cad") {
+        document.getElementById("form-region").value = "India";
+        document.getElementById("form-tier").value = "Tier 3";
+        document.getElementById("form-degree").value = "B.Tech/B.S.";
+        document.getElementById("form-projects").value = 2;
+        document.getElementById("form-internships").value = 0;
+        document.getElementById("form-papers").value = 0;
+        document.getElementById("form-competitions").value = 0;
+        
+        addTag("skills-input-wrapper", "Product Design", "tag-skill");
+        addTag("skills-input-wrapper", "GD&T (Geometric Dimensioning & Tolerancing)", "tag-skill");
+        addTag("skills-input-wrapper", "Sheet Metal Design", "tag-skill");
+        
+        addTag("tools-input-wrapper", "SolidWorks", "tag-sw");
+        addTag("tools-input-wrapper", "AutoCAD", "tag-sw");
+        
+        addTag("certs-input-wrapper", "Certified SolidWorks Associate (CSWA)", "tag-cert");
+        
+        setActiveDomainChip("CAD Design");
+    } 
+    else if (presetName === "cae-mid") {
+        document.getElementById("form-region").value = "India";
+        document.getElementById("form-tier").value = "Tier 2";
+        document.getElementById("form-degree").value = "M.Tech/M.S.";
+        document.getElementById("form-projects").value = 4;
+        document.getElementById("form-internships").value = 1;
+        document.getElementById("form-papers").value = 1;
+        document.getElementById("form-competitions").value = 1;
+        
+        addTag("skills-input-wrapper", "Finite Element Analysis (FEA)", "tag-skill");
+        addTag("skills-input-wrapper", "Computational Fluid Dynamics (CFD)", "tag-skill");
+        addTag("skills-input-wrapper", "Structural Analysis", "tag-skill");
+        
+        addTag("tools-input-wrapper", "ANSYS", "tag-sw");
+        addTag("tools-input-wrapper", "MATLAB", "tag-sw");
+        addTag("tools-input-wrapper", "Fluent", "tag-sw");
+        
+        addTag("certs-input-wrapper", "ANSYS Certified Professional", "tag-cert");
+        
+        setActiveDomainChip("CAE/Simulation");
+    } 
+    else if (presetName === "global-robotics") {
+        document.getElementById("form-region").value = "Global";
+        document.getElementById("form-tier").value = "Tier 1";
+        document.getElementById("form-degree").value = "B.Tech/B.S.";
+        document.getElementById("form-projects").value = 5;
+        document.getElementById("form-internships").value = 2;
+        document.getElementById("form-papers").value = 0;
+        document.getElementById("form-competitions").value = 1;
+        
+        addTag("skills-input-wrapper", "Mechatronics", "tag-skill");
+        addTag("skills-input-wrapper", "Control Systems", "tag-skill");
+        addTag("skills-input-wrapper", "Robotics", "tag-skill");
+        
+        addTag("tools-input-wrapper", "MATLAB", "tag-sw");
+        addTag("tools-input-wrapper", "Simulink", "tag-sw");
+        addTag("tools-input-wrapper", "Python", "tag-sw");
+        addTag("tools-input-wrapper", "Arduino", "tag-sw");
+        
+        addTag("certs-input-wrapper", "ASME Member / Cert", "tag-cert");
+        
+        setActiveDomainChip("Robotics/Mechatronics");
+    }
+}
+
+function setActiveDomainChip(domain) {
+    document.querySelectorAll(".domain-chip").forEach(chip => {
+        if(chip.getAttribute("data-domain") === domain) chip.classList.add("active");
+        else chip.classList.remove("active");
+    });
+}
+
+// App Initialization
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize particle background
+    // Generate cohort DB
+    candidates = generateDataset();
+    
+    // Init canvas particles
     initParticles();
-    // 1. Generate the massive dataset of 100,000 records
-    const loaderText = document.createElement("p");
-    loaderText.style.color = "var(--text-muted)";
-    loaderText.style.fontSize = "0.85rem";
-    loaderText.innerText = "Seeding candidate database...";
     
-    // Measure generation/load time
-    const t0 = performance.now();
-    fetch('candidates_100k.json')
-        .then(response => {
-            if (!response.ok) throw new Error("File not found or CORS block");
-            return response.json();
-        })
-        .then(data => {
-            candidates = data;
-            const t1 = performance.now();
-            console.log(`Loaded ${candidates.length} candidates from candidates_100k.json in ${(t1 - t0).toFixed(2)}ms`);
-            
-            const statusBadge = document.getElementById("db-status-badge");
-            if (statusBadge) {
-                statusBadge.innerHTML = `<span class="pulse-dot" style="background-color: var(--success)"></span> Database Loaded: 100,000 Web Extracted`;
-            }
-            filteredCandidates = [...candidates];
-            updateCandidatesTable();
-        })
-        .catch(err => {
-            console.log("Loading candidates_100k.json bypassed (CORS / file absent). Generating dynamic fallback...");
-            candidates = generateDataset(100000);
-            const t1 = performance.now();
-            console.log(`Generated ${candidates.length} candidates in ${(t1 - t0).toFixed(2)}ms`);
-            
-            const statusBadge = document.getElementById("db-status-badge");
-            if (statusBadge) {
-                statusBadge.innerHTML = `<span class="pulse-dot"></span> Database Loaded: 100,000 Freshers`;
-            }
-            filteredCandidates = [...candidates];
-            updateCandidatesTable();
+    // Setup Lucide icons
+    lucide.createIcons();
+
+    // Theme toggle listener
+    const themeBtn = document.getElementById("theme-toggle-btn");
+    themeBtn.addEventListener("click", () => {
+        const html = document.documentElement;
+        if (html.getAttribute("data-theme") === "dark") {
+            html.setAttribute("data-theme", "light");
+            activeTheme = 'light';
+            document.getElementById("theme-icon-sun").classList.add("hidden");
+            document.getElementById("theme-icon-moon").classList.remove("hidden");
+        } else {
+            html.setAttribute("data-theme", "dark");
+            activeTheme = 'dark';
+            document.getElementById("theme-icon-sun").classList.remove("hidden");
+            document.getElementById("theme-icon-moon").classList.add("hidden");
+        }
+        
+        // Redraw charts with new colors
+        if(targetProfile) {
+            drawGaugeChart(calculateCompetitivenessScore(targetProfile));
+            drawRadarChart(targetProfile, activeDomain);
+            drawHeatmapChart(activeDomain);
+            drawSalaryChart(calculateCompetitivenessScore(targetProfile));
+        }
+    });
+
+    // View Routing triggers
+    document.getElementById("nav-cta-btn").addEventListener("click", () => {
+        // Retrieve session profile if exists, else manual entry
+        const saved = sessionStorage.getItem("userProfile");
+        if(saved) {
+            buildDashboard(JSON.parse(saved));
+        } else {
+            showPane("manual-setup-panel");
+        }
+    });
+    
+    document.getElementById("hero-get-started-btn").addEventListener("click", () => {
+        showPane("manual-setup-panel");
+    });
+    
+    document.getElementById("hero-manual-btn").addEventListener("click", () => {
+        showPane("manual-setup-panel");
+    });
+    
+    document.getElementById("setup-back-btn").addEventListener("click", () => {
+        showPane("landing-page-container");
+    });
+
+    document.querySelectorAll(".launch-app-trigger").forEach(btn => {
+        btn.addEventListener("click", () => {
+            showPane("manual-setup-panel");
         });
+    });
+
+    // Preset chips listeners
+    document.querySelectorAll(".preset-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            loadPreset(chip.getAttribute("data-preset"));
+        });
+    });
+
+    // Domain chips selector
+    document.querySelectorAll(".domain-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            document.querySelectorAll(".domain-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+        });
+    });
+
+    // File upload PDF parse triggers
+    const dropzone = document.getElementById("upload-dropzone");
+    const fileInput = document.getElementById("hero-file-input");
     
-    // Setup tags inputs
-    setupTagsInput("skills-input-wrapper", "skills-text-input");
-    setupTagsInput("tools-input-wrapper", "tools-text-input");
-    setupTagsInput("certs-input-wrapper", "certs-text-input");
-    
-    // Event listeners
+    dropzone.addEventListener("click", () => fileInput.click());
+    dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = "var(--primary)";
+    });
+    dropzone.addEventListener("dragleave", () => {
+        dropzone.style.borderColor = "var(--border-color)";
+    });
+    dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = "var(--border-color)";
+        if(e.dataTransfer.files.length > 0) {
+            handlePdfUpload(e.dataTransfer.files[0]);
+        }
+    });
+    fileInput.addEventListener("change", () => {
+        if(fileInput.files.length > 0) {
+            handlePdfUpload(fileInput.files[0]);
+        }
+    });
+
+    // Paste resume text parse button
     document.getElementById("btn-parse-resume").addEventListener("click", () => {
         const text = document.getElementById("resume-paste-box").value;
-        if (!text.trim()) {
-            alert("Please paste your resume text first.");
-            return;
-        }
+        if (!text.trim()) return;
         
-        const overlay = document.getElementById("scanner-overlay");
-        const steps = [
-            document.getElementById("scan-step-1"),
-            document.getElementById("scan-step-2"),
-            document.getElementById("scan-step-3"),
-            document.getElementById("scan-step-4")
-        ];
+        const parsed = parseResumeText(text);
         
-        // Reset classes
-        steps.forEach(step => {
-            step.className = "scanner-step-row";
+        // Populate inputs
+        document.getElementById("form-region").value = parsed.region;
+        document.getElementById("form-tier").value = parsed.tier;
+        document.getElementById("form-degree").value = parsed.degree;
+        document.getElementById("form-projects").value = parsed.projects;
+        document.getElementById("form-internships").value = parsed.internships;
+        document.getElementById("form-papers").value = parsed.research_papers;
+        document.getElementById("form-competitions").value = parsed.competitions;
+        
+        const matched = getBestMatchedCluster(parsed.skills.concat(parsed.software_tools));
+        setActiveDomainChip(matched);
+        
+        document.querySelectorAll(".tag-pill").forEach(pill => pill.remove());
+        parsed.skills.forEach(s => addTag("skills-input-wrapper", s, "tag-skill"));
+        parsed.software_tools.forEach(sw => addTag("tools-input-wrapper", sw, "tag-sw"));
+        parsed.certifications.forEach(c => addTag("certs-input-wrapper", c, "tag-cert"));
+        
+        // Build Highlight
+        const hlBox = document.getElementById("highlighted-resume-box");
+        let highlightedText = parsed.raw_text;
+        parsed.skills.forEach(s => {
+            highlightedText = highlightedText.replace(new RegExp(s, 'gi'), `<span class="highlight-skill">${s}</span>`);
         });
-        
-        // Show scan overlay modal
-        overlay.classList.add("active");
-        
-        // Timeline animations
-        steps[0].classList.add("active");
-        
-        setTimeout(() => {
-            steps[0].classList.remove("active");
-            steps[0].classList.add("completed");
-            steps[1].classList.add("active");
-            
-            setTimeout(() => {
-                steps[1].classList.remove("active");
-                steps[1].classList.add("completed");
-                steps[2].classList.add("active");
-                
-                setTimeout(() => {
-                    steps[2].classList.remove("active");
-                    steps[2].classList.add("completed");
-                    steps[3].classList.add("active");
-                    
-                    setTimeout(() => {
-                        steps[3].classList.remove("active");
-                        steps[3].classList.add("completed");
-                        
-                        try {
-                            const parsed = parseResumeText(text);
-                            
-                            // Populate form
-                            document.getElementById("form-region").value = parsed.region;
-                            document.getElementById("form-tier").value = parsed.tier;
-                            document.getElementById("form-degree").value = parsed.degree;
-                            document.getElementById("form-projects").value = parsed.projects;
-                            document.getElementById("form-internships").value = parsed.internships;
-                            document.getElementById("form-papers").value = parsed.research_papers;
-                            document.getElementById("form-competitions").value = parsed.competitions;
-                            
-                            // Load tags
-                            setTags("skills-input-wrapper", parsed.skills);
-                            setTags("tools-input-wrapper", parsed.software_tools);
-                            setTags("certs-input-wrapper", parsed.certifications);
-                            
-                            // Render Highlighter
-                            renderHighlightedText(text, parsed);
-                        } catch (err) {
-                            console.error("Resume parsing error:", err);
-                            alert("Error during automatic parsing: " + err.message + "\nPlease try manually entering your details in the form.");
-                        } finally {
-                            setTimeout(() => {
-                                overlay.classList.remove("active");
-                            }, 400);
-                        }
-                    }, 650);
-                }, 600);
-            }, 700);
-        }, 600);
+        parsed.software_tools.forEach(sw => {
+            highlightedText = highlightedText.replace(new RegExp(sw, 'gi'), `<span class="highlight-software">${sw}</span>`);
+        });
+        parsed.certifications.forEach(c => {
+            highlightedText = highlightedText.replace(new RegExp(c, 'gi'), `<span class="highlight-cert">${c}</span>`);
+        });
+        hlBox.innerHTML = highlightedText;
+        document.getElementById("highlighted-resume-container").classList.remove("hidden");
     });
-    
+
+    // Custom tags input key listener
+    function setupTagInput(inputId, wrapperId, className) {
+        const input = document.getElementById(inputId);
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === ",") {
+                e.preventDefault();
+                const text = input.value.trim();
+                if(text) {
+                    addTag(wrapperId, text, className);
+                    input.value = "";
+                }
+            }
+        });
+    }
+    setupTagInput("skills-text-input", "skills-input-wrapper", "tag-skill");
+    setupTagInput("tools-text-input", "tools-input-wrapper", "tag-sw");
+    setupTagInput("certs-text-input", "certs-input-wrapper", "tag-cert");
+
+    // Build and compile standings trigger
     document.getElementById("btn-run-analysis").addEventListener("click", () => {
-        const region = document.getElementById("form-region").value;
-        const tier = document.getElementById("form-tier").value;
-        const degree = document.getElementById("form-degree").value;
-        const college = region === "India" ? "National Tech Institute" : "Global Tech University";
+        // Collect tags
+        const skills = Array.from(document.querySelectorAll("#skills-input-wrapper .tag-pill")).map(pill => pill.innerText.trim());
+        const software = Array.from(document.querySelectorAll("#tools-input-wrapper .tag-pill")).map(pill => pill.innerText.trim());
+        const certs = Array.from(document.querySelectorAll("#certs-input-wrapper .tag-pill")).map(pill => pill.innerText.trim());
         
-        const skills = getTags("skills-input-wrapper");
-        const software_tools = getTags("tools-input-wrapper");
-        const certifications = getTags("certs-input-wrapper");
-        
-        const projects = parseInt(document.getElementById("form-projects").value) || 0;
-        const internships = parseInt(document.getElementById("form-internships").value) || 0;
-        const research_papers = parseInt(document.getElementById("form-papers").value) || 0;
-        const competitions = parseInt(document.getElementById("form-competitions").value) || 0;
-        
+        const activeDomainChip = document.querySelector(".domain-chip.active");
+        const domain = activeDomainChip ? activeDomainChip.getAttribute("data-domain") : "CAD Design";
+
         const profile = {
-            region,
-            college,
-            tier,
-            degree,
-            skills,
-            software_tools,
-            certifications,
-            projects,
-            internships,
-            research_papers,
-            competitions
+            id: targetProfile?.id || `Candidate #ME-${Math.floor(10000 + Math.random() * 90000)}`,
+            region: document.getElementById("form-region").value,
+            tier: document.getElementById("form-tier").value,
+            degree: document.getElementById("form-degree").value,
+            projects: parseInt(document.getElementById("form-projects").value) || 0,
+            internships: parseInt(document.getElementById("form-internships").value) || 0,
+            research_papers: parseInt(document.getElementById("form-papers").value) || 0,
+            competitions: parseInt(document.getElementById("form-competitions").value) || 0,
+            skills: skills,
+            software_tools: software,
+            certifications: certs,
+            cluster: domain
         };
         
-        runAnalysis(profile);
+        buildDashboard(profile);
     });
-    
-    // Tab switching
-    const tabBtns = document.querySelectorAll(".tab-btn");
-    tabBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            tabBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            
-            const target = btn.dataset.tab;
-            
-            // Hide all tab views
-            document.getElementById("tab-dashboard-view").classList.add("hidden");
-            document.getElementById("tab-database-view").classList.add("hidden");
-            document.getElementById("tab-demand-view").classList.add("hidden");
-            document.getElementById("tab-courses-view").classList.add("hidden");
-            
-            if (target === "dashboard") {
-                document.getElementById("tab-dashboard-view").classList.remove("hidden");
-            } else if (target === "database") {
-                document.getElementById("tab-database-view").classList.remove("hidden");
-                updateCandidatesTable();
-            } else if (target === "demand") {
-                document.getElementById("tab-demand-view").classList.remove("hidden");
-                if (targetProfile) {
-                    renderEmployerInsights(targetProfile.cluster || "CAD Design");
-                } else {
-                    renderEmployerInsights("CAD Design");
-                }
-            } else if (target === "courses") {
-                document.getElementById("tab-courses-view").classList.remove("hidden");
-                if (targetProfile) {
-                    renderCourses(targetProfile.cluster || "CAD Design");
-                } else {
-                    renderCourses("CAD Design");
-                }
+
+    // Sidebar navigation clicks
+    document.querySelectorAll(".sidebar-nav-item").forEach(item => {
+        item.addEventListener("click", () => {
+            const view = item.getAttribute("data-view");
+            if(view) {
+                showDashboardView(view);
             }
         });
     });
-    
-    // Floating back buttons
-    document.getElementById("btn-back-to-input").addEventListener("click", () => {
-        document.getElementById("dashboard-panel").classList.add("hidden");
-        document.getElementById("setup-panel").classList.remove("hidden");
+
+    document.getElementById("sidebar-logout-btn").addEventListener("click", () => {
+        showPane("landing-page-container");
     });
     
-    // Database search/filters
-    document.getElementById("db-search").addEventListener("input", () => {
-        currentPage = 1;
-        updateCandidatesTable();
-    });
-    document.getElementById("db-region-filter").addEventListener("change", () => {
-        currentPage = 1;
-        updateCandidatesTable();
-    });
-    document.getElementById("db-cluster-filter").addEventListener("change", () => {
-        currentPage = 1;
-        updateCandidatesTable();
-    });
-    
-    // Pagination buttons
-    document.getElementById("prev-page-btn").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            updateCandidatesTable();
-            document.querySelector(".table-wrapper").scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-    document.getElementById("next-page-btn").addEventListener("click", () => {
-        const totalPages = Math.ceil(filteredCandidates.length / pageSize);
-        if (currentPage < totalPages) {
-            currentPage++;
-            updateCandidatesTable();
-            document.querySelector(".table-wrapper").scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-    
-    // Preset profile chips trigger
-    const presetChips = document.querySelectorAll(".preset-chip");
-    presetChips.forEach(chip => {
-        chip.addEventListener("click", () => {
-            const presetName = chip.dataset.preset;
-            loadPreset(presetName);
-        });
+    document.getElementById("dashboard-refine-profile-btn").addEventListener("click", () => {
+        showPane("manual-setup-panel");
     });
 
-    // PDF File upload handler using pdf.js
-    const fileInput = document.getElementById("resume-file-input");
-    const fileStatus = document.getElementById("pdf-upload-status");
-    
-    fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        if (file.type !== "application/pdf") {
-            alert("Please select a PDF file.");
-            fileInput.value = "";
-            return;
+    // AI Coach message send triggers
+    document.getElementById("coach-chat-send-btn").addEventListener("click", () => {
+        const input = document.getElementById("coach-chat-input");
+        const message = input.value.trim();
+        if(message) {
+            handleCoachChat(message);
+            input.value = "";
         }
-        
-        fileStatus.style.display = "block";
-        fileStatus.style.color = "var(--info)";
-        fileStatus.innerText = "Extracting text from PDF...";
-        
-        const reader = new FileReader();
-        reader.onload = async function() {
-            try {
-                const pdfjsLib = window['pdfjs-dist/build/pdf'];
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-                
-                const typedarray = new Uint8Array(this.result);
-                const pdf = await pdfjsLib.getDocument({data: typedarray}).promise;
-                
-                let extractedText = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const textContent = await page.getTextContent();
-                    const pageText = textContent.items.map(item => item.str).join(" ");
-                    extractedText += pageText + "\n";
-                }
-                
-                if (!extractedText.trim()) {
-                    throw new Error("Could not extract any readable text from this PDF (it might be scanned/image-only).");
-                }
-                
-                document.getElementById("resume-paste-box").value = extractedText;
-                fileStatus.innerText = "PDF text loaded successfully! Auto-parsing attributes...";
-                
-                // Automatically trigger parser click
-                setTimeout(() => {
-                    document.getElementById("btn-parse-resume").click();
-                    fileStatus.innerText = "PDF parsed and form populated!";
-                    setTimeout(() => {
-                        fileStatus.style.display = "none";
-                    }, 3000);
-                }, 500);
-                
-            } catch (err) {
-                console.error(err);
-                fileStatus.style.color = "var(--danger)";
-                fileStatus.innerText = `Error: ${err.message || 'Failed to read PDF file'}`;
-                alert(err.message || "Failed to parse PDF. Please try copy-pasting the text instead.");
-            }
-        };
-        reader.readAsArrayBuffer(file);
     });
-});
-
-// Tags input helper
-function setupTagsInput(containerId, inputId) {
-    const container = document.getElementById(containerId);
-    const input = document.getElementById(inputId);
     
-    input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === ",") {
-            e.preventDefault();
-            const val = input.value.trim();
-            if (val) {
-                addTag(containerId, val);
+    document.getElementById("coach-chat-input").addEventListener("keydown", (e) => {
+        if(e.key === 'Enter') {
+            const input = document.getElementById("coach-chat-input");
+            const message = input.value.trim();
+            if(message) {
+                handleCoachChat(message);
                 input.value = "";
             }
         }
     });
-    
-    // Adding click to input container to focus the text field
-    container.addEventListener("click", (e) => {
-        if (e.target === container) {
-            input.focus();
-        }
+
+    // Chat preset clicks
+    document.querySelectorAll(".chat-preset-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            handleCoachChat(chip.getAttribute("data-prompt"));
+        });
     });
-}
 
-function addTag(containerId, tagText) {
-    const container = document.getElementById(containerId);
-    const input = container.querySelector("input");
-    
-    // Check duplicates
-    const existingTags = getTags(containerId);
-    if (existingTags.some(t => t.toLowerCase() === tagText.toLowerCase())) {
-        return;
-    }
-    
-    const tagEl = document.createElement("span");
-    tagEl.className = "tag-pill";
-    tagEl.dataset.tag = tagText; // Store exact value in dataset
-    tagEl.innerHTML = `
-        ${tagText}
-        <button type="button" onclick="this.parentElement.remove()">&times;</button>
-    `;
-    
-    container.insertBefore(tagEl, input);
-}
-
-function setTags(containerId, tagsArray) {
-    const container = document.getElementById(containerId);
-    const input = container.querySelector("input");
-    
-    // Remove existing pills
-    const pills = container.querySelectorAll(".tag-pill");
-    pills.forEach(p => p.remove());
-    
-    // Add new pills
-    tagsArray.forEach(tag => {
-        addTag(containerId, tag);
+    // Interview simulator questions click
+    document.getElementById("coach-gen-interview-btn").addEventListener("click", () => {
+        const activeCluster = targetProfile?.cluster || activeDomain;
+        const box = document.getElementById("coach-questions-box");
+        box.innerHTML = `
+            <p style="color:var(--text-primary); font-weight:700; margin-bottom:0.5rem;">Simulating custom interview questions for "${activeCluster}":</p>
+            <ol style="margin-left:1.2rem; font-size:0.8rem; line-height:1.4; color:var(--text-secondary);">
+                <li>How do you define the primary datum to control perpendicularity?</li>
+                <li>What criteria do you use to evaluate if an FEA mesh is converged?</li>
+                <li>Explain the role of the integral term (Ki) in PID automation systems.</li>
+            </ol>
+        `;
     });
-}
 
-function getTags(containerId) {
-    const container = document.getElementById(containerId);
-    const pills = container.querySelectorAll(".tag-pill");
-    const tags = [];
-    pills.forEach(p => {
-        // Retrieve from data attribute, falling back to text scrubbing if missing
-        if (p.dataset.tag) {
-            tags.push(p.dataset.tag.trim());
-        } else {
-            tags.push(p.textContent.replace('×', '').trim());
-        }
+    // Download Report trigger
+    document.getElementById("coach-download-report-btn").addEventListener("click", () => {
+        downloadCareerReport();
     });
-    return tags;
-}
 
-// Preset Loader helper
-function loadPreset(presetName) {
-    let preset = {};
-    if (presetName === "entry-cad") {
-        preset = {
-            region: "India",
-            tier: "Tier 3",
-            degree: "B.Tech/B.S.",
-            projects: 2,
-            internships: 0,
-            research_papers: 0,
-            competitions: 0,
-            skills: ["Product Design", "GD&T (Geometric Dimensioning & Tolerancing)", "Sheet Metal Design"],
-            software_tools: ["SolidWorks", "AutoCAD"],
-            certifications: ["Certified SolidWorks Associate (CSWA)"]
-        };
-    } else if (presetName === "cae-mid") {
-        preset = {
-            region: "India",
-            tier: "Tier 2",
-            degree: "M.Tech/M.S.",
-            projects: 4,
-            internships: 1,
-            research_papers: 1,
-            competitions: 1,
-            skills: ["Finite Element Analysis (FEA)", "Computational Fluid Dynamics (CFD)", "Structural Analysis", "Thermal Analysis"],
-            software_tools: ["ANSYS", "MATLAB", "Fluent"],
-            certifications: ["ANSYS Certified Professional", "FEA Specialist Certification"]
-        };
-    } else if (presetName === "global-robotics") {
-        preset = {
-            region: "Global",
-            tier: "Tier 1",
-            degree: "B.Tech/B.S.",
-            projects: 5,
-            internships: 2,
-            research_papers: 0,
-            competitions: 2,
-            skills: ["Mechatronics", "Control Systems", "Robotics", "Embedded Systems"],
-            software_tools: ["MATLAB", "Simulink", "Python", "C++", "Arduino"],
-            certifications: ["ASME Member / Cert"]
-        };
-    }
-    
-    // Load to fields
-    document.getElementById("form-region").value = preset.region;
-    document.getElementById("form-tier").value = preset.tier;
-    document.getElementById("form-degree").value = preset.degree;
-    document.getElementById("form-projects").value = preset.projects;
-    document.getElementById("form-internships").value = preset.internships;
-    document.getElementById("form-papers").value = preset.research_papers;
-    document.getElementById("form-competitions").value = preset.competitions;
-    
-    setTags("skills-input-wrapper", preset.skills);
-    setTags("tools-input-wrapper", preset.software_tools);
-    setTags("certs-input-wrapper", preset.certifications);
-}
+    // FAQ Accordion click
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.addEventListener("click", () => {
+            const item = q.parentElement;
+            item.classList.toggle("active");
+        });
+    });
 
-// Detailed Employer Demands data segmented by Career Specialization
-const EMPLOYER_DEMANDS = {
-    "CAD Design": {
-        role: "Design Engineer / CAD Analyst / Product Developer",
-        skills: [
-            { name: "Geometric Dimensioning & Tolerancing (GD&T)", desc: "Applying ASME Y14.5 rules for datum definitions, feature control frames, MMC/LMC, and precision component matching.", priority: "Critical" },
-            { name: "Design for Manufacturing & Assembly (DFM/DFMA)", desc: "Optimizing CAD models for cost-efficient injection molding (draft angles), sheet metal fabrication (bend reliefs), and CNC machining.", priority: "High" },
-            { name: "Tolerance Stack-up Analysis", desc: "Performing linear and statistical (Root Sum Square - RSS) tolerance analyses to prevent assembly failures.", priority: "High" }
-        ],
-        software: [
-            { name: "SolidWorks", desc: "Industry-standard parametric 3D modeling, advanced surfacing, and assembly configuration management.", priority: "Critical" },
-            { name: "Autodesk AutoCAD", desc: "Producing precise 2D mechanical drafts, plant piping layouts, and mechanical details.", priority: "High" },
-            { name: "CATIA", desc: "Advanced surfacing and structural frame modeling, dominant in aerospace and automotive giants.", priority: "High" },
-            { name: "PTC Creo / Siemens NX", desc: "Top-tier CAD systems used in complex high-end automotive assemblies and machinery design.", priority: "Medium" }
-        ],
-        certs: [
-            { name: "Certified SolidWorks Professional (CSWP)", desc: "Validates complex solid modeling, multi-body parts, and coordinate systems setup.", priority: "High" },
-            { name: "Certified SolidWorks Associate (CSWA)", desc: "Entry-level credential proving core part drafting and assembly mating competence.", priority: "Medium" },
-            { name: "Autodesk Certified Professional", desc: "Verifies AutoCAD/Inventor drafting standards and speed proficiency.", priority: "Medium" }
-        ],
-        portfolio: [
-            { title: "Parametric Gearbox Assembly", desc: "A fully constrained gear system complying with tooth bending calculations and bearing fits." },
-            { title: "Sheet Metal Enclosure Design", desc: "Electronics casing detailing precise flat patterns, bend radii, and fastener reliefs." }
-        ]
-    },
-    "CAE/Simulation": {
-        role: "Simulation Analyst / FEA Engineer / CFD Specialist",
-        skills: [
-            { name: "Finite Element Method (FEM) Fundamentals", desc: "Theoretical understanding of element formulations (1D beams, 2D shells, 3D solids), meshing density, and convergence curves.", priority: "Critical" },
-            { name: "Computational Fluid Dynamics (CFD)", desc: "Applying turbulence models (SST k-omega, standard k-epsilon), near-wall cell treatment (y+), and mass flow conservation laws.", priority: "Critical" },
-            { name: "Structural & Vibration Dynamics", desc: "Setting up modal, harmonic response, fatigue lifecycle, and non-linear contact simulations.", priority: "High" }
-        ],
-        software: [
-            { name: "ANSYS Workbench", desc: "Industry benchmark for Static Structural, Modal, Fluent CFD solvers, and thermal simulations.", priority: "Critical" },
-            { name: "Abaqus / Nastran", desc: "Advanced solver software for complex structural fatigue, crash testing, and automotive structural durability.", priority: "High" },
-            { name: "Altair HyperMesh", desc: "Primary pre-processor used in automotive/aerospace industries to build structured meshes.", priority: "High" },
-            { name: "MATLAB", desc: "Used to build numerical scripts, solve differential matrices, and run optimization loops.", priority: "Medium" }
-        ],
-        certs: [
-            { name: "ANSYS Certified Professional", desc: "Industry-recognized validation of simulation setups, solver settings, and post-processing accuracy.", priority: "High" },
-            { name: "NAFEMS Certification", desc: "Structural simulation verification complying with international standards.", priority: "Medium" }
-        ],
-        portfolio: [
-            { title: "NACA Wing Section Aerodynamic CFD", desc: "CFD analysis validating lift/drag coefficients and boundary layer grid independence." },
-            { title: "Bike Frame Fatigue FEA", desc: "Structural fatigue FEA analyzing stress concentrations under dynamic cyclist loads." }
-        ]
-    },
-    "Robotics/Mechatronics": {
-        role: "Automation Engineer / Mechatronics specialist / Controls Engineer",
-        skills: [
-            { name: "Control Systems & PID Tuning", desc: "Designing closed-loop feedback controllers, tuning proportional, integral, and derivative constants for speed/position.", priority: "Critical" },
-            { name: "Embedded Programming", desc: "Writing C/C++ firmware for microcontrollers (Arduino, STM32, ESP32) to read sensor data (I2C, SPI) and drive actuators.", priority: "Critical" },
-            { name: "Robot Kinematics", desc: "Deriving Forward & Inverse kinematics matrices for joint angles and robotic tool positioning.", priority: "High" }
-        ],
-        software: [
-            { name: "MATLAB & Simulink", desc: "Modeling dynamic physical systems, root-locus design, and control loop simulations.", priority: "Critical" },
-            { name: "Python", desc: "Standard for robot vision scripting (OpenCV), motion planning algorithms, and machine learning models.", priority: "High" },
-            { name: "Arduino IDE / STM32Cube", desc: "Compiling firmware code for hardware execution and debugging hardware interfaces.", priority: "High" },
-            { name: "ROS (Robot Operating System)", desc: "Software framework providing hardware abstraction, device drivers, and package messaging.", priority: "Medium" }
-        ],
-        certs: [
-            { name: "CLAD (Certified LabVIEW Associate Developer)", desc: "Validates capability in automated testing, data acquisition, and virtual instrument controls.", priority: "High" },
-            { name: "ASME Robotics Specialist", desc: "Validates fundamentals of automation and robotic mechanism designs.", priority: "Medium" }
-        ],
-        portfolio: [
-            { title: "3-Axis Closed-loop Robotic Arm", desc: "Trajectory mapping and servo-driven controller utilizing Simulink & Arduino." },
-            { title: "PID Balance Bot", desc: "Self-balancing two-wheeled robot using IMU sensors and real-time PID feedback." }
-        ]
-    },
-    "Manufacturing/Operations": {
-        role: "Production Engineer / Quality Analyst / Operations Manager",
-        skills: [
-            { name: "Lean Six Sigma (DMAIC)", desc: "Process capability evaluation (Cp, Cpk indices), cycle time balancing, and statistical quality audits.", priority: "Critical" },
-            { name: "CNC Machining & CAM Fixtures", desc: "Generating precise tool paths (G-code/M-code) and designing mechanical fixtures using the 3-2-1 locating principle.", priority: "High" },
-            { name: "FMEA & Process Safety", desc: "Conducting Failure Mode and Effects Analyses to identify risks and establish safety protocols.", priority: "High" }
-        ],
-        software: [
-            { name: "Mastercam / SolidCAM", desc: "Industry-standard software for generating computer-aided manufacturing toolpaths.", priority: "Critical" },
-            { name: "Minitab", desc: "Primary statistical tool for analyzing manufacturing variance, Gage R&R, and control charts.", priority: "High" },
-            { name: "Autodesk AutoCAD", desc: "Used to draft factory layout designs, assembly floor configurations, and workflow steps.", priority: "Medium" }
-        ],
-        certs: [
-            { name: "Lean Six Sigma Green Belt", desc: "Validates candidate's capability to lead small process improvement and waste reduction projects.", priority: "Critical" },
-            { name: "Lean Six Sigma Yellow Belt", desc: "Proves familiarity with Lean terminologies, 5S layouts, and quality tools.", priority: "High" },
-            { name: "ASQ Certified Quality Engineer (CQE)", desc: "Verifies statistical evaluation competence and control methods.", priority: "Medium" }
-        ],
-        portfolio: [
-            { title: "Six Sigma DMAIC Yield Audit", desc: "Statistical process improvement study analyzing 500 samples in Minitab to boost yield." },
-            { title: "CAM-designed Welding Fixture", desc: "Fixture design utilizing quick-clamp fixtures and Mastercam CNC programming." }
-        ]
-    },
-    "HVAC/Thermal": {
-        role: "HVAC Project Engineer / MEP Designer / Building Energy Analyst",
-        skills: [
-            { name: "Cooling & Heating Load Calculation", desc: "Calculating sensible and latent heat transfer rates using CLTD and psychrometric principles.", priority: "Critical" },
-            { name: "Duct & Water Piping Design", desc: "Determining friction losses, pipe sizes, duct paths, and ventilation rates in buildings.", priority: "Critical" },
-            { name: "ASHRAE Standard Compliance", desc: "Applying international standards (Standard 55, 62.1, 90.1) for thermal comfort, ventilation, and efficiency.", priority: "High" }
-        ],
-        software: [
-            { name: "Autodesk Revit MEP", desc: "Industry standard for building information modeling (BIM), 3D duct layout, and coordinate checks.", priority: "Critical" },
-            { name: "Carrier Hourly Analysis Program (HAP)", desc: "Standard software for office heat load simulations, energy cost checks, and climate analysis.", priority: "High" },
-            { name: "Autodesk AutoCAD", desc: "Producing schematic double-line layouts and 2D piping plans.", priority: "High" }
-        ],
-        certs: [
-            { name: "HVAC Design Certificate", desc: "Validates core design knowledge from accredited engineering associations.", priority: "High" },
-            { name: "ASHRAE Member Certification", desc: "Demonstrates standard alignment and membership in ASHRAE.", priority: "Medium" }
-        ],
-        portfolio: [
-            { title: "Office Building VRF Design", desc: "Full heat load simulation in HAP, duct routing, and MEP layout in Revit." },
-            { title: "Shell-and-Tube Heat Exchanger Design", desc: "Thermal analysis using LMTD and effectiveness-NTU methods." }
-        ]
-    }
-};
+    // Course selector dropdown
+    document.getElementById("course-domain-selector").addEventListener("change", (e) => {
+        loadCourseAcademy(e.target.value);
+    });
 
-function renderEmployerInsights(cluster) {
-    const data = EMPLOYER_DEMANDS[cluster] || EMPLOYER_DEMANDS["CAD Design"];
-    
-    // Update header
-    document.getElementById("demand-cluster-icon").innerText = getClusterIcon(cluster);
-    document.getElementById("demand-cluster-title").innerText = cluster;
-    document.getElementById("demand-cluster-role").innerText = data.role;
-    
-    // Render Skills
-    const skillsList = document.getElementById("demand-skills-list");
-    skillsList.innerHTML = data.skills.map(s => {
-        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
-        if (s.priority === 'Critical') {
-            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
-        } else if (s.priority === 'High') {
-            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
-        }
-        return `
-            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
-                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${s.name}</strong>
-                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${s.priority}</span>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${s.desc}</p>
-            </div>
-        `;
-    }).join("");
-    
-    // Render Software
-    const softwareList = document.getElementById("demand-software-list");
-    softwareList.innerHTML = data.software.map(sw => {
-        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
-        if (sw.priority === 'Critical') {
-            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
-        } else if (sw.priority === 'High') {
-            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
-        }
-        return `
-            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
-                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${sw.name}</strong>
-                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${sw.priority}</span>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${sw.desc}</p>
-            </div>
-        `;
-    }).join("");
-    
-    // Render Certifications
-    const certsList = document.getElementById("demand-certs-list");
-    certsList.innerHTML = data.certs.map(c => {
-        let badgeStyle = "background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;";
-        if (c.priority === 'Critical') {
-            badgeStyle = "background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171;";
-        } else if (c.priority === 'High') {
-            badgeStyle = "background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #ddd6fe;";
-        }
-        return `
-            <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
-                    <strong style="color: var(--text-primary); font-size: 0.95rem;">${c.name}</strong>
-                    <span class="badge" style="${badgeStyle} font-size: 0.65rem; padding: 0.15rem 0.5rem; text-transform: uppercase;">${c.priority}</span>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${c.desc}</p>
-            </div>
-        `;
-    }).join("");
-    
-    // Render Portfolio
-    const portfolioList = document.getElementById("demand-portfolio-list");
-    portfolioList.innerHTML = data.portfolio.map(p => `
-        <div style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
-            <strong style="color: var(--info); font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">${p.title}</strong>
-            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">${p.desc}</p>
-        </div>
-    `).join("");
-}
-
-function renderCourses(cluster) {
-    const course = COURSE_CATALOG[cluster] || COURSE_CATALOG["CAD Design"];
-    
-    // Update header
-    document.getElementById("course-title-cluster").innerText = cluster;
-    document.getElementById("course-lesson-name").innerText = course.title;
-    
-    // Update completion status badge
-    const isCompleted = completedCourses.includes(cluster);
-    const badge = document.getElementById("course-completion-badge");
-    if (isCompleted) {
-        badge.className = "badge badge-success";
-        badge.innerText = "✨ Status: Completed (+5 Boost Active)";
-        badge.style.background = "rgba(16, 185, 129, 0.15)";
-        badge.style.borderColor = "rgba(16, 185, 129, 0.3)";
-        badge.style.color = "#34d399";
-    } else {
-        badge.className = "badge badge-purple";
-        badge.innerText = "⏳ Status: Incomplete";
-        badge.style.background = "rgba(139, 92, 246, 0.15)";
-        badge.style.borderColor = "rgba(139, 92, 246, 0.3)";
-        badge.style.color = "#ddd6fe";
-    }
-    
-    // Render lecture notes
-    document.getElementById("course-lecture-notes").innerHTML = course.written_content;
-    
-    // Render quiz question
-    document.getElementById("course-quiz-question").innerText = course.quiz_question;
-    
-    // Render quiz options (radios)
-    const form = document.getElementById("course-quiz-form");
-    form.innerHTML = course.quiz_options.map((opt, idx) => `
-        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.55rem 0.75rem; background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 6px; transition: all 0.2s; margin-bottom: 0.25rem;">
-            <input type="radio" name="quiz-option" value="${opt}" ${isCompleted ? 'disabled' : ''} style="accent-color: var(--primary);">
-            <span style="color: var(--text-secondary); font-size: 0.95rem;">${opt}</span>
-        </label>
-    `).join("");
-    
-    // Clear feedback
-    const feedback = document.getElementById("quiz-feedback-message");
-    feedback.innerText = "";
-    feedback.style.color = "";
-    
-    // Handle Submit Button
-    const submitBtn = document.getElementById("btn-submit-quiz");
-    if (isCompleted) {
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.5";
-        feedback.innerText = "Quiz completed successfully! +5 boost points applied to your score.";
-        feedback.style.color = "var(--success)";
-    } else {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = "1";
+    // Submit Academy quiz trigger
+    document.getElementById("btn-submit-quiz").addEventListener("click", () => {
+        const domain = document.getElementById("course-domain-selector").value;
+        const selected = document.querySelector('input[name="academy_quiz_opt"]:checked');
+        const feedback = document.getElementById("quiz-feedback-message");
         
-        // Remove existing listener to avoid stacking
-        const newSubmitBtn = submitBtn.cloneNode(true);
-        submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+        if(!selected) {
+            feedback.innerText = "❌ Please select an option.";
+            feedback.style.color = "var(--danger)";
+            return;
+        }
         
-        newSubmitBtn.addEventListener("click", () => {
-            const selectedOpt = form.querySelector('input[name="quiz-option"]:checked');
-            if (!selectedOpt) {
-                feedback.innerText = "⚠️ Please select an answer option.";
-                feedback.style.color = "#fbbf24";
-                return;
+        const course = COURSE_CATALOG[domain];
+        if (selected.value === course.quiz_answer) {
+            feedback.innerText = "🎉 Correct answer! Score boosted by +5.";
+            feedback.style.color = "var(--success)";
+            
+            if(!completedCourses.includes(domain)) {
+                completedCourses.push(domain);
             }
             
-            if (selectedOpt.value === course.quiz_answer) {
-                completedCourses.push(cluster);
-                feedback.innerText = "🎉 Correct answer! +5 Employability Points unlocked!";
-                feedback.style.color = "#34d399";
-                newSubmitBtn.disabled = true;
-                newSubmitBtn.style.opacity = "0.5";
-                
-                // Disable all radios
-                form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                
-                // Recompute active profile rankings dynamically!
-                if (targetProfile) {
-                    // Update target profile score (which will now see the new course completion!)
-                    targetProfile.score = calculateScore(targetProfile);
-                    
-                    // Recompute ranks and update DOM
-                    runAnalysis(targetProfile);
-                }
-                
-                // Update course badge
-                badge.className = "badge badge-success";
-                badge.innerText = "✨ Status: Completed (+5 Boost Active)";
-                badge.style.background = "rgba(16, 185, 129, 0.15)";
-                badge.style.borderColor = "rgba(16, 185, 129, 0.3)";
-                badge.style.color = "#34d399";
-            } else {
-                feedback.innerText = "❌ Incorrect answer. Please review the lecture notes and try again.";
-                feedback.style.color = "#f87171";
+            // Re-render
+            if (targetProfile) {
+                buildDashboard(targetProfile);
             }
+        } else {
+            feedback.innerText = "❌ Incorrect answer. Please try again.";
+            feedback.style.color = "var(--danger)";
+        }
+    });
+
+    // Simulator checkboxes
+    document.querySelectorAll(".sim-checkbox").forEach(cb => {
+        cb.addEventListener("change", () => {
+            updateSimulatorImpact();
         });
-    }
-}
+    });
+
+    // Database search & filters
+    document.getElementById("db-search-input").addEventListener("input", () => {
+        dbPage = 1;
+        renderDatabaseTable();
+    });
+    document.getElementById("db-region-filter").addEventListener("change", () => {
+        dbPage = 1;
+        renderDatabaseTable();
+    });
+    document.getElementById("db-cluster-filter").addEventListener("change", () => {
+        dbPage = 1;
+        renderDatabaseTable();
+    });
+    
+    // Pagination buttons
+    document.getElementById("prev-page-btn").addEventListener("click", () => {
+        if(dbPage > 1) {
+            dbPage--;
+            renderDatabaseTable();
+        }
+    });
+    document.getElementById("next-page-btn").addEventListener("click", () => {
+        dbPage++;
+        renderDatabaseTable();
+    });
+});
