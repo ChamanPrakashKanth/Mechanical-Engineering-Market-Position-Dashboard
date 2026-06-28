@@ -2585,3 +2585,826 @@ function downloadStudyPlan() {
     link.download = `MechIntel_Study_Plan_${role.replace(/ /g, '_')}.txt`;
     link.click();
 }
+
+// ========================================================
+// MECHINTEL AI — INTERACTIVE FEATURES IMPLEMENTATION
+// ========================================================
+
+// 1. MOCK INTERVIEW SIMULATOR DATABASE & LOGIC
+const SIMULATOR_QUESTIONS = {
+    "CAD Design": [
+        { q: "Explain the concept of 'Bonus Tolerance' in GD&T and when it applies.", keywords: ["maximum material condition", "mmc", "departure", "size limits", "bonus"] },
+        { q: "What is the difference between DFM (Design for Manufacturing) and DFA (Design for Assembly)?", keywords: ["part count", "manufacturing cost", "ease of assembly", "fasteners", "handling"] },
+        { q: "How do you select the appropriate safety factor for a mechanical component under dynamic loading?", keywords: ["fatigue", "yield strength", "stress concentration", "uncertainty", "load factor"] },
+        { q: "Describe a time you faced a design clash or interference in CAD and how you resolved it.", keywords: ["clash analysis", "clearance", "tolerance", "adjust", "interference"] }
+    ],
+    "CAE/Simulation": [
+        { q: "What is the physical meaning of the Jacobian matrix check in FEA element quality checks?", keywords: ["mapping", "distortion", "coordinate system", "mesh quality", "elements"] },
+        { q: "Under what circumstances would you select a dynamic transient thermal solver over a steady-state one?", keywords: ["time dependent", "heat capacity", "thermal lag", "transient", "cycles"] },
+        { q: "How do you verify if your CFD simulation results are mesh-independent?", keywords: ["mesh refinement", "grid convergence", "refine", "mesh study", "error"] },
+        { q: "Describe a time when a structural simulation failed to converge and how you fixed the boundary conditions.", keywords: ["singularity", "constraints", "loads", "convergence", "stiffness"] }
+    ],
+    "Robotics/Mechatronics": [
+        { q: "Explain the difference between forward kinematics and inverse kinematics in a robotic manipulator.", keywords: ["joint angles", "end effector", "position", "dh parameters", "coordinates"] },
+        { q: "How do you prevent actuator saturation when tuning PID feedback controller parameters?", keywords: ["windup", "integral limit", "saturation", "clamping", "anti-windup"] },
+        { q: "What is the purpose of using a hardware-in-the-loop (HIL) testing setup in robotics control deployment?", keywords: ["simulation", "real hardware", "controller", "safety", "verification"] },
+        { q: "Tell me about a mechatronic project where you had to interface sensors with a microcontroller.", keywords: ["adc", "i2c", "spi", "noise", "filtering", "calibration"] }
+    ],
+    "Manufacturing/Operations": [
+        { q: "Explain the difference between the Cp and Cpk capability indices in statistical process control.", keywords: ["centered", "specification limits", "mean", "deviation", "capability"] },
+        { q: "What are the five phases of the DMAIC process in Lean Six Sigma?", keywords: ["define", "measure", "analyze", "improve", "control"] },
+        { q: "How does CNC high-speed machining (HSM) affect tool wear and surface finish compared to conventional machining?", keywords: ["chip load", "thermal", "surface roughness", "feed rate", "spindle"] },
+        { q: "Explain a scenario where you had to reduce cycle times on a production line.", keywords: ["bottleneck", "value stream", "automation", "idle time", "throughput"] }
+    ],
+    "HVAC/Thermal": [
+        { q: "What is the Sensible Heat Factor (SHF) in psychrometric calculations and why is it important for cooling coil sizing?", keywords: ["sensible heat", "total heat", "moisture removal", "latent", "coil"] },
+        { q: "Explain the working principle of a Variable Refrigerant Flow (VRF) heat pump system.", keywords: ["compressor speed", "inverter", "refrigerant", "zoning", "loads"] },
+        { q: "How do you size HVAC duct networks using the equal friction method?", keywords: ["pressure drop", "velocity limit", "aspect ratio", "duct sizer", "friction"] },
+        { q: "Tell me about a thermal load calculation problem you solved for an office layout.", keywords: ["solar gain", "occupants", "lighting load", "ventilation", "envelope"] }
+    ]
+};
+
+const HR_SIM_QUESTION = { q: "Describe a major group project conflict or failure you resolved. Apply the STAR format in your response.", keywords: ["situation", "task", "action", "result"] };
+
+let interviewQuestions = [];
+let interviewQuestionIndex = 0;
+let interviewAnswersScores = [];
+let isInterviewOngoing = false;
+
+function initInterviewSimulator() {
+    const startBtn = document.getElementById("btn-start-interview-session");
+    const submitBtn = document.getElementById("btn-submit-interview-ans");
+    
+    if (startBtn) {
+        startBtn.addEventListener("click", startMockInterviewSession);
+    }
+    if (submitBtn) {
+        submitBtn.addEventListener("click", submitMockInterviewResponse);
+    }
+}
+
+function startMockInterviewSession() {
+    const cluster = targetProfile?.cluster || "CAD Design";
+    let list = SIMULATOR_QUESTIONS[cluster];
+    if (!list) list = SIMULATOR_QUESTIONS["CAD Design"];
+    
+    // Choose 3 random tech questions + 1 HR question
+    const shuffled = [...list].sort(() => 0.5 - Math.random());
+    interviewQuestions = shuffled.slice(0, 3);
+    interviewQuestions.push(HR_SIM_QUESTION);
+    
+    interviewQuestionIndex = 0;
+    interviewAnswersScores = [];
+    isInterviewOngoing = true;
+    
+    document.getElementById("interview-target-domain").innerText = cluster;
+    document.getElementById("interview-question-num").innerText = `1 / 4`;
+    document.getElementById("interview-input-container").style.display = "flex";
+    document.getElementById("interview-control-buttons").style.display = "none";
+    
+    const chatLog = document.getElementById("interview-chat-log-box");
+    chatLog.innerHTML = `
+        <div class="interview-message interviewer">
+            <strong>Interviewer:</strong> Hello! Welcome to your technical alignment session. I'll be auditing your competencies in <strong>${cluster}</strong>. Let's start with the first question:
+        </div>
+        <div class="interview-message interviewer">
+            <strong>Interviewer:</strong> ${interviewQuestions[0].q}
+        </div>
+    `;
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function submitMockInterviewResponse() {
+    const input = document.getElementById("interview-user-response");
+    const response = input.value.trim();
+    if (response.length < 10) {
+        alert("Please provide a detailed response (at least 10 characters).");
+        return;
+    }
+    
+    const chatLog = document.getElementById("interview-chat-log-box");
+    
+    // Append user answer
+    chatLog.innerHTML += `
+        <div class="interview-message user">
+            <strong>You:</strong> ${response}
+        </div>
+    `;
+    
+    // Score answer
+    const currentQ = interviewQuestions[interviewQuestionIndex];
+    const userLower = response.toLowerCase();
+    const matched = currentQ.keywords.filter(kw => userLower.includes(kw));
+    const score = Math.round((matched.length / currentQ.keywords.length) * 100);
+    interviewAnswersScores.push(score);
+    
+    // Append feedback
+    let feedback = "";
+    if (score >= 70) {
+        feedback = `Excellent response! You correctly highlighted core technical concepts like <strong>${matched.join(', ')}</strong>.`;
+    } else if (score >= 40) {
+        feedback = `Good attempt, but could be more robust. You mentioned <strong>${matched.join(', ')}</strong>. Try to also incorporate concepts like: <strong>${currentQ.keywords.filter(k => !matched.includes(k)).join(', ')}</strong>.`;
+    } else {
+        feedback = `Your answer is lacking key industry terms. To boost ATS and technical rating, incorporate terminology like: <strong>${currentQ.keywords.join(', ')}</strong>.`;
+    }
+    
+    chatLog.innerHTML += `
+        <div class="interview-message interviewer">
+            <strong>Interviewer:</strong> [Score: ${score}/100] ${feedback}
+        </div>
+    `;
+    
+    input.value = "";
+    interviewQuestionIndex++;
+    
+    if (interviewQuestionIndex < 4) {
+        document.getElementById("interview-question-num").innerText = `${interviewQuestionIndex + 1} / 4`;
+        setTimeout(() => {
+            chatLog.innerHTML += `
+                <div class="interview-message interviewer">
+                    <strong>Interviewer:</strong> Next question: ${interviewQuestions[interviewQuestionIndex].q}
+                </div>
+            `;
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }, 1000);
+    } else {
+        // Complete interview session
+        isInterviewOngoing = false;
+        const avgScore = Math.round(interviewAnswersScores.reduce((a, b) => a + b, 0) / 4);
+        const xpEarned = avgScore * 2;
+        
+        userXP += xpEarned;
+        localStorage.setItem("userXP", userXP);
+        
+        // Boost interview readiness index in header
+        document.getElementById("val-interview-readiness-badge").innerText = `Readiness: ${Math.max(40, avgScore)}%`;
+        
+        chatLog.innerHTML += `
+            <div class="interview-message system">
+                🎉 Session Completed! Average Score: ${avgScore}% | XP Awarded: +${xpEarned} XP.<br>
+                Your profile readiness stands updated. Return here anytime to practice new cases.
+            </div>
+        `;
+        
+        document.getElementById("interview-input-container").style.display = "none";
+        document.getElementById("interview-control-buttons").style.display = "flex";
+        document.getElementById("btn-start-interview-session").innerText = "Restart Mock Interview";
+        
+        // Re-draw dashboard metrics
+        if (targetProfile) {
+            updateScoresDisplay(calculateScores(targetProfile));
+        }
+    }
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+
+// 2. INTERACTIVE CAD TOLERANCE STACKUP & FEA WIDGET
+function initToleranceSimulator() {
+    const sliderHoleNom = document.getElementById("slider-hole-nom");
+    const sliderHoleTol = document.getElementById("slider-hole-tol");
+    const sliderShaftNom = document.getElementById("slider-shaft-nom");
+    const sliderShaftTol = document.getElementById("slider-shaft-tol");
+    const btnCheckQuiz = document.getElementById("btn-check-tol-challenge");
+    
+    if (sliderHoleNom) {
+        const updateAll = () => {
+            updateToleranceResults();
+        };
+        sliderHoleNom.addEventListener("input", updateAll);
+        sliderHoleTol.addEventListener("input", updateAll);
+        sliderShaftNom.addEventListener("input", updateAll);
+        sliderShaftTol.addEventListener("input", updateAll);
+        
+        document.querySelectorAll("input[name='tol-method']").forEach(radio => {
+            radio.addEventListener("change", updateAll);
+        });
+    }
+    
+    if (btnCheckQuiz) {
+        btnCheckQuiz.addEventListener("click", checkToleranceQuiz);
+    }
+    
+    updateToleranceResults();
+}
+
+function updateToleranceResults() {
+    const holeNom = parseFloat(document.getElementById("slider-hole-nom").value);
+    const holeTol = parseFloat(document.getElementById("slider-hole-tol").value);
+    const shaftNom = parseFloat(document.getElementById("slider-shaft-nom").value);
+    const shaftTol = parseFloat(document.getElementById("slider-shaft-tol").value);
+    
+    document.getElementById("label-hole-nom").innerText = `${holeNom.toFixed(2)} mm`;
+    document.getElementById("label-hole-tol").innerText = `${holeTol.toFixed(2)} mm`;
+    document.getElementById("label-shaft-nom").innerText = `${shaftNom.toFixed(2)} mm`;
+    document.getElementById("label-shaft-tol").innerText = `${shaftTol.toFixed(2)} mm`;
+    
+    const method = document.querySelector("input[name='tol-method']:checked").value;
+    
+    let minClearance = 0;
+    let maxClearance = 0;
+    let desc = "";
+    let isClash = false;
+    let rssTol = Math.sqrt(holeTol * holeTol + shaftTol * shaftTol);
+    
+    if (method === "worst-case") {
+        minClearance = (holeNom - holeTol) - (shaftNom + shaftTol);
+        maxClearance = (holeNom + holeTol) - (shaftNom - shaftTol);
+    } else {
+        // RSS statistical tolerance clearance bounds (3-sigma limits)
+        const meanClearance = holeNom - shaftNom;
+        minClearance = meanClearance - rssTol;
+        maxClearance = meanClearance + rssTol;
+    }
+    
+    if (minClearance < 0) {
+        isClash = true;
+        desc = `Interference Fit Detected! Possible Assembly Seizure Risk. Min Clearance: ${minClearance.toFixed(3)} mm.`;
+    } else {
+        desc = `Clearance Fit Guaranteed (Safe Assembly). Min Clearance: ${minClearance.toFixed(3)} mm | Max Clearance: ${maxClearance.toFixed(3)} mm.`;
+    }
+    
+    const resultsBox = document.getElementById("tolerance-results-card");
+    resultsBox.className = `fit-alert ${isClash ? 'warning' : 'safe'}`;
+    resultsBox.innerHTML = `<strong>Method: ${method === 'worst-case' ? 'Worst-Case' : 'RSS Statistical (3σ)'}</strong><br>${desc}`;
+    
+    drawToleranceSvg(holeNom, holeTol, shaftNom, shaftTol, minClearance);
+}
+
+function drawToleranceSvg(holeNom, holeTol, shaftNom, shaftTol, minClearance) {
+    const svg = document.getElementById("tolerance-svg");
+    if (!svg) return;
+    
+    // Nominal width models (scaled mapping: 50mm -> 120px)
+    const scale = 30; // pixels per mm
+    const refHole = 50.00;
+    
+    const holeWidth = 140 + (holeNom - refHole) * scale;
+    const holeMinY = 25 - holeTol * scale;
+    const holeMaxY = 95 + holeTol * scale;
+    
+    const shaftWidth = 120 + (shaftNom - refHole) * scale;
+    const shaftTolOffset = shaftTol * scale;
+    
+    // Draw SVG components
+    svg.innerHTML = `
+        <!-- Housing Block Top -->
+        <rect x="50" y="5" width="${holeWidth}" height="25" fill="#334155" rx="2" />
+        <!-- Housing Block Bottom -->
+        <rect x="50" y="90" width="${holeWidth}" height="25" fill="#334155" rx="2" />
+        <!-- Housing ID markers -->
+        <line x1="${50 + holeWidth}" y1="30" x2="${50 + holeWidth}" y2="90" stroke="#475569" stroke-dasharray="2,2" />
+        
+        <!-- Shaft Cylinder Pin -->
+        <rect x="10" y="35" width="${shaftWidth}" height="50" fill="${minClearance < 0 ? '#ef4444' : '#3b82f6'}" opacity="0.85" rx="3" />
+        <!-- Shaft OD Limit -->
+        <line x1="${10 + shaftWidth}" y1="35" x2="${10 + shaftWidth}" y2="85" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,1" />
+        
+        <!-- Clearance visual indicators -->
+        <rect x="${10 + shaftWidth}" y="30" width="${Math.max(0, (50 + holeWidth) - (10 + shaftWidth))}" height="60" fill="#10b981" opacity="${minClearance < 0 ? '0' : '0.2'}" />
+        
+        <!-- Dimension Line Labels -->
+        <line x1="10" y1="110" x2="${10 + shaftWidth}" y2="110" stroke="#64748b" stroke-width="1" marker-end="url(#arrow)" />
+        <text x="${10 + shaftWidth / 2}" y="105" fill="#94a3b8" font-size="8" text-anchor="middle">Shaft (d = ${shaftNom.toFixed(2)})</text>
+        
+        <line x1="50" y1="18" x2="${50 + holeWidth}" y2="18" stroke="#94a3b8" stroke-width="1" />
+        <text x="${50 + holeWidth / 2}" y="13" fill="#cbd5e1" font-size="8" text-anchor="middle">Hole (D = ${holeNom.toFixed(2)})</text>
+    `;
+}
+
+function checkToleranceQuiz() {
+    const input = document.getElementById("tol-challenge-input").value.trim();
+    const fb = document.getElementById("tol-challenge-feedback");
+    
+    // Hole tol = 0.03, Shaft tol = 0.02. RSS stacked tolerance = sqrt(0.03^2 + 0.02^2) = sqrt(0.0009 + 0.0004) = sqrt(0.0013) = 0.036 mm
+    const ansVal = parseFloat(input);
+    if (Math.abs(ansVal - 0.036) <= 0.005) {
+        fb.innerText = "🎉 Correct! RSS tolerance stackup limit is exactly ±0.036 mm.";
+        fb.style.color = "var(--success)";
+        
+        userXP += 100;
+        localStorage.setItem("userXP", userXP);
+        if (targetProfile) {
+            updateScoresDisplay(calculateScores(targetProfile));
+        }
+    } else {
+        fb.innerText = "❌ Incorrect. Hint: standard formula T_rss = √(T_hole² + T_shaft²).";
+        fb.style.color = "var(--danger)";
+    }
+}
+
+
+// 3. SMART RESUME OPTIMIZER & SCORE BOOSTER LOGIC
+function renderResumeScoreBoosters() {
+    const listContainer = document.getElementById("booster-recommendations-list");
+    if (!listContainer || !targetProfile) return;
+    
+    listContainer.innerHTML = "";
+    
+    const userKeywords = targetProfile.skills.concat(targetProfile.software_tools).map(s => s.toLowerCase());
+    
+    const optimizationItems = [
+        { key: "gd&t", label: "Include 'GD&T' or 'ASME Y14.5' keywords", pts: "+12% ATS Match", check: () => userKeywords.some(k => k.includes("gd&t") || k.includes("y14.5")), action: () => { document.getElementById("skills-text-input").focus(); } },
+        { key: "solidworks", label: "Add 'SolidWorks' software certification profile", pts: "+10% Score", check: () => userKeywords.some(k => k.includes("solidworks")), action: () => { document.getElementById("tools-text-input").focus(); } },
+        { key: "ansys", label: "Add FEA keywords ('ANSYS' or 'Abaqus')", pts: "+8% Match", check: () => userKeywords.some(k => k.includes("ansys") || k.includes("abaqus")), action: () => { document.getElementById("tools-text-input").focus(); } },
+        { key: "portfolio", label: "Provide a verified GrabCAD or GitHub portfolio URL", pts: "+10% Recruiter Rating", check: () => targetProfile.portfolio && targetProfile.portfolio.includes("http"), action: () => { showDashboardView("dashboard-profile"); } },
+        { key: "publications", label: "Add academic research publication counts", pts: "+5% Employability", check: () => targetProfile.research_papers > 0, action: () => { showDashboardView("dashboard-profile"); } }
+    ];
+    
+    optimizationItems.forEach(item => {
+        const met = item.check();
+        const row = document.createElement("div");
+        row.className = `booster-row ${met ? 'completed' : ''}`;
+        row.innerHTML = `
+            <div class="booster-details">
+                <i data-lucide="${met ? 'check-circle' : 'circle'}" style="color:${met ? 'var(--success)' : 'var(--text-muted)'}; width:16px; height:16px;"></i>
+                <span>${item.label}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <span class="booster-points">${item.pts}</span>
+                ${!met ? `<button class="btn btn-outline btn-xs" style="padding:0.2rem 0.4rem; font-size:0.7rem;" id="btn-fix-${item.key}">Fix</button>` : ''}
+            </div>
+        `;
+        
+        listContainer.appendChild(row);
+        
+        if (!met) {
+            document.getElementById(`btn-fix-${item.key}`).addEventListener("click", item.action);
+        }
+    });
+    
+    lucide.createIcons();
+}
+
+function runResumeOptimizer() {
+    const statusText = document.getElementById("optimizer-status-text");
+    statusText.innerText = "Analyzing document nodes & running local ATS cleaner...";
+    
+    setTimeout(() => {
+        // Upgrade targetProfile directly
+        if (targetProfile) {
+            const extraSkills = ["GD&T (Geometric Dimensioning & Tolerancing)", "Tolerance Stackup Analysis"];
+            const extraSoftware = ["SolidWorks", "ANSYS"];
+            const extraCerts = ["CSWP (Certified SolidWorks Professional)"];
+            
+            extraSkills.forEach(s => { if (!targetProfile.skills.includes(s)) targetProfile.skills.push(s); });
+            extraSoftware.forEach(sw => { if (!targetProfile.software_tools.includes(sw)) targetProfile.software_tools.push(sw); });
+            extraCerts.forEach(c => { if (!targetProfile.certifications.includes(c)) targetProfile.certifications.push(c); });
+            
+            // Recalculate and display scores
+            userXP += 100;
+            localStorage.setItem("userXP", userXP);
+            buildDashboard(targetProfile);
+            
+            statusText.innerText = "✅ Resume cleaned and standardized! Recruiter match rating boosted.";
+            renderResumeScoreBoosters();
+        } else {
+            statusText.innerText = "No profile active. Please paste resume first.";
+        }
+    }, 1500);
+}
+
+
+// 4. DAY-IN-THE-LIFE OPERATIONS SIMULATOR CASES & LOGIC
+const SIMULATION_CASES = {
+    "EV battery heat crisis": {
+        steps: [
+            {
+                story: "The battery pack of a new electric SUV prototype is thermal throttling during 150kW fast charging. Tests show cells are exceeding 55°C (131°F). The lead battery systems engineer asks for your immediate sizing recommendation. What do you do first?",
+                choices: [
+                    { text: "Increase coolant flow velocity through the liquid cooling plate.", cost: { stability: +10, budget: -15, timeline: -5 } },
+                    { text: "Swap coolant from pure water to a 50/50 water-glycol mix.", cost: { stability: +15, budget: -5, timeline: -10 } },
+                    { text: "Add high-conductivity Thermal Interface Material (TIM) between cells and plate.", cost: { stability: +25, budget: -10, timeline: -5 } }
+                ]
+            },
+            {
+                story: "You applied the thermal interface materials. Cell temperatures dropped, but coolant pump cavitation is now reported due to increased pressure drop in the microchannels. The timeline is slipping. How do you resolve this?",
+                choices: [
+                    { text: "Increase cooling channel width to reduce hydraulic resistance.", cost: { stability: -10, budget: -10, timeline: +10 } },
+                    { text: "Replace the coolant pump with a high-head industrial pump.", cost: { stability: +15, budget: -20, timeline: +5 } },
+                    { text: "Optimize microchannel geometry using CFD boundary layer refinements.", cost: { stability: +20, budget: -5, timeline: -15 } }
+                ]
+            },
+            {
+                story: "CFD optimization succeeded. During manufacturing review, the toolmaker reports that the variable-width channels cannot be machined using conventional extrusion. How do you adjust the design for manufacturing (DFM)?",
+                choices: [
+                    { text: "Use additive manufacturing (3D printing) for the cooling plates.", cost: { stability: +25, budget: -30, timeline: +10 } },
+                    { text: "Simplify variable-width channels to flat constant-width slots.", cost: { stability: +10, budget: +10, timeline: +15 } },
+                    { text: "Deploy vacuum brazing of stamped sheet-metal plates.", cost: { stability: +20, budget: -15, timeline: +5 } }
+                ]
+            }
+        ]
+    },
+    "Compressor shaft seizure": {
+        steps: [
+            {
+                story: "A high-speed rotating compressor shaft is seizing up on the assembly line during prototype run tests. Quality reports show tolerances are clashing. What is your first action?",
+                choices: [
+                    { text: "Tighten shaft machining tolerances on the lathe specifications.", cost: { stability: +15, budget: -20, timeline: -5 } },
+                    { text: "Implement statistical RSS limits to identify out-of-spec batches.", cost: { stability: +25, budget: -5, timeline: -10 } },
+                    { text: "Increase nominal hole diameter of the housing block.", cost: { stability: +10, budget: -15, timeline: -5 } }
+                ]
+            },
+            {
+                story: "RSS limits isolated the bad batches. However, shafts from standard suppliers are still yielding under dynamic vibration. Fatigue calculations show microcracks. How do you reinforce the shaft?",
+                choices: [
+                    { text: "Apply shot-peening to introduce compressive residual stress.", cost: { stability: +25, budget: -10, timeline: -5 } },
+                    { text: "Increase shaft radius by 10% (adjust machine blueprints).", cost: { stability: +20, budget: -15, timeline: -15 } },
+                    { text: "Switch material specification from structural steel to titanium.", cost: { stability: +30, budget: -35, timeline: -5 } }
+                ]
+            },
+            {
+                story: "The reinforced shaft resolved yield risks. But dynamic bearing noise now exceeds 75dB regulatory limits. Recruiter validation requires a silencer checklist. How do you solve the noise?",
+                choices: [
+                    { text: "Apply high-viscosity lubricating synthetic grease.", cost: { stability: +10, budget: -5, timeline: +10 } },
+                    { text: "Switch the ball bearings to low-noise ceramic hybrid bearings.", cost: { stability: +25, budget: -25, timeline: +5 } },
+                    { text: "Install elastomer dampening mounts to decouple compressor housing.", cost: { stability: +20, budget: -15, timeline: +10 } }
+                ]
+            }
+        ]
+    }
+};
+
+let simActiveCase = "EV battery heat crisis";
+let simActiveStep = 0;
+let simStability = 100;
+let simTimeline = 100;
+let simBudget = 100;
+let simOngoing = false;
+
+function initSimulationEngine() {
+    const resetBtn = document.getElementById("btn-reset-sim");
+    if (resetBtn) {
+        resetBtn.addEventListener("click", () => { startSimulationCase(simActiveCase); });
+    }
+    startSimulationCase("EV battery heat crisis");
+}
+
+function startSimulationCase(caseId) {
+    simActiveCase = caseId;
+    simActiveStep = 0;
+    simStability = 100;
+    simTimeline = 100;
+    simBudget = 100;
+    simOngoing = true;
+    
+    document.getElementById("sim-case-title").innerText = caseId;
+    document.getElementById("btn-reset-sim").style.display = "none";
+    
+    updateSimulationMeters();
+    renderSimulationStep();
+}
+
+function renderSimulationStep() {
+    const scenario = SIMULATION_CASES[simActiveCase];
+    const step = scenario.steps[simActiveStep];
+    
+    document.getElementById("sim-step-num").innerText = `Step: ${simActiveStep + 1} / 3`;
+    document.getElementById("sim-story-text-box").innerText = step.story;
+    
+    const choicesBox = document.getElementById("sim-choices-box");
+    choicesBox.innerHTML = "";
+    
+    step.choices.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "sim-choice-btn";
+        btn.innerText = `${String.fromCharCode(65 + idx)}. ${choice.text}`;
+        btn.addEventListener("click", () => { handleSimulationChoice(choice); });
+        choicesBox.appendChild(btn);
+    });
+}
+
+function handleSimulationChoice(choice) {
+    if (!simOngoing) return;
+    
+    // Apply costs
+    simStability = Math.min(100, Math.max(0, simStability + choice.cost.stability));
+    simTimeline = Math.min(100, Math.max(0, simTimeline + choice.cost.timeline));
+    simBudget = Math.min(100, Math.max(0, simBudget + choice.cost.budget));
+    
+    updateSimulationMeters();
+    
+    // Check failure conditions
+    if (simStability <= 10 || simTimeline <= 10 || simBudget <= 10) {
+        simOngoing = false;
+        document.getElementById("sim-story-text-box").innerHTML = `
+            💥 <strong>Mission Failure!</strong> your resources have bottomed out. 
+            Stability: ${simStability}%, Timeline: ${simTimeline}%, Budget: ${simBudget}%. 
+            Mechanical systems designs require balanced parameters. Click below to try again.
+        `;
+        document.getElementById("sim-choices-box").innerHTML = "";
+        document.getElementById("btn-reset-sim").style.display = "block";
+        return;
+    }
+    
+    simActiveStep++;
+    if (simActiveStep < 3) {
+        renderSimulationStep();
+    } else {
+        // Completed Case
+        simOngoing = false;
+        const rewardXP = Math.round((simStability + simTimeline + simBudget) / 3) * 2;
+        userXP += rewardXP;
+        localStorage.setItem("userXP", userXP);
+        
+        document.getElementById("sim-story-text-box").innerHTML = `
+            🏆 <strong>Simulation Successfully Resolved!</strong><br>
+            You balanced parameters and resolved the engineering crisis. <br>
+            Final Scores - Stability: ${simStability}%, Timeline: ${simTimeline}%, Budget: ${simBudget}%.<br>
+            Reward Unlocked: <strong>+${rewardXP} XP</strong>.
+        `;
+        document.getElementById("sim-choices-box").innerHTML = "";
+        
+        // Add select next scenario buttons
+        const choicesBox = document.getElementById("sim-choices-box");
+        const nextCase = simActiveCase === "EV battery heat crisis" ? "Compressor shaft seizure" : "EV battery heat crisis";
+        
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "btn btn-primary";
+        nextBtn.innerText = `Load Case: ${nextCase}`;
+        nextBtn.addEventListener("click", () => { startSimulationCase(nextCase); });
+        choicesBox.appendChild(nextBtn);
+        
+        if (targetProfile) {
+            updateScoresDisplay(calculateScores(targetProfile));
+        }
+    }
+}
+
+function updateSimulationMeters() {
+    const setMeter = (id, labelId, val) => {
+        const fill = document.getElementById(id);
+        const label = document.getElementById(labelId);
+        fill.style.width = `${val}%`;
+        label.innerText = `${val}%`;
+        
+        if (val < 30) fill.style.background = "var(--danger)";
+        else if (val < 65) fill.style.background = "var(--warning)";
+        else fill.style.background = "var(--success)";
+    };
+    
+    setMeter("sim-meter-stability", "label-sim-stability", simStability);
+    setMeter("sim-meter-timeline", "label-sim-timeline", simTimeline);
+    setMeter("sim-meter-budget", "label-sim-budget", simBudget);
+}
+
+
+// 5. VISUAL PORTFOLIO GENERATOR & THEMES
+function generateVisualPortfolioCode(profile, theme, bioText) {
+    const bio = bioText || `Competent ${profile.cluster || 'Design'} Engineer focused on structural design, analysis, and optimization.`;
+    
+    const skillsList = profile.skills.map(s => `<li>${s}</li>`).join('\n            ');
+    const softwareList = Object.keys(softwareProficiency).map(sw => {
+        const val = softwareProficiency[sw];
+        return `
+        <div class="sw-row">
+            <span>${sw}</span>
+            <div class="sw-bar"><div class="sw-fill" style="width:${val}%"></div></div>
+        </div>`;
+    }).join('\n        ');
+    
+    const certsList = profile.certifications.length > 0 ? 
+        profile.certifications.map(c => `<li>${c}</li>`).join('\n            ') :
+        `<li>ASME Engineering Design Certification</li>`;
+        
+    let styles = "";
+    if (theme === "glass") {
+        styles = `
+        body { font-family: sans-serif; background: radial-gradient(circle, #0f172a, #030712); color: #fff; padding: 2rem; }
+        .portfolio-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 2rem; backdrop-filter: blur(10px); max-width: 800px; margin: 0 auto; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37); }
+        h1 { color: #8b5cf6; margin-bottom: 0.5rem; }
+        .sw-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .sw-bar { width: 60%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow:hidden; }
+        .sw-fill { height: 100%; background: #2563eb; }
+        ul { padding-left: 1.25rem; }
+        li { margin-bottom: 0.4rem; font-size: 0.9rem; color: #cbd5e1; }
+        `;
+    } else if (theme === "terminal") {
+        styles = `
+        body { font-family: 'Courier New', monospace; background: #05070c; color: #00ff00; padding: 2rem; }
+        .portfolio-card { border: 2px solid #00ff00; border-radius: 6px; padding: 2rem; max-width: 800px; margin: 0 auto; }
+        h1 { color: #00ff00; text-transform: uppercase; border-bottom: 2px solid #00ff00; padding-bottom: 0.5rem; }
+        .sw-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .sw-bar { width: 50%; border: 1px solid #00ff00; height: 10px; }
+        .sw-fill { height: 100%; background: #00ff00; }
+        ul { list-style-type: square; }
+        li { margin-bottom: 0.4rem; }
+        `;
+    } else {
+        styles = `
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; padding: 2rem; }
+        .portfolio-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 2.5rem; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        h1 { color: #1e3a8a; margin-bottom: 0.25rem; border-left: 4px solid #1e3a8a; padding-left: 0.75rem; }
+        .sw-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .sw-bar { width: 60%; height: 8px; background: #f1f5f9; border-radius: 4px; overflow:hidden; }
+        .sw-fill { height: 100%; background: #1e3a8a; }
+        ul { padding-left: 1.25rem; }
+        li { margin-bottom: 0.4rem; font-size: 0.9rem; color: #475569; }
+        `;
+    }
+    
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${profile.id || 'Candidate'} — Engineering Competency Portfolio</title>
+    <style>${styles}</style>
+</head>
+<body>
+    <div class="portfolio-card">
+        <h1>${profile.id || 'Mechanical Engineer Candidate'}</h1>
+        <p style="font-weight:700; margin-bottom:1.5rem;">Specialization: ${profile.cluster || 'Mechanical Engineering'} (${profile.region})</p>
+        
+        <h3>Professional Synopsis</h3>
+        <p style="line-height:1.5; font-size:0.95rem; margin-bottom:1.5rem;">${bio}</p>
+        
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:1.5rem 0;">
+        
+        <h3>Mastered Engineering Skills</h3>
+        <ul>
+            ${skillsList}
+        </ul>
+        
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:1.5rem 0;">
+        
+        <h3>CAD/CAE Software Competency</h3>
+        <div style="margin-bottom:1.5rem;">
+            ${softwareList}
+        </div>
+        
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:1.5rem 0;">
+        
+        <h3>Professional Certifications</h3>
+        <ul style="margin-bottom:1.5rem;">
+            ${certsList}
+        </ul>
+    </div>
+</body>
+</html>`;
+}
+
+function initPortfolioGenerator() {
+    const previewBtn = document.getElementById("btn-preview-portfolio");
+    const downloadBtn = document.getElementById("btn-download-portfolio-file");
+    const closeBtn = document.getElementById("btn-close-portfolio-preview");
+    
+    if (previewBtn) {
+        previewBtn.addEventListener("click", previewVisualPortfolio);
+    }
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", downloadVisualPortfolioFile);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            document.getElementById("portfolio-preview-modal").style.display = "none";
+        });
+    }
+    
+    // Theme selection toggles
+    document.querySelectorAll(".theme-pill-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            document.querySelectorAll(".theme-pill-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+        });
+    });
+}
+
+function previewVisualPortfolio() {
+    if (!targetProfile) {
+        alert("Please parse a resume or select a preset profile first.");
+        return;
+    }
+    
+    const activeThemeChip = document.querySelector(".theme-pill-chip.active");
+    const theme = activeThemeChip ? activeThemeChip.getAttribute("data-theme-id") : "glass";
+    const bioText = document.getElementById("portfolio-custom-bio").value;
+    
+    const code = generateVisualPortfolioCode(targetProfile, theme, bioText);
+    
+    const modal = document.getElementById("portfolio-preview-modal");
+    const iframe = document.getElementById("portfolio-preview-iframe");
+    
+    modal.style.display = "flex";
+    
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(code);
+    iframeDoc.close();
+}
+
+function downloadVisualPortfolioFile() {
+    if (!targetProfile) {
+        alert("Please parse a resume or select a preset profile first.");
+        return;
+    }
+    
+    const activeThemeChip = document.querySelector(".theme-pill-chip.active");
+    const theme = activeThemeChip ? activeThemeChip.getAttribute("data-theme-id") : "glass";
+    const bioText = document.getElementById("portfolio-custom-bio").value;
+    
+    const code = generateVisualPortfolioCode(targetProfile, theme, bioText);
+    
+    const blob = new Blob([code], { type: "text/html" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `MechIntel_Visual_Portfolio_${theme}.html`;
+    link.click();
+}
+
+
+// 6. INDUSTRIAL ENGINEERING FORMULA CALCULATORS
+function initFormulaCalculators() {
+    const inputs = [
+        "calc-tol-h", "calc-tol-s",
+        "calc-beam-p", "calc-beam-l", "calc-beam-e", "calc-beam-i",
+        "calc-gear-wt", "calc-gear-f", "calc-gear-m", "calc-gear-y",
+        "calc-hvac-cfm", "calc-hvac-dt", "calc-hvac-dw"
+    ];
+    
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("input", runAllCalculators);
+        }
+    });
+    
+    runAllCalculators();
+}
+
+function runAllCalculators() {
+    // 1. Worst-Case vs RSS
+    const th = parseFloat(document.getElementById("calc-tol-h").value) || 0;
+    const ts = parseFloat(document.getElementById("calc-tol-s").value) || 0;
+    const wc = th + ts;
+    const rss = Math.sqrt(th * th + ts * ts);
+    document.getElementById("calc-tol-result").innerHTML = `Worst-Case: ±${wc.toFixed(3)} mm<br>RSS Statistical: ±${rss.toFixed(3)} mm`;
+    
+    // 2. Cantilever Beam Deflection
+    const p = parseFloat(document.getElementById("calc-beam-p").value) || 0;
+    const l = parseFloat(document.getElementById("calc-beam-l").value) || 0;
+    const e = parseFloat(document.getElementById("calc-beam-e").value) || 0;
+    const i = parseFloat(document.getElementById("calc-beam-i").value) || 0;
+    if (e > 0 && i > 0) {
+        const def = (p * Math.pow(l, 3) * 100) / (3 * e * i);
+        document.getElementById("calc-beam-result").innerText = `Max Deflection: ${def.toFixed(3)} mm`;
+    } else {
+        document.getElementById("calc-beam-result").innerText = `Error: invalid inputs`;
+    }
+    
+    // 3. Lewis Gear Stress
+    const wt = parseFloat(document.getElementById("calc-gear-wt").value) || 0;
+    const f = parseFloat(document.getElementById("calc-gear-f").value) || 0;
+    const m = parseFloat(document.getElementById("calc-gear-m").value) || 0;
+    const y = parseFloat(document.getElementById("calc-gear-y").value) || 0;
+    if (f > 0 && m > 0 && y > 0) {
+        const stress = wt / (f * m * y);
+        document.getElementById("calc-gear-result").innerText = `Bending Stress: ${stress.toFixed(2)} MPa`;
+    } else {
+        document.getElementById("calc-gear-result").innerText = `Error: invalid inputs`;
+    }
+    
+    // 4. HVAC Sizing
+    const cfm = parseFloat(document.getElementById("calc-hvac-cfm").value) || 0;
+    const dt = parseFloat(document.getElementById("calc-hvac-dt").value) || 0;
+    const dw = parseFloat(document.getElementById("calc-hvac-dw").value) || 0;
+    const qs = 1.08 * cfm * dt;
+    const ql = 4840 * cfm * dw;
+    document.getElementById("calc-hvac-result").innerHTML = `Sensible: ${qs.toLocaleString(undefined, {maximumFractionDigits:0})} Btu/h<br>Latent: ${ql.toLocaleString(undefined, {maximumFractionDigits:0})} Btu/h`;
+}
+
+
+// MAIN HOOK TO EXTEND THE showDashboardView WITH CUSTOM INITIALIZERS
+const originalShowDashboardView = showDashboardView;
+showDashboardView = function(viewId) {
+    originalShowDashboardView(viewId);
+    
+    if (viewId === "view-dashboard-simulation" || viewId === "dashboard-simulation") {
+        initSimulationEngine();
+    } else if (viewId === "view-dashboard-calculators" || viewId === "dashboard-calculators") {
+        initFormulaCalculators();
+    } else if (viewId === "view-dashboard-assessments" || viewId === "dashboard-assessments") {
+        initToleranceSimulator();
+    } else if (viewId === "view-dashboard-resume" || viewId === "dashboard-resume") {
+        renderResumeScoreBoosters();
+    }
+};
+
+// INITIALIZE CUSTOM INTERACTIVE CHANNELS ON DOM LOAD
+document.addEventListener("DOMContentLoaded", () => {
+    initInterviewSimulator();
+    initPortfolioGenerator();
+    
+    // Bind Optimize Resume Button
+    const optResumeBtn = document.getElementById("btn-optimize-resume-doc");
+    if (optResumeBtn) {
+        optResumeBtn.addEventListener("click", runResumeOptimizer);
+    }
+    
+    // Bind challenge checks
+    const btnCheckTol = document.getElementById("btn-check-tol-challenge");
+    if (btnCheckTol) {
+        btnCheckTol.addEventListener("click", checkToleranceQuiz);
+    }
+});
+

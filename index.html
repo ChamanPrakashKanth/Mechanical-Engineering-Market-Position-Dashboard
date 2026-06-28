@@ -406,8 +406,11 @@
                     <button class="sidebar-nav-item" data-view="dashboard-roadmaps">
                         <i data-lucide="map"></i> Learning Roadmaps
                     </button>
-                    <button class="sidebar-nav-item" data-view="dashboard-placeholders">
-                        <i data-lucide="rocket"></i> Future Integrations
+                    <button class="sidebar-nav-item" data-view="dashboard-simulation">
+                        <i data-lucide="play-circle"></i> Day-in-the-Life Simulator
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-calculators">
+                        <i data-lucide="calculator"></i> Formula Calculators
                     </button>
                 </nav>
 
@@ -722,6 +725,69 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Interactive CAD Tolerance Stackup & FEA Mesh Simulator Widget -->
+                            <div class="glass-card element-card tolerance-widget" style="margin-top: 1.5rem;">
+                                <h3 class="card-section-title"><i data-lucide="cog"></i> Interactive Tolerance Stackup & Fit Simulator</h3>
+                                <p class="section-subtitle" style="margin-bottom: 1.25rem;">Adjust the pin and housing dimensions to see if they fit under different manufacturing tolerances.</p>
+                                
+                                <div class="assembly-svg-canvas">
+                                    <svg id="tolerance-svg" width="100%" height="120" viewBox="0 0 400 120" style="background:#111520; border-radius:6px;"></svg>
+                                </div>
+
+                                <div class="simulator-sliders-grid">
+                                    <div>
+                                        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem; font-size:0.8rem;">
+                                            <span>Hole Nominal Diameter:</span>
+                                            <span id="label-hole-nom">50.00 mm</span>
+                                        </div>
+                                        <input type="range" id="slider-hole-nom" min="49.8" max="50.5" step="0.05" value="50.00" style="width:100%;">
+                                        
+                                        <div style="display:flex; justify-content:space-between; margin-top:0.8rem; margin-bottom:0.4rem; font-size:0.8rem;">
+                                            <span>Hole Tolerance (±):</span>
+                                            <span id="label-hole-tol">0.05 mm</span>
+                                        </div>
+                                        <input type="range" id="slider-hole-tol" min="0.01" max="0.15" step="0.01" value="0.05" style="width:100%;">
+                                    </div>
+                                    <div>
+                                        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem; font-size:0.8rem;">
+                                            <span>Shaft Nominal Diameter:</span>
+                                            <span id="label-shaft-nom">49.90 mm</span>
+                                        </div>
+                                        <input type="range" id="slider-shaft-nom" min="49.5" max="50.2" step="0.05" value="49.90" style="width:100%;">
+
+                                        <div style="display:flex; justify-content:space-between; margin-top:0.8rem; margin-bottom:0.4rem; font-size:0.8rem;">
+                                            <span>Shaft Tolerance (±):</span>
+                                            <span id="label-shaft-tol">0.04 mm</span>
+                                        </div>
+                                        <input type="range" id="slider-shaft-tol" min="0.01" max="0.15" step="0.01" value="0.04" style="width:100%;">
+                                    </div>
+                                </div>
+
+                                <div style="display:flex; gap:1.5rem; font-size:0.85rem; margin-top:1rem; flex-wrap:wrap;">
+                                    <label style="cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+                                        <input type="radio" name="tol-method" value="worst-case" checked> Worst-Case stackup
+                                    </label>
+                                    <label style="cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+                                        <input type="radio" name="tol-method" value="rss"> Root-Sum-Square (RSS) statistical fit
+                                    </label>
+                                </div>
+
+                                <div id="tolerance-results-card" class="fit-alert safe">
+                                    Min Clearance: 0.01mm | Max Clearance: 0.19mm | Fit: Clearance (Safe)
+                                </div>
+
+                                <!-- Solved and Verify Quiz Challenge -->
+                                <div style="border-top:1px solid var(--border-color); margin-top:1.25rem; padding-top:1.25rem; font-size:0.85rem;">
+                                    <strong>🧩 Design Engineer Challenge:</strong>
+                                    <p style="color:var(--text-secondary); margin-top:0.25rem;">Hole = 30.00 ±0.03 mm, Shaft = 29.95 ±0.02 mm. What is the RSS Stacked Tolerance in mm?</p>
+                                    <div style="display:flex; gap:0.75rem; margin-top:0.5rem; max-width:320px;">
+                                        <input type="text" id="tol-challenge-input" placeholder="e.g. 0.036" style="flex:1; padding:0.4rem; background:rgba(0,0,0,0.2); border:1px solid var(--border-color); border-radius:4px; color:#fff; font-size:0.85rem;">
+                                        <button id="btn-check-tol-challenge" class="btn btn-primary btn-sm">Verify</button>
+                                    </div>
+                                    <div id="tol-challenge-feedback" style="margin-top:0.4rem; font-weight:700;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -827,17 +893,47 @@
                                     <!-- Missing keywords list dynamically generated -->
                                 </div>
                             </div>
+
+                            <!-- Smart Resume Optimizer & Score Booster -->
+                            <div class="glass-card element-card booster-panel">
+                                <h3 class="card-section-title"><i data-lucide="zap"></i> Dynamic Resume Score Optimizer</h3>
+                                <p class="section-subtitle">Implement these target keywords and items to boost your recruiter matching score:</p>
+                                <div class="booster-list" id="booster-recommendations-list">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                                <button class="btn btn-primary" id="btn-optimize-resume-doc" style="width: 100%; margin-top: 1rem;">
+                                    <i data-lucide="sparkles"></i> Auto-Optimize Keywords Structure
+                                </button>
+                                <div id="optimizer-status-text" style="margin-top: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--success); font-weight: 600;"></div>
+                            </div>
                         </div>
 
                         <div class="grid-col-4">
-                            <!-- Static Portfolio Generator -->
+                            <!-- Enhanced Portfolio HTML Generator -->
                             <div class="glass-card element-card">
-                                <h3 class="card-section-title"><i data-lucide="layout-template"></i> Portfolio HTML Generator</h3>
-                                <p class="section-subtitle">Generate a clean, copy-pasteable HTML portfolio template based on your active profile details.</p>
-                                <button class="btn btn-outline" style="width:100%; margin-top: 1rem;" id="btn-generate-portfolio-html">
-                                    <i data-lucide="code"></i> Generate HTML Code
-                                </button>
-                                <textarea id="portfolio-output-code" class="hidden" style="width: 100%; height: 150px; margin-top:1rem; font-family:monospace; font-size:0.8rem; background:#000; color:#0f0; border-radius:6px; padding:0.5rem;" readonly></textarea>
+                                <h3 class="card-section-title"><i data-lucide="layout-template"></i> Visual Portfolio Generator</h3>
+                                <p class="section-subtitle">Generate a fully styled, standalone single-file HTML portfolio based on your profile.</p>
+                                
+                                <div style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+                                    <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.25rem;">Custom Headline / Tagline:</label>
+                                    <input type="text" id="portfolio-custom-bio" placeholder="e.g. Aspiring Automotive Design Engineer..." style="width:100%; padding:0.4rem; background:rgba(0,0,0,0.2); border:1px solid var(--border-color); border-radius:6px; color:#fff; font-size:0.8rem; outline:none;">
+                                </div>
+
+                                <div class="portfolio-theme-selector">
+                                    <span class="theme-pill-chip active" data-theme-id="glass">Glassmorphic</span>
+                                    <span class="theme-pill-chip" data-theme-id="terminal">Terminal</span>
+                                    <span class="theme-pill-chip" data-theme-id="professional">Slate Minimal</span>
+                                </div>
+
+                                <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                                    <button class="btn btn-outline" style="flex:1;" id="btn-preview-portfolio">
+                                        <i data-lucide="eye"></i> Preview
+                                    </button>
+                                    <button class="btn btn-success" style="flex:1;" id="btn-download-portfolio-file">
+                                        <i data-lucide="download"></i> Download
+                                    </button>
+                                </div>
+                                <textarea id="portfolio-output-code" class="hidden" style="width: 100%; height: 120px; margin-top:1rem; font-family:monospace; font-size:0.75rem; background:#000; color:#0f0; border-radius:6px; padding:0.5rem;" readonly></textarea>
                             </div>
                         </div>
                     </div>
@@ -855,6 +951,32 @@
 
                     <div class="dashboard-data-grid">
                         <div class="grid-col-8">
+                            <!-- Interactive Mock Interview Simulator Console -->
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="mic"></i> Interactive AI Mock Interview Terminal</h3>
+                                <p class="section-subtitle" style="margin-bottom: 1rem;">Answer technical and behavioral questions from a simulated recruiter. Type your answer and click Submit.</p>
+                                
+                                <div class="interview-terminal">
+                                    <div class="interview-metrics-strip">
+                                        <div>Target: <strong id="interview-target-domain">Design Engineering</strong></div>
+                                        <div>Question: <strong id="interview-question-num">1 / 4</strong></div>
+                                        <div>XP Reward: <strong style="color:var(--warning);">+200 XP</strong></div>
+                                    </div>
+                                    <div class="interview-chat-log" id="interview-chat-log-box">
+                                        <div class="interview-message system">
+                                            Click "Start Mock Interview" below to begin a custom roleplay session with a simulated Engineering Lead.
+                                        </div>
+                                    </div>
+                                    <div class="interview-input-row" id="interview-input-container" style="display:none;">
+                                        <textarea id="interview-user-response" placeholder="Type your detailed engineering answer here... (minimum 10 characters)"></textarea>
+                                        <button class="btn btn-success btn-sm" id="btn-submit-interview-ans" style="align-self:center; height:36px;"><i data-lucide="send"></i> Submit</button>
+                                    </div>
+                                    <div style="display:flex; justify-content:center; gap:0.75rem; margin-top:0.5rem;" id="interview-control-buttons">
+                                        <button class="btn btn-primary" id="btn-start-interview-session">Start Mock Interview</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Technical Q&A bank -->
                             <div class="glass-card element-card">
                                 <h3 class="card-section-title"><i data-lucide="help-circle"></i> Technical Question Bank</h3>
@@ -1184,63 +1306,151 @@
                     </div>
                 </div>
 
-                <!-- Dashboard Sub-View: Settings & Placeholders -->
-                <div id="view-dashboard-placeholders" class="dashboard-view-pane">
+                <!-- Dashboard Sub-View: Day-in-the-Life Simulation -->
+                <div id="view-dashboard-simulation" class="dashboard-view-pane">
                     <header class="dashboard-pane-header">
                         <div>
-                            <h1>Future Integrations & Advanced Features</h1>
-                            <p>Design placeholders for advanced enterprise integrations, visual portfolios, and recruiter dashboards</p>
+                            <h1>Day-in-the-Life Operations Simulator</h1>
+                            <p>Test your industrial problem solving and engineering heuristics in realistic scenarios</p>
                         </div>
                     </header>
 
-                    <div class="placeholders-grid">
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="linkedin" class="card-icon"></i>
-                            <h3>LinkedIn Profile Integration</h3>
-                            <p>Sync your LinkedIn profile, recommendations, and job experience directly into MechIntel to bypass manual entry. (Available in Phase 2)</p>
-                            <span class="badge badge-medium">Coming Soon</span>
+                    <div class="simulation-terminal">
+                        <div class="sim-meters-row">
+                            <div class="sim-meter-card">
+                                <h5>System Stability</h5>
+                                <div class="sim-meter-bar">
+                                    <div class="sim-meter-fill" id="sim-meter-stability" style="width: 100%; background: var(--success);"></div>
+                                </div>
+                                <span id="label-sim-stability" style="font-size:0.75rem; font-weight:700; margin-top:0.3rem; display:block;">100%</span>
+                            </div>
+                            <div class="sim-meter-card">
+                                <h5>Project Timeline</h5>
+                                <div class="sim-meter-bar">
+                                    <div class="sim-meter-fill" id="sim-meter-timeline" style="width: 100%; background: var(--warning);"></div>
+                                </div>
+                                <span id="label-sim-timeline" style="font-size:0.75rem; font-weight:700; margin-top:0.3rem; display:block;">100%</span>
+                            </div>
+                            <div class="sim-meter-card">
+                                <h5>Budget Resource</h5>
+                                <div class="sim-meter-bar">
+                                    <div class="sim-meter-fill" id="sim-meter-budget" style="width: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span id="label-sim-budget" style="font-size:0.75rem; font-weight:700; margin-top:0.3rem; display:block;">100%</span>
+                            </div>
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="github" class="card-icon"></i>
-                            <h3>GitHub & GrabCAD Sync</h3>
-                            <p>Automatically extract CAD geometries from GrabCAD and code scripts from GitHub to build a verified visual project catalog. (Available in Phase 2)</p>
-                            <span class="badge badge-medium">Coming Soon</span>
+
+                        <div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
+                            <span>Active Case: <strong id="sim-case-title">EV battery heat crisis</strong></span>
+                            <span id="sim-step-num">Step: 1 / 3</span>
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="layout-template" class="card-icon"></i>
-                            <h3>3D Portfolio Builder</h3>
-                            <p>Generate a customized, professional static portfolio page displaying your 3D CAD files, calculations, and stress curves. (Available in Phase 2)</p>
-                            <span class="badge badge-medium">Coming Soon</span>
+
+                        <div class="sim-story-text" id="sim-story-text-box">
+                            Loading scenario...
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="video" class="card-icon"></i>
-                            <h3>Mock Interviews</h3>
-                            <p>Participate in structured numerical or HR mock interviews with timed questions. (Available in Phase 3)</p>
-                            <span class="badge badge-low">Future Vision</span>
+
+                        <div class="sim-choices-container" id="sim-choices-box">
+                            <!-- Populated dynamically via JS -->
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="briefcase" class="card-icon"></i>
-                            <h3>Recruiter Dashboard</h3>
-                            <p>Allow hiring managers from Tesla, L&T, and Boeing to query anonymized profiles, filter by score, and contact matching freshers. (Available in Phase 3)</p>
-                            <span class="badge badge-low">Future Vision</span>
+                        
+                        <div style="display:flex; justify-content:center; margin-top:1.5rem;">
+                            <button class="btn btn-outline" id="btn-reset-sim" style="display:none;">Restart Scenario</button>
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="award" class="card-icon"></i>
-                            <h3>Certification & Verification Tracker</h3>
-                            <p>Validate your SolidWorks CSWP or Six Sigma Green Belt credentials directly using cryptographic hashes. (Available in Phase 2)</p>
-                            <span class="badge badge-medium">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Formula Calculators -->
+                <div id="view-dashboard-calculators" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Industrial Engineering Formula Calculators</h1>
+                            <p>Compute tolerances, deflection, stresses, and heat loads to verify designs and check values</p>
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="users" class="card-icon"></i>
-                            <h3>Community Leaderboard</h3>
-                            <p>Compare quiz scores and dashboard rankings with peers from your engineering department or global region. (Available in Phase 2)</p>
-                            <span class="badge badge-medium">Coming Soon</span>
+                    </header>
+
+                    <div class="calc-card-grid">
+                        <!-- Calc 1: Worst-case vs RSS Tolerance Sizer -->
+                        <div class="glass-card calculator-node">
+                            <h4 style="border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;"><i data-lucide="cog" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Worst-Case vs RSS Tolerance</h4>
+                            <div class="calculator-input-row">
+                                <label for="calc-tol-h">Hole Tolerance (T_h, ± mm)</label>
+                                <input type="number" id="calc-tol-h" step="0.01" value="0.05">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-tol-s">Shaft Tolerance (T_s, ± mm)</label>
+                                <input type="number" id="calc-tol-s" step="0.01" value="0.04">
+                            </div>
+                            <div class="calc-result-box" id="calc-tol-result">
+                                Worst-Case: ±0.090 mm<br>RSS Statistical: ±0.064 mm
+                            </div>
                         </div>
-                        <div class="placeholder-card glass-card">
-                            <i data-lucide="sparkles" class="card-icon"></i>
-                            <h3>Industry Mentorship</h3>
-                            <p>Schedule one-on-one virtual alignment sessions with verified senior consultants in aerospace, HVAC, or CFD. (Available in Phase 3)</p>
-                            <span class="badge badge-low">Future Vision</span>
+
+                        <!-- Calc 2: Cantilever Beam Deflection Solver -->
+                        <div class="glass-card calculator-node">
+                            <h4 style="border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;"><i data-lucide="activity" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Cantilever Tip Deflection</h4>
+                            <div class="calculator-input-row">
+                                <label for="calc-beam-p">Tip Load (P, kN)</label>
+                                <input type="number" id="calc-beam-p" value="3.0">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-beam-l">Beam Length (L, m)</label>
+                                <input type="number" id="calc-beam-l" value="2.0">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-beam-e">Modulus of Elasticity (E, GPa)</label>
+                                <input type="number" id="calc-beam-e" value="200.0">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-beam-i">Moment of Inertia (I, e-5 m⁴)</label>
+                                <input type="number" id="calc-beam-i" value="1.0">
+                            </div>
+                            <div class="calc-result-box" id="calc-beam-result">
+                                Max Deflection: 4.000 mm
+                            </div>
+                        </div>
+
+                        <!-- Calc 3: Lewis Gear Bending Stress Sizer -->
+                        <div class="glass-card calculator-node">
+                            <h4 style="border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;"><i data-lucide="settings" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Lewis Bending Gear Stress</h4>
+                            <div class="calculator-input-row">
+                                <label for="calc-gear-wt">Tangential Load (W_t, N)</label>
+                                <input type="number" id="calc-gear-wt" value="1200">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-gear-f">Face Width (F, mm)</label>
+                                <input type="number" id="calc-gear-f" value="25">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-gear-m">Module (m, mm)</label>
+                                <input type="number" id="calc-gear-m" value="4">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-gear-y">Lewis Form Factor (Y)</label>
+                                <input type="number" id="calc-gear-y" step="0.01" value="0.32">
+                            </div>
+                            <div class="calc-result-box" id="calc-gear-result">
+                                Bending Stress: 37.50 MPa
+                            </div>
+                        </div>
+
+                        <!-- Calc 4: HVAC Heat Load Estimator -->
+                        <div class="glass-card calculator-node">
+                            <h4 style="border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;"><i data-lucide="thermometer-snowflake" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> HVAC Heat Load Sizer</h4>
+                            <div class="calculator-input-row">
+                                <label for="calc-hvac-cfm">Air Flow Rate (CFM)</label>
+                                <input type="number" id="calc-hvac-cfm" value="500">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-hvac-dt">Temp Difference (ΔT, °F)</label>
+                                <input type="number" id="calc-hvac-dt" value="20">
+                            </div>
+                            <div class="calculator-input-row">
+                                <label for="calc-hvac-dw">Humidity Ratio Diff (ΔW, lb/lb)</label>
+                                <input type="number" id="calc-hvac-dw" step="0.001" value="0.005">
+                            </div>
+                            <div class="calc-result-box" id="calc-hvac-result">
+                                Sensible: 10,800 Btu/h<br>Latent: 12,100 Btu/h
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1280,6 +1490,17 @@
                     <span>Running global benchmarking standing model...</span>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- PORTFOLIO PREVIEW MODAL -->
+    <div id="portfolio-preview-modal" class="scanner-modal-overlay" style="z-index: 10000; display:none; align-items:center; justify-content:center;">
+        <div class="glass-card" style="width: 90%; max-width: 900px; height: 85vh; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; position:relative; background: var(--bg-main); border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin:0;"><i data-lucide="eye" style="vertical-align:middle; margin-right:4px;"></i> Live Portfolio Preview</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-close-portfolio-preview">Close Preview</button>
+            </div>
+            <iframe id="portfolio-preview-iframe" style="width: 100%; flex: 1; border: 1px solid var(--border-color); border-radius: 8px; background: white;"></iframe>
         </div>
     </div>
 
