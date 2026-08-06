@@ -23,6 +23,8 @@ Render all five low-latency preview videos:
 
 Rendered MP4s should land in `manim_courses/renders/` with filenames matching the Streamlit course catalog.
 
+These MP4s are also embedded directly into the client-side Learning Hub course cards (`Machine Design`, `Finite Element Analysis`, `Robotics`, `Six Sigma`, `Heat Transfer`) via `VIDEO_LESSONS` in `app.js`. The compile scripts inline them as base64 data URIs into `blogspot_deploy.html` / `blogspot_deploy_safe.html`, so the single-file builds stay self-contained.
+
 ## Upload to YouTube
 
 1. Create an OAuth desktop app in Google Cloud.

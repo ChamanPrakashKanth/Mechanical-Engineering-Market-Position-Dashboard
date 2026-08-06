@@ -62,7 +62,7 @@ Using technical keyword intersections, profiles are matched to one of five key d
 
 ## 🎥 Video Course Production (Manim)
 
-The project includes automated video production tooling inside the `manim_courses/` directory to generate visual lesson videos for the Streamlit dashboard:
+The project includes automated video production tooling inside the `manim_courses/` directory to generate visual lesson videos for the Streamlit dashboard and the SPA Learning Hub:
 
 1. **Setup**:
    Using a Python 3.10 virtual environment (to run Manim 0.19.1):
@@ -76,13 +76,18 @@ The project includes automated video production tooling inside the `manim_course
    .\.venv-manim\Scripts\python.exe manim_courses\render_lessons.py
    ```
 3. **Upload to YouTube**:
-   Enables automated YouTube uploads using OAuth credentials:
-   - Save your Google Cloud OAuth client credentials to `manim_courses/client_secrets.json`.
-   - Run the upload script:
-     ```powershell
-     .\.venv-manim\Scripts\python.exe manim_courses\upload_youtube.py --lesson <lesson-slug> --privacy private
-     ```
-   - Update the returned YouTube video ID in `COURSE_CATALOG` in `app_streamlit.py` to embed the videos.
+   - Enables automated YouTube uploads using OAuth credentials:
+     - Save your Google Cloud OAuth client credentials to `manim_courses/client_secrets.json`.
+     - Run the upload script:
+       ```powershell
+       .\.venv-manim\Scripts\python.exe manim_courses\upload_youtube.py --lesson <lesson-slug> --privacy private
+       ```
+     - Update the returned YouTube video ID in `COURSE_CATALOG` in `app_streamlit.py` to embed the videos.
+
+4. **Embedded in the SPA Learning Hub**:
+   - The rendered MP4s are embedded directly inside the matching course cards in the client-side app (`Machine Design`, `Finite Element Analysis`, `Robotics`, `Six Sigma`, and `Heat Transfer`) via the `VIDEO_LESSONS` mapping in `app.js`.
+   - When served with the repo present, the `<video>` players load the MP4s from `manim_courses/renders/`. The single-file builds (`compile_single_file.py`, `compile_blogspot_safe.py`) automatically inline the videos as base64 `data:` URIs so they play in fully self-contained deployments.
+   - If a video asset is unavailable, the player falls back to a graceful notice so the course stays usable.
 
 ---
 

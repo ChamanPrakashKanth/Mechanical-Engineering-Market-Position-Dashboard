@@ -1,5 +1,26 @@
+import base64
 import os
 import re
+
+VIDEO_FILES = [
+    "cad-lewis-gear-bending.mp4",
+    "cae-stiffness-matrix.mp4",
+    "robotics-pid-control.mp4",
+    "manufacturing-cpk-capability.mp4",
+    "hvac-sensible-latent-loads.mp4",
+]
+
+def inline_videos(js_content, workspace):
+    video_dir = os.path.join(workspace, "manim_courses", "renders")
+    for name in VIDEO_FILES:
+        path = os.path.join(video_dir, name)
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                data = base64.b64encode(f.read()).decode("ascii")
+            token = f"manim_courses/renders/{name}"
+            js_content = js_content.replace(token, f"data:video/mp4;base64,{data}")
+            print(f"Inlined video: {name}")
+    return js_content
 
 def compile_single_file():
     print("Compiling single self-contained HTML file for Blogspot deployment...")
@@ -25,6 +46,9 @@ def compile_single_file():
     # Read JS
     with open(js_path, 'r', encoding='utf-8') as f:
         js_content = f.read()
+    
+    # Inline lesson videos as base64 data URIs so the single-file build is self-contained
+    js_content = inline_videos(js_content, workspace)
         
     # 1. Replace the stylesheet link with the actual CSS style block
     css_link_pattern = '<link rel="stylesheet" href="styles.css">'

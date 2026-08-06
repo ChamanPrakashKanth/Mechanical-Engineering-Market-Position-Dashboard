@@ -1,5 +1,26 @@
+import base64
 import os
 import re
+
+VIDEO_FILES = [
+    "cad-lewis-gear-bending.mp4",
+    "cae-stiffness-matrix.mp4",
+    "robotics-pid-control.mp4",
+    "manufacturing-cpk-capability.mp4",
+    "hvac-sensible-latent-loads.mp4",
+]
+
+def inline_videos(js_content, workspace):
+    video_dir = os.path.join(workspace, "manim_courses", "renders")
+    for name in VIDEO_FILES:
+        path = os.path.join(video_dir, name)
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                data = base64.b64encode(f.read()).decode("ascii")
+            token = f"manim_courses/renders/{name}"
+            js_content = js_content.replace(token, f"data:video/mp4;base64,{data}")
+            print(f"Inlined video: {name}")
+    return js_content
 
 def minify_css(css):
     # Remove comments
@@ -9,69 +30,140 @@ def minify_css(css):
     return css.strip()
 
 def minify_js(js):
-    # Remove multi-line comments
-    js = re.sub(r'/\*.*?\*/', '', js, flags=re.DOTALL)
-    
-    lines = js.split('\n')
-    cleaned_lines = []
-    
-    # Pre-clean lines to filter out comments and empty entries
-    raw_lines = []
-    for line in lines:
-        line = line.strip()
-        if not line:
+    # Comment stripper that is aware of string literals, template literals, and
+    # regex literals so it never corrupts code (multi-line template literals,
+    # URLs inside strings, or regexes with quotes must be preserved verbatim).
+    out = []
+    i = 0
+    n = len(js)
+    state = "code"          # code | line | block | string | template | regex | regex_class
+    quote = None
+    tpl_depth = 0
+    last_code = ";"         # last non-whitespace char in code output
+
+    def expr_end(ch):
+        return ch is None or ch.isalnum() or ch in ")]}._$"
+
+    while i < n:
+        c = js[i]
+
+        if state == "line":
+            if c == "\n":
+                state = "code"
+                out.append(c)
+                last_code = c
+            i += 1
             continue
-        # Skip single-line comments
-        if line.startswith('//'):
+
+        if state == "block":
+            if c == "*" and i + 1 < n and js[i + 1] == "/":
+                state = "code"
+                i += 2
+            else:
+                i += 1
             continue
-        
-        # Remove trailing comments if they are not part of URLs
-        if '//' in line:
-            parts = line.split('//')
-            if len(parts) > 1:
-                # If first part ends with 'http:' or 'https:', keep it as URL
-                if parts[0].strip().endswith('http:') or parts[0].strip().endswith('https:'):
-                    pass
-                else:
-                    line = parts[0].strip()
-                    
-        if line:
-            raw_lines.append(line)
-            
-    # Process lines with a peek ahead
-    for i, line in enumerate(raw_lines):
-        next_line = raw_lines[i + 1] if i + 1 < len(raw_lines) else ""
-        
-        # Standard delimiters that block semicolons
-        ends_with_delim = (
-            line.endswith(';') or line.endswith('{') or line.endswith('}') or 
-            line.endswith(',') or line.endswith('[') or line.endswith(']') or 
-            line.endswith(':') or line.endswith('.') or line.endswith('&&') or 
-            line.endswith('||') or line.endswith('+') or line.endswith('-') or 
-            line.endswith('?') or line.endswith('=>')
-        )
-        
-        # Semicolon should not be appended if the next line starts with a closing delimiter
-        is_closing_next = (
-            next_line.startswith('}') or next_line.startswith(']') or 
-            next_line.startswith(')') or next_line.startswith('.') or
-            next_line.startswith(',') or next_line.startswith(';')
-        )
-        
-        if not ends_with_delim and not is_closing_next:
-            # Avoid appending semicolons after control flow headers like if, while, for
-            is_control_header = (
-                line.startswith('if') or line.startswith('else if') or 
-                line.startswith('for') or line.startswith('while') or 
-                line.startswith('function') or line.startswith('catch')
-            ) and line.endswith(')')
-            
-            if not is_control_header:
-                line += ';'
-                
-        cleaned_lines.append(line)
-            
-    return " ".join(cleaned_lines)
+
+        if state == "string":
+            out.append(c)
+            if c == "\\" and i + 1 < n:
+                out.append(js[i + 1])
+                i += 2
+                continue
+            if c == quote:
+                state = "code"
+                last_code = c
+            i += 1
+            continue
+
+        if state == "template":
+            out.append(c)
+            if c == "\\" and i + 1 < n:
+                out.append(js[i + 1])
+                i += 2
+                continue
+            if c == "$" and i + 1 < n and js[i + 1] == "{":
+                tpl_depth += 1
+                out.append(js[i + 1])
+                i += 2
+                continue
+            if c == "}" and tpl_depth > 0:
+                tpl_depth -= 1
+                i += 1
+                continue
+            if c == "`" and tpl_depth == 0:
+                state = "code"
+            i += 1
+            continue
+
+        if state == "regex":
+            out.append(c)
+            if c == "\\" and i + 1 < n:
+                out.append(js[i + 1])
+                i += 2
+                continue
+            if c == "[":
+                state = "regex_class"
+                i += 1
+                continue
+            if c == "/":
+                state = "code"
+                i += 1
+                while i < n and js[i].isalpha():
+                    out.append(js[i])
+                    i += 1
+                last_code = "/"
+                continue
+            i += 1
+            continue
+
+        if state == "regex_class":
+            out.append(c)
+            if c == "\\" and i + 1 < n:
+                out.append(js[i + 1])
+                i += 2
+                continue
+            if c == "]":
+                state = "regex"
+            i += 1
+            continue
+
+        # ---- code state ----
+        if c == "`":
+            state = "template"
+            tpl_depth = 0
+            out.append(c)
+            i += 1
+            last_code = c
+            continue
+        if c == "'" or c == '"':
+            state = "string"
+            quote = c
+            out.append(c)
+            i += 1
+            last_code = c
+            continue
+        if c == "/" and i + 1 < n:
+            nxt = js[i + 1]
+            if nxt == "/":
+                state = "line"
+                i += 2
+                continue
+            if nxt == "*":
+                state = "block"
+                i += 2
+                continue
+            if not expr_end(last_code):
+                state = "regex"
+                out.append(c)
+                i += 1
+                continue
+
+        out.append(c)
+        i += 1
+        if not c.isspace():
+            last_code = c
+
+    return "".join(out)
 
 def compile_safe():
     print("Compiling Blogger-safe self-contained HTML...")
@@ -94,9 +186,13 @@ def compile_safe():
         
     with open(js_path, 'r', encoding='utf-8') as f:
         js_content = f.read()
-        
+    
     min_css = minify_css(css_content)
     min_js = minify_js(js_content)
+    
+    # Inline lesson videos as base64 data URIs after minification so the giant base64
+    # strings never pass through the comment-stripping logic.
+    min_js = inline_videos(min_js, workspace)
     
     # Replace stylesheets and script links
     css_link_pattern = '<link rel="stylesheet" href="styles.css">'

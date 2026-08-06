@@ -1420,9 +1420,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Portfolio Generator click
-    document.getElementById("btn-generate-portfolio-html").addEventListener("click", () => {
-        if(targetProfile) generatePortfolioHtml(targetProfile);
-    });
+    const genPortfolioBtn = document.getElementById("btn-generate-portfolio-html");
+    if (genPortfolioBtn) {
+        genPortfolioBtn.addEventListener("click", () => {
+            if(targetProfile) generatePortfolioHtml(targetProfile);
+        });
+    }
 
     // Database explorer search
     document.getElementById("db-search-input").addEventListener("input", () => {
@@ -1469,6 +1472,37 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================================
 // LEARNING HUB & ROADMAPS DATABASE & ENGINE
 // ==========================================
+
+// Concept visualization videos attached to specific courses.
+// In the single-file builds the compile scripts inline these files as base64 data URIs;
+// when served with the repo present, the relative MP4 paths are used instead.
+const VIDEO_LESSONS = {
+    "Machine Design": {
+        src: "manim_courses/renders/cad-lewis-gear-bending.mp4",
+        label: "Lewis Gear Tooth Bending",
+        caption: "Why face width, module, and form factor control bending stress."
+    },
+    "Finite Element Analysis": {
+        src: "manim_courses/renders/cae-stiffness-matrix.mp4",
+        label: "The Finite Element Balance: K·u = f",
+        caption: "Stiffness, displacement, and applied force in FEA."
+    },
+    "Robotics": {
+        src: "manim_courses/renders/robotics-pid-control.mp4",
+        label: "PID Control Terms",
+        caption: "Proportional, integral, and derivative actions on a step response."
+    },
+    "Six Sigma": {
+        src: "manim_courses/renders/manufacturing-cpk-capability.mp4",
+        label: "Cp and Cpk Process Capability",
+        caption: "Why centered, narrow distributions pass capability."
+    },
+    "Heat Transfer": {
+        src: "manim_courses/renders/hvac-sensible-latent-loads.mp4",
+        label: "Sensible vs Latent Loads",
+        caption: "Temperature and humidity are separate HVAC jobs."
+    }
+};
 
 const COURSES_DATABASE = [
     // Mathematics
@@ -2330,6 +2364,23 @@ function renderCourses() {
         const isCompleted = userCompletedCourses.includes(course.title);
         const isBookmarked = userBookmarkedCourses.includes(course.title);
         const savedNote = userCourseNotes[course.title] || "";
+        const videoLesson = VIDEO_LESSONS[course.title] || null;
+
+        const videoBlock = videoLesson ? `
+            <div class="course-video-wrap" style="margin-bottom: 0.9rem;">
+                <video controls preload="metadata" playsinline style="width:100%; display:block; border-radius:12px; background:#000; aspect-ratio:16/9;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <source src="${videoLesson.src}" type="video/mp4">
+                    Your browser does not support embedded video.
+                </video>
+                <div style="display:none; padding:0.7rem 0.8rem; background:rgba(255,255,255,0.04); border:1px solid var(--border-color); border-radius:12px; color:var(--text-muted); font-size:0.75rem;">
+                    <i data-lucide="video-off" style="width:14px; height:14px; display:inline-block; vertical-align:middle; margin-right:4px;"></i>
+                    Visualization video is not bundled in this build. Use the free resources below to continue.
+                </div>
+                <div style="padding:0.45rem 0.1rem 0; font-size:0.75rem; color:var(--text-secondary);">
+                    <span style="color:var(--primary); font-weight:600;">&#9654; ${videoLesson.label}</span> &mdash; ${videoLesson.caption}
+                </div>
+            </div>
+        ` : '';
 
         const card = document.createElement("div");
         card.className = `glass-card course-card ${isCompleted ? 'completed' : ''}`;
@@ -2344,6 +2395,8 @@ function renderCourses() {
                         </button>
                     </div>
                 </div>
+                
+                ${videoBlock}
                 
                 <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                     ${course.title}
@@ -3408,3 +3461,796 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+
+/* RESTORED INTERACTIVE FEATURES */
+const QUIZ_QUESTIONS = {
+    cad: [
+        {
+            q: "A part model has a mass density of 0.0078 g/mm³. If the volume is 100,000 mm³, what is the total mass in grams?",
+            o: ["7.8 g", "78 g", "780 g", "7800 g"],
+            a: 2,
+            e: "Mass = Volume * Density = 100,000 * 0.0078 = 780 grams."
+        },
+        {
+            q: "Which SolidWorks feature is best suited for modeling sheet metal bends?",
+            o: ["Extruded Boss/Base", "Base Flange/Tab", "Swept Boss/Base", "Lofted Bend"],
+            a: 1,
+            e: "The Base Flange/Tab feature initializes sheet metal properties like K-factor and bend allowance."
+        }
+    ],
+    gdt: [
+        {
+            q: "What does the GD&T symbol for 'Position' represent?",
+            o: ["Concentricity", "Runout", "Location of a feature of size", "Profile of a line"],
+            a: 2,
+            e: "The Position tolerance (crosshair symbol) controls the location of features of size (like holes/pins) relative to datums."
+        },
+        {
+            q: "Which letter represents Maximum Material Condition?",
+            o: ["L", "M", "S", "P"],
+            a: 1,
+            e: "'M' inside a circle represents Maximum Material Condition (MMC)."
+        }
+    ],
+    fea: [
+        {
+            q: "Which mesh type is generally preferred for resolving high stress concentrations in critical aerospace joints?",
+            o: ["Coarse Tetrahedral", "Fine Hexahedral", "Linear Triangular", "Standard Shell"],
+            a: 1,
+            e: "Hexahedral elements provide better convergence and accuracy in high-stress gradients compared to tetrahedral elements."
+        },
+        {
+            q: "In CFD, what does the Prandtl number relate?",
+            o: ["Inertial forces to viscous forces", "Momentum diffusivity to thermal diffusivity", "Buoyant forces to viscous forces", "Velocity boundary layer to thermal boundary layer thickness"],
+            a: 1,
+            e: "The Prandtl number is the ratio of momentum diffusivity (kinematic viscosity) to thermal diffusivity."
+        }
+    ]
+};
+let activeQuiz = "cad";
+let activeQuestionIdx = 0;
+let quizScore = 0;
+let quizCompletedCount = 0;
+
+function renderActiveQuiz() {
+    const container = document.getElementById("quiz-question-container");
+    const questions = QUIZ_QUESTIONS[activeQuiz];
+    
+    if(!questions || activeQuestionIdx >= questions.length) {
+        // Complete state
+        container.innerHTML = `
+            <div style="text-align:center; padding: 2rem;">
+                <i data-lucide="check-circle" style="width:48px; height:48px; color:var(--success); margin-bottom:1rem;"></i>
+                <h3>Quiz Completed Successfully!</h3>
+                <p style="margin-top:0.5rem; color:var(--text-secondary);">You scored ${quizScore}/${questions.length} correct answers.</p>
+                <button class="btn btn-primary" onclick="resetActiveQuiz()" style="margin-top:1.5rem;">Restart Quiz</button>
+            </div>
+        `;
+        
+        quizCompletedCount = Math.min(quizCompletedCount + 1, 3);
+        userXP += 150;
+        localStorage.setItem("userXP", userXP);
+        
+        updateQuizStatsDisplay();
+        updateScoresDisplay(calculateScores(targetProfile));
+        lucide.createIcons();
+        return;
+    }
+    
+    const qa = questions[activeQuestionIdx];
+    container.innerHTML = `
+        <div class="quiz-question-block">
+            <div class="quiz-question-text">Q${activeQuestionIdx+1}: ${qa.q}</div>
+            <ul class="quiz-options-list">
+                ${qa.o.map((opt, idx) => `
+                    <li class="quiz-option-item" onclick="submitQuizChoice(${idx})">${opt}</li>
+                `).join('')}
+            </ul>
+            <div id="quiz-explanation" class="quiz-explanation-box hidden"></div>
+            <button class="btn btn-secondary btn-sm hidden" id="quiz-next-btn" onclick="nextQuizQuestion()" style="margin-top:1rem; align-self:flex-start;">Next Question <i data-lucide="arrow-right"></i></button>
+        </div>
+    `;
+    lucide.createIcons();
+}
+
+function submitQuizChoice(idx) {
+    const questions = QUIZ_QUESTIONS[activeQuiz];
+    const qa = questions[activeQuestionIdx];
+    
+    const items = document.querySelectorAll(".quiz-option-item");
+    items.forEach(item => item.onclick = null); // disable further clicking
+    
+    const expBox = document.getElementById("quiz-explanation");
+    expBox.innerText = qa.e;
+    expBox.classList.remove("hidden");
+    
+    if (idx === qa.a) {
+        items[idx].classList.add("correct");
+        quizScore++;
+    } else {
+        items[idx].classList.add("incorrect");
+        items[qa.a].classList.add("correct");
+    }
+    
+    document.getElementById("quiz-next-btn").classList.remove("hidden");
+}
+
+function nextQuizQuestion() {
+    activeQuestionIdx++;
+    renderActiveQuiz();
+}
+
+function resetActiveQuiz() {
+    activeQuestionIdx = 0;
+    quizScore = 0;
+    renderActiveQuiz();
+}
+
+function updateQuizStatsDisplay() {
+    document.getElementById("quiz-stat-completed").innerText = `${quizCompletedCount} / 3`;
+    document.getElementById("quiz-stat-score").innerText = `${Math.round((quizScore / 2) * 100)}%`;
+    document.getElementById("quiz-stat-xp").innerText = `${quizCompletedCount * 150} XP`;
+}
+
+function renderRecruiterSandboxTable() {
+    const minScore = parseInt(document.getElementById("recruiter-score-slider").value);
+    const region = document.getElementById("recruiter-region-filter").value;
+    const cluster = document.getElementById("recruiter-cluster-filter").value;
+    
+    let filtered = candidates.filter(c => c.score >= minScore);
+    if (region !== "All") filtered = filtered.filter(c => c.region === region);
+    if (cluster !== "All") filtered = filtered.filter(c => c.cluster === cluster);
+    
+    const tbody = document.getElementById("recruiter-table-body");
+    tbody.innerHTML = "";
+    
+    filtered.slice(0, 10).forEach(c => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><strong>${c.id}</strong></td>
+            <td>${c.degree} (${c.tier})</td>
+            <td>${c.cluster}</td>
+            <td><strong>${c.score}</strong></td>
+            <td><button class="btn btn-secondary btn-sm" onclick="sendSimulatedContact('${c.id}')"><i data-lucide="mail"></i> Request Contact</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+    lucide.createIcons();
+}
+
+function sendSimulatedContact(candidateId) {
+    alert(`Simulated Recruiter Action Success!\nAn automated email request has been sent to ${candidateId} requesting verified GrabCAD and certification logs.`);
+}
+
+function drawAcademicSandboxCharts() {
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    
+    // Bar chart averages
+    const specialties = ["CAD Design", "CAE/Simulation", "Robotics", "HVAC/Thermal", "Manufacturing"];
+    const scores = [65, 74, 78, 62, 58];
+    
+    const barData = [{
+        x: specialties,
+        y: scores,
+        type: 'bar',
+        marker: { color: '#2563eb' }
+    }];
+    
+    const barLayout = {
+        margin: { t: 20, b: 40, l: 40, r: 20 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme, size: 9 },
+        xaxis: { color: textTheme },
+        yaxis: { color: textTheme, range: [0, 100] }
+    };
+    
+    Plotly.newPlot("plotly-academic-bar-chart", barData, barLayout, {responsive:true, displayModeBar:false});
+    
+    // Pie chart distributions
+    const pieData = [{
+        values: [35, 25, 15, 15, 10],
+        labels: specialties,
+        type: 'pie',
+        hole: 0.4,
+        marker: { colors: ['#2563eb', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'] }
+    }];
+    
+    const pieLayout = {
+        margin: { t: 20, b: 20, l: 20, r: 20 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textTheme, size: 9 },
+        showlegend: false
+    };
+    
+    Plotly.newPlot("plotly-academic-pie-chart", pieData, pieLayout, {responsive:true, displayModeBar:false});
+}
+
+function drawLocalPlotly3dModel() {
+    const container = document.getElementById("cad-viewer-container");
+    container.innerHTML = "";
+    
+    const div = document.createElement("div");
+    div.id = "plotly-3d-cad-node";
+    div.style.width = "100%";
+    div.style.height = "100%";
+    container.appendChild(div);
+    
+    const x = [];
+    const y = [];
+    const z = [];
+    const i = [];
+    const j = [];
+    const k = [];
+    
+    const segments = 30;
+    const height = 1.6;
+    const radius = 1.0;
+    
+    for (let h = 0; h <= 10; h++) {
+        const hz = (h / 10) * height - (height / 2);
+        for (let s = 0; s < segments; s++) {
+            const theta = (s / segments) * 2 * Math.PI;
+            x.push(radius * Math.cos(theta));
+            y.push(radius * Math.sin(theta));
+            z.push(hz);
+        }
+    }
+    
+    const bladeCount = 6;
+    for (let b = 0; b < bladeCount; b++) {
+        const baseTheta = (b / bladeCount) * 2 * Math.PI;
+        for (let r_val = 1.0; r_val <= 3.2; r_val += 0.2) {
+            const twist = (r_val - 1.0) * 0.4;
+            const theta1 = baseTheta + twist;
+            const theta2 = baseTheta + twist + 0.15;
+            
+            for (let hz = -0.15; hz <= 0.15; hz += 0.1) {
+                x.push(r_val * Math.cos(theta1));
+                y.push(r_val * Math.sin(theta1));
+                z.push(hz);
+                
+                x.push(r_val * Math.cos(theta2));
+                y.push(r_val * Math.sin(theta2));
+                z.push(hz);
+            }
+        }
+    }
+    
+    const totalPoints = x.length;
+    for (let p = 0; p < totalPoints - 3; p += 3) {
+        i.push(p);
+        j.push(p + 1);
+        k.push(p + 2);
+    }
+    
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    
+    const data = [{
+        type: 'mesh3d',
+        x: x,
+        y: y,
+        z: z,
+        i: i,
+        j: j,
+        k: k,
+        opacity: 0.85,
+        color: '#2563eb',
+        intensity: z,
+        colorscale: 'Blues',
+        showscale: false
+    }];
+    
+    const layout = {
+        margin: { t: 0, b: 0, l: 0, r: 0 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        scene: {
+            xaxis: { visible: false },
+            yaxis: { visible: false },
+            zaxis: { visible: false },
+            camera: {
+                eye: { x: 1.4, y: 1.4, z: 1.2 }
+            }
+        }
+    };
+    
+    Plotly.newPlot("plotly-3d-cad-node", data, layout, {responsive: true, displayModeBar: false});
+}
+
+function load3dCadModel(type) {
+    const container = document.getElementById("cad-viewer-container");
+    
+    if(type === "plotly-impeller") {
+        drawLocalPlotly3dModel();
+    }
+    else if(type === "pump") {
+        container.innerHTML = `
+            <iframe title="Centrifugal Pump" style="width:100%; height:100%; border:none; border-radius:8px;" src="https://sketchfab.com/models/2f925b4121e74a88bc3b2eccefb30c1c/embed?autostart=1"></iframe>
+        `;
+    } 
+    else if(type === "upright") {
+        container.innerHTML = `
+            <iframe title="Formula SAE Upright" style="width:100%; height:100%; border:none; border-radius:8px;" src="https://sketchfab.com/models/8601c34a2e8140dbb5a9316d258b6883/embed?autostart=1"></iframe>
+        `;
+    } 
+    else if(type === "battery") {
+        container.innerHTML = `
+            <iframe title="EV Battery Module" style="width:100%; height:100%; border:none; border-radius:8px;" src="https://sketchfab.com/models/b712c9b68a864d42b9181bb53d5a498b/embed?autostart=1"></iframe>
+        `;
+    }
+}
+// RESTORED LINKEDIN & RECRUITER SIMULATOR LISTENERS
+document.addEventListener("DOMContentLoaded", () => {
+    const liModalBtn = document.getElementById("btn-linkedin-sim-modal");
+    if (liModalBtn) {
+        liModalBtn.addEventListener("click", () => {
+            const overlay = document.getElementById("linkedin-overlay");
+            if (overlay) overlay.classList.add("active");
+        });
+    }
+
+    const runLiSimBtn = document.getElementById("btn-run-linkedin-sim");
+    if (runLiSimBtn) {
+        runLiSimBtn.addEventListener("click", () => {
+            const statusDiv = document.getElementById("linkedin-sim-status");
+            if (statusDiv) statusDiv.style.display = "flex";
+            const steps = [1, 2, 3, 4];
+            steps.forEach((step, idx) => {
+                setTimeout(() => {
+                    const row = document.getElementById(`li-step-${step}`);
+                    if (row) {
+                        row.classList.add("active");
+                        if (idx > 0) {
+                            const prev = document.getElementById(`li-step-${steps[idx-1]}`);
+                            if (prev) {
+                                prev.classList.remove("active");
+                                prev.classList.add("done");
+                            }
+                        }
+                    }
+                }, (idx + 1) * 800);
+            });
+            setTimeout(() => {
+                const overlay = document.getElementById("linkedin-overlay");
+                if (overlay) overlay.classList.remove("active");
+                if (typeof showNotification === 'function') {
+                    showNotification("LinkedIn profile imported successfully! Skills updated.", "success");
+                } else {
+                    alert("LinkedIn profile imported successfully!");
+                }
+            }, 4000);
+        });
+    }
+
+    const recruiterSlider = document.getElementById("recruiter-score-slider");
+    if (recruiterSlider) {
+        recruiterSlider.addEventListener("input", (e) => {
+            const valLabel = document.getElementById("val-recruiter-score-slider");
+            if (valLabel) valLabel.innerText = `${e.target.value}+ Score`;
+            if (typeof renderRecruiterSandboxTable === 'function') renderRecruiterSandboxTable();
+        });
+    }
+});
+
+
+
+/* ==========================================================================
+   ADVANCED ENGINEERING ENGINES, WEB AUDIO FX & CANVAS CERTIFICATE EXPORTER
+   ========================================================================== */
+
+// 1. Web Audio Micro-Interaction Synthesizer
+let audioEnabled = true;
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playAudioTone(type) { /* Audio disabled */ }
+
+// 2. Ambient Particle Canvas Animation Loop
+function initParticleBackground() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+    
+    const particles = [];
+    const count = Math.min(50, Math.floor(width / 30));
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 2 + 1
+        });
+    }
+    
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
+        
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// 3. Beam Bending Calculator & Dynamic SVG Diagram Engine
+function initBeamCalculator() {
+    const pSlider = document.getElementById('slider-beam-load');
+    const lSlider = document.getElementById('slider-beam-length');
+    const eSlider = document.getElementById('slider-beam-e');
+    const iSlider = document.getElementById('slider-beam-i');
+    
+    if (!pSlider || !lSlider || !eSlider || !iSlider) return;
+    
+    function calculateBeam() {
+        const P = parseFloat(pSlider.value) * 1000; // N
+        const L = parseFloat(lSlider.value); // m
+        const E = parseFloat(eSlider.value) * 1e9; // Pa
+        const I = parseFloat(iSlider.value) * 1e-8; // m^4
+        
+        // Update labels
+        document.getElementById('val-beam-load').innerText = pSlider.value;
+        document.getElementById('val-beam-length').innerText = lSlider.value;
+        document.getElementById('val-beam-e').innerText = eSlider.value;
+        document.getElementById('val-beam-i').innerText = iSlider.value;
+        
+        // Max Deflection at center delta = (P * L^3) / (48 * E * I)
+        const maxDeflection = (P * Math.pow(L, 3)) / (48 * E * I) * 1000; // mm
+        // Max Moment at center M_max = P * L / 4
+        const maxMoment = (P * L / 4) / 1000; // kN·m
+        // Max Stress sigma = M * y / I (approx c = 0.1m)
+        const c = 0.1;
+        const maxStress = ((maxMoment * 1000) * c / I) / 1e6; // MPa
+        
+        document.getElementById('calc-beam-deflection').innerText = `${maxDeflection.toFixed(2)} mm`;
+        document.getElementById('calc-beam-moment').innerText = `${maxMoment.toFixed(2)} kN·m`;
+        document.getElementById('calc-beam-stress').innerText = `${maxStress.toFixed(1)} MPa`;
+        
+        renderBeamSvgDiagram(maxDeflection, maxMoment);
+    }
+    
+    [pSlider, lSlider, eSlider, iSlider].forEach(slider => {
+        slider.addEventListener('input', () => {
+            calculateBeam();
+            playAudioTone('click');
+        });
+    });
+    
+    calculateBeam();
+}
+
+function renderBeamSvgDiagram(deflection, moment) {
+    const container = document.getElementById('svg-beam-diagram-container');
+    if (!container) return;
+    
+    const svg = `
+    <svg width="100%" height="100%" viewBox="0 0 400 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Beam centerline -->
+        <line x1="40" y1="50" x2="360" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="4" stroke-dasharray="4"/>
+        
+        <!-- Deflected Beam Curve -->
+        <path d="M 40 50 Q 200 ${50 + Math.min(35, deflection * 5)} 360 50" fill="none" stroke="#00f2fe" stroke-width="4"/>
+        
+        <!-- Supports -->
+        <polygon points="40,52 30,70 50,70" fill="#3b82f6"/>
+        <polygon points="360,52 350,70 370,70" fill="#3b82f6"/>
+        <circle cx="360" cy="74" r="4" fill="#3b82f6"/>
+        
+        <!-- Load Arrow -->
+        <line x1="200" y1="10" x2="200" y2="45" stroke="#ef4444" stroke-width="3"/>
+        <polygon points="200,48 194,36 206,36" fill="#ef4444"/>
+        <text x="200" y="8" fill="#ef4444" font-size="11" text-anchor="middle" font-weight="bold">P (Load)</text>
+        
+        <!-- Moment Diagram Curve -->
+        <path d="M 40 120 L 200 ${120 - Math.min(45, moment * 0.7)} L 360 120 Z" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="145" fill="#10b981" font-size="10" text-anchor="middle">Bending Moment Diagram (M)</text>
+    </svg>`;
+    
+    container.innerHTML = svg;
+}
+
+// 4. Fluid Dynamics Reynolds Calculator & Pipe Streamline Flow Visualizer
+function initFluidCalculator() {
+    const typeSelect = document.getElementById('select-fluid-type');
+    const velSlider = document.getElementById('slider-fluid-vel');
+    const diaSlider = document.getElementById('slider-fluid-dia');
+    
+    if (!typeSelect || !velSlider || !diaSlider) return;
+    
+    const props = {
+        water: { density: 1000, viscosity: 0.001 },
+        oil: { density: 890, viscosity: 0.29 },
+        air: { density: 1.2, viscosity: 1.8e-5 },
+        hydraulic: { density: 870, viscosity: 0.04 }
+    };
+    
+    function calculateFluid() {
+        const fluid = props[typeSelect.value] || props.water;
+        const v = parseFloat(velSlider.value);
+        const D = parseFloat(diaSlider.value);
+        
+        document.getElementById('val-fluid-vel').innerText = v.toFixed(1);
+        document.getElementById('val-fluid-dia').innerText = D.toFixed(2);
+        
+        // Re = (rho * v * D) / mu
+        const Re = Math.round((fluid.density * v * D) / fluid.viscosity);
+        document.getElementById('calc-reynolds-num').innerText = Re.toLocaleString();
+        
+        const badge = document.getElementById('badge-flow-regime');
+        if (Re < 2300) {
+            badge.innerText = 'LAMINAR FLOW';
+            badge.style.background = '#10b981';
+        } else if (Re <= 4000) {
+            badge.innerText = 'TRANSITION FLOW';
+            badge.style.background = '#f59e0b';
+        } else {
+            badge.innerText = 'TURBULENT FLOW';
+            badge.style.background = '#ef4444';
+        }
+        
+        renderPipeFlowCanvas(Re);
+    }
+    
+    [typeSelect, velSlider, diaSlider].forEach(elem => {
+        elem.addEventListener('input', () => {
+            calculateFluid();
+            playAudioTone('click');
+        });
+    });
+    
+    calculateFluid();
+}
+
+function renderPipeFlowCanvas(Re) {
+    const canvas = document.getElementById('pipe-flow-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth;
+    const h = canvas.height = canvas.offsetHeight;
+    
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1.5;
+    
+    const isTurbulent = Re > 4000;
+    const isTransition = Re >= 2300 && Re <= 4000;
+    
+    for (let y = 15; y < h; y += 15) {
+        ctx.beginPath();
+        ctx.strokeStyle = isTurbulent ? 'rgba(239, 68, 68, 0.6)' : (isTransition ? 'rgba(245, 158, 11, 0.6)' : 'rgba(16, 185, 129, 0.6)');
+        ctx.moveTo(0, y);
+        for (let x = 0; x < w; x += 10) {
+            let offset = 0;
+            if (isTurbulent) {
+                offset = (Math.random() - 0.5) * 12;
+            } else if (isTransition) {
+                offset = Math.sin(x * 0.05) * 4;
+            }
+            ctx.lineTo(x, y + offset);
+        }
+        ctx.stroke();
+    }
+}
+
+// 5. 6-Axis Skills Radar Chart SVG Engine
+function initSkillsRadarEngine() {
+    const container = document.getElementById('skills-radar-container');
+    if (!container) return;
+    
+    const skills = {
+        cad: 85,
+        fea: 70,
+        cfd: 65,
+        gdt: 80,
+        robotics: 60,
+        mfg: 75
+    };
+    
+    const sliders = document.querySelectorAll('.radar-skill-slider');
+    sliders.forEach(slider => {
+        slider.addEventListener('input', (e) => {
+            const key = e.target.getAttribute('data-skill');
+            skills[key] = parseInt(e.target.value);
+            document.getElementById(`val-skill-${key}`).innerText = `${skills[key]}%`;
+            renderSkillsRadar(skills);
+            playAudioTone('click');
+        });
+    });
+    
+    renderSkillsRadar(skills);
+}
+
+function renderSkillsRadar(skills) {
+    const container = document.getElementById('skills-radar-container');
+    if (!container) return;
+    
+    const size = 280;
+    const center = size / 2;
+    const radius = size * 0.38;
+    const keys = ['cad', 'fea', 'cfd', 'gdt', 'robotics', 'mfg'];
+    const labels = ['CAD', 'FEA', 'CFD', 'GD&T', 'Robotics', 'DFM'];
+    const count = keys.length;
+    
+    let gridPolygons = '';
+    for (let r = 0.25; r <= 1.0; r += 0.25) {
+        let pts = [];
+        for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+            const x = center + radius * r * Math.cos(angle);
+            const y = center + radius * r * Math.sin(angle);
+            pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+        }
+        gridPolygons += `<polygon points="${pts.join(' ')}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
+    }
+    
+    let axisLines = '';
+    let skillPts = [];
+    for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+        const x = center + radius * Math.cos(angle);
+        const y = center + radius * Math.sin(angle);
+        axisLines += `<line x1="${center}" y1="${center}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>`;
+        
+        const labelX = center + (radius + 20) * Math.cos(angle);
+        const labelY = center + (radius + 15) * Math.sin(angle);
+        axisLines += `<text x="${labelX}" y="${labelY}" fill="var(--text-muted)" font-size="11" text-anchor="middle" alignment-baseline="middle">${labels[i]}</text>`;
+        
+        const valRatio = (skills[keys[i]] || 50) / 100;
+        const px = center + radius * valRatio * Math.cos(angle);
+        const py = center + radius * valRatio * Math.sin(angle);
+        skillPts.push(`${px.toFixed(1)},${py.toFixed(1)}`);
+    }
+    
+    const svg = `
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+        ${gridPolygons}
+        ${axisLines}
+        <polygon points="${skillPts.join(' ')}" fill="rgba(0, 242, 254, 0.25)" stroke="#00f2fe" stroke-width="2.5"/>
+        ${skillPts.map(pt => `<circle cx="${pt.split(',')[0]}" cy="${pt.split(',')[1]}" r="4" fill="#00f2fe"/>`).join('')}
+    </svg>`;
+    
+    container.innerHTML = svg;
+}
+
+// 6. Canvas Certificate Generator Engine
+function initCertificateGenerator() {
+    const certModal = document.getElementById('certificate-modal');
+    const openBtn = document.getElementById('btn-cert-modal');
+    const closeBtn = document.getElementById('btn-close-cert-modal');
+    const renderBtn = document.getElementById('btn-render-cert-preview');
+    const downloadBtn = document.getElementById('btn-download-cert-png');
+    
+    if (openBtn && certModal) {
+        openBtn.addEventListener('click', () => {
+            certModal.classList.add('active');
+            renderCertificateCanvas();
+            playAudioTone('success');
+        });
+    }
+    
+    if (closeBtn && certModal) {
+        closeBtn.addEventListener('click', () => certModal.classList.remove('active'));
+    }
+    
+    if (renderBtn) {
+        renderBtn.addEventListener('click', () => {
+            renderCertificateCanvas();
+            playAudioTone('click');
+        });
+    }
+    
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            downloadCertificatePNG();
+            playAudioTone('success');
+        });
+    }
+}
+
+function renderCertificateCanvas() {
+    const canvas = document.getElementById('cert-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    const userName = document.getElementById('cert-user-name').value || 'Chaman Prakash Kanth';
+    const trackTitle = document.getElementById('cert-track-title').value || 'Senior Mechanical Design & CAD Architect';
+    
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, 1200, 800);
+    grad.addColorStop(0, '#0f172a');
+    grad.addColorStop(0.5, '#1e1b4b');
+    grad.addColorStop(1, '#030712');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1200, 800);
+    
+    // Cyber Border
+    ctx.strokeStyle = '#00f2fe';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(30, 30, 1140, 740);
+    
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(45, 45, 1110, 710);
+    
+    // Title
+    ctx.fillStyle = '#00f2fe';
+    ctx.font = 'bold 32px "Outfit", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('MECHINTEL CAREER INTELLIGENCE PLATFORM', 600, 120);
+    
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 54px "Outfit", sans-serif';
+    ctx.fillText('CERTIFICATE OF ACHIEVEMENT', 600, 210);
+    
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '22px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('THIS IS OFFICIALLY PRESENTED TO', 600, 300);
+    
+    // Recipient Name
+    ctx.fillStyle = '#00f2fe';
+    ctx.font = 'extrabold 56px "Outfit", sans-serif';
+    ctx.fillText(userName.toUpperCase(), 600, 390);
+    
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '22px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('FOR SUCCESSFUL MASTERY OF THE VERIFIED COMPETENCY TRACK', 600, 470);
+    
+    // Track Title
+    ctx.fillStyle = '#10b981';
+    ctx.font = 'bold 36px "Outfit", sans-serif';
+    ctx.fillText(trackTitle, 600, 540);
+    
+    // Footer / Verification Hash
+    const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    ctx.fillStyle = '#64748b';
+    ctx.font = '18px "JetBrains Mono", monospace';
+    ctx.fillText(`Issued: ${dateStr}  |  Verification ID: MECH-INTEL-${Math.floor(100000 + Math.random() * 900000)}`, 600, 680);
+}
+
+function downloadCertificatePNG() {
+    const canvas = document.getElementById('cert-canvas');
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.download = 'MechIntel_Engineering_Certificate.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+// Global Init Hook
+document.addEventListener('DOMContentLoaded', () => {
+    initParticleBackground();
+    initBeamCalculator();
+    initFluidCalculator();
+    initSkillsRadarEngine();
+    initCertificateGenerator();
+});

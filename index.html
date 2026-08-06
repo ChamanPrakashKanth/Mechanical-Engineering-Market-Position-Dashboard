@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
+    <!-- Ambient Geometric Particle Background Canvas -->
+    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; opacity: 0.45;"></canvas>
     <canvas id="particle-canvas"></canvas>
 
     <!-- NAVIGATION BAR -->
@@ -215,7 +217,158 @@
             </div>
         </footer>
 
-    </main>
+    
+
+                <!-- RESTORED INTERACTIVE VIEWS -->
+                <div id="view-dashboard-quizzes" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>CAD / GD&T / FEA Practice Quizzes</h1>
+                            <p>Test your knowledge, review explanations, and earn +150 XP per passed quiz</p>
+                        </div>
+                    </header>
+                    
+                    <div class="dashboard-data-grid">
+                        <div class="grid-col-8">
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="clipboard-list"></i> Select Assessment Quiz</h3>
+                                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                                    <button class="btn btn-secondary quiz-select-btn active" data-quiz="cad">CAD CSWA Mock</button>
+                                    <button class="btn btn-secondary quiz-select-btn" data-quiz="gdt">ASME Y14.5 GD&T</button>
+                                    <button class="btn btn-secondary quiz-select-btn" data-quiz="fea">FEA / CFD Simulation</button>
+                                </div>
+                                
+                                <div id="quiz-question-container">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-col-4">
+                            <div class="glass-card element-card" style="text-align: center; padding: 2rem;">
+                                <i data-lucide="award" style="width: 48px; height: 48px; color: var(--warning); margin-bottom: 1rem;"></i>
+                                <h3>Quiz Statistics</h3>
+                                <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                                        <span>Quizzes Completed:</span>
+                                        <strong id="quiz-stat-completed">0 / 3</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                                        <span>Highest Score:</span>
+                                        <strong id="quiz-stat-score">0%</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                                        <span>Bonus XP Gained:</span>
+                                        <strong id="quiz-stat-xp">0 XP</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Recruiter Sandbox -->
+
+                <div id="view-dashboard-recruiter-sandbox" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Recruiter Query Sandbox (Simulated)</h1>
+                            <p>See how hiring managers view your profile, filter by scores, and request contact details</p>
+                        </div>
+                    </header>
+                    
+                    <div class="glass-card" style="padding: 2rem;">
+                        <div class="db-controls-row">
+                            <div class="db-filters" style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Minimum Career Score</label>
+                                    <input type="range" id="recruiter-score-slider" min="0" max="100" value="50" style="width:100%; accent-color:var(--primary); margin-top:0.4rem;">
+                                    <span style="font-size:0.8rem; font-weight:700;" id="val-recruiter-score-slider">50+ Score</span>
+                                </div>
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Region Target</label>
+                                    <select id="recruiter-region-filter" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; padding:0.4rem; border-radius:6px; outline:none; margin-top:0.2rem;">
+                                        <option value="All">All Regions</option>
+                                        <option value="India">India Only</option>
+                                        <option value="Global">Global Only</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Specialization</label>
+                                    <select id="recruiter-cluster-filter" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; padding:0.4rem; border-radius:6px; outline:none; margin-top:0.2rem;">
+                                        <option value="All">All Clusters</option>
+                                        <option value="CAD Design">CAD Design</option>
+                                        <option value="CAE/Simulation">CAE/Simulation</option>
+                                        <option value="Robotics/Mechatronics">Robotics/Mechatronics</option>
+                                        <option value="Manufacturing/Operations">Manufacturing/Operations</option>
+                                        <option value="HVAC/Thermal">HVAC/Thermal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container" style="margin-top: 1.5rem;">
+                            <table class="db-table">
+                                <thead>
+                                    <tr>
+                                        <th>Anonymized Candidate ID</th>
+                                        <th>Academic Status</th>
+                                        <th>Matched Specialization</th>
+                                        <th>Employability Score</th>
+                                        <th>Recruiter Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recruiter-table-body">
+                                    <!-- Loaded dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Academic Sandbox -->
+
+                <div id="view-dashboard-academic-sandbox" class="dashboard-view-pane">
+                    <header class="dashboard-pane-header">
+                        <div>
+                            <h1>Academic Placement & Cohort Analytics Sandbox</h1>
+                            <p>Visual mappings of a department class size of 120 graduating mechanical engineers</p>
+                        </div>
+                    </header>
+                    
+                    <div class="dashboard-data-grid">
+                        <div class="grid-col-8">
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="bar-chart-3"></i> Average Class Scores by Specialty</h3>
+                                <div id="plotly-academic-bar-chart" class="plotly-chart-node" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-col-4">
+                            <div class="glass-card element-card">
+                                <h3 class="card-section-title"><i data-lucide="pie-chart"></i> Specialty Distributions</h3>
+                                <div id="plotly-academic-pie-chart" class="plotly-chart-node" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card element-card">
+                        <h3 class="card-section-title"><i data-lucide="info"></i> Department Cohort Diagnostic Insights</h3>
+                        <div class="market-insights-grid">
+                            <div class="market-insight-column">
+                                <h4>Top Skill Gaps Identified</h4>
+                                <p>Analysis of current cohort profiles indicates <strong>72% of graduating students lack formal GD&T credentials</strong>, and <strong>65% show beginner levels in FEA mesh analysis</strong>. Instructors are recommended to add practical lab sessions on tolerances.</p>
+                            </div>
+                            <div class="market-insight-column">
+                                <h4>Hiring Recruiter Feedbacks</h4>
+                                <p>Recruiters accessing the database are seeking candidates with verified SolidWorks CSWP badges. Integrating CSWP preparatory tests inside semesters is forecast to improve average campus placement callbacks by <strong>3.4x</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sub-View: Settings & Placeholders -->
+            </main>
 
     <!-- MANUAL PROFILE SETUP MODAL / SECTION -->
     <section id="manual-setup-panel" class="view-panel hidden container print-hide">
@@ -260,6 +413,14 @@
                         <span class="preset-chip" data-preset="entry-cad">Entry Design (India)</span>
                         <span class="preset-chip" data-preset="cae-mid">CAE Specialist (M.Tech)</span>
                         <span class="preset-chip" data-preset="global-robotics">Global Robotics (Tier 1 B.S.)</span>
+                    
+                    <button class="btn btn-secondary btn-sm" id="btn-linkedin-sim-modal" style="margin-left: auto;">
+                        <i data-lucide="linkedin"></i> Import LinkedIn Profile
+                    </button>
+                    <!-- Web Audio & Certificate Exporter -->
+                    <button class="btn btn-primary btn-sm" id="btn-cert-modal" style="display: flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="award"></i> Claim Certificate
+                    </button>
                     </div>
                 </div>
                 
@@ -399,6 +560,15 @@
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-database">
                         <i data-lucide="users"></i> Competitor Database
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-quizzes">
+                        <i data-lucide="help-circle"></i> Practice Quizzes
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-recruiter-sandbox">
+                        <i data-lucide="users"></i> Recruiter Sandbox
+                    </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-academic-sandbox">
+                        <i data-lucide="graduation-cap"></i> Academic Analytics
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-learning">
                         <i data-lucide="book-open"></i> Learning Hub
@@ -682,6 +852,64 @@
                             <p>Rate your proficiency in 11 software tools and view matches across 14 mechanical disciplines</p>
                         </div>
                     </header>
+                <!-- Skills Radar Engine & Market Percentile Diagnostic -->
+                <div class="glass-card element-card" style="margin-top: 1.5rem; padding: 1.5rem;">
+                    <h3 class="card-section-title"><i data-lucide="radar"></i> 6-Axis Engineering Competency Radar & Market Percentile</h3>
+                    <p class="section-subtitle">Real-time benchmark diagnostic comparing your skillset against 100,000+ candidate profiles.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; align-items: center;">
+                        <div style="display: flex; justify-content: center;">
+                            <!-- SVG Radar Chart Container -->
+                            <div id="skills-radar-container" style="width: 280px; height: 280px; position: relative;"></div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="font-size:0.9rem; color:var(--text-muted); margin-bottom: 1rem;">Adjust Core Competencies:</h4>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>CAD Design & Surface Modeling</span>
+                                    <strong id="val-skill-cad">85%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="cad" min="10" max="100" value="85" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>FEA Stress & Structural Analysis</span>
+                                    <strong id="val-skill-fea">70%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="fea" min="10" max="100" value="70" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>CFD Thermal & Fluid Simulation</span>
+                                    <strong id="val-skill-cfd">65%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="cfd" min="10" max="100" value="65" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>ASME Y14.5 GD&T Tolerancing</span>
+                                    <strong id="val-skill-gdt">80%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="gdt" min="10" max="100" value="80" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>Robotics & Mechatronics</span>
+                                    <strong id="val-skill-robotics">60%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="robotics" min="10" max="100" value="60" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.6rem;">
+                                <div style="display:flex; justify-size:space-between; font-size:0.8rem;">
+                                    <span>DFM / Manufacturing Processes</span>
+                                    <strong id="val-skill-mfg">75%</strong>
+                                </div>
+                                <input type="range" class="radar-skill-slider" data-skill="mfg" min="10" max="100" value="75" style="width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     <div class="dashboard-data-grid">
                         <!-- Software Skills assessment sliders -->
@@ -1367,10 +1595,122 @@
                             <p>Compute tolerances, deflection, stresses, and heat loads to verify designs and check values</p>
                         </div>
                     </header>
+                <!-- Beam Deflection & Moment Diagram Interactive Calculator -->
+                <div class="glass-card element-card" style="margin-top: 1.5rem; padding: 1.5rem;">
+                    <h3 class="card-section-title"><i data-lucide="activity"></i> Beam Bending Deflection & Shear/Moment Diagram Engine</h3>
+                    <p class="section-subtitle">Real-time Euler-Bernoulli beam mechanics calculation with dynamic SVG force diagrams.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Point Load P (<span id="val-beam-load">50</span> kN)</label>
+                                <input type="range" id="slider-beam-load" min="5" max="200" value="50" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Beam Length L (<span id="val-beam-length">4.0</span> m)</label>
+                                <input type="range" id="slider-beam-length" min="1" max="10" step="0.5" value="4.0" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Elastic Modulus E (<span id="val-beam-e">200</span> GPa - Steel)</label>
+                                <input type="range" id="slider-beam-e" min="70" max="210" step="10" value="200" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Moment of Inertia I (<span id="val-beam-i">4500</span> cm⁴)</label>
+                                <input type="range" id="slider-beam-i" min="500" max="15000" step="500" value="4500" style="width:100%;">
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 style="color: var(--accent-primary); font-size: 0.9rem; margin-bottom: 0.5rem;">Computed Results:</h4>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem;">
+                                    <span>Max Deflection (δ_max):</span>
+                                    <strong id="calc-beam-deflection" style="color:#00f2fe;">3.70 mm</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem;">
+                                    <span>Max Bending Moment (M_max):</span>
+                                    <strong id="calc-beam-moment" style="color:#10b981;">50.00 kN·m</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                    <span>Max Bending Stress (σ_max):</span>
+                                    <strong id="calc-beam-stress" style="color:#f59e0b;">111.1 MPa</strong>
+                                </div>
+                            </div>
+                            
+                            <!-- Dynamic SVG Shear & Moment Diagram Node -->
+                            <div id="svg-beam-diagram-container" style="width:100%; height: 160px; margin-top: 1rem;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fluid Dynamics Reynolds Number Flow Regime Simulator -->
+                <div class="glass-card element-card" style="margin-top: 1.5rem; padding: 1.5rem;">
+                    <h3 class="card-section-title"><i data-lucide="droplet"></i> Fluid Flow & Reynolds Number Regime Simulator</h3>
+                    <p class="section-subtitle">Simulate pipe flow regimes (Laminar vs Transition vs Turbulent) with fluid viscosity properties.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Fluid Medium</label>
+                                <select id="select-fluid-type" class="form-control" style="width:100%; background:var(--bg-tertiary); color:var(--text-primary); padding:0.5rem; border-radius:6px; border:1px solid var(--border-color);">
+                                    <option value="water">Water (Density 1000 kg/m³, Viscosity 0.001 Pa·s)</option>
+                                    <option value="oil">Engine Oil SAE 30 (Density 890 kg/m³, Viscosity 0.29 Pa·s)</option>
+                                    <option value="air">Air at 20°C (Density 1.2 kg/m³, Viscosity 1.8e-5 Pa·s)</option>
+                                    <option value="hydraulic">Hydraulic Fluid (Density 870 kg/m³, Viscosity 0.04 Pa·s)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Flow Velocity v (<span id="val-fluid-vel">1.5</span> m/s)</label>
+                                <input type="range" id="slider-fluid-vel" min="0.1" max="10.0" step="0.1" value="1.5" style="width:100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="font-size:0.85rem; font-weight:600;">Pipe Diameter D (<span id="val-fluid-dia">0.05</span> m)</label>
+                                <input type="range" id="slider-fluid-dia" min="0.01" max="0.50" step="0.01" value="0.05" style="width:100%;">
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 style="color: var(--accent-primary); font-size: 0.9rem; margin-bottom: 0.5rem;">Flow Diagnostics:</h4>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem;">
+                                    <span>Reynolds Number (Re):</span>
+                                    <strong id="calc-reynolds-num" style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color:#00f2fe;">75,000</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                    <span>Flow Regime State:</span>
+                                    <span id="badge-flow-regime" class="badge" style="background:#ef4444; color:white; font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:700;">TURBULENT FLOW</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Animated Pipe Flow Streamline Visualizer -->
+                            <div id="pipe-flow-viz-container" style="width:100%; height: 90px; margin-top: 1rem; background: #0f172a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                                <canvas id="pipe-flow-canvas" style="width:100%; height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     <div class="calc-card-grid">
                         <!-- Calc 1: Worst-case vs RSS Tolerance Sizer -->
-                        <div class="glass-card calculator-node">
+                        
+                    <!-- Restored 3D CAD Embed Sandbox & Plotly Viewport -->
+                    <div class="glass-card element-card" style="margin-top: 1.5rem; padding: 1.5rem;">
+                        <h3 class="card-section-title"><i data-lucide="box"></i> 3D CAD Embed & Plotly Viewport</h3>
+                        <p class="section-subtitle">Load an interactive 3D engineering assembly or select local Plotly CAD models.</p>
+                        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem; flex-wrap: wrap;">
+                            <select id="cad-sample-selector" class="form-control" style="max-width: 300px; background: var(--bg-tertiary); color: var(--text-primary); padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                                <option value="plotly-impeller">Local Plotly 3D Impeller (Offline/Interactive)</option>
+                                <option value="solidworks-assembly">SolidWorks Pump Assembly (.SLDASM)</option>
+                                <option value="step-gearbox">ASME Gearbox Model (.STP)</option>
+                            </select>
+                            <button class="btn btn-outline" id="btn-load-cad"><i data-lucide="eye"></i> Render CAD Model</button>
+                        </div>
+                        <div id="cad-viewer-container" style="margin-top: 1.5rem; min-height: 350px; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <div id="plotly-3d-cad-node" style="width: 100%; height: 350px;"></div>
+                        </div>
+                    </div>
+
+<div class="glass-card calculator-node">
                             <h4 style="border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;"><i data-lucide="cog" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Worst-Case vs RSS Tolerance</h4>
                             <div class="calculator-input-row">
                                 <label for="calc-tol-h">Hole Tolerance (T_h, ± mm)</label>
@@ -1454,6 +1794,17 @@
                         </div>
                     </div>
                 </div>
+            
+
+                <!-- RESTORED INTERACTIVE VIEWS -->
+
+                <!-- Dashboard Sub-View: Recruiter Sandbox -->
+
+
+                <!-- Dashboard Sub-View: Academic Sandbox -->
+
+
+                <!-- Dashboard Sub-View: Settings & Placeholders -->
             </main>
         </div>
     </section>
@@ -1506,5 +1857,72 @@
 
     <!-- Application Script -->
     <script src="app.js"></script>
+
+<div id="linkedin-overlay" class="scanner-modal-overlay">
+        <div class="scanner-modal-card glass-card" style="max-width: 480px;">
+            <div class="scanner-modal-title" style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="linkedin" style="color:#0077b5;"></i> LinkedIn Profile Import Simulator</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); text-align:center;">Enter any LinkedIn Profile URL below to simulate an automated credentials extraction pipeline.</p>
+            
+            <input type="text" id="linkedin-url-input" placeholder="https://www.linkedin.com/in/username" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:8px; padding:0.6rem; outline:none; margin-top:0.5rem; margin-bottom:0.5rem;">
+            
+            <button class="btn btn-primary" id="btn-run-linkedin-sim" style="width:100%;">Run Simulator Scrape</button>
+            
+            <div id="linkedin-sim-status" class="scanner-steps-list" style="display:none; margin-top:1rem;">
+                <div class="scanner-step-row" id="li-step-1">
+                    <span class="scanner-step-icon">1</span>
+                    <span>Connecting to simulated LinkedIn graph node...</span>
+                </div>
+                <div class="scanner-step-row" id="li-step-2">
+                    <span class="scanner-step-icon">2</span>
+                    <span>Extracting education credentials and degree major...</span>
+                </div>
+                <div class="scanner-step-row" id="li-step-3">
+                    <span class="scanner-step-icon">3</span>
+                    <span>Resolving internships and project listings...</span>
+                </div>
+                <div class="scanner-step-row" id="li-step-4">
+                    <span class="scanner-step-icon">4</span>
+                    <span>Mapping skills to 11 software tools...</span>
+                </div>
+            </div>
+        </div>
+
+    <!-- Certificate Generator Modal -->
+    <div id="certificate-modal" class="scanner-modal-overlay">
+        <div class="scanner-modal-card glass-card" style="max-width: 680px; width: 90%; padding: 2rem; border: 1px solid var(--accent-primary);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <h2 style="font-size:1.4rem; display:flex; align-items:center; gap:0.5rem; color:#fff;">
+                    <i data-lucide="award" style="color:var(--accent-primary);"></i> Official Engineering Certification
+                </h2>
+                <button class="btn btn-secondary btn-sm" id="btn-close-cert-modal" style="padding:0.2rem 0.6rem;">✕</button>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">Generate an officially verified digital certificate of completion to share on your resume, portfolio, or LinkedIn profile.</p>
+            
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label style="font-size:0.85rem; font-weight:600;">Recipient Full Name</label>
+                <input type="text" id="cert-user-name" class="form-control" value="Chaman Prakash Kanth" style="width:100%; background:var(--bg-tertiary); color:#fff; padding:0.6rem; border-radius:6px; border:1px solid var(--border-color);">
+            </div>
+            
+            <div class="form-group" style="margin-bottom:1.5rem;">
+                <label style="font-size:0.85rem; font-weight:600;">Certified Mastery Track</label>
+                <select id="cert-track-title" class="form-control" style="width:100%; background:var(--bg-tertiary); color:#fff; padding:0.6rem; border-radius:6px; border:1px solid var(--border-color);">
+                    <option value="Senior Mechanical Design & CAD Architect">Senior Mechanical Design & CAD Architect</option>
+                    <option value="ASME Y14.5 GD&T Tolerancing Specialist">ASME Y14.5 GD&T Tolerancing Specialist</option>
+                    <option value="FEA Structural & CFD Simulation Engineer">FEA Structural & CFD Simulation Engineer</option>
+                    <option value="Mechatronics & Industrial Robotics Expert">Mechatronics & Industrial Robotics Expert</option>
+                </select>
+            </div>
+            
+            <!-- Canvas Preview Container -->
+            <div style="width:100%; overflow:hidden; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.5); margin-bottom:1.5rem;">
+                <canvas id="cert-canvas" width="1200" height="800" style="width:100%; height:auto; display:block; background:#0f172a;"></canvas>
+            </div>
+            
+            <div style="display:flex; justify-content:flex-end; gap:1rem;">
+                <button class="btn btn-secondary" id="btn-render-cert-preview"><i data-lucide="refresh-cw"></i> Update Preview</button>
+                <button class="btn btn-primary" id="btn-download-cert-png"><i data-lucide="download"></i> Download High-Res PNG</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
