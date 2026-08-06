@@ -13,6 +13,14 @@ VIDEO_FILES = [
     "som-mohrs-circle.mp4",
     "tom-four-bar-linkage.mp4",
     "cnc-gcode-toolpath.mp4",
+    "calculus-derivative-rate.mp4",
+    "linear-algebra-eigenvalues.mp4",
+    "diff-eq-spring-damper.mp4",
+    "mechanics-truss-equilibrium.mp4",
+    "materials-iron-carbon.mp4",
+    "control-bode-plot.mp4",
+    "simulation-von-mises.mp4",
+    "additive-3d-printing.mp4",
 ]
 
 def inline_videos(js_content, workspace):

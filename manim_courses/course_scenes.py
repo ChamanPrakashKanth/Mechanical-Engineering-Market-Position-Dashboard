@@ -303,3 +303,181 @@ class CncGcodeToolpath(CourseScene):
         self.play(Indicate(labels[1], color=SUCCESS), run_time=1.0)
         self.show_takeaway("CNC action: clear workpiece boundaries with G00 before engaging G01.")
 
+
+class CalculusDerivativeRate(CourseScene):
+    def construct(self):
+        header = title_block("Calculus", "Derivatives & Velocity: v(t) = dx/dt")
+        formula = formula_card(["v(t) = d/dt [ x(t) ]", "tangent slope equals instantaneous velocity"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        axes = Axes(x_range=[0, 5, 1], y_range=[0, 4, 1], x_length=6.0, y_length=2.4, tips=False).shift(LEFT * 1.0 + DOWN * 0.7)
+        curve = axes.plot(lambda x: 0.2 * x**2 + 0.3 * x, color=ACCENT)
+        tangent = Line(axes.c2p(1.0, 0.1), axes.c2p(4.0, 2.8), color=WARNING, stroke_width=4)
+        dot = Dot(axes.c2p(2.5, 0.2*2.5**2 + 0.3*2.5), color=SUCCESS)
+
+        labels = VGroup(
+            Text("Position x(t)", font_size=20, color=ACCENT),
+            Text("Slope = Velocity v(t)", font_size=20, color=WARNING),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 3.2 + DOWN * 0.6)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(Create(axes), Create(curve), run_time=1.2)
+        self.play(Create(tangent), FadeIn(dot), FadeIn(labels), run_time=1.3)
+        self.play(Indicate(labels[1], color=WARNING), run_time=1.0)
+        self.show_takeaway("Calculus action: differentiate position functions to predict peak velocity.")
+
+
+class LinearAlgebraEigenvalues(CourseScene):
+    def construct(self):
+        header = title_block("Linear Algebra", "Eigenvalues: A v = lambda v")
+        formula = formula_card(["[A - lambda I] v = 0", "eigenvalues lambda represent structural natural frequencies omega^2"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        v1 = labeled_arrow("Mode 1 (v1)", LEFT * 2.0 + DOWN * 1.0, LEFT * 2.0 + UP * 0.8, SUCCESS)
+        v2 = labeled_arrow("Mode 2 (v2)", RIGHT * 1.0 + DOWN * 1.0, RIGHT * 2.2 + UP * 0.5, ACCENT)
+
+        matrix = formula_card(["| K - omega^2 M | = 0", "solves system resonance frequencies"], WARNING).shift(RIGHT * 2.4 + DOWN * 0.5)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(GrowArrow(v1[0]), FadeIn(v1[1]), GrowArrow(v2[0]), FadeIn(v2[1]), run_time=1.3)
+        self.play(Write(matrix), run_time=1.2)
+        self.play(Indicate(formula[1][1], color=SUCCESS), run_time=1.0)
+        self.show_takeaway("Linear algebra action: check det(K - w^2 M) = 0 to avoid resonant destruction.")
+
+
+class DiffEqSpringDamper(CourseScene):
+    def construct(self):
+        header = title_block("Differential Equations", "Mass-Spring-Damper: m x'' + c x' + k x = 0")
+        formula = formula_card(["m x'' + c x' + k x = 0", "damping ratio zeta dictates underdamped vs overdamped response"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        axes = Axes(x_range=[0, 6, 1], y_range=[-1.2, 1.2, 0.5], x_length=6.0, y_length=2.4, tips=False).shift(LEFT * 1.0 + DOWN * 0.7)
+        underdamped = axes.plot(lambda x: np.exp(-0.6 * x) * np.cos(3.0 * x), color=ACCENT)
+        critdamped = axes.plot(lambda x: (1 + 1.5 * x) * np.exp(-1.5 * x), color=SUCCESS)
+
+        labels = VGroup(
+            Text("zeta < 1: Underdamped", font_size=20, color=ACCENT),
+            Text("zeta = 1: Critical Damping", font_size=20, color=SUCCESS),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 3.0 + DOWN * 0.6)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(Create(axes), Create(underdamped), run_time=1.3)
+        self.play(Create(critdamped), FadeIn(labels), run_time=1.3)
+        self.play(Indicate(labels[1], color=SUCCESS), run_time=1.0)
+        self.show_takeaway("ODE action: tune damping c to return to equilibrium rapidly without ringing.")
+
+
+class MechanicsTrussEquilibrium(CourseScene):
+    def construct(self):
+        header = title_block("Engineering Mechanics", "Truss Joint Equilibrium: sum Fx = 0, sum Fy = 0")
+        formula = formula_card(["sum F_x = 0  and  sum F_y = 0", "concurrent pin forces resolve into tension (+) and compression (-)"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        p_joint = LEFT * 1.5 + DOWN * 0.6
+        joint_dot = Dot(p_joint, color=TEXT, radius=0.15)
+
+        f_load = labeled_arrow("F_load", p_joint, p_joint + DOWN * 1.4, WARNING)
+        t_member1 = labeled_arrow("T1 (Tension)", p_joint, p_joint + RIGHT * 1.6 + UP * 0.9, SUCCESS)
+        c_member2 = labeled_arrow("C2 (Compression)", p_joint, p_joint + LEFT * 1.6 + UP * 0.9, ACCENT)
+
+        labels = VGroup(
+            Text("Pin Joint Analysis", font_size=21, color=TEXT),
+            Text("Resolving Vector Components", font_size=21, color=MUTED),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 2.8 + DOWN * 0.5)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(FadeIn(joint_dot), GrowArrow(f_load[0]), FadeIn(f_load[1]), run_time=1.1)
+        self.play(GrowArrow(t_member1[0]), FadeIn(t_member1[1]), GrowArrow(c_member2[0]), FadeIn(c_member2[1]), FadeIn(labels), run_time=1.4)
+        self.play(Indicate(formula[1][0], color=SUCCESS), run_time=1.0)
+        self.show_takeaway("Mechanics action: balance pin joint vectors to size structural member cross-sections.")
+
+
+class MaterialsIronCarbon(CourseScene):
+    def construct(self):
+        header = title_block("Materials Science", "Iron-Carbon Phase Equilibrium Diagram")
+        formula = formula_card(["Austenite (gamma) -> Ferrite (alpha) + Fe3C Cementite", "eutectoid point at 0.76% C and 727 deg C"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        axes = Axes(x_range=[0, 2, 0.5], y_range=[600, 1100, 100], x_length=5.5, y_length=2.4, tips=False).shift(LEFT * 1.2 + DOWN * 0.7)
+        eutectoid_line = DashedLine(axes.c2p(0, 727), axes.c2p(2, 727), color=WARNING)
+        point_eut = Dot(axes.c2p(0.76, 727), color=SUCCESS, radius=0.12)
+
+        labels = VGroup(
+            Text("Austenite (gamma)", font_size=20, color=ACCENT).shift(LEFT * 1.2 + UP * 0.5),
+            Text("Pearlite (alpha + Fe3C)", font_size=20, color=SUCCESS).shift(LEFT * 1.2 + DOWN * 1.2),
+            Text("Eutectoid: 727 C", font_size=20, color=WARNING).shift(RIGHT * 2.4 + DOWN * 0.5),
+        )
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(Create(axes), Create(eutectoid_line), FadeIn(point_eut), run_time=1.2)
+        self.play(FadeIn(labels), run_time=1.3)
+        self.play(Indicate(labels[2], color=WARNING), run_time=1.0)
+        self.show_takeaway("Materials action: heat treat above 727 C to control hardness and grain growth.")
+
+
+class ControlBodePlot(CourseScene):
+    def construct(self):
+        header = title_block("Control Systems", "Bode Plot: Gain & Phase Margins")
+        formula = formula_card(["GM = -20 log10 |G(j w_pc)|", "PM = 180 deg + angle G(j w_gc)"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        axes = Axes(x_range=[0, 5, 1], y_range=[-40, 20, 20], x_length=6.0, y_length=2.4, tips=False).shift(LEFT * 1.0 + DOWN * 0.7)
+        mag_curve = axes.plot(lambda x: 15 - 12 * x, color=ACCENT)
+        zero_db = DashedLine(axes.c2p(0, 0), axes.c2p(5, 0), color=MUTED)
+        cross_dot = Dot(axes.c2p(1.25, 0), color=SUCCESS)
+
+        labels = VGroup(
+            Text("Gain Margin (GM)", font_size=20, color=WARNING),
+            Text("Phase Margin (PM)", font_size=20, color=SUCCESS),
+            Text("w_gc: Gain Crossover", font_size=20, color=TEXT),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 3.2 + DOWN * 0.6)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(Create(axes), Create(zero_db), Create(mag_curve), FadeIn(cross_dot), run_time=1.3)
+        self.play(FadeIn(labels), run_time=1.2)
+        self.play(Indicate(labels[1], color=SUCCESS), run_time=1.0)
+        self.show_takeaway("Control action: maintain PM > 45 deg to prevent loop instability.")
+
+
+class SimulationVonMises(CourseScene):
+    def construct(self):
+        header = title_block("ANSYS / Simulation", "Von Mises Stress vs Material Yielding")
+        formula = formula_card(["sigma_vm = sqrt( sigma_1^2 - sigma_1 sigma_2 + sigma_2^2 )", "yields when equivalent stress sigma_vm >= sigma_y"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        part = RoundedRectangle(width=4.2, height=2.2, corner_radius=0.2, color=MUTED).shift(LEFT * 2.2 + DOWN * 0.6)
+        part.set_fill(PRIMARY, opacity=0.3)
+        hole = Circle(radius=0.45, color=MUTED).shift(LEFT * 2.2 + DOWN * 0.6).set_fill(BG, opacity=1.0)
+        hotspot = Annulus(inner_radius=0.45, outer_radius=0.75, color=WARNING).shift(LEFT * 2.2 + DOWN * 0.6).set_fill(WARNING, opacity=0.5)
+
+        labels = VGroup(
+            Text("Stress Riser at Notch", font_size=21, color=WARNING),
+            Text("sigma_vm > Yield Limit", font_size=21, color=SUCCESS),
+            Text("Factor of Safety Ns = S_y / sigma_vm", font_size=20, color=TEXT),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 2.2 + DOWN * 0.6)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(FadeIn(part), FadeIn(hole), run_time=1.1)
+        self.play(FadeIn(hotspot), FadeIn(labels), run_time=1.3)
+        self.play(Indicate(labels[0], color=WARNING), run_time=1.0)
+        self.show_takeaway("FEA action: add fillets at geometric notches to relieve von Mises stress spikes.")
+
+
+class Additive3dPrinting(CourseScene):
+    def construct(self):
+        header = title_block("Additive Manufacturing", "FDM Extrusion, Layer Bonding & Infill")
+        formula = formula_card(["Nozzle Temp + Layer Height + Infill Pattern", "layer adhesion strength determines Z-axis tensile capacity"], PRIMARY).next_to(header, DOWN, buff=0.45)
+
+        bed = Line(LEFT * 3.8 + DOWN * 1.5, LEFT * 0.2 + DOWN * 1.5, color=MUTED, stroke_width=6)
+        layer1 = Rectangle(width=3.2, height=0.22, color=ACCENT).shift(LEFT * 2.0 + DOWN * 1.35).set_fill(ACCENT, opacity=0.5)
+        layer2 = Rectangle(width=3.2, height=0.22, color=ACCENT).shift(LEFT * 2.0 + DOWN * 1.1).set_fill(ACCENT, opacity=0.5)
+        layer3 = Rectangle(width=3.2, height=0.22, color=WARNING).shift(LEFT * 2.0 + DOWN * 0.85).set_fill(WARNING, opacity=0.7)
+
+        nozzle = Polygon(LEFT * 2.3 + UP * 0.2, LEFT * 1.7 + UP * 0.2, LEFT * 2.0 + DOWN * 0.6, color=SUCCESS).set_fill(SUCCESS, opacity=0.8)
+
+        labels = VGroup(
+            Text("Extruder Nozzle", font_size=20, color=SUCCESS),
+            Text("Layer Height h", font_size=20, color=WARNING),
+            Text("Inter-layer Thermal Fusion", font_size=20, color=TEXT),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.2).shift(RIGHT * 2.5 + DOWN * 0.6)
+
+        self.play(FadeIn(header), Write(formula), run_time=1.2)
+        self.play(Create(bed), FadeIn(layer1), FadeIn(layer2), run_time=1.1)
+        self.play(FadeIn(nozzle), Create(layer3), FadeIn(labels), run_time=1.3)
+        self.play(Indicate(labels[2], color=SUCCESS), run_time=1.0)
+        self.show_takeaway("3D printing action: align functional load directions perpendicular to print layer lines.")
+
+

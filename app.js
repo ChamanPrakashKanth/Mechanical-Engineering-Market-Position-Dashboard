@@ -1143,8 +1143,13 @@ function showPane(paneId) {
 }
 
 function showDashboardView(viewId) {
+    document.querySelectorAll(".dashboard-view-tab").forEach(tab => tab.classList.add("hidden"));
     document.querySelectorAll(".dashboard-view-pane").forEach(pane => pane.classList.remove("active"));
-    document.getElementById(`view-${viewId}`).classList.add("active");
+    
+    const targetTab = document.getElementById(viewId);
+    if (targetTab) targetTab.classList.remove("hidden");
+    const targetPane = document.getElementById(`view-${viewId}`);
+    if (targetPane) targetPane.classList.add("active");
     
     document.querySelectorAll(".sidebar-nav-item").forEach(item => {
         if(item.getAttribute("data-view") === viewId) {
@@ -1160,6 +1165,8 @@ function showDashboardView(viewId) {
     } else if (viewId === "dashboard-roadmaps") {
         initLearningHub();
         renderActiveRoadmap();
+    } else if (viewId === "dashboard-videos") {
+        renderVideoAcademy();
     }
 }
 
@@ -1526,8 +1533,331 @@ const VIDEO_LESSONS = {
         src: "manim_courses/renders/cnc-gcode-toolpath.mp4",
         label: "G00 Rapid vs G01 Feed Moves",
         caption: "Comparing non-cutting positioning against controlled cutting toolpaths."
+    },
+    "Calculus": {
+        src: "manim_courses/renders/calculus-derivative-rate.mp4",
+        label: "Derivatives & Velocity v(t)",
+        caption: "Instantaneous rate of change and tangent slope."
+    },
+    "Linear Algebra": {
+        src: "manim_courses/renders/linear-algebra-eigenvalues.mp4",
+        label: "Eigenvalues & Vibration Modes",
+        caption: "Solving natural resonance frequencies |K - w^2 M| = 0."
+    },
+    "Differential Equations": {
+        src: "manim_courses/renders/diff-eq-spring-damper.mp4",
+        label: "Mass-Spring-Damper Dynamics",
+        caption: "Underdamped vs critically damped ODE step response."
+    },
+    "Engineering Mechanics": {
+        src: "manim_courses/renders/mechanics-truss-equilibrium.mp4",
+        label: "Truss Joint Equilibrium",
+        caption: "Concurrent force balancing for member tension and compression."
+    },
+    "Materials Science": {
+        src: "manim_courses/renders/materials-iron-carbon.mp4",
+        label: "Iron-Carbon Phase Diagram",
+        caption: "Austenite, pearlite, and the 727°C eutectoid transformation."
+    },
+    "Mechatronics": {
+        src: "manim_courses/renders/control-bode-plot.mp4",
+        label: "Bode Plot Margins",
+        caption: "Gain crossover frequency and closed-loop phase margin."
+    },
+    "ANSYS Mechanical": {
+        src: "manim_courses/renders/simulation-von-mises.mp4",
+        label: "Von Mises Yield Criterion",
+        caption: "Stress concentration notch risers and equivalent yield limit."
+    },
+    "Additive Manufacturing": {
+        src: "manim_courses/renders/additive-3d-printing.mp4",
+        label: "FDM Extrusion & Layer Fusion",
+        caption: "Nozzle extrusion, layer height, and Z-axis tensile adhesion."
     }
 };
+
+const VIDEO_ACADEMY_REGISTRY = [
+    {
+        id: "cad-lewis-gear-bending",
+        title: "CAD Design: Lewis Gear Tooth Bending",
+        category: "CAD & Design",
+        src: "manim_courses/renders/cad-lewis-gear-bending.mp4",
+        description: "A Manim lesson explaining tangential load, module, face width, and Lewis form factor for gear tooth bending.",
+        takeaway: "Design action: reduce bending stress before the model reaches manufacturing.",
+        tags: ["CAD", "gear design", "bending stress"]
+    },
+    {
+        id: "cae-stiffness-matrix",
+        title: "CAE Simulation: Stiffness Matrix K·u = f",
+        category: "CAE & Simulation",
+        src: "manim_courses/renders/cae-stiffness-matrix.mp4",
+        description: "A Manim lesson explaining the K u equals f relationship used in finite element analysis.",
+        takeaway: "Simulation action: check loads, constraints, and mesh before trusting colors.",
+        tags: ["FEA", "CAE", "stiffness matrix"]
+    },
+    {
+        id: "robotics-pid-control",
+        title: "Robotics: PID Control Terms",
+        category: "Automation & Robotics",
+        src: "manim_courses/renders/robotics-pid-control.mp4",
+        description: "A Manim lesson showing how proportional, integral, and derivative terms shape closed-loop step response.",
+        takeaway: "Control action: tune response speed without letting oscillation dominate.",
+        tags: ["robotics", "PID", "control systems"]
+    },
+    {
+        id: "manufacturing-cpk-capability",
+        title: "Manufacturing: Cp and Cpk Process Capability",
+        category: "Manufacturing & Materials",
+        src: "manim_courses/renders/manufacturing-cpk-capability.mp4",
+        description: "A Manim lesson explaining specification limits, process spread, centering, Cp, and Cpk.",
+        takeaway: "Quality action: reduce spread and recenter before defects reach customers.",
+        tags: ["six sigma", "manufacturing", "process capability"]
+    },
+    {
+        id: "hvac-sensible-latent-loads",
+        title: "HVAC Thermal: Sensible vs Latent Loads",
+        category: "Thermal & Fluids",
+        src: "manim_courses/renders/hvac-sensible-latent-loads.mp4",
+        description: "A Manim lesson explaining temperature load, moisture load, and how HVAC engineers separate the two.",
+        takeaway: "HVAC action: size for heat and humidity, not temperature alone.",
+        tags: ["HVAC", "thermal", "heat transfer"]
+    },
+    {
+        id: "fluid-bernoulli-conservation",
+        title: "Fluid Mechanics: Bernoulli Energy Conservation",
+        category: "Thermal & Fluids",
+        src: "manim_courses/renders/fluid-bernoulli-conservation.mp4",
+        description: "A Manim lesson explaining pressure head, velocity head, and constriction flow physics.",
+        takeaway: "Fluid action: high velocity creates low static pressure region.",
+        tags: ["fluid mechanics", "Bernoulli", "pipe flow"]
+    },
+    {
+        id: "thermo-carnot-cycle",
+        title: "Thermodynamics: Carnot Heat Engine Efficiency",
+        category: "Thermal & Fluids",
+        src: "manim_courses/renders/thermo-carnot-cycle.mp4",
+        description: "A Manim lesson explaining isothermal and adiabatic processes on P-V coordinates.",
+        takeaway: "Thermal action: reduce rejection temperature TL to maximize engine output.",
+        tags: ["thermodynamics", "Carnot", "power cycles"]
+    },
+    {
+        id: "som-mohrs-circle",
+        title: "Strength of Materials: Mohr's Circle Stress Transformation",
+        category: "Core Mechanical Engineering",
+        src: "manim_courses/renders/som-mohrs-circle.mp4",
+        description: "A Manim lesson showing principal stresses sigma_1, sigma_2 and maximum shear stress tau_max.",
+        takeaway: "Stress action: evaluate principal angles before yielding occurs.",
+        tags: ["strength of materials", "Mohr's circle", "stress analysis"]
+    },
+    {
+        id: "tom-four-bar-linkage",
+        title: "Theory of Machines: Four-Bar Linkage Kinematics",
+        category: "Core Mechanical Engineering",
+        src: "manim_courses/renders/tom-four-bar-linkage.mp4",
+        description: "A Manim lesson illustrating Grashof's rule s + l <= p + q and crank-rocker motion.",
+        takeaway: "Kinematic action: select link ratios for continuous motor drive input.",
+        tags: ["theory of machines", "kinematics", "linkages"]
+    },
+    {
+        id: "cnc-gcode-toolpath",
+        title: "CNC Programming: G00 vs G01 Cutting Toolpaths",
+        category: "Manufacturing & Materials",
+        src: "manim_courses/renders/cnc-gcode-toolpath.mp4",
+        description: "A Manim lesson comparing G00 rapid positioning with G01 linear interpolation cutting feeds.",
+        takeaway: "CNC action: clear workpiece boundaries with G00 before engaging G01.",
+        tags: ["CNC", "manufacturing", "G-code"]
+    },
+    {
+        id: "calculus-derivative-rate",
+        title: "Calculus: Derivatives & Instantaneous Velocity",
+        category: "Mathematics",
+        src: "manim_courses/renders/calculus-derivative-rate.mp4",
+        description: "A Manim lesson explaining how the slope of position curves yields velocity v(t) = dx/dt.",
+        takeaway: "Calculus action: differentiate position functions to predict peak velocity.",
+        tags: ["calculus", "mathematics", "derivatives"]
+    },
+    {
+        id: "linear-algebra-eigenvalues",
+        title: "Linear Algebra: Eigenvalues & Vibration Modes",
+        category: "Mathematics",
+        src: "manim_courses/renders/linear-algebra-eigenvalues.mp4",
+        description: "A Manim lesson connecting matrix eigenvalue decomposition to natural resonance frequencies.",
+        takeaway: "Linear algebra action: check det(K - w^2 M) = 0 to avoid resonant destruction.",
+        tags: ["linear algebra", "eigenvalues", "vibrations"]
+    },
+    {
+        id: "diff-eq-spring-damper",
+        title: "Differential Equations: Mass-Spring-Damper Dynamics",
+        category: "Mathematics",
+        src: "manim_courses/renders/diff-eq-spring-damper.mp4",
+        description: "A Manim lesson showing 2nd order ODE responses for underdamped and critically damped systems.",
+        takeaway: "ODE action: tune damping c to return to equilibrium rapidly without ringing.",
+        tags: ["differential equations", "dynamics", "damping"]
+    },
+    {
+        id: "mechanics-truss-equilibrium",
+        title: "Engineering Mechanics: Truss Joint Static Equilibrium",
+        category: "Core Mechanical Engineering",
+        src: "manim_courses/renders/mechanics-truss-equilibrium.mp4",
+        description: "A Manim lesson demonstrating vector resolution and member force balancing at concurrent pin joints.",
+        takeaway: "Mechanics action: balance pin joint vectors to size structural member cross-sections.",
+        tags: ["statics", "trusses", "equilibrium"]
+    },
+    {
+        id: "materials-iron-carbon",
+        title: "Materials Science: Iron-Carbon Phase Diagram",
+        category: "Manufacturing & Materials",
+        src: "manim_courses/renders/materials-iron-carbon.mp4",
+        description: "A Manim lesson illustrating austenite, pearlite, ferrite, and the 727 deg C eutectoid transition.",
+        takeaway: "Materials action: heat treat above 727 C to control hardness and grain growth.",
+        tags: ["materials science", "heat treatment", "phase diagram"]
+    },
+    {
+        id: "control-bode-plot",
+        title: "Control Systems: Bode Plot Gain & Phase Margins",
+        category: "Automation & Robotics",
+        src: "manim_courses/renders/control-bode-plot.mp4",
+        description: "A Manim lesson showing frequency magnitude response, gain crossover, and closed-loop phase margins.",
+        takeaway: "Control action: maintain PM > 45 deg to prevent loop instability.",
+        tags: ["control systems", "bode plot", "mechatronics"]
+    },
+    {
+        id: "simulation-von-mises",
+        title: "ANSYS / Simulation: Von Mises Yield Criterion",
+        category: "CAE & Simulation",
+        src: "manim_courses/renders/simulation-von-mises.mp4",
+        description: "A Manim lesson explaining stress concentration risers and equivalent von Mises yield limits.",
+        takeaway: "FEA action: add fillets at geometric notches to relieve von Mises stress spikes.",
+        tags: ["FEA", "simulation", "von Mises"]
+    },
+    {
+        id: "additive-3d-printing",
+        title: "Additive Manufacturing: FDM Extrusion & Layer Fusion",
+        category: "Manufacturing & Materials",
+        src: "manim_courses/renders/additive-3d-printing.mp4",
+        description: "A Manim lesson demonstrating layer height, nozzle extrusion, and Z-axis interlayer bonding.",
+        takeaway: "3D printing action: align functional load directions perpendicular to print layer lines.",
+        tags: ["3D printing", "additive manufacturing", "FDM"]
+    }
+];
+
+function renderVideoAcademy() {
+    const grid = document.getElementById("video-academy-grid");
+    if (!grid) return;
+
+    const categoryFilters = document.getElementById("video-category-filters");
+    const searchInput = document.getElementById("video-search-input");
+    const countLabel = document.getElementById("video-count-label");
+
+    let activeCategory = "All";
+    let searchVal = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+    function filterAndRender() {
+        const filtered = VIDEO_ACADEMY_REGISTRY.filter(item => {
+            if (activeCategory !== "All") {
+                if (activeCategory === "Mathematics" && item.category !== "Mathematics") return false;
+                if (activeCategory === "Core Mechanical Engineering" && item.category !== "Core Mechanical Engineering") return false;
+                if (activeCategory === "CAD & Design" && item.category !== "CAD & Design") return false;
+                if (activeCategory === "CAE & Simulation" && item.category !== "CAE & Simulation") return false;
+                if (activeCategory === "Automation & Robotics" && item.category !== "Automation & Robotics") return false;
+                if (activeCategory === "Manufacturing & Materials" && item.category !== "Manufacturing & Materials") return false;
+                if (activeCategory === "Thermal & Fluids" && item.category !== "Thermal & Fluids") return false;
+            }
+            if (searchVal) {
+                const matches = item.title.toLowerCase().includes(searchVal) ||
+                                item.description.toLowerCase().includes(searchVal) ||
+                                item.tags.some(t => t.toLowerCase().includes(searchVal));
+                if (!matches) return false;
+            }
+            return true;
+        });
+
+        if (countLabel) {
+            countLabel.textContent = `Showing ${filtered.length} of ${VIDEO_ACADEMY_REGISTRY.length} lessons`;
+        }
+
+        grid.innerHTML = filtered.map(item => `
+            <div class="video-card">
+                <div class="video-card-thumb">
+                    <video preload="metadata" playsinline muted style="width:100%; height:100%; object-fit:cover;">
+                        <source src="${item.src}" type="video/mp4">
+                    </video>
+                    <div class="video-play-overlay" onclick="selectTheaterVideo('${item.id}')">
+                        <div class="play-btn-circle">
+                            <i data-lucide="play" style="width:24px; height:24px; fill:#fff; margin-left:3px;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card-body">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                        <span class="course-badge beginner" style="font-size:0.7rem;">${item.category}</span>
+                        <span style="font-size:0.72rem; color:var(--text-muted);"><i data-lucide="play-circle" style="width:12px; height:12px; display:inline-block; vertical-align:middle;"></i> Manim HD</span>
+                    </div>
+                    <h4 style="font-size:0.95rem; margin-bottom:0.4rem; color:#fff;">${item.title}</h4>
+                    <p style="font-size:0.78rem; color:var(--text-secondary); line-height:1.35; margin-bottom:0.75rem; flex:1;">${item.description}</p>
+                    <button class="btn btn-outline btn-sm" onclick="selectTheaterVideo('${item.id}')" style="width:100%; font-size:0.78rem;">
+                        <i data-lucide="play" style="width:14px; height:14px;"></i> Play in Theater
+                    </button>
+                </div>
+            </div>
+        `).join("");
+
+        if (window.lucide) lucide.createIcons();
+    }
+
+    if (categoryFilters) {
+        categoryFilters.querySelectorAll(".pill-btn").forEach(btn => {
+            btn.onclick = () => {
+                categoryFilters.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeCategory = btn.getAttribute("data-category");
+                filterAndRender();
+            };
+        });
+    }
+
+    if (searchInput) {
+        searchInput.oninput = (e) => {
+            searchVal = e.target.value.toLowerCase().trim();
+            filterAndRender();
+        };
+    }
+
+    filterAndRender();
+}
+
+function selectTheaterVideo(id) {
+    const item = VIDEO_ACADEMY_REGISTRY.find(v => v.id === id);
+    if (!item) return;
+
+    const titleEl = document.getElementById("theater-video-title");
+    const badgeEl = document.getElementById("theater-video-badge");
+    const descEl = document.getElementById("theater-video-desc");
+    const takeawayEl = document.getElementById("theater-video-takeaway");
+    const tagsEl = document.getElementById("theater-video-tags");
+    const playerEl = document.getElementById("theater-video-player");
+    const sourceEl = document.getElementById("theater-video-source");
+
+    if (titleEl) titleEl.innerHTML = `<i data-lucide="play-circle" style="color: var(--accent-primary);"></i> Lesson: ${item.title}`;
+    if (badgeEl) badgeEl.textContent = item.category;
+    if (descEl) descEl.textContent = item.description;
+    if (takeawayEl) takeawayEl.textContent = item.takeaway;
+    if (tagsEl) {
+        tagsEl.innerHTML = item.tags.map(t => `<span class="skill-tag">${t}</span>`).join("");
+    }
+    if (playerEl && sourceEl) {
+        sourceEl.src = item.src;
+        playerEl.load();
+        playerEl.play().catch(() => {});
+    }
+
+    const theaterCard = document.getElementById("featured-video-theater");
+    if (theaterCard) {
+        theaterCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    if (window.lucide) lucide.createIcons();
+}
 
 const COURSES_DATABASE = [
     // Mathematics

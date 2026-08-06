@@ -89,6 +89,78 @@
       "title": "CNC Programming: G00 vs G01 Cutting Toolpaths",
       "description": "A short Manim lesson comparing G00 rapid positioning with G01 linear interpolation cutting feeds.",
       "tags": ["mechanical engineering", "manufacturing", "CNC", "G-code", "Manim"]
+    },
+    {
+      "cluster": "Mathematics",
+      "slug": "calculus-derivative-rate",
+      "scene": "CalculusDerivativeRate",
+      "file": "manim_courses/renders/calculus-derivative-rate.mp4",
+      "title": "Calculus: Derivatives & Instantaneous Velocity",
+      "description": "A short Manim lesson explaining how the slope of position curves yields velocity v(t) = dx/dt.",
+      "tags": ["mechanical engineering", "mathematics", "calculus", "derivatives", "Manim"]
+    },
+    {
+      "cluster": "Mathematics",
+      "slug": "linear-algebra-eigenvalues",
+      "scene": "LinearAlgebraEigenvalues",
+      "file": "manim_courses/renders/linear-algebra-eigenvalues.mp4",
+      "title": "Linear Algebra: Eigenvalues & Vibration Modes",
+      "description": "A short Manim lesson connecting matrix eigenvalue decomposition to natural resonance frequencies.",
+      "tags": ["mechanical engineering", "linear algebra", "eigenvalues", "vibrations", "Manim"]
+    },
+    {
+      "cluster": "Mathematics",
+      "slug": "diff-eq-spring-damper",
+      "scene": "DiffEqSpringDamper",
+      "file": "manim_courses/renders/diff-eq-spring-damper.mp4",
+      "title": "Differential Equations: Mass-Spring-Damper Dynamics",
+      "description": "A short Manim lesson showing 2nd order ODE responses for underdamped and critically damped systems.",
+      "tags": ["mechanical engineering", "differential equations", "dynamics", "damping", "Manim"]
+    },
+    {
+      "cluster": "Core Mechanical Engineering",
+      "slug": "mechanics-truss-equilibrium",
+      "scene": "MechanicsTrussEquilibrium",
+      "file": "manim_courses/renders/mechanics-truss-equilibrium.mp4",
+      "title": "Engineering Mechanics: Truss Joint Static Equilibrium",
+      "description": "A short Manim lesson demonstrating vector resolution and member force balancing at concurrent pin joints.",
+      "tags": ["mechanical engineering", "statics", "trusses", "equilibrium", "Manim"]
+    },
+    {
+      "cluster": "Materials Science",
+      "slug": "materials-iron-carbon",
+      "scene": "MaterialsIronCarbon",
+      "file": "manim_courses/renders/materials-iron-carbon.mp4",
+      "title": "Materials Science: Iron-Carbon Phase Diagram",
+      "description": "A short Manim lesson illustrating austenite, pearlite, ferrite, and the 727 deg C eutectoid transition.",
+      "tags": ["mechanical engineering", "materials science", "heat treatment", "metallurgy", "Manim"]
+    },
+    {
+      "cluster": "Automation/Mechatronics",
+      "slug": "control-bode-plot",
+      "scene": "ControlBodePlot",
+      "file": "manim_courses/renders/control-bode-plot.mp4",
+      "title": "Control Systems: Bode Plot Gain & Phase Margins",
+      "description": "A short Manim lesson showing frequency magnitude response, gain crossover, and closed-loop phase margins.",
+      "tags": ["mechanical engineering", "control systems", "bode plot", "mechatronics", "Manim"]
+    },
+    {
+      "cluster": "CAE/Simulation",
+      "slug": "simulation-von-mises",
+      "scene": "SimulationVonMises",
+      "file": "manim_courses/renders/simulation-von-mises.mp4",
+      "title": "ANSYS / Simulation: Von Mises Yield Criterion",
+      "description": "A short Manim lesson explaining stress concentration risers and equivalent von Mises yield limits.",
+      "tags": ["mechanical engineering", "FEA", "simulation", "von Mises", "stress", "Manim"]
+    },
+    {
+      "cluster": "Manufacturing/Operations",
+      "slug": "additive-3d-printing",
+      "scene": "Additive3dPrinting",
+      "file": "manim_courses/renders/additive-3d-printing.mp4",
+      "title": "Additive Manufacturing: FDM Extrusion & Layer Fusion",
+      "description": "A short Manim lesson demonstrating layer height, nozzle extrusion, and Z-axis interlayer bonding.",
+      "tags": ["mechanical engineering", "3d printing", "additive manufacturing", "FDM", "Manim"]
     }
   ]
 }
