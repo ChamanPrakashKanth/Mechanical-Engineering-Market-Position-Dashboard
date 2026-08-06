@@ -1483,97 +1483,46 @@ document.addEventListener("DOMContentLoaded", () => {
 // Concept visualization videos attached to specific courses.
 // In the single-file builds the compile scripts inline these files as base64 data URIs;
 // when served with the repo present, the relative MP4 paths are used instead.
+const MP4_VIDEOS = {
+    "cad-lewis-gear-bending": "manim_courses/renders/cad-lewis-gear-bending.mp4",
+    "cae-stiffness-matrix": "manim_courses/renders/cae-stiffness-matrix.mp4",
+    "robotics-pid-control": "manim_courses/renders/robotics-pid-control.mp4",
+    "manufacturing-cpk-capability": "manim_courses/renders/manufacturing-cpk-capability.mp4",
+    "hvac-sensible-latent-loads": "manim_courses/renders/hvac-sensible-latent-loads.mp4",
+    "fluid-bernoulli-conservation": "manim_courses/renders/fluid-bernoulli-conservation.mp4",
+    "thermo-carnot-cycle": "manim_courses/renders/thermo-carnot-cycle.mp4",
+    "som-mohrs-circle": "manim_courses/renders/som-mohrs-circle.mp4",
+    "tom-four-bar-linkage": "manim_courses/renders/tom-four-bar-linkage.mp4",
+    "cnc-gcode-toolpath": "manim_courses/renders/cnc-gcode-toolpath.mp4",
+    "calculus-derivative-rate": "manim_courses/renders/calculus-derivative-rate.mp4",
+    "linear-algebra-eigenvalues": "manim_courses/renders/linear-algebra-eigenvalues.mp4",
+    "diff-eq-spring-damper": "manim_courses/renders/diff-eq-spring-damper.mp4",
+    "mechanics-truss-equilibrium": "manim_courses/renders/mechanics-truss-equilibrium.mp4",
+    "materials-iron-carbon": "manim_courses/renders/materials-iron-carbon.mp4",
+    "control-bode-plot": "manim_courses/renders/control-bode-plot.mp4",
+    "simulation-von-mises": "manim_courses/renders/simulation-von-mises.mp4",
+    "additive-3d-printing": "manim_courses/renders/additive-3d-printing.mp4"
+};
+
 const VIDEO_LESSONS = {
-    "Machine Design": {
-        src: "manim_courses/renders/cad-lewis-gear-bending.mp4",
-        label: "Lewis Gear Tooth Bending",
-        caption: "Why face width, module, and form factor control bending stress."
-    },
-    "Finite Element Analysis": {
-        src: "manim_courses/renders/cae-stiffness-matrix.mp4",
-        label: "The Finite Element Balance: K·u = f",
-        caption: "Stiffness, displacement, and applied force in FEA."
-    },
-    "Robotics": {
-        src: "manim_courses/renders/robotics-pid-control.mp4",
-        label: "PID Control Terms",
-        caption: "Proportional, integral, and derivative actions on a step response."
-    },
-    "Six Sigma": {
-        src: "manim_courses/renders/manufacturing-cpk-capability.mp4",
-        label: "Cp and Cpk Process Capability",
-        caption: "Why centered, narrow distributions pass capability."
-    },
-    "Heat Transfer": {
-        src: "manim_courses/renders/hvac-sensible-latent-loads.mp4",
-        label: "Sensible vs Latent Loads",
-        caption: "Temperature and humidity are separate HVAC jobs."
-    },
-    "Fluid Mechanics": {
-        src: "manim_courses/renders/fluid-bernoulli-conservation.mp4",
-        label: "Bernoulli Energy Conservation",
-        caption: "Static pressure drops when flow velocity accelerates through constriction."
-    },
-    "Thermodynamics": {
-        src: "manim_courses/renders/thermo-carnot-cycle.mp4",
-        label: "Carnot Engine Efficiency",
-        caption: "Ideal cycle thermal limit bounded strictly by reservoir temperatures."
-    },
-    "Strength of Materials": {
-        src: "manim_courses/renders/som-mohrs-circle.mp4",
-        label: "Mohr's Circle Stress Transformation",
-        caption: "Visualizing principal stresses sigma_1, sigma_2 and maximum shear radius."
-    },
-    "Theory of Machines": {
-        src: "manim_courses/renders/tom-four-bar-linkage.mp4",
-        label: "Four-Bar Kinematics & Grashof Rule",
-        caption: "Why s + l <= p + q guarantees continuous crank drive motion."
-    },
-    "CNC Programming": {
-        src: "manim_courses/renders/cnc-gcode-toolpath.mp4",
-        label: "G00 Rapid vs G01 Feed Moves",
-        caption: "Comparing non-cutting positioning against controlled cutting toolpaths."
-    },
-    "Calculus": {
-        src: "manim_courses/renders/calculus-derivative-rate.mp4",
-        label: "Derivatives & Velocity v(t)",
-        caption: "Instantaneous rate of change and tangent slope."
-    },
-    "Linear Algebra": {
-        src: "manim_courses/renders/linear-algebra-eigenvalues.mp4",
-        label: "Eigenvalues & Vibration Modes",
-        caption: "Solving natural resonance frequencies |K - w^2 M| = 0."
-    },
-    "Differential Equations": {
-        src: "manim_courses/renders/diff-eq-spring-damper.mp4",
-        label: "Mass-Spring-Damper Dynamics",
-        caption: "Underdamped vs critically damped ODE step response."
-    },
-    "Engineering Mechanics": {
-        src: "manim_courses/renders/mechanics-truss-equilibrium.mp4",
-        label: "Truss Joint Equilibrium",
-        caption: "Concurrent force balancing for member tension and compression."
-    },
-    "Materials Science": {
-        src: "manim_courses/renders/materials-iron-carbon.mp4",
-        label: "Iron-Carbon Phase Diagram",
-        caption: "Austenite, pearlite, and the 727°C eutectoid transformation."
-    },
-    "Mechatronics": {
-        src: "manim_courses/renders/control-bode-plot.mp4",
-        label: "Bode Plot Margins",
-        caption: "Gain crossover frequency and closed-loop phase margin."
-    },
-    "ANSYS Mechanical": {
-        src: "manim_courses/renders/simulation-von-mises.mp4",
-        label: "Von Mises Yield Criterion",
-        caption: "Stress concentration notch risers and equivalent yield limit."
-    },
-    "Additive Manufacturing": {
-        src: "manim_courses/renders/additive-3d-printing.mp4",
-        label: "FDM Extrusion & Layer Fusion",
-        caption: "Nozzle extrusion, layer height, and Z-axis tensile adhesion."
-    }
+    "Machine Design": { src: MP4_VIDEOS["cad-lewis-gear-bending"], label: "Lewis Gear Tooth Bending", caption: "Why face width, module, and form factor control bending stress." },
+    "Finite Element Analysis": { src: MP4_VIDEOS["cae-stiffness-matrix"], label: "The Finite Element Balance: K·u = f", caption: "Stiffness, displacement, and applied force in FEA." },
+    "Robotics": { src: MP4_VIDEOS["robotics-pid-control"], label: "PID Control Terms", caption: "Proportional, integral, and derivative actions on a step response." },
+    "Six Sigma": { src: MP4_VIDEOS["manufacturing-cpk-capability"], label: "Cp and Cpk Process Capability", caption: "Why centered, narrow distributions pass capability." },
+    "Heat Transfer": { src: MP4_VIDEOS["hvac-sensible-latent-loads"], label: "Sensible vs Latent Loads", caption: "Temperature and humidity are separate HVAC jobs." },
+    "Fluid Mechanics": { src: MP4_VIDEOS["fluid-bernoulli-conservation"], label: "Bernoulli Energy Conservation", caption: "Static pressure drops when flow velocity accelerates through constriction." },
+    "Thermodynamics": { src: MP4_VIDEOS["thermo-carnot-cycle"], label: "Carnot Engine Efficiency", caption: "Ideal cycle thermal limit bounded strictly by reservoir temperatures." },
+    "Strength of Materials": { src: MP4_VIDEOS["som-mohrs-circle"], label: "Mohr's Circle Stress Transformation", caption: "Visualizing principal stresses sigma_1, sigma_2 and maximum shear radius." },
+    "Theory of Machines": { src: MP4_VIDEOS["tom-four-bar-linkage"], label: "Four-Bar Kinematics & Grashof Rule", caption: "Why s + l <= p + q guarantees continuous crank drive motion." },
+    "CNC Programming": { src: MP4_VIDEOS["cnc-gcode-toolpath"], label: "G00 Rapid vs G01 Feed Moves", caption: "Comparing non-cutting positioning against controlled cutting toolpaths." },
+    "Calculus": { src: MP4_VIDEOS["calculus-derivative-rate"], label: "Derivatives & Velocity v(t)", caption: "Instantaneous rate of change and tangent slope." },
+    "Linear Algebra": { src: MP4_VIDEOS["linear-algebra-eigenvalues"], label: "Eigenvalues & Vibration Modes", caption: "Solving natural resonance frequencies |K - w^2 M| = 0." },
+    "Differential Equations": { src: MP4_VIDEOS["diff-eq-spring-damper"], label: "Mass-Spring-Damper Dynamics", caption: "Underdamped vs critically damped ODE step response." },
+    "Engineering Mechanics": { src: MP4_VIDEOS["mechanics-truss-equilibrium"], label: "Truss Joint Equilibrium", caption: "Concurrent force balancing for member tension and compression." },
+    "Materials Science": { src: MP4_VIDEOS["materials-iron-carbon"], label: "Iron-Carbon Phase Diagram", caption: "Austenite, pearlite, and the 727°C eutectoid transformation." },
+    "Mechatronics": { src: MP4_VIDEOS["control-bode-plot"], label: "Bode Plot Margins", caption: "Gain crossover frequency and closed-loop phase margin." },
+    "ANSYS Mechanical": { src: MP4_VIDEOS["simulation-von-mises"], label: "Von Mises Yield Criterion", caption: "Stress concentration notch risers and equivalent yield limit." },
+    "Additive Manufacturing": { src: MP4_VIDEOS["additive-3d-printing"], label: "FDM Extrusion & Layer Fusion", caption: "Nozzle extrusion, layer height, and Z-axis tensile adhesion." }
 };
 
 const VIDEO_ACADEMY_REGISTRY = [
@@ -1581,7 +1530,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "cad-lewis-gear-bending",
         title: "CAD Design: Lewis Gear Tooth Bending",
         category: "CAD & Design",
-        src: "manim_courses/renders/cad-lewis-gear-bending.mp4",
+        src: MP4_VIDEOS["cad-lewis-gear-bending"],
         description: "A Manim lesson explaining tangential load, module, face width, and Lewis form factor for gear tooth bending.",
         takeaway: "Design action: reduce bending stress before the model reaches manufacturing.",
         tags: ["CAD", "gear design", "bending stress"]
@@ -1590,7 +1539,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "cae-stiffness-matrix",
         title: "CAE Simulation: Stiffness Matrix K·u = f",
         category: "CAE & Simulation",
-        src: "manim_courses/renders/cae-stiffness-matrix.mp4",
+        src: MP4_VIDEOS["cae-stiffness-matrix"],
         description: "A Manim lesson explaining the K u equals f relationship used in finite element analysis.",
         takeaway: "Simulation action: check loads, constraints, and mesh before trusting colors.",
         tags: ["FEA", "CAE", "stiffness matrix"]
@@ -1599,7 +1548,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "robotics-pid-control",
         title: "Robotics: PID Control Terms",
         category: "Automation & Robotics",
-        src: "manim_courses/renders/robotics-pid-control.mp4",
+        src: MP4_VIDEOS["robotics-pid-control"],
         description: "A Manim lesson showing how proportional, integral, and derivative terms shape closed-loop step response.",
         takeaway: "Control action: tune response speed without letting oscillation dominate.",
         tags: ["robotics", "PID", "control systems"]
@@ -1608,7 +1557,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "manufacturing-cpk-capability",
         title: "Manufacturing: Cp and Cpk Process Capability",
         category: "Manufacturing & Materials",
-        src: "manim_courses/renders/manufacturing-cpk-capability.mp4",
+        src: MP4_VIDEOS["manufacturing-cpk-capability"],
         description: "A Manim lesson explaining specification limits, process spread, centering, Cp, and Cpk.",
         takeaway: "Quality action: reduce spread and recenter before defects reach customers.",
         tags: ["six sigma", "manufacturing", "process capability"]
@@ -1617,7 +1566,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "hvac-sensible-latent-loads",
         title: "HVAC Thermal: Sensible vs Latent Loads",
         category: "Thermal & Fluids",
-        src: "manim_courses/renders/hvac-sensible-latent-loads.mp4",
+        src: MP4_VIDEOS["hvac-sensible-latent-loads"],
         description: "A Manim lesson explaining temperature load, moisture load, and how HVAC engineers separate the two.",
         takeaway: "HVAC action: size for heat and humidity, not temperature alone.",
         tags: ["HVAC", "thermal", "heat transfer"]
@@ -1626,7 +1575,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "fluid-bernoulli-conservation",
         title: "Fluid Mechanics: Bernoulli Energy Conservation",
         category: "Thermal & Fluids",
-        src: "manim_courses/renders/fluid-bernoulli-conservation.mp4",
+        src: MP4_VIDEOS["fluid-bernoulli-conservation"],
         description: "A Manim lesson explaining pressure head, velocity head, and constriction flow physics.",
         takeaway: "Fluid action: high velocity creates low static pressure region.",
         tags: ["fluid mechanics", "Bernoulli", "pipe flow"]
@@ -1635,7 +1584,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "thermo-carnot-cycle",
         title: "Thermodynamics: Carnot Heat Engine Efficiency",
         category: "Thermal & Fluids",
-        src: "manim_courses/renders/thermo-carnot-cycle.mp4",
+        src: MP4_VIDEOS["thermo-carnot-cycle"],
         description: "A Manim lesson explaining isothermal and adiabatic processes on P-V coordinates.",
         takeaway: "Thermal action: reduce rejection temperature TL to maximize engine output.",
         tags: ["thermodynamics", "Carnot", "power cycles"]
@@ -1644,7 +1593,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "som-mohrs-circle",
         title: "Strength of Materials: Mohr's Circle Stress Transformation",
         category: "Core Mechanical Engineering",
-        src: "manim_courses/renders/som-mohrs-circle.mp4",
+        src: MP4_VIDEOS["som-mohrs-circle"],
         description: "A Manim lesson showing principal stresses sigma_1, sigma_2 and maximum shear stress tau_max.",
         takeaway: "Stress action: evaluate principal angles before yielding occurs.",
         tags: ["strength of materials", "Mohr's circle", "stress analysis"]
@@ -1653,7 +1602,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "tom-four-bar-linkage",
         title: "Theory of Machines: Four-Bar Linkage Kinematics",
         category: "Core Mechanical Engineering",
-        src: "manim_courses/renders/tom-four-bar-linkage.mp4",
+        src: MP4_VIDEOS["tom-four-bar-linkage"],
         description: "A Manim lesson illustrating Grashof's rule s + l <= p + q and crank-rocker motion.",
         takeaway: "Kinematic action: select link ratios for continuous motor drive input.",
         tags: ["theory of machines", "kinematics", "linkages"]
@@ -1662,7 +1611,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "cnc-gcode-toolpath",
         title: "CNC Programming: G00 vs G01 Cutting Toolpaths",
         category: "Manufacturing & Materials",
-        src: "manim_courses/renders/cnc-gcode-toolpath.mp4",
+        src: MP4_VIDEOS["cnc-gcode-toolpath"],
         description: "A Manim lesson comparing G00 rapid positioning with G01 linear interpolation cutting feeds.",
         takeaway: "CNC action: clear workpiece boundaries with G00 before engaging G01.",
         tags: ["CNC", "manufacturing", "G-code"]
@@ -1671,7 +1620,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "calculus-derivative-rate",
         title: "Calculus: Derivatives & Instantaneous Velocity",
         category: "Mathematics",
-        src: "manim_courses/renders/calculus-derivative-rate.mp4",
+        src: MP4_VIDEOS["calculus-derivative-rate"],
         description: "A Manim lesson explaining how the slope of position curves yields velocity v(t) = dx/dt.",
         takeaway: "Calculus action: differentiate position functions to predict peak velocity.",
         tags: ["calculus", "mathematics", "derivatives"]
@@ -1680,7 +1629,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "linear-algebra-eigenvalues",
         title: "Linear Algebra: Eigenvalues & Vibration Modes",
         category: "Mathematics",
-        src: "manim_courses/renders/linear-algebra-eigenvalues.mp4",
+        src: MP4_VIDEOS["linear-algebra-eigenvalues"],
         description: "A Manim lesson connecting matrix eigenvalue decomposition to natural resonance frequencies.",
         takeaway: "Linear algebra action: check det(K - w^2 M) = 0 to avoid resonant destruction.",
         tags: ["linear algebra", "eigenvalues", "vibrations"]
@@ -1689,7 +1638,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "diff-eq-spring-damper",
         title: "Differential Equations: Mass-Spring-Damper Dynamics",
         category: "Mathematics",
-        src: "manim_courses/renders/diff-eq-spring-damper.mp4",
+        src: MP4_VIDEOS["diff-eq-spring-damper"],
         description: "A Manim lesson showing 2nd order ODE responses for underdamped and critically damped systems.",
         takeaway: "ODE action: tune damping c to return to equilibrium rapidly without ringing.",
         tags: ["differential equations", "dynamics", "damping"]
@@ -1698,7 +1647,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "mechanics-truss-equilibrium",
         title: "Engineering Mechanics: Truss Joint Static Equilibrium",
         category: "Core Mechanical Engineering",
-        src: "manim_courses/renders/mechanics-truss-equilibrium.mp4",
+        src: MP4_VIDEOS["mechanics-truss-equilibrium"],
         description: "A Manim lesson demonstrating vector resolution and member force balancing at concurrent pin joints.",
         takeaway: "Mechanics action: balance pin joint vectors to size structural member cross-sections.",
         tags: ["statics", "trusses", "equilibrium"]
@@ -1707,7 +1656,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "materials-iron-carbon",
         title: "Materials Science: Iron-Carbon Phase Diagram",
         category: "Manufacturing & Materials",
-        src: "manim_courses/renders/materials-iron-carbon.mp4",
+        src: MP4_VIDEOS["materials-iron-carbon"],
         description: "A Manim lesson illustrating austenite, pearlite, ferrite, and the 727 deg C eutectoid transition.",
         takeaway: "Materials action: heat treat above 727 C to control hardness and grain growth.",
         tags: ["materials science", "heat treatment", "phase diagram"]
@@ -1716,7 +1665,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "control-bode-plot",
         title: "Control Systems: Bode Plot Gain & Phase Margins",
         category: "Automation & Robotics",
-        src: "manim_courses/renders/control-bode-plot.mp4",
+        src: MP4_VIDEOS["control-bode-plot"],
         description: "A Manim lesson showing frequency magnitude response, gain crossover, and closed-loop phase margins.",
         takeaway: "Control action: maintain PM > 45 deg to prevent loop instability.",
         tags: ["control systems", "bode plot", "mechatronics"]
@@ -1725,7 +1674,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "simulation-von-mises",
         title: "ANSYS / Simulation: Von Mises Yield Criterion",
         category: "CAE & Simulation",
-        src: "manim_courses/renders/simulation-von-mises.mp4",
+        src: MP4_VIDEOS["simulation-von-mises"],
         description: "A Manim lesson explaining stress concentration risers and equivalent von Mises yield limits.",
         takeaway: "FEA action: add fillets at geometric notches to relieve von Mises stress spikes.",
         tags: ["FEA", "simulation", "von Mises"]
@@ -1734,7 +1683,7 @@ const VIDEO_ACADEMY_REGISTRY = [
         id: "additive-3d-printing",
         title: "Additive Manufacturing: FDM Extrusion & Layer Fusion",
         category: "Manufacturing & Materials",
-        src: "manim_courses/renders/additive-3d-printing.mp4",
+        src: MP4_VIDEOS["additive-3d-printing"],
         description: "A Manim lesson demonstrating layer height, nozzle extrusion, and Z-axis interlayer bonding.",
         takeaway: "3D printing action: align functional load directions perpendicular to print layer lines.",
         tags: ["3D printing", "additive manufacturing", "FDM"]

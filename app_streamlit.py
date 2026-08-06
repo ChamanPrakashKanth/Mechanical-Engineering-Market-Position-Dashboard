@@ -10,18 +10,27 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Hide Streamlit Default UI padding
+# Hide Streamlit Default UI padding and enforce responsive full-height layout
 st.markdown("""
 <style>
-    .reportview-container .main .block-container {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-        padding-left: 0rem;
-        padding-right: 0rem;
+    #root > div:nth-child(1) > div > div > div {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .main .block-container {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    footer {
+        display: none !important;
     }
     iframe {
-        border-radius: 12px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        width: 100% !important;
+        border: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -43,6 +52,6 @@ if os.path.exists(html_path):
         html_content = f.read()
     
     # Embed inside high-performance responsive container
-    st.components.v1.html(html_content, height=950, scrolling=True)
+    st.components.v1.html(html_content, height=1200, scrolling=True)
 else:
     st.error("Error: Could not find compiled Blogspot HTML deployment file.")
