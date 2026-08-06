@@ -1501,6 +1501,31 @@ const VIDEO_LESSONS = {
         src: "manim_courses/renders/hvac-sensible-latent-loads.mp4",
         label: "Sensible vs Latent Loads",
         caption: "Temperature and humidity are separate HVAC jobs."
+    },
+    "Fluid Mechanics": {
+        src: "manim_courses/renders/fluid-bernoulli-conservation.mp4",
+        label: "Bernoulli Energy Conservation",
+        caption: "Static pressure drops when flow velocity accelerates through constriction."
+    },
+    "Thermodynamics": {
+        src: "manim_courses/renders/thermo-carnot-cycle.mp4",
+        label: "Carnot Engine Efficiency",
+        caption: "Ideal cycle thermal limit bounded strictly by reservoir temperatures."
+    },
+    "Strength of Materials": {
+        src: "manim_courses/renders/som-mohrs-circle.mp4",
+        label: "Mohr's Circle Stress Transformation",
+        caption: "Visualizing principal stresses sigma_1, sigma_2 and maximum shear radius."
+    },
+    "Theory of Machines": {
+        src: "manim_courses/renders/tom-four-bar-linkage.mp4",
+        label: "Four-Bar Kinematics & Grashof Rule",
+        caption: "Why s + l <= p + q guarantees continuous crank drive motion."
+    },
+    "CNC Programming": {
+        src: "manim_courses/renders/cnc-gcode-toolpath.mp4",
+        label: "G00 Rapid vs G01 Feed Moves",
+        caption: "Comparing non-cutting positioning against controlled cutting toolpaths."
     }
 };
 

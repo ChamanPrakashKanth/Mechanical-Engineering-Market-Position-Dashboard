@@ -44,6 +44,51 @@
       "title": "HVAC Thermal: Sensible and Latent Loads",
       "description": "A short Manim lesson explaining temperature load, moisture load, and how HVAC engineers separate the two.",
       "tags": ["mechanical engineering", "HVAC", "thermal", "heat transfer", "Manim"]
+    },
+    {
+      "cluster": "Fluid Mechanics",
+      "slug": "fluid-bernoulli-conservation",
+      "scene": "FluidBernoulliConservation",
+      "file": "manim_courses/renders/fluid-bernoulli-conservation.mp4",
+      "title": "Fluid Mechanics: Bernoulli Energy Conservation",
+      "description": "A short Manim lesson explaining pressure head, velocity head, and constriction flow physics.",
+      "tags": ["mechanical engineering", "fluid mechanics", "Bernoulli", "pipe flow", "Manim"]
+    },
+    {
+      "cluster": "Thermodynamics",
+      "slug": "thermo-carnot-cycle",
+      "scene": "ThermoCarnotCycle",
+      "file": "manim_courses/renders/thermo-carnot-cycle.mp4",
+      "title": "Thermodynamics: Carnot Heat Engine Efficiency",
+      "description": "A short Manim lesson explaining isothermal and adiabatic processes on P-V coordinates.",
+      "tags": ["mechanical engineering", "thermodynamics", "Carnot", "power cycles", "Manim"]
+    },
+    {
+      "cluster": "Strength of Materials",
+      "slug": "som-mohrs-circle",
+      "scene": "SomMohrsCircle",
+      "file": "manim_courses/renders/som-mohrs-circle.mp4",
+      "title": "Strength of Materials: Mohr's Circle Stress Transformation",
+      "description": "A short Manim lesson showing principal stresses sigma_1, sigma_2 and maximum shear stress tau_max.",
+      "tags": ["mechanical engineering", "strength of materials", "Mohr's circle", "stress analysis", "Manim"]
+    },
+    {
+      "cluster": "Theory of Machines",
+      "slug": "tom-four-bar-linkage",
+      "scene": "TomFourBarLinkage",
+      "file": "manim_courses/renders/tom-four-bar-linkage.mp4",
+      "title": "Theory of Machines: Four-Bar Linkage Kinematics",
+      "description": "A short Manim lesson illustrating Grashof's rule s + l <= p + q and crank-rocker motion.",
+      "tags": ["mechanical engineering", "theory of machines", "kinematics", "linkages", "Manim"]
+    },
+    {
+      "cluster": "CNC Programming",
+      "slug": "cnc-gcode-toolpath",
+      "scene": "CncGcodeToolpath",
+      "file": "manim_courses/renders/cnc-gcode-toolpath.mp4",
+      "title": "CNC Programming: G00 vs G01 Cutting Toolpaths",
+      "description": "A short Manim lesson comparing G00 rapid positioning with G01 linear interpolation cutting feeds.",
+      "tags": ["mechanical engineering", "manufacturing", "CNC", "G-code", "Manim"]
     }
   ]
 }

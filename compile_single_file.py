@@ -8,6 +8,11 @@ VIDEO_FILES = [
     "robotics-pid-control.mp4",
     "manufacturing-cpk-capability.mp4",
     "hvac-sensible-latent-loads.mp4",
+    "fluid-bernoulli-conservation.mp4",
+    "thermo-carnot-cycle.mp4",
+    "som-mohrs-circle.mp4",
+    "tom-four-bar-linkage.mp4",
+    "cnc-gcode-toolpath.mp4",
 ]
 
 def inline_videos(js_content, workspace):
