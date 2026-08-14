@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     <!-- CDNs -->
@@ -704,6 +704,80 @@
                                         <span class="pct-total" id="db-cluster-total">within Specialty</span>
                                         <div class="pct-progressbar"><div class="bar bar-purple" id="db-cluster-progress"></div></div>
                                         <span class="pct-label" id="db-cluster-pct">Top 0% Specialty</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cohort Intelligence: preserves the existing ranking UI while adding decision-grade context -->
+                            <div class="glass-card element-card benchmark-intelligence-card">
+                                <div class="benchmark-card-heading">
+                                    <div>
+                                        <h3 class="card-section-title"><i data-lucide="scan-search"></i> Anonymized Cohort Intelligence</h3>
+                                        <p>See the distribution behind your standing—not only the final rank.</p>
+                                    </div>
+                                    <span class="benchmark-model-badge">100K modeled cohort</span>
+                                </div>
+                                <div class="benchmark-intelligence-layout">
+                                    <div id="plotly-benchmark-distribution" class="plotly-chart-node benchmark-distribution-chart"></div>
+                                    <div class="benchmark-kpi-stack">
+                                        <div class="benchmark-kpi">
+                                            <span>Specialty cohort</span>
+                                            <strong id="benchmark-cohort-size">0 profiles</strong>
+                                        </div>
+                                        <div class="benchmark-kpi">
+                                            <span>Cohort median</span>
+                                            <strong id="benchmark-cohort-median">0.0 score</strong>
+                                        </div>
+                                        <div class="benchmark-kpi">
+                                            <span>Top 10% threshold</span>
+                                            <strong id="benchmark-top10-cutoff">0.0 score</strong>
+                                        </div>
+                                        <div class="benchmark-kpi benchmark-kpi-accent">
+                                            <span>Your next benchmark</span>
+                                            <strong id="benchmark-next-move">Calculating…</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="benchmark-disclosure"><i data-lucide="info"></i> Standing is calculated from a deterministic, anonymized market model. The browser uses a representative 10,000-profile sample and scales rank counts to the 100,000-profile benchmark; it is directional, not a live census of applicants.</p>
+                            </div>
+
+                            <!-- Interactive rank-impact planning -->
+                            <div class="glass-card element-card career-move-card">
+                                <div class="benchmark-card-heading">
+                                    <div>
+                                        <h3 class="card-section-title"><i data-lucide="route"></i> What Moves My Rank?</h3>
+                                        <p>Model career investments before committing time or money. Your saved profile is not changed.</p>
+                                    </div>
+                                    <button class="btn btn-outline btn-sm" id="scenario-reset-btn"><i data-lucide="rotate-ccw"></i> Reset</button>
+                                </div>
+                                <div class="career-move-layout">
+                                    <div class="scenario-controls">
+                                        <label class="scenario-control">
+                                            <span><b>Additional portfolio projects</b><strong id="scenario-projects-value">0</strong></span>
+                                            <input type="range" id="scenario-projects" min="0" max="3" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>Additional internships</b><strong id="scenario-internships-value">0</strong></span>
+                                            <input type="range" id="scenario-internships" min="0" max="2" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>New certifications</b><strong id="scenario-certs-value">0</strong></span>
+                                            <input type="range" id="scenario-certs" min="0" max="2" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>Software proficiency gain</b><strong id="scenario-software-value">+0%</strong></span>
+                                            <input type="range" id="scenario-software" min="0" max="30" step="5" value="0">
+                                        </label>
+                                    </div>
+                                    <div class="scenario-results">
+                                        <div class="scenario-result-primary">
+                                            <span>Projected readiness</span>
+                                            <strong id="scenario-score">0.0</strong>
+                                            <em id="scenario-score-gain">No change</em>
+                                        </div>
+                                        <div class="scenario-result-row"><span>Worldwide rank</span><strong id="scenario-global-rank">#0</strong></div>
+                                        <div class="scenario-result-row"><span>Specialty rank</span><strong id="scenario-specialty-rank">#0</strong></div>
+                                        <div class="scenario-best-move"><span>Highest-impact single move</span><strong id="scenario-best-move">Run your profile first</strong></div>
                                     </div>
                                 </div>
                             </div>
@@ -1831,6 +1905,24 @@
                         </div>
                     </div>
 
+                    <!-- Structured video course tracks built from the lesson library -->
+                    <div class="video-course-section">
+                        <div class="video-course-section-heading">
+                            <div>
+                                <span class="video-course-eyebrow">Guided learning</span>
+                                <h3>Video Course Tracks</h3>
+                                <p>Follow sequenced lessons, save progress, and continue from your next unfinished module.</p>
+                            </div>
+                            <div class="video-course-overall-progress">
+                                <span>Academy progress</span>
+                                <strong id="video-academy-progress-label">0 / 18 lessons</strong>
+                                <div class="video-course-progress"><div id="video-academy-progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div id="video-course-track-grid" class="video-course-track-grid"></div>
+                        <div id="video-course-queue" class="video-course-queue hidden"></div>
+                    </div>
+
                     <!-- Video Controls: Search & Category Filters -->
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                         <!-- Category Filter Pills -->
@@ -1885,6 +1977,9 @@
                                 <div style="font-size: 0.82rem; color: var(--text-main);" id="theater-video-takeaway">
                                     Design action: reduce bending stress before the model reaches manufacturing.
                                 </div>
+                                <button class="btn btn-success btn-sm" id="video-complete-btn" style="width:100%; margin-top:0.65rem;">
+                                    <i data-lucide="check-circle"></i> Mark Lesson Complete
+                                </button>
                             </div>
                         </div>
                     </div>

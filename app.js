@@ -272,14 +272,14 @@ function parseResumeText(text) {
 }
 
 // Structured Assessment Calculators
-function calculateScores(profile) {
+function calculateScores(profile, proficiencyValues = softwareProficiency) {
     // 1. Academics
     const acadBase = profile.tier === "Tier 1" ? 100 : (profile.tier === "Tier 2" ? 70 : 40);
     const degBase = profile.degree === "B.Tech/B.S." ? 70 : (profile.degree === "M.Tech/M.S." ? 85 : 100);
     const acadWeighted = (acadBase * 0.6 + degBase * 0.4) * 0.25;
     
     // 2. Software proficiency values mapping
-    const swValues = Object.values(softwareProficiency);
+    const swValues = Object.values(proficiencyValues);
     const swAverage = swValues.reduce((a,b) => a+b, 0) / swValues.length;
     const skillsWeighted = (swAverage * 0.6 + Math.min(profile.skills.length * 20, 100) * 0.4) * 0.35;
     
@@ -818,20 +818,24 @@ function buildDashboard(profile) {
     const ranks = getRanks(scores.readiness, profile.cluster || "Design Engineering", profile.region, profile.tier);
     
     document.getElementById("db-global-rank").innerText = `#${ranks.globalRank.toLocaleString()}`;
-    document.getElementById("db-global-pct").innerText = `Top ${ranks.globalPercentile}% Globally`;
-    document.getElementById("db-global-progress").style.width = `${100 - ranks.globalPercentile}%`;
+    document.getElementById("db-global-total").innerText = `of ${ranks.globalTotal.toLocaleString()} Worldwide`;
+    document.getElementById("db-global-pct").innerText = `${ordinal(ranks.globalPercentile)} percentile · Top ${ranks.globalTopShare}%`;
+    document.getElementById("db-global-progress").style.width = `${ranks.globalPercentile}%`;
 
     document.getElementById("db-india-rank").innerText = `#${ranks.indiaRank.toLocaleString()}`;
-    document.getElementById("db-india-pct").innerText = `Top ${ranks.indiaPercentile}% Nationally`;
-    document.getElementById("db-india-progress").style.width = `${100 - ranks.indiaPercentile}%`;
+    document.getElementById("db-india-total").innerText = `of ${ranks.indiaTotal.toLocaleString()} ${profile.region}`;
+    document.getElementById("db-india-pct").innerText = `${ordinal(ranks.indiaPercentile)} percentile · Top ${ranks.indiaTopShare}%`;
+    document.getElementById("db-india-progress").style.width = `${ranks.indiaPercentile}%`;
 
     document.getElementById("db-tier-rank").innerText = `#${ranks.tierRank.toLocaleString()}`;
-    document.getElementById("db-tier-pct").innerText = `Top ${ranks.tierPercentile}% in Tier`;
-    document.getElementById("db-tier-progress").style.width = `${100 - ranks.tierPercentile}%`;
+    document.getElementById("db-tier-total").innerText = `of ${ranks.tierTotal.toLocaleString()} ${profile.tier} peers`;
+    document.getElementById("db-tier-pct").innerText = `${ordinal(ranks.tierPercentile)} percentile · Top ${ranks.tierTopShare}%`;
+    document.getElementById("db-tier-progress").style.width = `${ranks.tierPercentile}%`;
 
     document.getElementById("db-cluster-rank").innerText = `#${ranks.clusterRank.toLocaleString()}`;
-    document.getElementById("db-cluster-pct").innerText = `Top ${ranks.clusterPercentile}% in Specialty`;
-    document.getElementById("db-cluster-progress").style.width = `${100 - ranks.clusterPercentile}%`;
+    document.getElementById("db-cluster-total").innerText = `of ${ranks.clusterTotal.toLocaleString()} specialty peers`;
+    document.getElementById("db-cluster-pct").innerText = `${ordinal(ranks.clusterPercentile)} percentile · Top ${ranks.clusterTopShare}%`;
+    document.getElementById("db-cluster-progress").style.width = `${ranks.clusterPercentile}%`;
 
     document.getElementById("sb-candidate-id").innerText = profile.id || "Candidate #ME-49023";
     document.getElementById("sb-college-val").innerText = `${profile.degree} | ${profile.tier}`;
@@ -858,6 +862,8 @@ function buildDashboard(profile) {
     drawRadarChart();
     drawHeatmapChart();
     drawSalaryChart(scores.readiness);
+    drawBenchmarkDistribution(scores.readiness, profile);
+    renderCareerMoveScenario();
     
     // ATS checklist
     renderAtsScorecard(profile);
@@ -1170,33 +1176,167 @@ function showDashboardView(viewId) {
     }
 }
 
-// Calculate ranks in database
+function resolveSpecialtyDomains(matchedDomain) {
+    const specialtyMap = {
+        "CAD Design": ["Design Engineering", "Automotive", "Aerospace"],
+        "CAE/Simulation": ["FEA", "CFD", "Thermal Engineering"],
+        "Robotics/Mechatronics": ["Robotics", "Mechatronics", "Maintenance Engineering"],
+        "Manufacturing/Operations": ["Manufacturing Engineering", "Production Engineering", "Quality Engineering", "Industrial Engineering"],
+        "HVAC/Thermal": ["HVAC", "Thermal Engineering", "CFD"]
+    };
+    return specialtyMap[matchedDomain] || [matchedDomain];
+}
+
+function percentileStanding(scores, score, scaleFactor) {
+    const countHigher = scores.filter(value => value > score).length;
+    const percentile = Math.max(Math.round(((scores.length - countHigher) / scores.length) * 100), 1);
+    const total = Math.round(scores.length * scaleFactor);
+    return {
+        rank: Math.min(total, Math.max(1, Math.round(countHigher * scaleFactor) + 1)),
+        total,
+        percentile,
+        topShare: Math.min(100, Math.max(1, 101 - percentile))
+    };
+}
+
+function ordinal(value) {
+    const remainder100 = value % 100;
+    if (remainder100 >= 11 && remainder100 <= 13) return `${value}th`;
+    if (value % 10 === 1) return `${value}st`;
+    if (value % 10 === 2) return `${value}nd`;
+    if (value % 10 === 3) return `${value}rd`;
+    return `${value}th`;
+}
+
+// Calculate ranks from the representative sample and scale counts to the 100K benchmark.
 function getRanks(score, matchedDomain, region, tier) {
     const allScores = candidates.map(c => c.score).sort((a,b) => b-a);
     const nationalScores = candidates.filter(c => c.region === region).map(c => c.score).sort((a,b) => b-a);
     const tierScores = candidates.filter(c => c.region === region && c.tier === tier).map(c => c.score).sort((a,b) => b-a);
-    
-    const globalCountHigher = allScores.filter(s => s > score).length;
-    const nationalCountHigher = nationalScores.filter(s => s > score).length;
-    const tierCountHigher = tierScores.filter(s => s > score).length;
-    
+    const domains = resolveSpecialtyDomains(matchedDomain);
+    const clusterScores = candidates.filter(c => domains.includes(c.cluster)).map(c => c.score).sort((a,b) => b-a);
+    const scaleFactor = 100000 / Math.max(allScores.length, 1);
+    const global = percentileStanding(allScores, score, scaleFactor);
+    const national = percentileStanding(nationalScores, score, scaleFactor);
+    const tierGroup = percentileStanding(tierScores, score, scaleFactor);
+    const specialty = percentileStanding(clusterScores.length ? clusterScores : allScores, score, scaleFactor);
+
     return {
-        globalRank: globalCountHigher + 1,
-        globalTotal: allScores.length,
-        globalPercentile: Math.max(Math.round(((allScores.length - globalCountHigher) / allScores.length) * 100), 1),
-        
-        indiaRank: nationalCountHigher + 1,
-        indiaTotal: nationalScores.length,
-        indiaPercentile: Math.max(Math.round(((nationalScores.length - nationalCountHigher) / nationalScores.length) * 100), 1),
-        
-        tierRank: tierCountHigher + 1,
-        tierTotal: tierScores.length,
-        tierPercentile: Math.max(Math.round(((tierScores.length - tierCountHigher) / tierScores.length) * 100), 1),
-        
-        clusterRank: Math.round(globalCountHigher * 0.1) + 1,
-        clusterTotal: Math.round(allScores.length * 0.1),
-        clusterPercentile: Math.max(Math.round(((allScores.length - globalCountHigher) / allScores.length) * 100), 1)
+        globalRank: global.rank, globalTotal: global.total, globalPercentile: global.percentile, globalTopShare: global.topShare,
+        indiaRank: national.rank, indiaTotal: national.total, indiaPercentile: national.percentile, indiaTopShare: national.topShare,
+        tierRank: tierGroup.rank, tierTotal: tierGroup.total, tierPercentile: tierGroup.percentile, tierTopShare: tierGroup.topShare,
+        clusterRank: specialty.rank, clusterTotal: specialty.total, clusterPercentile: specialty.percentile, clusterTopShare: specialty.topShare
     };
+}
+
+function drawBenchmarkDistribution(score, profile) {
+    const domains = resolveSpecialtyDomains(profile.cluster);
+    const cohort = candidates.filter(candidate => domains.includes(candidate.cluster));
+    const effectiveCohort = cohort.length ? cohort : candidates;
+    const sorted = effectiveCohort.map(candidate => candidate.score).sort((a, b) => a - b);
+    const scaleFactor = 100000 / Math.max(candidates.length, 1);
+    const median = sorted[Math.floor(sorted.length / 2)] || 0;
+    const top10Index = Math.max(0, Math.floor(sorted.length * 0.9));
+    const top10Cutoff = sorted[top10Index] || 0;
+    const gap = Math.max(0, Math.round((top10Cutoff - score) * 10) / 10);
+
+    document.getElementById("benchmark-cohort-size").innerText = `${Math.round(effectiveCohort.length * scaleFactor).toLocaleString()} profiles`;
+    document.getElementById("benchmark-cohort-median").innerText = `${median.toFixed(1)} score`;
+    document.getElementById("benchmark-top10-cutoff").innerText = `${top10Cutoff.toFixed(1)} score`;
+    document.getElementById("benchmark-next-move").innerText = gap > 0 ? `+${gap.toFixed(1)} points to top 10%` : "You are inside the top 10%";
+
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+    Plotly.newPlot("plotly-benchmark-distribution", [{
+        x: sorted, type: "histogram", nbinsx: 24, histnorm: "percent",
+        marker: { color: "rgba(56,189,248,0.62)", line: { color: "rgba(56,189,248,0.95)", width: 1 } },
+        hovertemplate: "Score %{x}<br>% of cohort %{y:.1f}%<extra></extra>"
+    }], {
+        margin: { l: 42, r: 16, t: 18, b: 42 },
+        paper_bgcolor: "transparent", plot_bgcolor: "transparent", font: { color: textTheme, size: 11 },
+        xaxis: { title: "Career readiness score", gridcolor: gridTheme, range: [0, 100] },
+        yaxis: { title: "% of cohort", gridcolor: gridTheme },
+        shapes: [
+            { type: "line", x0: score, x1: score, y0: 0, y1: 1, yref: "paper", line: { color: "#f59e0b", width: 3 } },
+            { type: "line", x0: top10Cutoff, x1: top10Cutoff, y0: 0, y1: 1, yref: "paper", line: { color: "#10b981", width: 2, dash: "dot" } }
+        ],
+        annotations: [
+            { x: score, y: 1, yref: "paper", text: "You", showarrow: false, yshift: 10, font: { color: "#f59e0b", size: 11 } },
+            { x: top10Cutoff, y: 1, yref: "paper", text: "Top 10%", showarrow: false, yshift: -12, font: { color: "#10b981", size: 10 } }
+        ],
+        showlegend: false, bargap: 0.08
+    }, { responsive: true, displayModeBar: false });
+}
+
+function buildScenario(profile, additions) {
+    const projectedProfile = {
+        ...profile,
+        projects: Math.min(10, profile.projects + additions.projects),
+        internships: Math.min(5, profile.internships + additions.internships),
+        certifications: [...profile.certifications]
+    };
+    for (let index = 0; index < additions.certs; index++) {
+        projectedProfile.certifications.push(`Planned certification ${index + 1}`);
+    }
+    const projectedProficiency = Object.fromEntries(
+        Object.entries(softwareProficiency).map(([tool, value]) => [tool, Math.min(100, value + additions.software)])
+    );
+    const scores = calculateScores(projectedProfile, projectedProficiency);
+    return { profile: projectedProfile, scores };
+}
+
+function readScenarioInputs() {
+    return {
+        projects: parseInt(document.getElementById("scenario-projects")?.value || "0"),
+        internships: parseInt(document.getElementById("scenario-internships")?.value || "0"),
+        certs: parseInt(document.getElementById("scenario-certs")?.value || "0"),
+        software: parseInt(document.getElementById("scenario-software")?.value || "0")
+    };
+}
+
+function renderCareerMoveScenario() {
+    if (!targetProfile || !document.getElementById("scenario-score")) return;
+    const additions = readScenarioInputs();
+    const baseline = calculateScores(targetProfile);
+    const projected = buildScenario(targetProfile, additions);
+    const ranks = getRanks(projected.scores.readiness, projected.profile.cluster, projected.profile.region, projected.profile.tier);
+    const gain = Math.round((projected.scores.readiness - baseline.readiness) * 10) / 10;
+
+    document.getElementById("scenario-projects-value").textContent = `+${additions.projects}`;
+    document.getElementById("scenario-internships-value").textContent = `+${additions.internships}`;
+    document.getElementById("scenario-certs-value").textContent = `+${additions.certs}`;
+    document.getElementById("scenario-software-value").textContent = `+${additions.software}%`;
+    document.getElementById("scenario-score").textContent = projected.scores.readiness.toFixed(1);
+    document.getElementById("scenario-score-gain").textContent = gain > 0 ? `+${gain.toFixed(1)} readiness points` : "No change";
+    document.getElementById("scenario-global-rank").textContent = `#${ranks.globalRank.toLocaleString()}`;
+    document.getElementById("scenario-specialty-rank").textContent = `#${ranks.clusterRank.toLocaleString()}`;
+
+    const singleMoves = [
+        { label: "Complete one validated portfolio project", additions: { projects: 1, internships: 0, certs: 0, software: 0 } },
+        { label: "Complete one relevant internship", additions: { projects: 0, internships: 1, certs: 0, software: 0 } },
+        { label: "Earn one relevant certification", additions: { projects: 0, internships: 0, certs: 1, software: 0 } },
+        { label: "Raise software proficiency by 10%", additions: { projects: 0, internships: 0, certs: 0, software: 10 } }
+    ].map(move => ({ ...move, gain: buildScenario(targetProfile, move.additions).scores.readiness - baseline.readiness }))
+      .sort((a, b) => b.gain - a.gain);
+    const best = singleMoves[0];
+    document.getElementById("scenario-best-move").textContent = `${best.label} (+${best.gain.toFixed(1)})`;
+}
+
+function initCareerMoveSimulator() {
+    ["scenario-projects", "scenario-internships", "scenario-certs", "scenario-software"].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.addEventListener("input", renderCareerMoveScenario);
+    });
+    const reset = document.getElementById("scenario-reset-btn");
+    if (reset) {
+        reset.addEventListener("click", () => {
+            ["scenario-projects", "scenario-internships", "scenario-certs", "scenario-software"].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) input.value = 0;
+            });
+            renderCareerMoveScenario();
+        });
+    }
 }
 
 // App initial setup
@@ -1210,6 +1350,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Technical Accordions
     populateQuestionBanks();
+    initCareerMoveSimulator();
 
     // Theme toggle listener
     const themeBtn = document.getElementById("theme-toggle-btn");
@@ -1233,6 +1374,7 @@ document.addEventListener("DOMContentLoaded", () => {
             drawRadarChart();
             drawHeatmapChart();
             drawSalaryChart(scores.readiness);
+            drawBenchmarkDistribution(scores.readiness, targetProfile);
         }
     });
 
@@ -1690,10 +1832,134 @@ const VIDEO_ACADEMY_REGISTRY = [
     }
 ];
 
+const VIDEO_COURSE_TRACKS = [
+    {
+        id: "design-foundations", title: "Mechanical Design Foundations", level: "Beginner → Intermediate", duration: "45 min",
+        description: "Statics, stress transformation, mechanisms, and gear design in one coherent visual sequence.",
+        lessons: ["mechanics-truss-equilibrium", "som-mohrs-circle", "tom-four-bar-linkage", "cad-lewis-gear-bending"]
+    },
+    {
+        id: "simulation-engineer", title: "Simulation Engineer Starter", level: "Intermediate", duration: "50 min",
+        description: "Build the mathematics and physical judgment required to interpret FEA results responsibly.",
+        lessons: ["linear-algebra-eigenvalues", "diff-eq-spring-damper", "cae-stiffness-matrix", "simulation-von-mises"]
+    },
+    {
+        id: "thermal-fluids", title: "Thermal & Fluids Essentials", level: "Beginner → Intermediate", duration: "40 min",
+        description: "Connect thermodynamic limits, fluid energy conservation, and practical HVAC load behavior.",
+        lessons: ["thermo-carnot-cycle", "fluid-bernoulli-conservation", "hvac-sensible-latent-loads"]
+    },
+    {
+        id: "smart-manufacturing", title: "Smart Manufacturing Core", level: "Intermediate", duration: "50 min",
+        description: "Understand materials, toolpaths, additive processes, and capability-driven quality control.",
+        lessons: ["materials-iron-carbon", "cnc-gcode-toolpath", "additive-3d-printing", "manufacturing-cpk-capability"]
+    },
+    {
+        id: "controls-robotics", title: "Controls & Robotics Visual Track", level: "Intermediate", duration: "45 min",
+        description: "Move from dynamic-system behavior to PID tuning and frequency-domain stability.",
+        lessons: ["diff-eq-spring-damper", "robotics-pid-control", "control-bode-plot", "tom-four-bar-linkage"]
+    }
+];
+
+let completedVideoLessons = JSON.parse(localStorage.getItem("completedVideoLessons") || "[]");
+let activeVideoCourseId = localStorage.getItem("activeVideoCourseId") || null;
+let currentVideoLessonId = "cad-lewis-gear-bending";
+
+function videoCourseProgress(track) {
+    const completed = track.lessons.filter(id => completedVideoLessons.includes(id)).length;
+    return { completed, total: track.lessons.length, percent: Math.round(completed / track.lessons.length * 100) };
+}
+
+function renderVideoCourseTracks() {
+    const grid = document.getElementById("video-course-track-grid");
+    const queue = document.getElementById("video-course-queue");
+    if (!grid || !queue) return;
+
+    const uniqueCompleted = VIDEO_ACADEMY_REGISTRY.filter(item => completedVideoLessons.includes(item.id)).length;
+    const academyPercent = Math.round(uniqueCompleted / VIDEO_ACADEMY_REGISTRY.length * 100);
+    document.getElementById("video-academy-progress-label").textContent = `${uniqueCompleted} / ${VIDEO_ACADEMY_REGISTRY.length} lessons`;
+    document.getElementById("video-academy-progress-bar").style.width = `${academyPercent}%`;
+
+    grid.innerHTML = VIDEO_COURSE_TRACKS.map(track => {
+        const progress = videoCourseProgress(track);
+        const isActive = activeVideoCourseId === track.id;
+        return `
+            <article class="video-course-track ${isActive ? 'active' : ''}">
+                <div class="video-course-track-top">
+                    <span class="video-course-level">${track.level}</span>
+                    <span>${track.duration}</span>
+                </div>
+                <h4>${track.title}</h4>
+                <p>${track.description}</p>
+                <div class="video-course-meta"><span>${progress.completed}/${progress.total} modules</span><strong>${progress.percent}%</strong></div>
+                <div class="video-course-progress"><div style="width:${progress.percent}%"></div></div>
+                <button class="btn ${isActive ? 'btn-primary' : 'btn-outline'} btn-sm" onclick="startVideoCourse('${track.id}')">
+                    <i data-lucide="${progress.completed ? 'play-circle' : 'book-open'}"></i>
+                    ${progress.completed === progress.total ? 'Review course' : progress.completed ? 'Continue course' : 'Start course'}
+                </button>
+            </article>`;
+    }).join("");
+
+    const activeTrack = VIDEO_COURSE_TRACKS.find(track => track.id === activeVideoCourseId);
+    if (!activeTrack) {
+        queue.classList.add("hidden");
+        queue.innerHTML = "";
+    } else {
+        queue.classList.remove("hidden");
+        queue.innerHTML = `
+            <div class="video-course-queue-heading">
+                <div><span>Active course</span><h4>${activeTrack.title}</h4></div>
+                <strong>${videoCourseProgress(activeTrack).percent}% complete</strong>
+            </div>
+            <div class="video-course-modules">
+                ${activeTrack.lessons.map((lessonId, index) => {
+                    const lesson = VIDEO_ACADEMY_REGISTRY.find(item => item.id === lessonId);
+                    const complete = completedVideoLessons.includes(lessonId);
+                    return `<button class="video-course-module ${complete ? 'complete' : ''} ${currentVideoLessonId === lessonId ? 'current' : ''}" onclick="selectTheaterVideo('${lessonId}')">
+                        <span class="module-index">${complete ? '✓' : index + 1}</span>
+                        <span><b>${lesson.title}</b><small>${lesson.category} · Manim HD</small></span>
+                        <i data-lucide="play"></i>
+                    </button>`;
+                }).join("")}
+            </div>`;
+    }
+
+    updateVideoCompleteButton();
+    if (window.lucide) lucide.createIcons();
+}
+
+function startVideoCourse(trackId) {
+    const track = VIDEO_COURSE_TRACKS.find(item => item.id === trackId);
+    if (!track) return;
+    activeVideoCourseId = trackId;
+    localStorage.setItem("activeVideoCourseId", trackId);
+    const nextLesson = track.lessons.find(id => !completedVideoLessons.includes(id)) || track.lessons[0];
+    renderVideoCourseTracks();
+    selectTheaterVideo(nextLesson);
+}
+
+function toggleVideoLessonComplete(lessonId) {
+    const existingIndex = completedVideoLessons.indexOf(lessonId);
+    if (existingIndex >= 0) completedVideoLessons.splice(existingIndex, 1);
+    else completedVideoLessons.push(lessonId);
+    localStorage.setItem("completedVideoLessons", JSON.stringify(completedVideoLessons));
+    renderVideoCourseTracks();
+}
+
+function updateVideoCompleteButton() {
+    const button = document.getElementById("video-complete-btn");
+    if (!button) return;
+    const complete = completedVideoLessons.includes(currentVideoLessonId);
+    button.classList.toggle("btn-success", !complete);
+    button.classList.toggle("btn-secondary", complete);
+    button.innerHTML = `<i data-lucide="${complete ? 'check-circle-2' : 'check-circle'}"></i> ${complete ? 'Lesson Completed' : 'Mark Lesson Complete'}`;
+    button.onclick = () => toggleVideoLessonComplete(currentVideoLessonId);
+}
+
 function renderVideoAcademy() {
     const grid = document.getElementById("video-academy-grid");
     if (!grid) return;
 
+    renderVideoCourseTracks();
     const categoryFilters = document.getElementById("video-category-filters");
     const searchInput = document.getElementById("video-search-input");
     const countLabel = document.getElementById("video-count-label");
@@ -1778,6 +2044,7 @@ function renderVideoAcademy() {
 function selectTheaterVideo(id) {
     const item = VIDEO_ACADEMY_REGISTRY.find(v => v.id === id);
     if (!item) return;
+    currentVideoLessonId = id;
 
     const titleEl = document.getElementById("theater-video-title");
     const badgeEl = document.getElementById("theater-video-badge");
@@ -1798,6 +2065,9 @@ function selectTheaterVideo(id) {
         sourceEl.src = item.src;
         playerEl.load();
         playerEl.play().catch(() => {});
+        playerEl.onended = () => {
+            if (!completedVideoLessons.includes(id)) toggleVideoLessonComplete(id);
+        };
     }
 
     const theaterCard = document.getElementById("featured-video-theater");
@@ -1805,6 +2075,7 @@ function selectTheaterVideo(id) {
         theaterCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    renderVideoCourseTracks();
     if (window.lucide) lucide.createIcons();
 }
 

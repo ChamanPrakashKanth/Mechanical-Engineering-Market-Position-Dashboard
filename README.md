@@ -24,6 +24,8 @@ Computes a custom **Employability Score** (from 0 to 100) based on weighted resu
 - **Tier Group Rank**: Performance relative to peers from the same college tier.
 - **Specialization Cluster Rank**: Ranking within the matched career discipline.
 
+The dashboard also includes an anonymized cohort distribution and a **What Moves My Rank?** simulator. Engineers can model additional projects, internships, certifications, and software-proficiency gains to compare projected readiness and ranking impact without changing their saved profile.
+
 ### 3. Specialty Career Clustering
 Using technical keyword intersections, profiles are matched to one of five key disciplines:
 - 📐 **CAD Design**: Focuses on geometric drafting, 3D modeling, GD&T, and Design for Manufacturing (DFM/DFMA).
@@ -57,6 +59,11 @@ Using technical keyword intersections, profiles are matched to one of five key d
   - *Manufacturing*: Six Sigma capability indices ($C_p$/$C_{pk}$ step-by-step example), DMAIC phases, and CNC machining speeds/feeds.
   - *HVAC/Thermal*: Sensible vs. Latent cooling load rates ($q_s$, $q_l$), psychrometrics, and Darcy-Weisbach head loss equations.
 - Integrates interactive quiz checks that unlock **employability boost points** (+5.0 score boost) upon correct answers.
+
+### 9. Structured Video Course Tracks
+- Organizes the 18 embedded Manim MP4 lessons into five guided courses: Mechanical Design, Simulation Engineering, Thermal & Fluids, Smart Manufacturing, and Controls & Robotics.
+- Saves lesson completion and active-course progress locally, provides a sequenced module queue, and resumes from the next unfinished lesson.
+- Automatically marks a lesson complete when playback ends, with a manual completion control for review workflows.
 
 ---
 

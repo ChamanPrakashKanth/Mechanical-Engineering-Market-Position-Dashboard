@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Stylesheet -->
     <style>
 
@@ -31,6 +31,117 @@
     --neon-purple: #8b5cf6;
     --neon-amber: #f59e0b;
     --neon-rose: #f43f5e;
+}
+
+/* Anonymized Cohort Intelligence */
+.benchmark-intelligence-card {
+    margin-top: 1rem;
+}
+
+.benchmark-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.benchmark-card-heading p {
+    margin-top: 0.35rem;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+.benchmark-model-badge {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    color: var(--success);
+    background: var(--success-glow);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.benchmark-intelligence-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(220px, 0.8fr);
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.benchmark-distribution-chart {
+    min-height: 265px;
+}
+
+.benchmark-kpi-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+}
+
+.benchmark-kpi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 104px;
+    padding: 0.85rem;
+    border-radius: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.benchmark-kpi span {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.benchmark-kpi strong {
+    margin-top: 0.35rem;
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+.benchmark-kpi-accent {
+    background: linear-gradient(135deg, var(--primary-glow), var(--success-glow));
+    border-color: var(--border-hover);
+}
+
+.benchmark-kpi-accent strong {
+    color: var(--success);
+}
+
+.benchmark-disclosure {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    margin-top: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+.benchmark-disclosure svg {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+}
+
+@media (max-width: 900px) {
+    .benchmark-intelligence-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+    .benchmark-card-heading { flex-direction: column; }
+    .benchmark-kpi-stack { grid-template-columns: 1fr; }
 }
 
 body {
@@ -2588,6 +2699,348 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
 }
 
+/* ===========================================================================
+   MECHINTEL EDITORIAL UI — feature-preserving visual refresh
+   ========================================================================== */
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+    --font-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-heading: 'Manrope', 'DM Sans', sans-serif;
+    --bg-main: #f6f3ec;
+    --bg-navbar: rgba(246, 243, 236, 0.9);
+    --bg-card: rgba(255, 253, 248, 0.92);
+    --bg-card-hover: #fffdf8;
+    --bg-secondary: #eef3ef;
+    --bg-tertiary: #fffdf8;
+    --input-bg: #fffdf8;
+    --border-color: #d8ddd7;
+    --border-hover: rgba(0, 108, 103, 0.45);
+    --text-primary: #122025;
+    --text-secondary: #5d6a6f;
+    --text-muted: #7d898c;
+    --primary: #006c67;
+    --primary-glow: rgba(0, 108, 103, 0.10);
+    --accent: #d8663a;
+    --accent-primary: #006c67;
+    --accent-glow: rgba(216, 102, 58, 0.10);
+    --success: #168068;
+    --success-glow: rgba(22, 128, 104, 0.10);
+    --warning: #c67a24;
+    --danger: #bb4f48;
+    --danger-glow: rgba(187, 79, 72, 0.10);
+    --glass-blur: blur(18px);
+    --shadow-premium: 0 14px 38px rgba(34, 54, 52, 0.08);
+}
+
+* { font-family: var(--font-primary); }
+
+body {
+    background: linear-gradient(180deg, #eaf2ee 0, #f6f3ec 34rem, #f6f3ec 100%);
+    color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6,
+.brand-text, .section-title, .metric-value, .pct-rank {
+    font-family: var(--font-heading);
+}
+
+#bg-canvas, #particle-canvas { opacity: 0.08 !important; }
+
+.navbar {
+    height: 72px;
+    padding: 0 3.5rem;
+    background: var(--bg-navbar);
+    border-bottom: 1px solid rgba(18, 32, 37, 0.08);
+    box-shadow: 0 4px 22px rgba(30, 58, 55, 0.04);
+}
+
+.brand-icon, .sidebar-brand-icon { color: var(--primary); }
+.brand-text { color: var(--text-primary); font-weight: 800; }
+.accent-dot { color: var(--accent); }
+.nav-item { color: var(--text-secondary); }
+.nav-item:hover { color: var(--primary); }
+
+.hero-section {
+    max-width: 1240px;
+    min-height: 690px;
+    margin: 0 auto;
+    padding: 9rem 2rem 5rem;
+    gap: 4.5rem;
+}
+
+.hero-badge {
+    color: var(--primary);
+    background: rgba(0, 108, 103, 0.08);
+    border: 1px solid rgba(0, 108, 103, 0.18);
+    box-shadow: none;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    color: var(--text-primary);
+    font-size: clamp(3rem, 5.8vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+}
+
+.gradient-text {
+    color: var(--primary);
+    background: none;
+    -webkit-text-fill-color: currentColor;
+}
+
+.hero-subtitle { color: var(--text-secondary); font-size: 1.08rem; line-height: 1.7; }
+
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow-premium);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.glass-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    box-shadow: 0 18px 42px rgba(20, 69, 65, 0.10);
+    transform: translateY(-2px);
+}
+
+.hero-ingest-card { border-top: 4px solid var(--primary); }
+.drag-drop-zone { background: #f2f5f1; border-color: #cbd6d0; }
+.drag-drop-zone:hover { background: #e8f0ec; border-color: var(--primary); }
+
+.btn { border-radius: 999px; font-weight: 700; box-shadow: none; }
+.btn-primary {
+    color: #fff;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover { background: #07534f; box-shadow: 0 8px 22px rgba(0,108,103,.18); }
+.btn-success { background: var(--primary); color: #fff; }
+.btn-secondary, .btn-outline {
+    color: var(--text-primary);
+    background: rgba(255,253,248,.72);
+    border-color: var(--border-color);
+}
+
+.stats-strip {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #102f30;
+    border: 0;
+    border-radius: 22px;
+    box-shadow: 0 18px 38px rgba(16,47,48,.15);
+}
+.stat-number { color: #d9eee7; }
+.stat-label { color: #aebfbb; }
+
+.features-section, .faq-section { max-width: 1200px; margin-left: auto; margin-right: auto; }
+.section-header h2 { color: var(--text-primary); }
+.section-header p, .feature-card p, .faq-answer p { color: var(--text-secondary); }
+.feature-icon-wrapper { background: var(--primary-glow) !important; color: var(--primary) !important; }
+
+.footer { background: #102f30; border-top: 0; }
+.footer .brand-text, .footer-bottom { color: #edf5f1; }
+.footer p { color: #aebfbb; }
+
+/* Profile builder */
+#manual-setup-panel { max-width: 1240px; padding-top: 3rem; }
+.setup-header h2 { color: var(--text-primary); }
+.setup-header p { color: var(--text-secondary); }
+.setup-left, .setup-right { padding: 1.5rem; }
+
+input, textarea, select,
+.tags-input-container,
+.calculator-input-row input {
+    color: var(--text-primary) !important;
+    background: var(--input-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+input:focus, textarea:focus, select:focus,
+.tags-input-container:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px var(--primary-glow) !important;
+}
+
+/* Dashboard shell */
+.dashboard-layout-wrapper { background: #f6f3ec; }
+.dashboard-sidebar {
+    background: #102f30;
+    border-right: 0;
+    box-shadow: 8px 0 30px rgba(16,47,48,.10);
+}
+.sidebar-header, .sidebar-user-summary { border-color: rgba(255,255,255,.10); }
+.sidebar-header span, .gamification-title, .xp-text { color: #f3f7f4; }
+.sidebar-user-summary {
+    background: #fffdf8;
+    border-color: rgba(255,255,255,.22);
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+}
+.sidebar-user-summary .user-details { min-width: 0; }
+.sidebar-user-summary .user-id {
+    color: #122025 !important;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-user-summary .user-sub {
+    color: #5d6a6f !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-nav-item { color: #afc0bc; border-radius: 10px; }
+.sidebar-nav-item:hover { color: #fff; background: rgba(255,255,255,.07); }
+.sidebar-nav-item.active {
+    color: #fff;
+    background: rgba(117, 207, 183, .15);
+    box-shadow: inset 3px 0 0 #75cfb7;
+}
+.sidebar-nav-item.active svg { color: #75cfb7; }
+.sidebar-gamification-box { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.10); }
+.xp-progress-bar { background: #75cfb7; }
+
+.dashboard-main-content {
+    background: linear-gradient(180deg, #eaf2ee 0, #f6f3ec 32rem);
+    padding: 2.2rem 2.5rem 4rem;
+}
+.dashboard-pane-header { margin-bottom: 1.7rem; }
+.dashboard-pane-header h1 { color: var(--text-primary); font-size: 2rem; }
+.dashboard-pane-header p { color: var(--text-secondary); }
+
+.metric-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(34,54,52,.06);
+}
+.metric-card:hover { border-color: var(--border-hover); }
+.metric-icon { border-radius: 12px; background: var(--primary-glow) !important; color: var(--primary) !important; }
+.metric-value, .pct-rank { color: var(--text-primary); }
+.metric-label, .pct-total, .pct-label { color: var(--text-secondary); }
+
+.element-card, .plot-card { border-radius: 18px; }
+.card-section-title { color: var(--text-primary); }
+.card-section-title svg { color: var(--primary); }
+.pct-progressbar { background: #e4e9e4; }
+.pct-progressbar .bar { background: var(--primary); }
+
+.db-table th {
+    color: var(--text-secondary);
+    background: #eef3ef;
+    border-color: var(--border-color);
+}
+.db-table td { color: var(--text-primary); border-color: var(--border-color); }
+.db-table tr:hover td { background: rgba(0,108,103,.04); }
+
+.domain-chip, .preset-chip, .pill-btn, .theme-pill-chip {
+    color: var(--text-secondary);
+    background: #f0f4f0;
+    border-color: var(--border-color);
+}
+.domain-chip.active, .preset-chip.active, .pill-btn.active, .theme-pill-chip.active {
+    color: #fff;
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: none;
+}
+
+.video-card, .calculator-node { background: var(--bg-card); border-color: var(--border-color); }
+.play-btn-circle { background: var(--primary); box-shadow: 0 4px 16px rgba(0,108,103,.25); }
+.calc-result-box { color: var(--primary); background: var(--primary-glow); border-color: rgba(0,108,103,.18); }
+
+::-webkit-scrollbar-track { background: #edf1ed; }
+::-webkit-scrollbar-thumb { background: #bdc9c3; border-color: transparent; }
+
+@media (max-width: 900px) {
+    .navbar { padding: 0 1rem; }
+    .hero-section { padding-top: 7rem; gap: 2rem; }
+    .dashboard-main-content { padding: 1.25rem 1rem 3rem; }
+}
+
+/* Rank impact simulator */
+.career-move-card { margin-top: 1rem; }
+.career-move-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(250px, .8fr); gap: 1rem; }
+.scenario-controls { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.scenario-control {
+    padding: .9rem;
+    background: #f1f5f1;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+.scenario-control > span { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; }
+.scenario-control b { color: var(--text-primary); font-size: .78rem; }
+.scenario-control strong { color: var(--primary); font-size: .78rem; }
+.scenario-control input[type="range"] { width: 100%; accent-color: var(--primary); box-shadow: none !important; }
+.scenario-results { padding: 1rem; background: #102f30; color: #fff; border-radius: 16px; }
+.scenario-result-primary { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: .2rem .8rem; padding-bottom: .8rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+.scenario-result-primary span, .scenario-result-row span, .scenario-best-move span { color: #aebfbb; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+.scenario-result-primary strong { grid-row: span 2; font: 800 2.3rem var(--font-heading); color: #d9eee7; }
+.scenario-result-primary em { color: #75cfb7; font-size: .75rem; font-style: normal; }
+.scenario-result-row { display: flex; justify-content: space-between; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+.scenario-result-row strong { color: #fff; }
+.scenario-best-move { margin-top: .8rem; padding: .75rem; background: rgba(117,207,183,.10); border-radius: 10px; }
+.scenario-best-move span { display: block; margin-bottom: .35rem; }
+.scenario-best-move strong { color: #75cfb7; font-size: .82rem; line-height: 1.4; }
+
+/* Structured video courses */
+.video-course-section { margin-bottom: 1.5rem; }
+.video-course-section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1rem; }
+.video-course-eyebrow { color: var(--primary); font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.video-course-section-heading h3 { margin: .25rem 0; color: var(--text-primary); }
+.video-course-section-heading p { color: var(--text-secondary); font-size: .82rem; }
+.video-course-overall-progress { width: 230px; flex: 0 0 auto; }
+.video-course-overall-progress > span { display: block; color: var(--text-muted); font-size: .68rem; text-transform: uppercase; }
+.video-course-overall-progress > strong { display: block; margin: .2rem 0 .4rem; color: var(--text-primary); font-size: .82rem; }
+.video-course-track-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: .8rem; }
+.video-course-track {
+    display: flex; flex-direction: column; min-height: 270px; padding: 1rem;
+    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(34,54,52,.05); transition: .2s ease;
+}
+.video-course-track:hover, .video-course-track.active { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 12px 28px rgba(0,108,103,.10); }
+.video-course-track-top { display: flex; justify-content: space-between; color: var(--text-muted); font-size: .68rem; }
+.video-course-level { color: var(--primary); font-weight: 700; }
+.video-course-track h4 { margin: .8rem 0 .45rem; color: var(--text-primary); font-size: .98rem; }
+.video-course-track p { flex: 1; color: var(--text-secondary); font-size: .76rem; line-height: 1.5; }
+.video-course-meta { display: flex; justify-content: space-between; margin: .8rem 0 .35rem; color: var(--text-muted); font-size: .7rem; }
+.video-course-meta strong { color: var(--primary); }
+.video-course-progress { height: 6px; overflow: hidden; background: #dfe7e2; border-radius: 999px; }
+.video-course-progress > div { height: 100%; background: var(--primary); border-radius: inherit; transition: width .3s ease; }
+.video-course-track .btn { width: 100%; margin-top: .85rem; }
+.video-course-queue { margin-top: 1rem; padding: 1rem; background: #e9f0ec; border: 1px solid var(--border-color); border-radius: 16px; }
+.video-course-queue-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: .75rem; }
+.video-course-queue-heading span { color: var(--primary); font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.video-course-queue-heading h4 { color: var(--text-primary); margin-top: .15rem; }
+.video-course-queue-heading > strong { color: var(--primary); font-size: .78rem; }
+.video-course-modules { display: grid; gap: .45rem; }
+.video-course-module {
+    display: grid; grid-template-columns: 32px 1fr 18px; gap: .65rem; align-items: center; width: 100%;
+    padding: .65rem .75rem; text-align: left; color: var(--text-primary); background: var(--bg-card);
+    border: 1px solid var(--border-color); border-radius: 10px; cursor: pointer;
+}
+.video-course-module:hover, .video-course-module.current { border-color: var(--primary); background: #fffdf8; }
+.video-course-module.complete { background: rgba(22,128,104,.07); }
+.module-index { display: grid; place-items: center; width: 28px; height: 28px; color: var(--primary); background: var(--primary-glow); border-radius: 50%; font-weight: 800; }
+.video-course-module span:nth-child(2) { display: flex; flex-direction: column; }
+.video-course-module b { font-size: .76rem; }
+.video-course-module small { margin-top: .12rem; color: var(--text-muted); font-size: .65rem; }
+.video-card h4[style] { color: var(--text-primary) !important; }
+
+@media (max-width: 900px) {
+    .career-move-layout { grid-template-columns: 1fr; }
+    .video-course-section-heading { align-items: flex-start; flex-direction: column; }
+    .video-course-overall-progress { width: 100%; }
+}
+@media (max-width: 560px) {
+    .scenario-controls { grid-template-columns: 1fr; }
+}
+
 
 
 </style>
@@ -3285,6 +3738,80 @@ h1, h2, h3, h4, h5, h6 {
                                         <span class="pct-total" id="db-cluster-total">within Specialty</span>
                                         <div class="pct-progressbar"><div class="bar bar-purple" id="db-cluster-progress"></div></div>
                                         <span class="pct-label" id="db-cluster-pct">Top 0% Specialty</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cohort Intelligence: preserves the existing ranking UI while adding decision-grade context -->
+                            <div class="glass-card element-card benchmark-intelligence-card">
+                                <div class="benchmark-card-heading">
+                                    <div>
+                                        <h3 class="card-section-title"><i data-lucide="scan-search"></i> Anonymized Cohort Intelligence</h3>
+                                        <p>See the distribution behind your standing—not only the final rank.</p>
+                                    </div>
+                                    <span class="benchmark-model-badge">100K modeled cohort</span>
+                                </div>
+                                <div class="benchmark-intelligence-layout">
+                                    <div id="plotly-benchmark-distribution" class="plotly-chart-node benchmark-distribution-chart"></div>
+                                    <div class="benchmark-kpi-stack">
+                                        <div class="benchmark-kpi">
+                                            <span>Specialty cohort</span>
+                                            <strong id="benchmark-cohort-size">0 profiles</strong>
+                                        </div>
+                                        <div class="benchmark-kpi">
+                                            <span>Cohort median</span>
+                                            <strong id="benchmark-cohort-median">0.0 score</strong>
+                                        </div>
+                                        <div class="benchmark-kpi">
+                                            <span>Top 10% threshold</span>
+                                            <strong id="benchmark-top10-cutoff">0.0 score</strong>
+                                        </div>
+                                        <div class="benchmark-kpi benchmark-kpi-accent">
+                                            <span>Your next benchmark</span>
+                                            <strong id="benchmark-next-move">Calculating…</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="benchmark-disclosure"><i data-lucide="info"></i> Standing is calculated from a deterministic, anonymized market model. The browser uses a representative 10,000-profile sample and scales rank counts to the 100,000-profile benchmark; it is directional, not a live census of applicants.</p>
+                            </div>
+
+                            <!-- Interactive rank-impact planning -->
+                            <div class="glass-card element-card career-move-card">
+                                <div class="benchmark-card-heading">
+                                    <div>
+                                        <h3 class="card-section-title"><i data-lucide="route"></i> What Moves My Rank?</h3>
+                                        <p>Model career investments before committing time or money. Your saved profile is not changed.</p>
+                                    </div>
+                                    <button class="btn btn-outline btn-sm" id="scenario-reset-btn"><i data-lucide="rotate-ccw"></i> Reset</button>
+                                </div>
+                                <div class="career-move-layout">
+                                    <div class="scenario-controls">
+                                        <label class="scenario-control">
+                                            <span><b>Additional portfolio projects</b><strong id="scenario-projects-value">0</strong></span>
+                                            <input type="range" id="scenario-projects" min="0" max="3" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>Additional internships</b><strong id="scenario-internships-value">0</strong></span>
+                                            <input type="range" id="scenario-internships" min="0" max="2" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>New certifications</b><strong id="scenario-certs-value">0</strong></span>
+                                            <input type="range" id="scenario-certs" min="0" max="2" value="0">
+                                        </label>
+                                        <label class="scenario-control">
+                                            <span><b>Software proficiency gain</b><strong id="scenario-software-value">+0%</strong></span>
+                                            <input type="range" id="scenario-software" min="0" max="30" step="5" value="0">
+                                        </label>
+                                    </div>
+                                    <div class="scenario-results">
+                                        <div class="scenario-result-primary">
+                                            <span>Projected readiness</span>
+                                            <strong id="scenario-score">0.0</strong>
+                                            <em id="scenario-score-gain">No change</em>
+                                        </div>
+                                        <div class="scenario-result-row"><span>Worldwide rank</span><strong id="scenario-global-rank">#0</strong></div>
+                                        <div class="scenario-result-row"><span>Specialty rank</span><strong id="scenario-specialty-rank">#0</strong></div>
+                                        <div class="scenario-best-move"><span>Highest-impact single move</span><strong id="scenario-best-move">Run your profile first</strong></div>
                                     </div>
                                 </div>
                             </div>
@@ -4412,6 +4939,24 @@ h1, h2, h3, h4, h5, h6 {
                         </div>
                     </div>
 
+                    <!-- Structured video course tracks built from the lesson library -->
+                    <div class="video-course-section">
+                        <div class="video-course-section-heading">
+                            <div>
+                                <span class="video-course-eyebrow">Guided learning</span>
+                                <h3>Video Course Tracks</h3>
+                                <p>Follow sequenced lessons, save progress, and continue from your next unfinished module.</p>
+                            </div>
+                            <div class="video-course-overall-progress">
+                                <span>Academy progress</span>
+                                <strong id="video-academy-progress-label">0 / 18 lessons</strong>
+                                <div class="video-course-progress"><div id="video-academy-progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div id="video-course-track-grid" class="video-course-track-grid"></div>
+                        <div id="video-course-queue" class="video-course-queue hidden"></div>
+                    </div>
+
                     <!-- Video Controls: Search & Category Filters -->
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                         <!-- Category Filter Pills -->
@@ -4466,6 +5011,9 @@ h1, h2, h3, h4, h5, h6 {
                                 <div style="font-size: 0.82rem; color: var(--text-main);" id="theater-video-takeaway">
                                     Design action: reduce bending stress before the model reaches manufacturing.
                                 </div>
+                                <button class="btn btn-success btn-sm" id="video-complete-btn" style="width:100%; margin-top:0.65rem;">
+                                    <i data-lucide="check-circle"></i> Mark Lesson Complete
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -4817,14 +5365,14 @@ function parseResumeText(text) {
 }
 
 // Structured Assessment Calculators
-function calculateScores(profile) {
+function calculateScores(profile, proficiencyValues = softwareProficiency) {
     // 1. Academics
     const acadBase = profile.tier === "Tier 1" ? 100 : (profile.tier === "Tier 2" ? 70 : 40);
     const degBase = profile.degree === "B.Tech/B.S." ? 70 : (profile.degree === "M.Tech/M.S." ? 85 : 100);
     const acadWeighted = (acadBase * 0.6 + degBase * 0.4) * 0.25;
     
     // 2. Software proficiency values mapping
-    const swValues = Object.values(softwareProficiency);
+    const swValues = Object.values(proficiencyValues);
     const swAverage = swValues.reduce((a,b) => a+b, 0) / swValues.length;
     const skillsWeighted = (swAverage * 0.6 + Math.min(profile.skills.length * 20, 100) * 0.4) * 0.35;
     
@@ -5363,20 +5911,24 @@ function buildDashboard(profile) {
     const ranks = getRanks(scores.readiness, profile.cluster || "Design Engineering", profile.region, profile.tier);
     
     document.getElementById("db-global-rank").innerText = `#${ranks.globalRank.toLocaleString()}`;
-    document.getElementById("db-global-pct").innerText = `Top ${ranks.globalPercentile}% Globally`;
-    document.getElementById("db-global-progress").style.width = `${100 - ranks.globalPercentile}%`;
+    document.getElementById("db-global-total").innerText = `of ${ranks.globalTotal.toLocaleString()} Worldwide`;
+    document.getElementById("db-global-pct").innerText = `${ordinal(ranks.globalPercentile)} percentile · Top ${ranks.globalTopShare}%`;
+    document.getElementById("db-global-progress").style.width = `${ranks.globalPercentile}%`;
 
     document.getElementById("db-india-rank").innerText = `#${ranks.indiaRank.toLocaleString()}`;
-    document.getElementById("db-india-pct").innerText = `Top ${ranks.indiaPercentile}% Nationally`;
-    document.getElementById("db-india-progress").style.width = `${100 - ranks.indiaPercentile}%`;
+    document.getElementById("db-india-total").innerText = `of ${ranks.indiaTotal.toLocaleString()} ${profile.region}`;
+    document.getElementById("db-india-pct").innerText = `${ordinal(ranks.indiaPercentile)} percentile · Top ${ranks.indiaTopShare}%`;
+    document.getElementById("db-india-progress").style.width = `${ranks.indiaPercentile}%`;
 
     document.getElementById("db-tier-rank").innerText = `#${ranks.tierRank.toLocaleString()}`;
-    document.getElementById("db-tier-pct").innerText = `Top ${ranks.tierPercentile}% in Tier`;
-    document.getElementById("db-tier-progress").style.width = `${100 - ranks.tierPercentile}%`;
+    document.getElementById("db-tier-total").innerText = `of ${ranks.tierTotal.toLocaleString()} ${profile.tier} peers`;
+    document.getElementById("db-tier-pct").innerText = `${ordinal(ranks.tierPercentile)} percentile · Top ${ranks.tierTopShare}%`;
+    document.getElementById("db-tier-progress").style.width = `${ranks.tierPercentile}%`;
 
     document.getElementById("db-cluster-rank").innerText = `#${ranks.clusterRank.toLocaleString()}`;
-    document.getElementById("db-cluster-pct").innerText = `Top ${ranks.clusterPercentile}% in Specialty`;
-    document.getElementById("db-cluster-progress").style.width = `${100 - ranks.clusterPercentile}%`;
+    document.getElementById("db-cluster-total").innerText = `of ${ranks.clusterTotal.toLocaleString()} specialty peers`;
+    document.getElementById("db-cluster-pct").innerText = `${ordinal(ranks.clusterPercentile)} percentile · Top ${ranks.clusterTopShare}%`;
+    document.getElementById("db-cluster-progress").style.width = `${ranks.clusterPercentile}%`;
 
     document.getElementById("sb-candidate-id").innerText = profile.id || "Candidate #ME-49023";
     document.getElementById("sb-college-val").innerText = `${profile.degree} | ${profile.tier}`;
@@ -5403,6 +5955,8 @@ function buildDashboard(profile) {
     drawRadarChart();
     drawHeatmapChart();
     drawSalaryChart(scores.readiness);
+    drawBenchmarkDistribution(scores.readiness, profile);
+    renderCareerMoveScenario();
     
     // ATS checklist
     renderAtsScorecard(profile);
@@ -5715,33 +6269,167 @@ function showDashboardView(viewId) {
     }
 }
 
-// Calculate ranks in database
+function resolveSpecialtyDomains(matchedDomain) {
+    const specialtyMap = {
+        "CAD Design": ["Design Engineering", "Automotive", "Aerospace"],
+        "CAE/Simulation": ["FEA", "CFD", "Thermal Engineering"],
+        "Robotics/Mechatronics": ["Robotics", "Mechatronics", "Maintenance Engineering"],
+        "Manufacturing/Operations": ["Manufacturing Engineering", "Production Engineering", "Quality Engineering", "Industrial Engineering"],
+        "HVAC/Thermal": ["HVAC", "Thermal Engineering", "CFD"]
+    };
+    return specialtyMap[matchedDomain] || [matchedDomain];
+}
+
+function percentileStanding(scores, score, scaleFactor) {
+    const countHigher = scores.filter(value => value > score).length;
+    const percentile = Math.max(Math.round(((scores.length - countHigher) / scores.length) * 100), 1);
+    const total = Math.round(scores.length * scaleFactor);
+    return {
+        rank: Math.min(total, Math.max(1, Math.round(countHigher * scaleFactor) + 1)),
+        total,
+        percentile,
+        topShare: Math.min(100, Math.max(1, 101 - percentile))
+    };
+}
+
+function ordinal(value) {
+    const remainder100 = value % 100;
+    if (remainder100 >= 11 && remainder100 <= 13) return `${value}th`;
+    if (value % 10 === 1) return `${value}st`;
+    if (value % 10 === 2) return `${value}nd`;
+    if (value % 10 === 3) return `${value}rd`;
+    return `${value}th`;
+}
+
+// Calculate ranks from the representative sample and scale counts to the 100K benchmark.
 function getRanks(score, matchedDomain, region, tier) {
     const allScores = candidates.map(c => c.score).sort((a,b) => b-a);
     const nationalScores = candidates.filter(c => c.region === region).map(c => c.score).sort((a,b) => b-a);
     const tierScores = candidates.filter(c => c.region === region && c.tier === tier).map(c => c.score).sort((a,b) => b-a);
-    
-    const globalCountHigher = allScores.filter(s => s > score).length;
-    const nationalCountHigher = nationalScores.filter(s => s > score).length;
-    const tierCountHigher = tierScores.filter(s => s > score).length;
-    
+    const domains = resolveSpecialtyDomains(matchedDomain);
+    const clusterScores = candidates.filter(c => domains.includes(c.cluster)).map(c => c.score).sort((a,b) => b-a);
+    const scaleFactor = 100000 / Math.max(allScores.length, 1);
+    const global = percentileStanding(allScores, score, scaleFactor);
+    const national = percentileStanding(nationalScores, score, scaleFactor);
+    const tierGroup = percentileStanding(tierScores, score, scaleFactor);
+    const specialty = percentileStanding(clusterScores.length ? clusterScores : allScores, score, scaleFactor);
+
     return {
-        globalRank: globalCountHigher + 1,
-        globalTotal: allScores.length,
-        globalPercentile: Math.max(Math.round(((allScores.length - globalCountHigher) / allScores.length) * 100), 1),
-        
-        indiaRank: nationalCountHigher + 1,
-        indiaTotal: nationalScores.length,
-        indiaPercentile: Math.max(Math.round(((nationalScores.length - nationalCountHigher) / nationalScores.length) * 100), 1),
-        
-        tierRank: tierCountHigher + 1,
-        tierTotal: tierScores.length,
-        tierPercentile: Math.max(Math.round(((tierScores.length - tierCountHigher) / tierScores.length) * 100), 1),
-        
-        clusterRank: Math.round(globalCountHigher * 0.1) + 1,
-        clusterTotal: Math.round(allScores.length * 0.1),
-        clusterPercentile: Math.max(Math.round(((allScores.length - globalCountHigher) / allScores.length) * 100), 1)
+        globalRank: global.rank, globalTotal: global.total, globalPercentile: global.percentile, globalTopShare: global.topShare,
+        indiaRank: national.rank, indiaTotal: national.total, indiaPercentile: national.percentile, indiaTopShare: national.topShare,
+        tierRank: tierGroup.rank, tierTotal: tierGroup.total, tierPercentile: tierGroup.percentile, tierTopShare: tierGroup.topShare,
+        clusterRank: specialty.rank, clusterTotal: specialty.total, clusterPercentile: specialty.percentile, clusterTopShare: specialty.topShare
     };
+}
+
+function drawBenchmarkDistribution(score, profile) {
+    const domains = resolveSpecialtyDomains(profile.cluster);
+    const cohort = candidates.filter(candidate => domains.includes(candidate.cluster));
+    const effectiveCohort = cohort.length ? cohort : candidates;
+    const sorted = effectiveCohort.map(candidate => candidate.score).sort((a, b) => a - b);
+    const scaleFactor = 100000 / Math.max(candidates.length, 1);
+    const median = sorted[Math.floor(sorted.length / 2)] || 0;
+    const top10Index = Math.max(0, Math.floor(sorted.length * 0.9));
+    const top10Cutoff = sorted[top10Index] || 0;
+    const gap = Math.max(0, Math.round((top10Cutoff - score) * 10) / 10);
+
+    document.getElementById("benchmark-cohort-size").innerText = `${Math.round(effectiveCohort.length * scaleFactor).toLocaleString()} profiles`;
+    document.getElementById("benchmark-cohort-median").innerText = `${median.toFixed(1)} score`;
+    document.getElementById("benchmark-top10-cutoff").innerText = `${top10Cutoff.toFixed(1)} score`;
+    document.getElementById("benchmark-next-move").innerText = gap > 0 ? `+${gap.toFixed(1)} points to top 10%` : "You are inside the top 10%";
+
+    const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+    const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+    Plotly.newPlot("plotly-benchmark-distribution", [{
+        x: sorted, type: "histogram", nbinsx: 24, histnorm: "percent",
+        marker: { color: "rgba(56,189,248,0.62)", line: { color: "rgba(56,189,248,0.95)", width: 1 } },
+        hovertemplate: "Score %{x}<br>% of cohort %{y:.1f}%<extra></extra>"
+    }], {
+        margin: { l: 42, r: 16, t: 18, b: 42 },
+        paper_bgcolor: "transparent", plot_bgcolor: "transparent", font: { color: textTheme, size: 11 },
+        xaxis: { title: "Career readiness score", gridcolor: gridTheme, range: [0, 100] },
+        yaxis: { title: "% of cohort", gridcolor: gridTheme },
+        shapes: [
+            { type: "line", x0: score, x1: score, y0: 0, y1: 1, yref: "paper", line: { color: "#f59e0b", width: 3 } },
+            { type: "line", x0: top10Cutoff, x1: top10Cutoff, y0: 0, y1: 1, yref: "paper", line: { color: "#10b981", width: 2, dash: "dot" } }
+        ],
+        annotations: [
+            { x: score, y: 1, yref: "paper", text: "You", showarrow: false, yshift: 10, font: { color: "#f59e0b", size: 11 } },
+            { x: top10Cutoff, y: 1, yref: "paper", text: "Top 10%", showarrow: false, yshift: -12, font: { color: "#10b981", size: 10 } }
+        ],
+        showlegend: false, bargap: 0.08
+    }, { responsive: true, displayModeBar: false });
+}
+
+function buildScenario(profile, additions) {
+    const projectedProfile = {
+        ...profile,
+        projects: Math.min(10, profile.projects + additions.projects),
+        internships: Math.min(5, profile.internships + additions.internships),
+        certifications: [...profile.certifications]
+    };
+    for (let index = 0; index < additions.certs; index++) {
+        projectedProfile.certifications.push(`Planned certification ${index + 1}`);
+    }
+    const projectedProficiency = Object.fromEntries(
+        Object.entries(softwareProficiency).map(([tool, value]) => [tool, Math.min(100, value + additions.software)])
+    );
+    const scores = calculateScores(projectedProfile, projectedProficiency);
+    return { profile: projectedProfile, scores };
+}
+
+function readScenarioInputs() {
+    return {
+        projects: parseInt(document.getElementById("scenario-projects")?.value || "0"),
+        internships: parseInt(document.getElementById("scenario-internships")?.value || "0"),
+        certs: parseInt(document.getElementById("scenario-certs")?.value || "0"),
+        software: parseInt(document.getElementById("scenario-software")?.value || "0")
+    };
+}
+
+function renderCareerMoveScenario() {
+    if (!targetProfile || !document.getElementById("scenario-score")) return;
+    const additions = readScenarioInputs();
+    const baseline = calculateScores(targetProfile);
+    const projected = buildScenario(targetProfile, additions);
+    const ranks = getRanks(projected.scores.readiness, projected.profile.cluster, projected.profile.region, projected.profile.tier);
+    const gain = Math.round((projected.scores.readiness - baseline.readiness) * 10) / 10;
+
+    document.getElementById("scenario-projects-value").textContent = `+${additions.projects}`;
+    document.getElementById("scenario-internships-value").textContent = `+${additions.internships}`;
+    document.getElementById("scenario-certs-value").textContent = `+${additions.certs}`;
+    document.getElementById("scenario-software-value").textContent = `+${additions.software}%`;
+    document.getElementById("scenario-score").textContent = projected.scores.readiness.toFixed(1);
+    document.getElementById("scenario-score-gain").textContent = gain > 0 ? `+${gain.toFixed(1)} readiness points` : "No change";
+    document.getElementById("scenario-global-rank").textContent = `#${ranks.globalRank.toLocaleString()}`;
+    document.getElementById("scenario-specialty-rank").textContent = `#${ranks.clusterRank.toLocaleString()}`;
+
+    const singleMoves = [
+        { label: "Complete one validated portfolio project", additions: { projects: 1, internships: 0, certs: 0, software: 0 } },
+        { label: "Complete one relevant internship", additions: { projects: 0, internships: 1, certs: 0, software: 0 } },
+        { label: "Earn one relevant certification", additions: { projects: 0, internships: 0, certs: 1, software: 0 } },
+        { label: "Raise software proficiency by 10%", additions: { projects: 0, internships: 0, certs: 0, software: 10 } }
+    ].map(move => ({ ...move, gain: buildScenario(targetProfile, move.additions).scores.readiness - baseline.readiness }))
+      .sort((a, b) => b.gain - a.gain);
+    const best = singleMoves[0];
+    document.getElementById("scenario-best-move").textContent = `${best.label} (+${best.gain.toFixed(1)})`;
+}
+
+function initCareerMoveSimulator() {
+    ["scenario-projects", "scenario-internships", "scenario-certs", "scenario-software"].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.addEventListener("input", renderCareerMoveScenario);
+    });
+    const reset = document.getElementById("scenario-reset-btn");
+    if (reset) {
+        reset.addEventListener("click", () => {
+            ["scenario-projects", "scenario-internships", "scenario-certs", "scenario-software"].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) input.value = 0;
+            });
+            renderCareerMoveScenario();
+        });
+    }
 }
 
 // App initial setup
@@ -5755,6 +6443,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Technical Accordions
     populateQuestionBanks();
+    initCareerMoveSimulator();
 
     // Theme toggle listener
     const themeBtn = document.getElementById("theme-toggle-btn");
@@ -5778,6 +6467,7 @@ document.addEventListener("DOMContentLoaded", () => {
             drawRadarChart();
             drawHeatmapChart();
             drawSalaryChart(scores.readiness);
+            drawBenchmarkDistribution(scores.readiness, targetProfile);
         }
     });
 
@@ -6235,10 +6925,134 @@ const VIDEO_ACADEMY_REGISTRY = [
     }
 ];
 
+const VIDEO_COURSE_TRACKS = [
+    {
+        id: "design-foundations", title: "Mechanical Design Foundations", level: "Beginner → Intermediate", duration: "45 min",
+        description: "Statics, stress transformation, mechanisms, and gear design in one coherent visual sequence.",
+        lessons: ["mechanics-truss-equilibrium", "som-mohrs-circle", "tom-four-bar-linkage", "cad-lewis-gear-bending"]
+    },
+    {
+        id: "simulation-engineer", title: "Simulation Engineer Starter", level: "Intermediate", duration: "50 min",
+        description: "Build the mathematics and physical judgment required to interpret FEA results responsibly.",
+        lessons: ["linear-algebra-eigenvalues", "diff-eq-spring-damper", "cae-stiffness-matrix", "simulation-von-mises"]
+    },
+    {
+        id: "thermal-fluids", title: "Thermal & Fluids Essentials", level: "Beginner → Intermediate", duration: "40 min",
+        description: "Connect thermodynamic limits, fluid energy conservation, and practical HVAC load behavior.",
+        lessons: ["thermo-carnot-cycle", "fluid-bernoulli-conservation", "hvac-sensible-latent-loads"]
+    },
+    {
+        id: "smart-manufacturing", title: "Smart Manufacturing Core", level: "Intermediate", duration: "50 min",
+        description: "Understand materials, toolpaths, additive processes, and capability-driven quality control.",
+        lessons: ["materials-iron-carbon", "cnc-gcode-toolpath", "additive-3d-printing", "manufacturing-cpk-capability"]
+    },
+    {
+        id: "controls-robotics", title: "Controls & Robotics Visual Track", level: "Intermediate", duration: "45 min",
+        description: "Move from dynamic-system behavior to PID tuning and frequency-domain stability.",
+        lessons: ["diff-eq-spring-damper", "robotics-pid-control", "control-bode-plot", "tom-four-bar-linkage"]
+    }
+];
+
+let completedVideoLessons = JSON.parse(localStorage.getItem("completedVideoLessons") || "[]");
+let activeVideoCourseId = localStorage.getItem("activeVideoCourseId") || null;
+let currentVideoLessonId = "cad-lewis-gear-bending";
+
+function videoCourseProgress(track) {
+    const completed = track.lessons.filter(id => completedVideoLessons.includes(id)).length;
+    return { completed, total: track.lessons.length, percent: Math.round(completed / track.lessons.length * 100) };
+}
+
+function renderVideoCourseTracks() {
+    const grid = document.getElementById("video-course-track-grid");
+    const queue = document.getElementById("video-course-queue");
+    if (!grid || !queue) return;
+
+    const uniqueCompleted = VIDEO_ACADEMY_REGISTRY.filter(item => completedVideoLessons.includes(item.id)).length;
+    const academyPercent = Math.round(uniqueCompleted / VIDEO_ACADEMY_REGISTRY.length * 100);
+    document.getElementById("video-academy-progress-label").textContent = `${uniqueCompleted} / ${VIDEO_ACADEMY_REGISTRY.length} lessons`;
+    document.getElementById("video-academy-progress-bar").style.width = `${academyPercent}%`;
+
+    grid.innerHTML = VIDEO_COURSE_TRACKS.map(track => {
+        const progress = videoCourseProgress(track);
+        const isActive = activeVideoCourseId === track.id;
+        return `
+            <article class="video-course-track ${isActive ? 'active' : ''}">
+                <div class="video-course-track-top">
+                    <span class="video-course-level">${track.level}</span>
+                    <span>${track.duration}</span>
+                </div>
+                <h4>${track.title}</h4>
+                <p>${track.description}</p>
+                <div class="video-course-meta"><span>${progress.completed}/${progress.total} modules</span><strong>${progress.percent}%</strong></div>
+                <div class="video-course-progress"><div style="width:${progress.percent}%"></div></div>
+                <button class="btn ${isActive ? 'btn-primary' : 'btn-outline'} btn-sm" onclick="startVideoCourse('${track.id}')">
+                    <i data-lucide="${progress.completed ? 'play-circle' : 'book-open'}"></i>
+                    ${progress.completed === progress.total ? 'Review course' : progress.completed ? 'Continue course' : 'Start course'}
+                </button>
+            </article>`;
+    }).join("");
+
+    const activeTrack = VIDEO_COURSE_TRACKS.find(track => track.id === activeVideoCourseId);
+    if (!activeTrack) {
+        queue.classList.add("hidden");
+        queue.innerHTML = "";
+    } else {
+        queue.classList.remove("hidden");
+        queue.innerHTML = `
+            <div class="video-course-queue-heading">
+                <div><span>Active course</span><h4>${activeTrack.title}</h4></div>
+                <strong>${videoCourseProgress(activeTrack).percent}% complete</strong>
+            </div>
+            <div class="video-course-modules">
+                ${activeTrack.lessons.map((lessonId, index) => {
+                    const lesson = VIDEO_ACADEMY_REGISTRY.find(item => item.id === lessonId);
+                    const complete = completedVideoLessons.includes(lessonId);
+                    return `<button class="video-course-module ${complete ? 'complete' : ''} ${currentVideoLessonId === lessonId ? 'current' : ''}" onclick="selectTheaterVideo('${lessonId}')">
+                        <span class="module-index">${complete ? '✓' : index + 1}</span>
+                        <span><b>${lesson.title}</b><small>${lesson.category} · Manim HD</small></span>
+                        <i data-lucide="play"></i>
+                    </button>`;
+                }).join("")}
+            </div>`;
+    }
+
+    updateVideoCompleteButton();
+    if (window.lucide) lucide.createIcons();
+}
+
+function startVideoCourse(trackId) {
+    const track = VIDEO_COURSE_TRACKS.find(item => item.id === trackId);
+    if (!track) return;
+    activeVideoCourseId = trackId;
+    localStorage.setItem("activeVideoCourseId", trackId);
+    const nextLesson = track.lessons.find(id => !completedVideoLessons.includes(id)) || track.lessons[0];
+    renderVideoCourseTracks();
+    selectTheaterVideo(nextLesson);
+}
+
+function toggleVideoLessonComplete(lessonId) {
+    const existingIndex = completedVideoLessons.indexOf(lessonId);
+    if (existingIndex >= 0) completedVideoLessons.splice(existingIndex, 1);
+    else completedVideoLessons.push(lessonId);
+    localStorage.setItem("completedVideoLessons", JSON.stringify(completedVideoLessons));
+    renderVideoCourseTracks();
+}
+
+function updateVideoCompleteButton() {
+    const button = document.getElementById("video-complete-btn");
+    if (!button) return;
+    const complete = completedVideoLessons.includes(currentVideoLessonId);
+    button.classList.toggle("btn-success", !complete);
+    button.classList.toggle("btn-secondary", complete);
+    button.innerHTML = `<i data-lucide="${complete ? 'check-circle-2' : 'check-circle'}"></i> ${complete ? 'Lesson Completed' : 'Mark Lesson Complete'}`;
+    button.onclick = () => toggleVideoLessonComplete(currentVideoLessonId);
+}
+
 function renderVideoAcademy() {
     const grid = document.getElementById("video-academy-grid");
     if (!grid) return;
 
+    renderVideoCourseTracks();
     const categoryFilters = document.getElementById("video-category-filters");
     const searchInput = document.getElementById("video-search-input");
     const countLabel = document.getElementById("video-count-label");
@@ -6323,6 +7137,7 @@ function renderVideoAcademy() {
 function selectTheaterVideo(id) {
     const item = VIDEO_ACADEMY_REGISTRY.find(v => v.id === id);
     if (!item) return;
+    currentVideoLessonId = id;
 
     const titleEl = document.getElementById("theater-video-title");
     const badgeEl = document.getElementById("theater-video-badge");
@@ -6343,6 +7158,9 @@ function selectTheaterVideo(id) {
         sourceEl.src = item.src;
         playerEl.load();
         playerEl.play().catch(() => {});
+        playerEl.onended = () => {
+            if (!completedVideoLessons.includes(id)) toggleVideoLessonComplete(id);
+        };
     }
 
     const theaterCard = document.getElementById("featured-video-theater");
@@ -6350,6 +7168,7 @@ function selectTheaterVideo(id) {
         theaterCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    renderVideoCourseTracks();
     if (window.lucide) lucide.createIcons();
 }
 
