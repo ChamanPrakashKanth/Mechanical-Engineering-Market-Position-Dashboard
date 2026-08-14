@@ -3029,4 +3029,69 @@ input:focus, textarea:focus, select:focus,
     .scenario-controls { grid-template-columns: 1fr; }
 }
 
+/* 1,000 Mathematics Shorts */
+.math-shorts-section { margin: 0 0 1.5rem; padding: 1.1rem; }
+.math-shorts-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.math-shorts-header h3 { margin: .2rem 0 .3rem; color: var(--text-primary); font-size: 1.2rem; }
+.math-shorts-header p { color: var(--text-secondary); font-size: .8rem; }
+.math-shorts-stats { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
+.math-shorts-stats > div { min-width: 72px; padding: .48rem .65rem; text-align: center; background: var(--primary-glow); border: 1px solid rgba(0,108,103,.12); border-radius: 12px; }
+.math-shorts-stats strong { display: block; color: var(--primary); font-size: .88rem; }
+.math-shorts-stats span { display: block; margin-top: .05rem; color: var(--text-muted); font-size: .58rem; font-weight: 800; text-transform: uppercase; }
+.math-short-theater { overflow: hidden; background: #0b292b; border: 1px solid rgba(0,108,103,.25); border-radius: 18px; box-shadow: 0 14px 34px rgba(10,43,43,.14); }
+.math-short-stage { position: relative; aspect-ratio: 16 / 9; max-height: 540px; background: #102f30; }
+.math-short-stage canvas { display: block; width: 100%; height: 100%; }
+.math-short-big-play { position: absolute; inset: 50% auto auto 50%; display: grid; place-items: center; width: 66px; height: 66px; transform: translate(-50%,-50%); color: #fff; background: rgba(0,108,103,.92); border: 2px solid rgba(255,255,255,.8); border-radius: 50%; cursor: pointer; box-shadow: 0 8px 26px rgba(0,0,0,.3); transition: .2s ease; }
+.math-short-big-play:hover { transform: translate(-50%,-50%) scale(1.06); }
+.math-short-big-play.playing { opacity: 0; pointer-events: none; }
+.math-short-player-bar { display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: center; gap: .65rem; padding: .7rem .85rem; color: #e7f3ef; background: #0b292b; }
+.math-short-player-bar button { display: grid; place-items: center; min-width: 34px; height: 34px; padding: 0 .55rem; color: #e7f3ef; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 9px; cursor: pointer; }
+.math-short-player-bar button:hover { background: rgba(117,207,183,.18); }
+.math-short-player-bar .math-short-complete-btn { width: auto; padding: 0 .75rem; color: #9be0cc; font-size: .7rem; font-weight: 800; }
+.math-short-time { min-width: 70px; color: #b8ccc7; font-size: .7rem; font-variant-numeric: tabular-nums; }
+.math-short-timeline { height: 7px; overflow: hidden; background: rgba(255,255,255,.14); border-radius: 999px; cursor: pointer; }
+.math-short-timeline > div { height: 100%; width: 0; background: #75cfb7; border-radius: inherit; transition: width .08s linear; }
+.math-short-now-playing { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem 1rem; color: #b8ccc7; background: #103638; border-top: 1px solid rgba(255,255,255,.08); font-size: .72rem; }
+.math-short-now-playing strong { display: block; margin-top: .2rem; color: #fff; font-size: .88rem; }
+.math-short-now-playing > span { align-self: center; color: #75cfb7; font-weight: 800; white-space: nowrap; }
+.math-shorts-controls { display: grid; grid-template-columns: minmax(220px,1fr) repeat(3,minmax(130px,.35fr)); gap: .65rem; margin: 1rem 0 .7rem; }
+.math-search-wrap { position: relative; }
+.math-search-wrap i { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+.math-shorts-controls input, .math-shorts-controls select { width: 100%; height: 42px; padding: 0 .75rem; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; font: 600 .74rem var(--font-body); outline: none; }
+.math-shorts-controls input { padding-left: 2.25rem; }
+.math-shorts-controls input:focus, .math-shorts-controls select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+.math-shorts-result-row, .math-shorts-pagination { display: flex; justify-content: space-between; align-items: center; gap: .75rem; color: var(--text-muted); font-size: .7rem; }
+.math-shorts-pagination { justify-content: center; margin-top: 1rem; }
+.math-shorts-pagination button { padding: .55rem .8rem; color: var(--primary); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 9px; font-weight: 800; cursor: pointer; }
+.math-shorts-pagination button:disabled { opacity: .4; cursor: default; }
+.math-shorts-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); gap: .75rem; margin-top: .75rem; }
+.math-short-card { overflow: hidden; text-align: left; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; box-shadow: 0 6px 18px rgba(34,54,52,.05); transition: .2s ease; }
+.math-short-card:hover, .math-short-card.current { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 10px 24px rgba(0,108,103,.1); }
+.math-short-card.complete { border-color: rgba(22,128,104,.35); }
+.math-short-card-preview { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; padding: 1.5rem .8rem .8rem; color: #d9eee7; text-align: center; background: linear-gradient(145deg,#0b292b,#155054); border: 0; cursor: pointer; }
+.math-short-card-preview strong { font: 800 1.2rem var(--font-heading); }
+.math-short-card-preview span { position: absolute; left: .55rem; top: .5rem; color: #75cfb7; font-size: .58rem; font-weight: 800; text-transform: uppercase; }
+.math-short-card-preview i { position: absolute; left: 50%; bottom: .45rem; width: 18px; transform: translateX(-50%); color: #75cfb7; }
+.math-short-card-preview em { position: absolute; right: .5rem; bottom: .45rem; padding: .18rem .35rem; color: #fff; background: rgba(0,0,0,.45); border-radius: 5px; font-size: .58rem; font-style: normal; }
+.math-short-card-body { padding: .75rem; }
+.math-short-card-body > span { color: var(--primary); font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.math-short-card-body h4 { margin: .35rem 0 .55rem; color: var(--text-primary); font-size: .78rem; line-height: 1.35; }
+.math-short-card-body p { min-height: 2.7em; margin-bottom: .65rem; color: var(--text-muted); font-size: .66rem; line-height: 1.35; }
+.math-short-card-body .btn { width: 100%; }
+
+@media (max-width: 900px) {
+    .math-shorts-controls { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 620px) {
+    .math-shorts-header, .math-short-now-playing { flex-direction: column; }
+    .math-shorts-stats { justify-content: flex-start; }
+    .math-shorts-controls { grid-template-columns: 1fr; }
+    .math-short-player-bar { grid-template-columns: auto auto 1fr auto; }
+    .math-short-player-bar .math-short-complete-btn { grid-column: 1 / -1; }
+    .math-shorts-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 430px) {
+    .math-shorts-grid { grid-template-columns: 1fr; }
+}
+
 

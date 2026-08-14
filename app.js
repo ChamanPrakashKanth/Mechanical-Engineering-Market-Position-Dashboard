@@ -1955,11 +1955,359 @@ function updateVideoCompleteButton() {
     button.onclick = () => toggleVideoLessonComplete(currentVideoLessonId);
 }
 
+// -------------------------------------------------------------------------
+// 1,000 Mathematics Shorts — deterministic 20-second visual micro-videos
+// -------------------------------------------------------------------------
+const MATH_SHORT_TOPICS = [
+    ["ratios", "Arithmetic & Ratios"], ["percent", "Percentages"], ["linear", "Linear Equations"],
+    ["quadratic", "Quadratic Equations"], ["sequence", "Sequences"], ["coordinate", "Coordinate Geometry"],
+    ["geometry", "Plane Geometry"], ["trigonometry", "Trigonometry"], ["vectors", "Vectors"],
+    ["matrices", "Matrices"], ["determinants", "Determinants"], ["derivatives", "Differential Calculus"],
+    ["integrals", "Integral Calculus"], ["diffeq", "Differential Equations"], ["complex", "Complex Numbers"],
+    ["probability", "Probability"], ["statistics", "Statistics"], ["numerical", "Numerical Methods"],
+    ["laplace", "Laplace Transforms"], ["units", "Engineering Units"]
+];
+
+function fixedNumber(value, digits = 2) {
+    return Number(value.toFixed(digits)).toString();
+}
+
+function buildMathShort(topicId, topicName, index, catalogIndex) {
+    const number = index + 1;
+    const difficulty = index < 17 ? "Foundation" : index < 34 ? "Intermediate" : "Advanced";
+    let title = "", objective = "", problem = "", step1 = "", step2 = "", answer = "", formula = "";
+    const a = 2 + (index % 8), b = 3 + ((index * 3) % 9), c = 2 + ((index * 5) % 7);
+
+    switch (topicId) {
+        case "ratios": {
+            const scale = 2 + (index % 7);
+            title = `Reduce a ratio — Example ${number}`; objective = "Cancel a common scale factor.";
+            problem = `Simplify ${a * scale} : ${b * scale}`; step1 = `Common factor = ${scale}`;
+            step2 = `${a * scale} ÷ ${scale} : ${b * scale} ÷ ${scale}`; answer = `${a} : ${b}`; formula = "a·k : b·k = a : b"; break;
+        }
+        case "percent": {
+            const percent = 5 * (1 + index % 15), base = 20 * (2 + index % 18), result = base * percent / 100;
+            title = `Percentage of a quantity — Example ${number}`; objective = "Convert percent to a multiplier.";
+            problem = `Find ${percent}% of ${base}`; step1 = `${percent}% = ${percent}/100`;
+            step2 = `${percent}/100 × ${base}`; answer = fixedNumber(result); formula = "part = percent × whole"; break;
+        }
+        case "linear": {
+            const solution = 1 + index % 14, rhs = a * solution + b;
+            title = `Solve a linear equation — Example ${number}`; objective = "Isolate the unknown with inverse operations.";
+            problem = `${a}x + ${b} = ${rhs}`; step1 = `${a}x = ${rhs} − ${b} = ${rhs - b}`;
+            step2 = `x = ${rhs - b} ÷ ${a}`; answer = `x = ${solution}`; formula = "ax + b = c"; break;
+        }
+        case "quadratic": {
+            const r1 = 1 + index % 8, r2 = 2 + (index * 2) % 9, sum = r1 + r2, product = r1 * r2;
+            title = `Factor a quadratic — Example ${number}`; objective = "Recover roots from their sum and product.";
+            problem = `x² − ${sum}x + ${product} = 0`; step1 = `Numbers with sum ${sum}, product ${product}`;
+            step2 = `(x − ${r1})(x − ${r2}) = 0`; answer = `x = ${r1} or ${r2}`; formula = "(x−r₁)(x−r₂)=0"; break;
+        }
+        case "sequence": {
+            const first = 2 + index % 10, difference = 1 + index % 7, term = 5 + index % 12, result = first + (term - 1) * difference;
+            title = `Arithmetic sequence — Example ${number}`; objective = "Find any term from the first value and common difference.";
+            problem = `a₁=${first}, d=${difference}. Find a${term}`; step1 = `aₙ = a₁ + (n−1)d`;
+            step2 = `${first} + (${term}−1)×${difference}`; answer = `a${term} = ${result}`; formula = "aₙ=a₁+(n−1)d"; break;
+        }
+        case "coordinate": {
+            const x1 = index % 6, y1 = (index * 2) % 5, scale = 1 + index % 5, x2 = x1 + 3 * scale, y2 = y1 + 4 * scale;
+            title = `Distance between points — Example ${number}`; objective = "Apply the Pythagorean distance formula.";
+            problem = `A(${x1},${y1}), B(${x2},${y2})`; step1 = `Δx=${3 * scale}, Δy=${4 * scale}`;
+            step2 = `d=√(${3 * scale}²+${4 * scale}²)`; answer = `d = ${5 * scale}`; formula = "d=√(Δx²+Δy²)"; break;
+        }
+        case "geometry": {
+            const width = 3 + index % 12, height = 4 + (index * 2) % 10;
+            title = `Rectangle geometry — Example ${number}`; objective = "Connect dimensions to area and perimeter.";
+            problem = `Width=${width}, height=${height}`; step1 = `Area = ${width}×${height} = ${width * height}`;
+            step2 = `Perimeter = 2(${width}+${height})`; answer = `A=${width * height}, P=${2 * (width + height)}`; formula = "A=wh, P=2(w+h)"; break;
+        }
+        case "trigonometry": {
+            const angles = [0, 30, 45, 60, 90], sinValues = ["0", "1/2", "√2/2", "√3/2", "1"];
+            const position = index % angles.length, angle = angles[position];
+            title = `Exact sine value — Example ${number}`; objective = "Recall the unit-circle special angles.";
+            problem = `Evaluate sin(${angle}°)`; step1 = `Locate ${angle}° on the unit circle`;
+            step2 = "Sine is the y-coordinate"; answer = `sin(${angle}°) = ${sinValues[position]}`; formula = "sin θ = opposite/hypotenuse"; break;
+        }
+        case "vectors": {
+            const u1 = a, u2 = b, v1 = c, v2 = 1 + index % 6, dot = u1 * v1 + u2 * v2;
+            title = `Vector dot product — Example ${number}`; objective = "Measure directional alignment.";
+            problem = `u=⟨${u1},${u2}⟩, v=⟨${v1},${v2}⟩`; step1 = `u·v = ${u1}×${v1} + ${u2}×${v2}`;
+            step2 = `${u1 * v1} + ${u2 * v2}`; answer = `u·v = ${dot}`; formula = "u·v=u₁v₁+u₂v₂"; break;
+        }
+        case "matrices": {
+            const d = 1 + index % 9;
+            title = `Add two matrices — Example ${number}`; objective = "Combine corresponding matrix entries.";
+            problem = `[${a} ${b}; ${c} ${d}] + [${d} ${c}; ${b} ${a}]`; step1 = "Add entry by entry";
+            step2 = `[${a}+${d}  ${b}+${c}; ${c}+${b}  ${d}+${a}]`; answer = `[${a + d} ${b + c}; ${b + c} ${a + d}]`; formula = "(A+B)ᵢⱼ=Aᵢⱼ+Bᵢⱼ"; break;
+        }
+        case "determinants": {
+            const d = 2 + index % 8, determinant = a * d - b * c;
+            title = `2×2 determinant — Example ${number}`; objective = "Compute signed area scaling.";
+            problem = `det [${a} ${b}; ${c} ${d}]`; step1 = `ad − bc = ${a}×${d} − ${b}×${c}`;
+            step2 = `${a * d} − ${b * c}`; answer = `det = ${determinant}`; formula = "det(A)=ad−bc"; break;
+        }
+        case "derivatives": {
+            const power = 2 + index % 7, coefficient = 1 + index % 9;
+            title = `Power-rule derivative — Example ${number}`; objective = "Differentiate polynomial powers.";
+            problem = `d/dx (${coefficient}x^${power})`; step1 = `Bring down exponent ${power}`;
+            step2 = `${coefficient}×${power} x^${power - 1}`; answer = `${coefficient * power}x^${power - 1}`; formula = "d(xⁿ)/dx = nxⁿ⁻¹"; break;
+        }
+        case "integrals": {
+            const power = 1 + index % 6, coefficient = (power + 1) * (1 + index % 5);
+            title = `Power-rule integral — Example ${number}`; objective = "Reverse polynomial differentiation.";
+            problem = `∫ ${coefficient}x^${power} dx`; step1 = `Increase exponent: ${power}→${power + 1}`;
+            step2 = `${coefficient}/(${power + 1}) x^${power + 1}`; answer = `${coefficient / (power + 1)}x^${power + 1} + C`; formula = "∫xⁿdx=xⁿ⁺¹/(n+1)+C"; break;
+        }
+        case "diffeq": {
+            const rate = 1 + index % 5, initial = 1 + index % 8;
+            title = `Exponential differential equation — Example ${number}`; objective = "Recognize proportional growth or decay.";
+            problem = `dy/dt=${rate}y, y(0)=${initial}`; step1 = `General form y=Ce^(${rate}t)`;
+            step2 = `Initial value gives C=${initial}`; answer = `y=${initial}e^(${rate}t)`; formula = "y′=ky ⇒ y=Ceᵏᵗ"; break;
+        }
+        case "complex": {
+            const real = a * c - b, imag = a + b * c;
+            title = `Multiply complex numbers — Example ${number}`; objective = "Use i² = −1 when expanding.";
+            problem = `(${a}+${b}i)(${c}+i)`; step1 = `${a * c}+${a}i+${b * c}i+${b}i²`;
+            step2 = `${a * c}−${b} + (${a}+${b * c})i`; answer = `${real} + ${imag}i`; formula = "i²=−1"; break;
+        }
+        case "probability": {
+            const favorable = 1 + index % 5, total = favorable + 2 + index % 8;
+            title = `Simple probability — Example ${number}`; objective = "Compare favorable and total equally likely outcomes.";
+            problem = `${favorable} favorable outcomes among ${total}`; step1 = "P = favorable / total";
+            step2 = `${favorable}/${total}`; answer = `P = ${fixedNumber(favorable / total, 3)}`; formula = "P(A)=n(A)/n(S)"; break;
+        }
+        case "statistics": {
+            const values = [a, b, c, a + b, c + 2], sum = values.reduce((total, value) => total + value, 0);
+            title = `Arithmetic mean — Example ${number}`; objective = "Summarize a dataset with its average.";
+            problem = `Mean of ${values.join(", ")}`; step1 = `Sum = ${sum}`;
+            step2 = `${sum} ÷ ${values.length}`; answer = `Mean = ${fixedNumber(sum / values.length)}`; formula = "x̄=Σx/n"; break;
+        }
+        case "numerical": {
+            const target = 2 + index % 15, guess = 1 + index % 6, next = .5 * (guess + target / guess);
+            title = `Newton step for √${target} — Example ${number}`; objective = "Improve a square-root estimate iteratively.";
+            problem = `Start x₀=${guess}`; step1 = `x₁=½(x₀+${target}/x₀)`;
+            step2 = `½(${guess}+${fixedNumber(target / guess, 3)})`; answer = `x₁ = ${fixedNumber(next, 3)}`; formula = "xₙ₊₁=½(xₙ+N/xₙ)"; break;
+        }
+        case "laplace": {
+            const power = index % 6, factorial = [1, 1, 2, 6, 24, 120][power];
+            title = `Laplace transform of t^${power} — Example ${number}`; objective = "Apply the standard power transform.";
+            problem = `L{t^${power}}`; step1 = `L{tⁿ}=n!/sⁿ⁺¹`;
+            step2 = `${power}! / s^${power + 1}`; answer = `${factorial}/s^${power + 1}`; formula = "L{tⁿ}=n!/sⁿ⁺¹"; break;
+        }
+        case "units": {
+            const meters = 1 + index % 25, millimeters = meters * 1000;
+            title = `Engineering unit conversion — Example ${number}`; objective = "Convert SI length scales without losing magnitude.";
+            problem = `Convert ${meters} m to mm`; step1 = "1 m = 1000 mm";
+            step2 = `${meters} × 1000`; answer = `${millimeters} mm`; formula = "m × 10³ = mm"; break;
+        }
+    }
+
+    return {
+        id: `math-${String(catalogIndex + 1).padStart(4, "0")}`, topicId, topic: topicName,
+        title, objective, problem, step1, step2, answer, formula, difficulty, duration: 20
+    };
+}
+
+function generateMathShortCatalog() {
+    const catalog = [];
+    MATH_SHORT_TOPICS.forEach(([topicId, topicName]) => {
+        for (let index = 0; index < 50; index++) catalog.push(buildMathShort(topicId, topicName, index, catalog.length));
+    });
+    return catalog;
+}
+
+const MATH_SHORTS_CATALOG = generateMathShortCatalog();
+let completedMathShorts = JSON.parse(localStorage.getItem("completedMathShorts") || "[]");
+let currentMathShort = MATH_SHORTS_CATALOG[0];
+let mathShortPage = 1;
+let mathShortFiltered = MATH_SHORTS_CATALOG;
+let mathShortPlaying = false;
+let mathShortElapsed = 0;
+let mathShortLastFrame = 0;
+let mathShortAnimationFrame = null;
+const MATH_SHORT_PAGE_SIZE = 20;
+
+function wrapCanvasText(context, text, x, y, maxWidth, lineHeight, maxLines = 3) {
+    const words = String(text).split(" ");
+    const lines = [];
+    let line = "";
+    words.forEach(word => {
+        const candidate = line ? `${line} ${word}` : word;
+        if (context.measureText(candidate).width > maxWidth && line) { lines.push(line); line = word; }
+        else line = candidate;
+    });
+    if (line) lines.push(line);
+    lines.slice(0, maxLines).forEach((value, index) => context.fillText(value, x, y + index * lineHeight));
+}
+
+function drawMathShortFrame(elapsedSeconds = mathShortElapsed) {
+    const canvas = document.getElementById("math-short-canvas");
+    if (!canvas || !currentMathShort) return;
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width, height = canvas.height;
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, "#0c3434"); gradient.addColorStop(.58, "#102f30"); gradient.addColorStop(1, "#07534f");
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, width, height);
+
+    ctx.strokeStyle = "rgba(117,207,183,.12)"; ctx.lineWidth = 2;
+    for (let x = -height; x < width; x += 90) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + height, height); ctx.stroke(); }
+
+    ctx.fillStyle = "#75cfb7"; ctx.font = "700 26px DM Sans";
+    ctx.fillText(`${currentMathShort.topic}  •  ${currentMathShort.difficulty}`, 62, 64);
+    ctx.textAlign = "right"; ctx.fillStyle = "#aebfbb"; ctx.font = "600 24px DM Sans";
+    ctx.fillText(`${currentMathShort.id.toUpperCase()}  •  20 SEC`, width - 62, 64); ctx.textAlign = "left";
+
+    let label, main, supporting;
+    if (elapsedSeconds < 4) { label = "TODAY'S MICRO-LESSON"; main = currentMathShort.title; supporting = currentMathShort.objective; }
+    else if (elapsedSeconds < 9) { label = "PROBLEM"; main = currentMathShort.problem; supporting = currentMathShort.formula; }
+    else if (elapsedSeconds < 14) { label = "STEP 1"; main = currentMathShort.step1; supporting = currentMathShort.problem; }
+    else if (elapsedSeconds < 18) { label = "STEP 2"; main = currentMathShort.step2; supporting = "Follow the units and signs carefully."; }
+    else { label = "ANSWER"; main = currentMathShort.answer; supporting = "Replay once, then solve a similar example without looking."; }
+
+    const pulse = .96 + .04 * Math.sin(elapsedSeconds * 3);
+    ctx.fillStyle = label === "ANSWER" ? "#f4b183" : "#75cfb7"; ctx.font = "800 30px DM Sans";
+    ctx.fillText(label, 84, 184);
+    ctx.save(); ctx.translate(width / 2, 350); ctx.scale(pulse, pulse); ctx.translate(-width / 2, -350);
+    ctx.fillStyle = "#ffffff"; ctx.font = "800 58px Manrope"; ctx.textAlign = "center";
+    wrapCanvasText(ctx, main, width / 2, 330, 1040, 74, 3); ctx.restore();
+    ctx.fillStyle = "#b9cbc6"; ctx.font = "500 28px DM Sans"; ctx.textAlign = "center";
+    wrapCanvasText(ctx, supporting, width / 2, 520, 1000, 38, 2); ctx.textAlign = "left";
+
+    const progress = Math.min(1, elapsedSeconds / 20);
+    ctx.fillStyle = "rgba(255,255,255,.14)"; ctx.fillRect(62, height - 48, width - 124, 8);
+    ctx.fillStyle = "#75cfb7"; ctx.fillRect(62, height - 48, (width - 124) * progress, 8);
+    document.getElementById("math-short-timeline-bar").style.width = `${progress * 100}%`;
+    document.getElementById("math-short-time").textContent = `0:${String(Math.min(20, Math.floor(elapsedSeconds))).padStart(2, "0")} / 0:20`;
+}
+
+function mathShortLoop(timestamp) {
+    if (!mathShortPlaying) return;
+    if (!mathShortLastFrame) mathShortLastFrame = timestamp;
+    mathShortElapsed += (timestamp - mathShortLastFrame) / 1000;
+    mathShortLastFrame = timestamp;
+    if (mathShortElapsed >= 20) {
+        mathShortElapsed = 20; mathShortPlaying = false; drawMathShortFrame(20);
+        if (!completedMathShorts.includes(currentMathShort.id)) toggleMathShortComplete(currentMathShort.id, true);
+        updateMathShortPlayButtons(); return;
+    }
+    drawMathShortFrame();
+    mathShortAnimationFrame = requestAnimationFrame(mathShortLoop);
+}
+
+function updateMathShortPlayButtons() {
+    const icon = mathShortPlaying ? "pause" : "play";
+    const play = document.getElementById("math-short-play-btn");
+    const big = document.getElementById("math-short-big-play");
+    if (play) play.innerHTML = `<i data-lucide="${icon}"></i>`;
+    if (big) { big.innerHTML = `<i data-lucide="${icon}"></i>`; big.classList.toggle("playing", mathShortPlaying); }
+    if (window.lucide) lucide.createIcons();
+}
+
+function toggleMathShortPlayback() {
+    if (mathShortElapsed >= 20) mathShortElapsed = 0;
+    mathShortPlaying = !mathShortPlaying; mathShortLastFrame = 0;
+    updateMathShortPlayButtons();
+    if (mathShortPlaying) mathShortAnimationFrame = requestAnimationFrame(mathShortLoop);
+    else if (mathShortAnimationFrame) cancelAnimationFrame(mathShortAnimationFrame);
+}
+
+function replayMathShort() {
+    mathShortElapsed = 0; mathShortPlaying = true; mathShortLastFrame = 0;
+    updateMathShortPlayButtons(); mathShortAnimationFrame = requestAnimationFrame(mathShortLoop);
+}
+
+function selectMathShort(id) {
+    const lesson = MATH_SHORTS_CATALOG.find(item => item.id === id);
+    if (!lesson) return;
+    currentMathShort = lesson; mathShortElapsed = 0; mathShortPlaying = false; mathShortLastFrame = 0;
+    document.getElementById("math-short-topic").textContent = `${lesson.topic} · ${lesson.difficulty}`;
+    document.getElementById("math-short-title").textContent = lesson.title;
+    document.getElementById("math-short-objective").textContent = lesson.objective;
+    drawMathShortFrame(0); updateMathShortPlayButtons(); updateMathShortCompleteButton(); renderMathShortGrid();
+    document.querySelector(".math-short-theater")?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function toggleMathShortComplete(id = currentMathShort.id, forceComplete = false) {
+    const index = completedMathShorts.indexOf(id);
+    if (index >= 0 && !forceComplete) completedMathShorts.splice(index, 1);
+    else if (index < 0) completedMathShorts.push(id);
+    localStorage.setItem("completedMathShorts", JSON.stringify(completedMathShorts));
+    updateMathShortCompleteButton(); applyMathShortFilters();
+}
+
+function updateMathShortCompleteButton() {
+    const button = document.getElementById("math-short-complete-btn");
+    if (!button || !currentMathShort) return;
+    const complete = completedMathShorts.includes(currentMathShort.id);
+    button.innerHTML = `<i data-lucide="${complete ? 'check-circle-2' : 'check-circle'}"></i> ${complete ? 'Completed' : 'Mark complete'}`;
+    button.classList.toggle("btn-success", complete);
+    if (window.lucide) lucide.createIcons();
+}
+
+function renderMathShortGrid() {
+    const grid = document.getElementById("math-shorts-grid");
+    if (!grid) return;
+    const totalPages = Math.max(1, Math.ceil(mathShortFiltered.length / MATH_SHORT_PAGE_SIZE));
+    mathShortPage = Math.min(mathShortPage, totalPages);
+    const start = (mathShortPage - 1) * MATH_SHORT_PAGE_SIZE;
+    const pageItems = mathShortFiltered.slice(start, start + MATH_SHORT_PAGE_SIZE);
+    grid.innerHTML = pageItems.map(item => {
+        const complete = completedMathShorts.includes(item.id), current = currentMathShort?.id === item.id;
+        return `<article class="math-short-card ${complete ? 'complete' : ''} ${current ? 'current' : ''}">
+            <button class="math-short-card-preview" onclick="selectMathShort('${item.id}')">
+                <span>${item.topic}</span><strong>${item.formula}</strong><i data-lucide="play"></i><em>20 sec</em>
+            </button>
+            <div class="math-short-card-body"><span>${item.id.toUpperCase()} · ${item.difficulty}</span><h4>${item.title}</h4><p>${item.objective}</p>
+                <button class="btn btn-outline btn-sm" onclick="selectMathShort('${item.id}')">${complete ? '<i data-lucide="check-circle-2"></i> Review' : '<i data-lucide="play"></i> Watch'}</button>
+            </div></article>`;
+    }).join("");
+    document.getElementById("math-shorts-result-count").textContent = `Showing ${pageItems.length} of ${mathShortFiltered.length.toLocaleString()} videos`;
+    document.getElementById("math-shorts-page-label").textContent = `Page ${mathShortPage} of ${totalPages}`;
+    document.getElementById("math-shorts-prev").disabled = mathShortPage <= 1;
+    document.getElementById("math-shorts-next").disabled = mathShortPage >= totalPages;
+    document.getElementById("math-shorts-completed-count").textContent = completedMathShorts.length.toLocaleString();
+    if (window.lucide) lucide.createIcons();
+}
+
+function applyMathShortFilters() {
+    const query = document.getElementById("math-shorts-search")?.value.toLowerCase().trim() || "";
+    const topic = document.getElementById("math-shorts-topic")?.value || "All";
+    const difficulty = document.getElementById("math-shorts-difficulty")?.value || "All";
+    const status = document.getElementById("math-shorts-status")?.value || "All";
+    mathShortFiltered = MATH_SHORTS_CATALOG.filter(item => {
+        if (topic !== "All" && item.topicId !== topic) return false;
+        if (difficulty !== "All" && item.difficulty !== difficulty) return false;
+        if (status === "Completed" && !completedMathShorts.includes(item.id)) return false;
+        if (status === "Incomplete" && completedMathShorts.includes(item.id)) return false;
+        if (query && !`${item.title} ${item.topic} ${item.objective} ${item.problem} ${item.formula}`.toLowerCase().includes(query)) return false;
+        return true;
+    });
+    mathShortPage = 1; renderMathShortGrid();
+}
+
+function initMathShortsLibrary() {
+    const grid = document.getElementById("math-shorts-grid");
+    if (!grid || grid.dataset.initialized) return;
+    grid.dataset.initialized = "true";
+    const topicSelect = document.getElementById("math-shorts-topic");
+    topicSelect.innerHTML = `<option value="All">All 20 topics</option>` + MATH_SHORT_TOPICS.map(([id, name]) => `<option value="${id}">${name} (50)</option>`).join("");
+    document.getElementById("math-shorts-search").addEventListener("input", applyMathShortFilters);
+    [topicSelect, document.getElementById("math-shorts-difficulty"), document.getElementById("math-shorts-status")].forEach(input => input.addEventListener("change", applyMathShortFilters));
+    document.getElementById("math-shorts-prev").addEventListener("click", () => { mathShortPage--; renderMathShortGrid(); });
+    document.getElementById("math-shorts-next").addEventListener("click", () => { mathShortPage++; renderMathShortGrid(); });
+    document.getElementById("math-short-play-btn").addEventListener("click", toggleMathShortPlayback);
+    document.getElementById("math-short-big-play").addEventListener("click", toggleMathShortPlayback);
+    document.getElementById("math-short-replay-btn").addEventListener("click", replayMathShort);
+    document.getElementById("math-short-complete-btn").addEventListener("click", () => toggleMathShortComplete());
+    selectMathShort(MATH_SHORTS_CATALOG[0].id); applyMathShortFilters();
+}
+
 function renderVideoAcademy() {
     const grid = document.getElementById("video-academy-grid");
     if (!grid) return;
 
     renderVideoCourseTracks();
+    initMathShortsLibrary();
     const categoryFilters = document.getElementById("video-category-filters");
     const searchInput = document.getElementById("video-search-input");
     const countLabel = document.getElementById("video-count-label");

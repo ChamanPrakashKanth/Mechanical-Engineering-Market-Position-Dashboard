@@ -65,6 +65,12 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Saves lesson completion and active-course progress locally, provides a sequenced module queue, and resumes from the next unfinished lesson.
 - Automatically marks a lesson complete when playback ends, with a manual completion control for review workflows.
 
+### 10. Mathematics Shorts Library
+- Includes **1,000 separate 20-second visual mathematics lessons** inside Video Academy: 20 topics with 50 worked examples per topic.
+- Covers arithmetic, algebra, geometry, trigonometry, vectors, matrices, calculus, differential equations, complex numbers, probability, statistics, numerical methods, Laplace transforms, and engineering units.
+- Renders each lesson as a lightweight animated canvas video on demand, avoiding the multi-gigabyte download that 1,000 bundled MP4 files would require.
+- Provides play, pause, replay, automatic completion, manual completion, saved progress, search, topic/level/status filters, and 50-page browsing.
+
 ---
 
 ## 🎥 Video Course Production (Manim)

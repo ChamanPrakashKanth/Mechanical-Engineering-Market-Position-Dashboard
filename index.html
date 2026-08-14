@@ -1923,6 +1923,66 @@
                         <div id="video-course-queue" class="video-course-queue hidden"></div>
                     </div>
 
+                    <!-- 1,000 on-demand mathematics micro-videos -->
+                    <section class="math-shorts-section glass-card">
+                        <div class="math-shorts-header">
+                            <div>
+                                <span class="video-course-eyebrow">20-second visual lessons</span>
+                                <h3>1,000 Mathematics Shorts</h3>
+                                <p>Distinct worked examples rendered locally on demand—fast playback without a massive download.</p>
+                            </div>
+                            <div class="math-shorts-stats">
+                                <div><strong>1,000</strong><span>videos</span></div>
+                                <div><strong>20s</strong><span>each</span></div>
+                                <div><strong id="math-shorts-completed-count">0</strong><span>completed</span></div>
+                            </div>
+                        </div>
+
+                        <div class="math-short-theater">
+                            <div class="math-short-stage">
+                                <canvas id="math-short-canvas" width="1280" height="720" aria-label="Mathematics micro-video player"></canvas>
+                                <button class="math-short-big-play" id="math-short-big-play" aria-label="Play mathematics video"><i data-lucide="play"></i></button>
+                            </div>
+                            <div class="math-short-player-bar">
+                                <button class="math-player-button" id="math-short-play-btn" aria-label="Play or pause"><i data-lucide="play"></i></button>
+                                <button class="math-player-button" id="math-short-replay-btn" aria-label="Replay"><i data-lucide="rotate-ccw"></i></button>
+                                <span id="math-short-time">0:00 / 0:20</span>
+                                <div class="math-short-timeline"><div id="math-short-timeline-bar"></div></div>
+                                <button class="btn btn-outline btn-sm" id="math-short-complete-btn"><i data-lucide="check-circle"></i> Mark complete</button>
+                            </div>
+                            <div class="math-short-now-playing">
+                                <div><span id="math-short-topic">Algebra</span><h4 id="math-short-title">Loading mathematics library…</h4></div>
+                                <p id="math-short-objective">Select a short to begin.</p>
+                            </div>
+                        </div>
+
+                        <div class="math-shorts-controls">
+                            <div class="math-search-wrap"><i data-lucide="search"></i><input id="math-shorts-search" type="text" placeholder="Search 1,000 math videos…"></div>
+                            <select id="math-shorts-topic" aria-label="Filter mathematics videos by topic"></select>
+                            <select id="math-shorts-difficulty" aria-label="Filter mathematics videos by difficulty">
+                                <option value="All">All levels</option>
+                                <option value="Foundation">Foundation</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                            <select id="math-shorts-status" aria-label="Filter mathematics videos by completion">
+                                <option value="All">All progress</option>
+                                <option value="Incomplete">Not completed</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <div class="math-shorts-result-row">
+                            <span id="math-shorts-result-count">Showing 20 of 1,000 videos</span>
+                            <div class="math-shorts-pagination">
+                                <button class="btn btn-outline btn-sm" id="math-shorts-prev"><i data-lucide="chevron-left"></i> Previous</button>
+                                <span id="math-shorts-page-label">Page 1 of 50</span>
+                                <button class="btn btn-outline btn-sm" id="math-shorts-next">Next <i data-lucide="chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <div id="math-shorts-grid" class="math-shorts-grid"></div>
+                    </section>
+
                     <!-- Video Controls: Search & Category Filters -->
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                         <!-- Category Filter Pills -->
