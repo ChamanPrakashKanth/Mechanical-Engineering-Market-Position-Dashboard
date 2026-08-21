@@ -2,6 +2,8 @@
 
 An interactive, premium career intelligence dashboard designed for Mechanical Engineering graduates to parse resumes, evaluate technical skills, map profiles to career clusters, and compute rankings against a database of **1 Lakh (100,000+) mechanical engineering graduates** worldwide and in India.
 
+Public SEO site: **https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/**
+
 This project offers two fully functional UI versions:
 1. **Single-Page Application (SPA)**: Built with HTML5, Vanilla CSS3 (glassmorphic theme), and pure JavaScript. It operates completely client-side in the browser.
 2. **Streamlit Web Application**: Python-based interactive dashboard that adds course learning modules, quiz checks, and advanced data rendering.
@@ -70,6 +72,12 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Covers arithmetic, algebra, geometry, trigonometry, vectors, matrices, calculus, differential equations, complex numbers, probability, statistics, numerical methods, Laplace transforms, and engineering units.
 - Renders each lesson as a lightweight animated canvas video on demand, avoiding the multi-gigabyte download that 1,000 bundled MP4 files would require.
 - Provides play, pause, replay, automatic completion, manual completion, saved progress, search, topic/level/status filters, and 50-page browsing.
+
+### 11. Creator Content Funnel & SEO
+- Guides users from the free career assessment to [Strategic 814 on YouTube](https://www.youtube.com/@Strategic814), [Defense Affairs 814 on Blogger](https://defenseaffairs814.blogspot.com/), and [Chaman Kant on X](https://x.com/ChamanKant44703).
+- Places contextual creator calls-to-action in the hero, dedicated Creator Hub, dashboard sidebar, and footer without interrupting the assessment workflow.
+- Includes campaign attribution parameters, privacy-friendly local click counters, Open Graph/X social cards, JSON-LD, canonical metadata, `robots.txt`, and an XML sitemap.
+- Deploys the crawlable static frontend through the GitHub Pages workflow in `.github/workflows/pages.yml`.
 
 ---
 

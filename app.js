@@ -5176,4 +5176,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initFluidCalculator();
     initSkillsRadarEngine();
     initCertificateGenerator();
+
+    // Privacy-friendly first-party funnel telemetry. This never leaves the browser;
+    // outbound UTM parameters provide aggregate attribution on supported platforms.
+    document.querySelectorAll('.funnel-link[data-funnel-platform]').forEach(link => {
+        link.addEventListener('click', () => {
+            const platform = link.dataset.funnelPlatform;
+            const saved = JSON.parse(localStorage.getItem('mechintelCreatorFunnel') || '{}');
+            saved[platform] = (saved[platform] || 0) + 1;
+            saved.lastPlatform = platform;
+            saved.lastClickedAt = new Date().toISOString();
+            localStorage.setItem('mechintelCreatorFunnel', JSON.stringify(saved));
+        });
+    });
 });

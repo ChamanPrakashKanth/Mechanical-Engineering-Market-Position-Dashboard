@@ -3094,4 +3094,50 @@ input:focus, textarea:focus, select:focus,
     .math-shorts-grid { grid-template-columns: 1fr; }
 }
 
+/* Creator conversion funnel */
+.hero-creator-note { display: flex; align-items: center; gap: .45rem; max-width: 560px; margin-top: 1rem; color: var(--text-muted); font-size: .72rem; line-height: 1.45; }
+.hero-creator-note svg { width: 15px; flex: 0 0 auto; color: var(--primary); }
+.creator-hub-section { position: relative; max-width: 1200px; margin: 2rem auto; padding: 4rem 1.5rem; overflow: hidden; }
+.creator-hub-section::before { content: ""; position: absolute; inset: 2rem 1.5rem 0; z-index: -1; background: linear-gradient(135deg,#0b3132,#104a49); border-radius: 28px; box-shadow: 0 24px 60px rgba(11,49,50,.18); }
+.creator-hub-intro { max-width: 720px; padding: 1.75rem 2rem 2rem; color: #fff; }
+.creator-hub-eyebrow { color: #75cfb7; font-size: .7rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.creator-hub-intro h2 { margin: .55rem 0 .75rem; color: #fff; font-size: clamp(1.8rem,4vw,2.65rem); line-height: 1.12; }
+.creator-hub-intro p { color: #b9cbc6; font-size: .92rem; line-height: 1.65; }
+.creator-funnel-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; padding: 0 2rem 2rem; }
+.creator-funnel-card { position: relative; display: flex; flex-direction: column; min-height: 280px; padding: 1.4rem; color: var(--text-primary); text-decoration: none; background: #fffdf8; border: 1px solid rgba(255,255,255,.2); border-radius: 18px; box-shadow: 0 14px 34px rgba(0,0,0,.14); transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.creator-funnel-card:hover { transform: translateY(-5px); border-color: #75cfb7; box-shadow: 0 20px 40px rgba(0,0,0,.2); }
+.creator-platform-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 1.1rem; color: #fff; background: var(--primary); border-radius: 13px; }
+.creator-youtube .creator-platform-icon { background: #d92d20; }
+.creator-x .creator-platform-icon { background: #111; }
+.creator-blog .creator-platform-icon { background: #f57c00; }
+.creator-x-mark { font: 800 1rem var(--font-heading); }
+.creator-platform-label { color: var(--primary); font-size: .64rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.creator-funnel-card h3 { margin: .42rem 0 .55rem; color: #102629; font-size: 1.1rem; }
+.creator-funnel-card p { flex: 1; color: #637071; font-size: .78rem; line-height: 1.55; }
+.creator-funnel-card strong { display: flex; align-items: center; gap: .35rem; margin-top: 1.1rem; color: var(--primary); font-size: .75rem; }
+.creator-funnel-card strong svg { width: 15px; }
+.footer-creator-links { display: flex; gap: .65rem; flex-wrap: wrap; }
+.footer-creator-links a { display: inline-flex; align-items: center; gap: .38rem; padding: .55rem .72rem; color: #dbe9e4; text-decoration: none; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; font-size: .72rem; font-weight: 700; transition: .2s ease; }
+.footer-creator-links a:hover { color: #fff; background: rgba(117,207,183,.16); border-color: rgba(117,207,183,.4); }
+.footer-creator-links svg { width: 15px; }
+.sidebar-creator-funnel { margin-bottom: .6rem; padding: .7rem; background: rgba(117,207,183,.08); border: 1px solid rgba(117,207,183,.16); border-radius: 10px; }
+.sidebar-creator-funnel > span { display: block; margin-bottom: .5rem; color: #9db5af; font-size: .59rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.sidebar-creator-funnel > div { display: grid; grid-template-columns: repeat(3,1fr); gap: .35rem; }
+.sidebar-creator-funnel a { display: grid; place-items: center; height: 32px; color: #d9eee7; text-decoration: none; background: rgba(255,255,255,.07); border-radius: 7px; transition: .2s ease; }
+.sidebar-creator-funnel a:hover { color: #fff; background: rgba(117,207,183,.2); }
+.sidebar-creator-funnel svg { width: 15px; }
+
+@media (max-width: 980px) {
+    .creator-funnel-grid { grid-template-columns: 1fr; }
+    .creator-funnel-card { min-height: 220px; }
+}
+@media (max-width: 760px) {
+    .hero-ctas { flex-direction: column; width: 100%; }
+    .hero-ctas .btn { width: 100%; }
+    .creator-hub-section { padding: 2rem 1rem; }
+    .creator-hub-section::before { inset: 0; border-radius: 0; }
+    .creator-hub-intro, .creator-funnel-grid { padding-left: .5rem; padding-right: .5rem; }
+    .footer-creator-links { width: 100%; }
+}
+
 

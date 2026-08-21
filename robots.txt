@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/sitemap.xml
