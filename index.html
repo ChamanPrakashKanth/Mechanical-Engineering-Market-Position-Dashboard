@@ -1551,8 +1551,8 @@
                             <div class="metric-icon blue"><i data-lucide="book-open"></i></div>
                             <div class="metric-data">
                                 <span class="metric-label">Total Courses</span>
-                                <span class="metric-value">40 Subjects</span>
-                                <span class="metric-change">Sourced Curriculum</span>
+                                <span class="metric-value" id="learn-stat-total-courses">51 Courses</span>
+                                <span class="metric-change" id="learn-stat-total-lessons">255 text lessons</span>
                             </div>
                         </div>
                         <div class="metric-card glass-card">
@@ -1614,6 +1614,36 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- In-app text course reader -->
+                    <section id="text-course-reader" class="text-course-reader hidden" aria-live="polite">
+                        <div class="text-course-reader-header">
+                            <button class="btn btn-outline btn-sm" id="text-course-close-btn" onclick="closeTextCourse()"><i data-lucide="arrow-left"></i> All courses</button>
+                            <div>
+                                <span id="text-course-category">Text Academy</span>
+                                <h2 id="text-course-title">Course title</h2>
+                                <p id="text-course-description">Course description</p>
+                            </div>
+                            <div class="text-course-progress-summary">
+                                <strong id="text-course-progress-value">0%</strong>
+                                <span>course progress</span>
+                            </div>
+                        </div>
+                        <div class="text-course-progress-track"><div id="text-course-progress-bar"></div></div>
+                        <div class="text-course-reader-layout">
+                            <nav id="text-course-lesson-nav" class="text-course-lesson-nav" aria-label="Text course lessons"></nav>
+                            <article class="text-course-article">
+                                <div class="text-lesson-meta"><span id="text-lesson-number">Lesson 1 of 5</span><span id="text-lesson-duration">12 min read</span></div>
+                                <h3 id="text-lesson-title">Lesson title</h3>
+                                <p id="text-lesson-summary" class="text-lesson-summary"></p>
+                                <div id="text-lesson-content"></div>
+                                <div class="text-lesson-actions">
+                                    <button class="btn btn-outline" id="text-lesson-prev-btn" onclick="changeTextLesson(-1)"><i data-lucide="chevron-left"></i> Previous</button>
+                                    <button class="btn btn-primary" id="text-lesson-complete-btn" onclick="completeCurrentTextLesson()">Complete & Continue <i data-lucide="arrow-right"></i></button>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
 
                     <!-- Course grid -->
                     <div class="features-grid" id="learning-course-grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.5rem;">

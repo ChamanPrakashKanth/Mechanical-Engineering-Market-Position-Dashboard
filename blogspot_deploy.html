@@ -3195,6 +3195,64 @@ input:focus, textarea:focus, select:focus,
     .footer-creator-links { width: 100%; }
 }
 
+/* In-app text course academy */
+.text-course-card-progress { margin-top: 1rem; padding: .8rem; background: #eef3ef; border: 1px solid var(--border-color); border-radius: 11px; }
+.text-course-card-progress > div:first-child { display: flex; justify-content: space-between; color: var(--text-muted); font-size: .66rem; }
+.text-course-card-progress > div:first-child strong { color: var(--primary); }
+.text-course-card-progress-track { height: 6px; margin: .45rem 0 .7rem; overflow: hidden; background: #d9e3dd; border-radius: 999px; }
+.text-course-card-progress-track > div { height: 100%; background: var(--primary); border-radius: inherit; transition: width .25s ease; }
+.text-course-card-progress .btn { width: 100%; }
+.text-course-reader { scroll-margin-top: 88px; margin-bottom: 1.5rem; overflow: hidden; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 18px 44px rgba(34,54,52,.1); }
+.text-course-reader-header { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: start; padding: 1.25rem 1.35rem 1rem; background: linear-gradient(135deg,#0d3536,#135251); }
+.text-course-reader-header .btn { color: #d9eee7; border-color: rgba(255,255,255,.18); }
+.text-course-reader-header > div:nth-child(2) > span { color: #75cfb7; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.text-course-reader-header h2 { margin: .3rem 0 .35rem; color: #fff; font-size: 1.5rem; }
+.text-course-reader-header p { max-width: 760px; color: #b7cbc5; font-size: .75rem; line-height: 1.5; }
+.text-course-progress-summary { min-width: 100px; padding: .65rem .75rem; text-align: center; background: rgba(255,255,255,.08); border-radius: 11px; }
+.text-course-progress-summary strong { display: block; color: #75cfb7; font-size: 1.35rem; }
+.text-course-progress-summary span { color: #b7cbc5; font-size: .58rem; text-transform: uppercase; }
+.text-course-progress-track { height: 7px; background: #193f3f; }
+.text-course-progress-track > div { height: 100%; width: 0; background: #75cfb7; transition: width .3s ease; }
+.text-course-reader-layout { display: grid; grid-template-columns: minmax(220px,290px) minmax(0,1fr); min-height: 570px; }
+.text-course-lesson-nav { padding: .8rem; background: #edf2ee; border-right: 1px solid var(--border-color); }
+.text-course-lesson-button { display: grid; grid-template-columns: 30px 1fr; gap: .6rem; align-items: start; width: 100%; padding: .72rem; margin-bottom: .45rem; color: var(--text-primary); text-align: left; background: transparent; border: 1px solid transparent; border-radius: 10px; cursor: pointer; }
+.text-course-lesson-button:hover { background: rgba(255,255,255,.7); }
+.text-course-lesson-button.active { background: #fffdf8; border-color: var(--primary); box-shadow: 0 5px 14px rgba(0,108,103,.08); }
+.text-course-lesson-button > span:first-child { display: grid; place-items: center; width: 27px; height: 27px; color: var(--primary); background: rgba(0,108,103,.09); border-radius: 50%; font-size: .7rem; font-weight: 800; }
+.text-course-lesson-button.complete > span:first-child { color: #fff; background: var(--primary); }
+.text-course-lesson-button > span:last-child { display: flex; flex-direction: column; min-width: 0; }
+.text-course-lesson-button small { color: var(--text-muted); font-size: .57rem; text-transform: uppercase; }
+.text-course-lesson-button strong { margin: .13rem 0; font-size: .7rem; line-height: 1.3; }
+.text-course-lesson-button em { color: var(--text-muted); font-size: .58rem; font-style: normal; }
+.text-course-article { max-width: 900px; padding: 1.65rem clamp(1.2rem,4vw,3rem) 2rem; }
+.text-lesson-meta { display: flex; justify-content: space-between; color: var(--primary); font-size: .65rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.text-course-article > h3 { margin: .55rem 0 .55rem; color: var(--text-primary); font-size: clamp(1.45rem,3vw,2rem); }
+.text-lesson-summary { padding-bottom: 1rem; color: var(--text-secondary); font-size: .88rem; line-height: 1.65; border-bottom: 1px solid var(--border-color); }
+.text-lesson-section { padding: 1.05rem 0; border-bottom: 1px solid var(--border-color); }
+.text-lesson-section h4 { margin-bottom: .55rem; color: var(--text-primary); font-size: .92rem; }
+.text-lesson-section p, .text-lesson-section li { color: var(--text-secondary); font-size: .78rem; line-height: 1.65; }
+.text-lesson-section ul { display: grid; gap: .38rem; padding-left: 1.15rem; }
+.text-lesson-section li::marker { color: var(--primary); }
+.text-lesson-callout { display: flex; gap: .7rem; align-items: flex-start; padding: .8rem .9rem; color: #174a48; background: #e4f1ec; border-left: 4px solid var(--primary); border-radius: 8px; }
+.text-lesson-callout svg { width: 19px; flex: 0 0 auto; color: var(--primary); }
+.text-lesson-callout strong { font-size: .76rem; line-height: 1.55; }
+.text-lesson-actions { display: flex; justify-content: space-between; gap: .75rem; padding-top: 1.25rem; }
+
+@media (max-width: 820px) {
+    .text-course-reader-header { grid-template-columns: 1fr auto; }
+    .text-course-reader-header > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+    .text-course-reader-layout { grid-template-columns: 1fr; }
+    .text-course-lesson-nav { display: grid; grid-template-columns: repeat(5,minmax(175px,1fr)); overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border-color); }
+    .text-course-lesson-button { margin-bottom: 0; }
+}
+@media (max-width: 520px) {
+    .text-course-progress-summary { min-width: 76px; }
+    .text-course-reader-header { padding: 1rem; }
+    .text-course-article { padding: 1.2rem 1rem 1.5rem; }
+    .text-lesson-actions { flex-direction: column-reverse; }
+    .text-lesson-actions .btn { width: 100%; }
+}
+
 
 
 </style>
@@ -4696,8 +4754,8 @@ input:focus, textarea:focus, select:focus,
                             <div class="metric-icon blue"><i data-lucide="book-open"></i></div>
                             <div class="metric-data">
                                 <span class="metric-label">Total Courses</span>
-                                <span class="metric-value">40 Subjects</span>
-                                <span class="metric-change">Sourced Curriculum</span>
+                                <span class="metric-value" id="learn-stat-total-courses">51 Courses</span>
+                                <span class="metric-change" id="learn-stat-total-lessons">255 text lessons</span>
                             </div>
                         </div>
                         <div class="metric-card glass-card">
@@ -4759,6 +4817,36 @@ input:focus, textarea:focus, select:focus,
                             </div>
                         </div>
                     </div>
+
+                    <!-- In-app text course reader -->
+                    <section id="text-course-reader" class="text-course-reader hidden" aria-live="polite">
+                        <div class="text-course-reader-header">
+                            <button class="btn btn-outline btn-sm" id="text-course-close-btn" onclick="closeTextCourse()"><i data-lucide="arrow-left"></i> All courses</button>
+                            <div>
+                                <span id="text-course-category">Text Academy</span>
+                                <h2 id="text-course-title">Course title</h2>
+                                <p id="text-course-description">Course description</p>
+                            </div>
+                            <div class="text-course-progress-summary">
+                                <strong id="text-course-progress-value">0%</strong>
+                                <span>course progress</span>
+                            </div>
+                        </div>
+                        <div class="text-course-progress-track"><div id="text-course-progress-bar"></div></div>
+                        <div class="text-course-reader-layout">
+                            <nav id="text-course-lesson-nav" class="text-course-lesson-nav" aria-label="Text course lessons"></nav>
+                            <article class="text-course-article">
+                                <div class="text-lesson-meta"><span id="text-lesson-number">Lesson 1 of 5</span><span id="text-lesson-duration">12 min read</span></div>
+                                <h3 id="text-lesson-title">Lesson title</h3>
+                                <p id="text-lesson-summary" class="text-lesson-summary"></p>
+                                <div id="text-lesson-content"></div>
+                                <div class="text-lesson-actions">
+                                    <button class="btn btn-outline" id="text-lesson-prev-btn" onclick="changeTextLesson(-1)"><i data-lucide="chevron-left"></i> Previous</button>
+                                    <button class="btn btn-primary" id="text-lesson-complete-btn" onclick="completeCurrentTextLesson()">Complete & Continue <i data-lucide="arrow-right"></i></button>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
 
                     <!-- Course grid -->
                     <div class="features-grid" id="learning-course-grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.5rem;">
@@ -8471,6 +8559,123 @@ const COURSES_DATABASE = [
     }
 ];
 
+// Every Learning Hub subject receives five self-contained reading lessons.
+// The blueprints keep the content compact while preserving subject-specific
+// principles, equations, workflows, and practice problems.
+const TEXT_COURSE_BLUEPRINTS = {
+    "Calculus": { concepts: ["A limit describes the value approached by a function and establishes continuity.", "The derivative is an instantaneous rate of change and the local slope of a response curve.", "Integration accumulates distributed quantities such as work, mass, area, and heat.", "Optimization uses stationary points plus boundary checks to select feasible extrema."], key: "Derivative: f′(x)=lim(h→0)[f(x+h)−f(x)]/h · Integral: ∫ f(x)dx", application: "Differentiate displacement to obtain velocity and acceleration; integrate a distributed load to obtain resultant force.", exercise: "For x(t)=2t³−5t²+4, derive velocity and acceleration, then evaluate both at t=2 s." },
+    "Linear Algebra": { concepts: ["Vectors encode magnitude and direction while matrices encode linear transformations.", "A linear system Ax=b represents coupled equilibrium or compatibility equations.", "The determinant indicates invertibility and geometric scale change.", "Eigenvectors retain direction under a transformation; eigenvalues provide modal scale or frequency information."], key: "Ax=b · det(A)≠0 for a unique solution · Av=λv", application: "Finite-element stiffness equations and vibration mode extraction are matrix problems.", exercise: "Solve a 2×2 equilibrium system and verify the result by multiplying A by the solution vector." },
+    "Differential Equations": { concepts: ["An ODE relates an unknown function to derivatives with respect to one variable.", "Initial and boundary conditions select the physical solution from a family of mathematical solutions.", "Second-order equations model inertia, damping, and stiffness.", "Laplace transforms convert differential equations into algebraic equations in the s-domain."], key: "Mass–spring–damper: m x″+c x′+kx=F(t)", application: "Model transient vibration, thermal response, fluid transients, and control-system dynamics.", exercise: "Classify the damping of a system with m=2 kg, c=12 N·s/m, and k=50 N/m." },
+    "Probability & Statistics": { concepts: ["Probability quantifies uncertainty over a defined sample space.", "A distribution connects possible values with likelihood or density.", "Confidence intervals estimate population parameters from samples.", "Hypothesis tests distinguish evidence from ordinary process variation."], key: "Mean x̄=Σx/n · Sample variance s²=Σ(x−x̄)²/(n−1)", application: "Use sampling and process capability to make quality decisions without inspecting every part.", exercise: "Calculate the mean, range, and sample standard deviation of five measured shaft diameters." },
+    "Numerical Methods": { concepts: ["Numerical methods approximate solutions when closed forms are unavailable.", "Truncation and round-off errors must be separated and controlled.", "Root-finding algorithms trade robustness for convergence speed.", "Discretization converts continuous fields into solvable algebraic systems."], key: "Newton–Raphson: xₙ₊₁=xₙ−f(xₙ)/f′(xₙ)", application: "Solve nonlinear design equations, interpolate test data, and approximate derivatives and integrals.", exercise: "Perform two Newton iterations to estimate √10 starting from x₀=3." },
+    "Engineering Mathematics": { concepts: ["Vector calculus describes gradient, divergence, and curl in physical fields.", "Complex numbers compactly represent oscillation magnitude and phase.", "Fourier series decompose periodic signals into harmonic components.", "Special functions appear in cylindrical and spherical boundary-value problems."], key: "Gradient ∇φ · Divergence ∇·V · Curl ∇×V", application: "Interpret velocity, stress, temperature, electromagnetic, and vibration fields.", exercise: "Find the gradient of T=x²+2y²−z and interpret its direction physically." },
+    "Engineering Mechanics": { concepts: ["A free-body diagram isolates a body and shows every external force and moment.", "Static equilibrium requires zero resultant force and zero resultant moment.", "Distributed loads can be replaced by an equivalent force acting through the load centroid.", "Friction forces oppose impending or relative motion and are limited by μN."], key: "ΣF=0 · ΣM=0 · F≤μN", application: "Resolve reactions, truss forces, frame loads, centroids, and friction limits before sizing components.", exercise: "Draw the FBD and determine reactions for a simply supported beam carrying a central point load." },
+    "Strength of Materials": { concepts: ["Normal stress is axial force divided by area; strain is deformation divided by length.", "Hooke’s law relates elastic stress and strain within the proportional limit.", "Bending stress varies linearly from the neutral axis.", "Combined stresses require transformation or a failure criterion."], key: "σ=P/A · ε=δ/L · σ=My/I · τ=Tr/J", application: "Check shafts, beams, columns, pressure members, and fasteners for strength and stiffness.", exercise: "Find maximum bending stress in a rectangular beam under a known bending moment." },
+    "Fluid Mechanics": { concepts: ["Pressure in a static fluid varies with elevation and density.", "Continuity enforces conservation of mass through a control volume.", "Bernoulli’s equation balances pressure, kinetic, and potential energy for ideal flow.", "Reynolds number predicts whether viscous or inertial effects dominate."], key: "ṁ=ρAV · p/ρg+V²/2g+z=constant · Re=ρVD/μ", application: "Size pipes, pumps, nozzles, ducts, and flow meters while accounting for losses.", exercise: "Calculate Reynolds number and flow regime for water in a 50 mm pipe at 1.5 m/s." },
+    "Thermodynamics": { concepts: ["A system boundary defines what mass and energy are being counted.", "The first law conserves energy; the second law constrains direction and efficiency.", "Properties define state while heat and work describe energy crossing a boundary.", "Entropy generation measures irreversibility and lost work potential."], key: "Closed system: ΔU=Q−W · Steady flow: Q−W=ṁΔ(h+V²/2+gz)", application: "Analyze engines, turbines, compressors, boilers, refrigerators, and power cycles.", exercise: "Apply the steady-flow energy equation to an adiabatic turbine and calculate shaft work." },
+    "Heat Transfer": { concepts: ["Conduction moves energy through a material temperature gradient.", "Convection couples a surface to moving fluid through a heat-transfer coefficient.", "Radiation transfers energy by electromagnetic emission.", "Thermal resistance networks combine layers and boundary films."], key: "Conduction q=−kA dT/dx · Convection q=hA(Ts−T∞) · Radiation q=εσA(Ts⁴−Tsur⁴)", application: "Design insulation, heat exchangers, cooling systems, fins, and thermal protection.", exercise: "Build a resistance network and calculate heat loss through an insulated wall." },
+    "Theory of Machines": { concepts: ["Links and joints create constrained relative motion in mechanisms.", "Mobility counts independent inputs needed to define mechanism position.", "Velocity and acceleration analysis convert geometry into motion performance.", "Balancing reduces shaking force and bearing load from rotating or reciprocating masses."], key: "Planar mobility: M=3(L−1)−2J₁−J₂", application: "Analyze four-bar linkages, cams, gear trains, flywheels, governors, and balancing systems.", exercise: "Calculate the mobility of a planar four-bar mechanism and identify its input and output links." },
+    "Machine Design": { concepts: ["Design converts loads, constraints, materials, and reliability targets into dimensions.", "Stress concentration and fatigue govern many cyclic failures.", "Failure theories compare multiaxial stress states to material limits.", "Standard-component selection must include life, lubrication, fit, and manufacturability."], key: "Design factor n=strength/allowable stress · Von Mises σv=√(σ₁²−σ₁σ₂+σ₂²)", application: "Size shafts, gears, bearings, springs, keys, bolts, welds, and power-transmission components.", exercise: "Select a shaft diameter for combined bending and torsion using a stated design factor." },
+    "Manufacturing Processes": { concepts: ["Process selection balances material, geometry, tolerance, surface finish, volume, and cost.", "Casting shapes molten material; forming reshapes solid material by plastic flow.", "Machining removes material with a controlled cutting edge.", "Welding joins components through heat, pressure, or both."], key: "Unit cost = material + processing + tooling/production volume + quality loss", application: "Choose a defensible process chain from raw stock through finishing and inspection.", exercise: "Compare casting, machining, and additive manufacturing for a low-volume pump impeller." },
+    "Materials Science": { concepts: ["Atomic bonding and crystal structure influence stiffness, conductivity, and deformation.", "Defects enable diffusion and plastic deformation.", "Phase diagrams predict equilibrium phases with composition and temperature.", "Heat treatment controls microstructure, hardness, toughness, and residual stress."], key: "Lever rule: phase fraction = opposite tie-line length / total tie-line length", application: "Select alloys and heat treatments using service load, temperature, environment, and manufacturing route.", exercise: "Use an iron–carbon diagram to identify phases for a 0.4 wt% C steel during slow cooling." },
+    "Engineering Drawing": { concepts: ["Orthographic views describe three-dimensional geometry with aligned projections.", "Section views reveal internal features without hidden-line clutter.", "Dimensions define function and inspection requirements rather than duplicating geometry.", "Drawing standards create a common technical language for manufacturing."], key: "A complete drawing controls geometry, size, tolerance, material, finish, and revision.", application: "Produce manufacturing-ready part and assembly drawings that can be interpreted without verbal explanation.", exercise: "Create front, top, side, and section views for a stepped shaft with an internal bore." },
+    "Industrial Engineering": { concepts: ["Work measurement establishes standard time and capacity.", "Forecasting and inventory policies balance service level against cost.", "Linear programming allocates limited resources to an objective.", "Queuing models expose the relationship between utilization, waiting, and variability."], key: "Little’s law: L=λW · EOQ=√(2DS/H)", application: "Improve layout, scheduling, inventory, line balance, logistics, and productivity.", exercise: "Calculate takt time and minimum stations for a production target and task-time set." },
+    "Metrology": { concepts: ["Measurement is a comparison with a traceable reference.", "Accuracy, precision, resolution, repeatability, and uncertainty describe different performance aspects.", "Fits and limit gauges convert design tolerances into production decisions.", "Calibration establishes instrument error and traceability."], key: "Measurement result = indicated value + correction ± uncertainty", application: "Plan inspection using micrometers, gauges, surface instruments, optical systems, and CMMs.", exercise: "Create an uncertainty budget for a shaft measurement made with a micrometer." },
+    "Tribology": { concepts: ["Friction arises from adhesion, deformation, and surface interaction.", "Lubrication regimes range from boundary to mixed to full-film separation.", "Wear mechanisms include adhesive, abrasive, fatigue, and chemical wear.", "Surface texture and lubricant viscosity strongly influence contact life."], key: "Stribeck parameter ∝ viscosity×speed/load · Archard wear V=kWL/H", application: "Improve bearing, gear, seal, cam, and sliding-interface reliability.", exercise: "Explain how speed, viscosity, and load move a journal bearing across the Stribeck curve." },
+    "AutoCAD": { concepts: ["Layers separate geometry by function and plotting behavior.", "Object snaps and constraints preserve geometric intent.", "Blocks reuse standard content and attributes.", "Layouts and viewports control paper-space documentation."], key: "Draft at full scale in model space; control print scale in paper-space viewports.", application: "Create consistent 2D layouts, fabrication drawings, schematics, and facility plans.", exercise: "Draft a dimensioned flange using layers, a reusable block, and a plotted layout." },
+    "SolidWorks": { concepts: ["Parametric sketches capture design intent with dimensions and relations.", "Features transform sketches into manufacturable solid geometry.", "Assemblies use mates to constrain component degrees of freedom.", "Drawings inherit model geometry and support revision-controlled documentation."], key: "Stable models use simple sketches, meaningful references, and a deliberate feature order.", application: "Build parts, assemblies, drawings, configurations, and basic simulations for product design.", exercise: "Model a parametric mounting bracket, create two configurations, and produce its drawing." },
+    "CATIA": { concepts: ["Part Design builds history-based solids from sketches and features.", "Generative Shape Design creates controlled wireframe and surface geometry.", "Assembly Design manages product structure and constraints.", "Publication and parameter tools stabilize interfaces in large models."], key: "Separate master references, interface geometry, and detail features to control change.", application: "Develop aerospace and automotive parts where complex surfaces and large assemblies dominate.", exercise: "Create a surface-driven panel, trim it, thicken it, and publish its assembly interfaces." },
+    "Creo": { concepts: ["Intent Manager solves sketch constraints and dimensions.", "Datum strategy provides stable references for features and assemblies.", "Relations and family tables automate variants.", "Top-down design shares controlled geometry between components."], key: "Reference stability improves when design intent follows datums instead of transient edges.", application: "Create configurable product families and robust machinery assemblies.", exercise: "Build a parameter-driven shaft family with keyway and drawing variants." },
+    "Siemens NX": { concepts: ["NX combines parametric, synchronous, and direct modeling.", "Expressions connect dimensions and engineering rules.", "Assemblies use arrangements, constraints, and reference sets.", "Integrated CAD/CAM/CAE reduces translation between lifecycle stages."], key: "Use expressions and reference sets to keep large models lightweight and rule-driven.", application: "Develop complex products with linked design, analysis, and manufacturing data.", exercise: "Model a configurable impeller and prepare a lightweight assembly reference set." },
+    "Fusion 360": { concepts: ["Components, bodies, and sketches define product structure.", "The timeline records parametric modeling history.", "Cloud documents support versioning and collaboration.", "Manufacture workspaces connect geometry to toolpaths and setup sheets."], key: "Create a component before modeling parts that must move or appear in a BOM.", application: "Move quickly from concept CAD through simulation, rendering, and CAM.", exercise: "Design a two-part clamp, create joints, and generate a basic milling setup." },
+    "CFD Fundamentals": { concepts: ["CFD enforces discrete conservation of mass, momentum, and energy.", "The mesh controls spatial resolution and numerical cost.", "Boundary conditions must represent the physical system without over-constraining it.", "Verification checks discretization error; validation compares against reality."], key: "Continuity: ∂ρ/∂t+∇·(ρu)=0 · Momentum: ρDu/Dt=−∇p+μ∇²u+ρg", application: "Predict flow distribution, pressure drop, force, mixing, and heat transfer.", exercise: "Design a mesh-independence study for pressure drop through an elbow." },
+    "Finite Element Analysis": { concepts: ["FEA divides a continuum into elements connected at nodes.", "Shape functions interpolate the field inside each element.", "Assembly combines element equations into a global system.", "Boundary conditions remove rigid-body modes and represent supports and loads."], key: "Global equilibrium: Ku=F · Element stiffness Ke=∫BᵀDB dV", application: "Estimate stress, deformation, vibration, heat flow, and nonlinear response.", exercise: "Explain why a cantilever model needs a mesh study near the fixed boundary." },
+    "ANSYS Mechanical": { concepts: ["Engineering Data defines material models and units.", "Connections determine load transfer between bodies.", "Mesh controls and element quality affect solution accuracy.", "Result interpretation requires equilibrium, convergence, and stress-singularity checks."], key: "A converged solver is not automatically a valid physical model.", application: "Build static, modal, thermal, buckling, fatigue, and contact analyses.", exercise: "Create a validation checklist for a bolted-bracket static structural analysis." },
+    "ANSYS Fluent": { concepts: ["Solver choice depends on compressibility, transience, and coupling.", "Near-wall treatment must match turbulence model and y+.", "Initialization supplies a starting field; residuals measure equation imbalance.", "Monitors and integral balances determine practical convergence."], key: "Wall resolution target depends on model: y+≈1 for wall-resolved SST; wall functions often target y+>30.", application: "Simulate internal flow, aerodynamics, combustion, multiphase flow, and conjugate heat transfer.", exercise: "Specify boundary conditions and convergence monitors for airflow through a heated duct." },
+    "Abaqus": { concepts: ["Abaqus/Standard solves implicit equilibrium; Abaqus/Explicit advances dynamics with small stable time steps.", "Steps organize loading history and nonlinear procedures.", "Interactions define contact, constraints, and connector behavior.", "Material models must match strain rate, plasticity, damage, and temperature needs."], key: "Choose Explicit for severe contact/short dynamics; Standard for equilibrium-dominated problems.", application: "Analyze nonlinear contact, forming, impact, fracture, composites, and complex materials.", exercise: "Choose Standard or Explicit for a sheet-forming simulation and justify the decision." },
+    "OpenFOAM": { concepts: ["Cases are organized into initial fields, physical constants, and system dictionaries.", "Finite-volume schemes are selected per derivative term.", "Pressure–velocity coupling uses SIMPLE, PISO, or PIMPLE families.", "Command-line utilities support meshing, checking, solving, and post-processing."], key: "A valid case requires consistent dimensions, boundary types, schemes, and solver controls.", application: "Build transparent, scriptable CFD workflows for research and engineering.", exercise: "Outline the directory files required for an incompressible steady pipe-flow case." },
+    "COMSOL": { concepts: ["Physics interfaces translate governing equations into configured formulations.", "Multiphysics couplings exchange fields between interfaces.", "Selections keep materials and conditions attached to intended geometry.", "Studies control stationary, transient, frequency-domain, and parametric solutions."], key: "Coupled models must maintain consistent units, boundary conditions, and time scales.", application: "Simulate thermal, structural, fluid, acoustic, electromagnetic, and chemical interactions.", exercise: "Plan a conjugate heat-transfer study for an electronics enclosure and list coupled physics." },
+    "CNC Programming": { concepts: ["Machine coordinates, work offsets, and tool offsets define the cutting reference system.", "G codes command motion and modes; M codes control machine functions.", "Feeds and speeds determine chip formation, heat, force, and tool life.", "Safe programs use planned approach, clearance, verification, and recovery states."], key: "Spindle speed N=1000Vc/(πD) · Feed rate Vf=fz·z·N", application: "Create safe turning and milling programs with setup sheets and verification.", exercise: "Calculate rpm and feed for a four-flute cutter, then write a safe profile sequence." },
+    "Welding": { concepts: ["A welding process supplies heat and shielding to create a joint.", "Joint design controls access, penetration, distortion, and stress concentration.", "Heat input changes cooling rate and heat-affected-zone properties.", "Procedure qualification connects variables to repeatable joint performance."], key: "Heat input per length ≈ efficiency×voltage×current/travel speed", application: "Select processes, consumables, parameters, inspection, and distortion controls.", exercise: "Choose a process and joint preparation for a structural carbon-steel plate weld." },
+    "Casting": { concepts: ["Pattern allowances account for shrinkage, machining, and withdrawal.", "Gating controls metal delivery while risers feed solidification shrinkage.", "Solidification direction should progress toward a feed source.", "Defects connect to flow, gas, inclusions, mold behavior, and thermal gradients."], key: "Chvorinov: solidification time t=C(V/A)ⁿ", application: "Design castable geometry, gating, risers, draft, cores, and inspection strategy.", exercise: "Use modulus reasoning to position a riser for a thick casting section." },
+    "Machining": { concepts: ["Chip formation depends on material, tool geometry, speed, feed, and depth of cut.", "Cutting force and power constrain machine and fixture selection.", "Tool wear changes dimensions, forces, finish, and process stability.", "Process planning establishes datums and sequences roughing before finishing."], key: "Material removal rate (turning) ≈ πD·depth·feed·rpm", application: "Plan turning, milling, drilling, grinding, tooling, workholding, and inspection.", exercise: "Select roughing and finishing parameters for an aluminum shaft and estimate cycle time." },
+    "Additive Manufacturing": { concepts: ["Additive processes build geometry layer by layer from digital data.", "Orientation controls support volume, anisotropy, finish, and build time.", "Design for additive manufacturing consolidates parts and creates internal features.", "Post-processing may include depowdering, heat treatment, machining, and inspection."], key: "A printable design balances minimum feature size, overhang, support access, and process anisotropy.", application: "Choose polymer or metal processes and redesign components for additive value.", exercise: "Reorient and redesign a lightweight bracket to reduce supports while preserving load paths." },
+    "Lean Manufacturing": { concepts: ["Value is defined by the customer; non-value activity is waste.", "Flow reduces queues, transport, inventory, and elapsed time.", "Pull systems replenish based on actual consumption.", "Standard work and visual management expose abnormal conditions."], key: "Takt time = available production time / customer demand", application: "Use value-stream mapping, 5S, kanban, SMED, standard work, and kaizen.", exercise: "Map a three-step process, identify the eight wastes, and propose one flow improvement." },
+    "Six Sigma": { concepts: ["DMAIC structures improvement from problem definition through control.", "Measurement-system analysis separates process variation from measurement error.", "Capability compares stable process spread and centering with specification limits.", "Control charts distinguish common-cause from special-cause variation."], key: "Cp=(USL−LSL)/(6σ) · Cpk=min[(USL−μ)/(3σ),(μ−LSL)/(3σ)]", application: "Reduce defects using data, verified causes, controlled experiments, and sustained controls.", exercise: "Calculate Cp and Cpk, then explain why a capable spread can still be off-center." },
+    "PLC": { concepts: ["A PLC repeatedly scans inputs, executes logic, and updates outputs.", "Ladder logic represents relay-style Boolean control.", "Timers, counters, sequences, and interlocks organize machine behavior.", "Fail-safe design considers de-energized states and independent safety circuits."], key: "Scan cycle: read inputs → execute program → diagnostics/communications → write outputs", application: "Control motors, conveyors, cylinders, sensors, alarms, and industrial sequences.", exercise: "Write a start/stop seal-in circuit with overload protection and an emergency-stop condition." },
+    "SCADA": { concepts: ["SCADA supervises distributed processes through field devices, PLCs, networks, and servers.", "Tags connect process values to displays, alarms, and histories.", "Alarm design prioritizes actionable abnormal conditions.", "Historian data supports trends, reporting, root-cause analysis, and optimization."], key: "A useful alarm is timely, prioritized, understandable, and operator-actionable.", application: "Design operator screens, alarms, trends, reports, redundancy, and secure access.", exercise: "Create an alarm philosophy and screen hierarchy for a small pumping station." },
+    "Robotics": { concepts: ["Coordinate frames describe pose relative to a reference.", "Forward kinematics maps joint values to end-effector pose.", "Inverse kinematics finds joint values for a desired pose and may have multiple solutions.", "Trajectory planning specifies time-varying position, velocity, and acceleration."], key: "Homogeneous transforms combine rotation and translation in a 4×4 matrix.", application: "Model manipulators, select actuators, plan motion, and integrate sensing and control.", exercise: "Construct the planar two-link forward-kinematics equations and evaluate one pose." },
+    "Mechatronics": { concepts: ["Mechatronics integrates mechanics, electronics, sensing, actuation, and software.", "Sensors convert physical variables into usable signals.", "Actuators convert electrical, pneumatic, or hydraulic power into motion.", "Feedback reduces error but introduces stability and bandwidth constraints."], key: "Closed-loop transfer: T(s)=G(s)/(1+G(s)H(s))", application: "Develop smart products, motion systems, instrumentation, and embedded machines.", exercise: "Choose sensor, actuator, controller, and sampling rate for a motor-position system." },
+    "Industrial Automation": { concepts: ["Automation architecture separates field, control, supervisory, and enterprise layers.", "Sequences require explicit states, transitions, permissives, and faults.", "Industrial networks trade speed, determinism, distance, and interoperability.", "Safety functions require risk assessment and independent validated design."], key: "State logic = current state + transition condition → next state + defined outputs", application: "Integrate PLCs, drives, robots, vision, pneumatics, safety, and production data.", exercise: "Create a state diagram and I/O list for an automated pick-and-place cell." },
+    "Industry 4.0": { concepts: ["Connected assets create data streams across operations and enterprise systems.", "Interoperability requires common models, identifiers, and protocols.", "Edge computing filters and acts near the process; cloud platforms aggregate and scale.", "Digital maturity depends on people and process discipline as much as technology."], key: "Start with a business decision, identify required data, then choose connectivity and analytics.", application: "Build traceability, predictive maintenance, adaptive scheduling, and connected quality systems.", exercise: "Define a minimum viable connected-factory use case with value, signals, architecture, and KPI." },
+    "Digital Twin": { concepts: ["A digital twin is a maintained digital representation linked to a specific physical asset or process.", "Models may be physics-based, data-driven, or hybrid.", "State estimation reconciles model predictions with sensor observations.", "Lifecycle governance manages identity, configuration, calibration, and trust."], key: "Twin loop: sense → synchronize → estimate/predict → decide → act → verify", application: "Monitor condition, predict remaining life, test operating changes, and optimize performance.", exercise: "Design a digital-twin data flow for a centrifugal pump and define validation metrics." },
+    "Python": { concepts: ["Variables, collections, conditions, and loops express computational logic.", "Functions and modules organize reusable engineering calculations.", "NumPy arrays support vectorized numerical work; pandas manages tabular data.", "Visualization and testing turn scripts into auditable engineering tools."], key: "Prefer explicit units, named functions, assertions, and reproducible inputs over opaque scripts.", application: "Automate calculations, clean test data, run simulations, and generate reports.", exercise: "Write and test a function that calculates Reynolds number for scalar and array inputs." },
+    "MATLAB": { concepts: ["Matrices and vectorized operations are MATLAB’s primary computational model.", "Scripts explore workflows while functions create reusable interfaces.", "Plotting reveals trends, errors, and model behavior.", "Toolboxes extend control, signal, optimization, and simulation capabilities."], key: "Use element-wise operators .*, ./, and .^ when operating independently on array entries.", application: "Analyze experiments, solve equations, design controls, process signals, and prototype algorithms.", exercise: "Generate a damped-vibration response, plot it, and estimate logarithmic decrement." },
+    "C++": { concepts: ["Static types and compiled execution support predictable performance.", "Functions, classes, and templates create reusable abstractions.", "Memory ownership and lifetime are central to safe systems programming.", "The standard library provides containers, algorithms, and concurrency tools."], key: "Prefer RAII and standard containers to manual resource management.", application: "Develop embedded control, robotics, simulation kernels, and performance-critical tools.", exercise: "Create a class for a sensor sample buffer and compute a moving average safely." },
+    "SQL": { concepts: ["Relational tables represent entities with keys and constraints.", "SELECT filters, projects, groups, and orders result sets.", "JOIN combines related records across tables.", "Indexes accelerate reads but add storage and write cost."], key: "A reliable schema uses primary keys, foreign keys, appropriate types, and normalized relationships.", application: "Query maintenance histories, production traces, quality measurements, and engineering configurations.", exercise: "Write a query joining machines and failures to rank assets by downtime this month." },
+    "Git & GitHub": { concepts: ["A commit is an immutable project snapshot with authorship and history.", "Branches isolate changes and enable review before integration.", "Merges combine histories; conflicts require an explicit human decision.", "Issues, pull requests, and automation connect code changes to collaboration and checks."], key: "Safe loop: pull → branch → change → test → commit → push → review → merge", application: "Version calculations, simulation inputs, scripts, documentation, and collaborative engineering projects.", exercise: "Create a feature branch, make two logical commits, open a pull request, and describe a rollback plan." }
+};
+
+function buildTextCourseLessons(course) {
+    const blueprint = TEXT_COURSE_BLUEPRINTS[course.title] || {
+        concepts: course.skills.map(skill => `${skill} is a core capability in ${course.title}.`),
+        key: `Use governing principles, consistent units, and documented assumptions in every ${course.title} calculation.`,
+        application: course.description,
+        exercise: `Create a worked example demonstrating the three principal skills in ${course.title}.`
+    };
+    const concepts = [...blueprint.concepts];
+    while (concepts.length < 4) concepts.push(`Connect ${course.skills[concepts.length % course.skills.length]} to a practical engineering decision.`);
+    return [
+        {
+            title: `Orientation: Why ${course.title} matters`, duration: "8 min read",
+            summary: course.description,
+            sections: [
+                { heading: "What you will be able to do", bullets: course.skills },
+                { heading: "Engineering context", body: blueprint.application },
+                { heading: "Before you begin", body: `Recommended prerequisite: ${course.prereq}. Keep a notebook, work in consistent SI units, and write every assumption beside the calculation it affects.` }
+            ]
+        },
+        {
+            title: "First principles and vocabulary", duration: "12 min read",
+            summary: "Build a reliable mental model before using formulas or software.",
+            sections: [
+                { heading: "Core idea 1", body: concepts[0] },
+                { heading: "Core idea 2", body: concepts[1] },
+                { heading: "Key relation or rule", callout: blueprint.key },
+                { heading: "Reading check", body: `Explain both core ideas in your own words, then name one assumption that could make the key relation invalid.` }
+            ]
+        },
+        {
+            title: "Methods, models, and limitations", duration: "14 min read",
+            summary: "Move from definitions to the methods engineers actually apply.",
+            sections: [
+                { heading: "Core idea 3", body: concepts[2] },
+                { heading: "Core idea 4", body: concepts[3] },
+                { heading: "Model discipline", bullets: ["Define the system boundary and required output.", "List inputs with units and source quality.", "Choose the simplest model that captures the governing behavior.", "Check limiting cases, conservation, and order of magnitude.", "Record uncertainty and conditions where the result should not be used."] }
+            ]
+        },
+        {
+            title: "Professional engineering workflow", duration: "11 min read",
+            summary: "Turn subject knowledge into a traceable technical decision.",
+            sections: [
+                { heading: "Application", body: blueprint.application },
+                { heading: "Five-step workflow", bullets: ["Translate the request into a measurable requirement.", "Sketch the system and identify interfaces, loads, or data paths.", "Calculate or model with explicit assumptions and units.", "Verify against an independent method, benchmark, or experiment.", "Communicate the result, margin, risk, and recommended action."] },
+                { heading: "Quality gate", callout: "Do not accept a result only because software converged or a formula returned a number. Confirm physical plausibility, units, boundary conditions, and sensitivity." }
+            ]
+        },
+        {
+            title: "Worked challenge and mastery check", duration: "15 min read",
+            summary: "Apply the course as a complete engineering argument, not a memory test.",
+            sections: [
+                { heading: "Challenge", callout: blueprint.exercise },
+                { heading: "Required submission", bullets: ["A labeled diagram, schema, or model boundary.", "Known data, unknowns, assumptions, and consistent units.", "A transparent solution with intermediate checks.", "A brief interpretation: what the result means for design or operation.", "One validation method and one limitation."] },
+                { heading: "Mastery questions", bullets: course.skills.map(skill => `Can you explain, apply, and verify ${skill} without copying a finished solution?`) },
+                { heading: "Completion standard", body: "You have mastered this course when you can solve the challenge, explain why the method is appropriate, detect an unrealistic answer, and communicate a defensible decision." }
+            ]
+        }
+    ];
+}
+
 const ROADMAPS_DATABASE = {
     "Mechanical Engineer": {
         time: "185 Hours",
@@ -8561,6 +8766,9 @@ const ROADMAPS_DATABASE = {
 let userCompletedCourses = [];
 let userBookmarkedCourses = [];
 let userCourseNotes = {};
+let completedTextLessons = [];
+let activeTextCourseTitle = null;
+let activeTextLessonIndex = 0;
 
 function initLearningHub() {
     const completed = localStorage.getItem("userCompletedCourses");
@@ -8572,11 +8780,19 @@ function initLearningHub() {
     const notes = localStorage.getItem("userCourseNotes");
     userCourseNotes = notes ? JSON.parse(notes) : {};
 
+    const textProgress = localStorage.getItem("completedTextLessons");
+    completedTextLessons = textProgress ? JSON.parse(textProgress) : [];
+
     updateLearningStats();
 }
 
 function updateLearningStats() {
     const completedCount = userCompletedCourses.length;
+    const totalTextLessons = COURSES_DATABASE.length * 5;
+    const totalCoursesLabel = document.getElementById("learn-stat-total-courses");
+    const totalLessonsLabel = document.getElementById("learn-stat-total-lessons");
+    if (totalCoursesLabel) totalCoursesLabel.innerText = `${COURSES_DATABASE.length} Courses`;
+    if (totalLessonsLabel) totalLessonsLabel.innerText = `${totalTextLessons} text lessons · ${completedTextLessons.length} read`;
     document.getElementById("learn-stat-completed").innerText = completedCount;
     document.getElementById("learn-stat-completed-pct").innerText = `${Math.round((completedCount / COURSES_DATABASE.length) * 100)}% Complete`;
     
@@ -8607,11 +8823,14 @@ function renderCourses() {
     const filtered = COURSES_DATABASE.filter(course => {
         // Search filter
         if (searchVal) {
+            const blueprint = TEXT_COURSE_BLUEPRINTS[course.title];
+            const searchableText = blueprint ? `${blueprint.concepts.join(" ")} ${blueprint.key} ${blueprint.application} ${blueprint.exercise}`.toLowerCase() : "";
             const matchesSearch = 
                 course.title.toLowerCase().includes(searchVal) ||
                 course.description.toLowerCase().includes(searchVal) ||
                 course.prereq.toLowerCase().includes(searchVal) ||
-                course.skills.some(s => s.toLowerCase().includes(searchVal));
+                course.skills.some(s => s.toLowerCase().includes(searchVal)) ||
+                searchableText.includes(searchVal);
             if (!matchesSearch) return false;
         }
 
@@ -8642,23 +8861,9 @@ function renderCourses() {
         const isCompleted = userCompletedCourses.includes(course.title);
         const isBookmarked = userBookmarkedCourses.includes(course.title);
         const savedNote = userCourseNotes[course.title] || "";
-        const videoLesson = VIDEO_LESSONS[course.title] || null;
-
-        const videoBlock = videoLesson ? `
-            <div class="course-video-wrap" style="margin-bottom: 0.9rem;">
-                <video controls preload="metadata" playsinline style="width:100%; display:block; border-radius:12px; background:#000; aspect-ratio:16/9;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-                    <source src="${videoLesson.src}" type="video/mp4">
-                    Your browser does not support embedded video.
-                </video>
-                <div style="display:none; padding:0.7rem 0.8rem; background:rgba(255,255,255,0.04); border:1px solid var(--border-color); border-radius:12px; color:var(--text-muted); font-size:0.75rem;">
-                    <i data-lucide="video-off" style="width:14px; height:14px; display:inline-block; vertical-align:middle; margin-right:4px;"></i>
-                    Visualization video is not bundled in this build. Use the free resources below to continue.
-                </div>
-                <div style="padding:0.45rem 0.1rem 0; font-size:0.75rem; color:var(--text-secondary);">
-                    <span style="color:var(--primary); font-weight:600;">&#9654; ${videoLesson.label}</span> &mdash; ${videoLesson.caption}
-                </div>
-            </div>
-        ` : '';
+        const textLessons = buildTextCourseLessons(course);
+        const textCompleted = textLessons.filter((_, index) => completedTextLessons.includes(textLessonId(course.title, index))).length;
+        const textProgressPct = Math.round((textCompleted / textLessons.length) * 100);
 
         const card = document.createElement("div");
         card.className = `glass-card course-card ${isCompleted ? 'completed' : ''}`;
@@ -8673,8 +8878,6 @@ function renderCourses() {
                         </button>
                     </div>
                 </div>
-                
-                ${videoBlock}
                 
                 <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                     ${course.title}
@@ -8702,6 +8905,11 @@ function renderCourses() {
                         `).join('')}
                     </div>
                 </div>
+                <div class="text-course-card-progress">
+                    <div><span>${textCompleted} / ${textLessons.length} text lessons</span><strong>${textProgressPct}%</strong></div>
+                    <div class="text-course-card-progress-track"><div style="width:${textProgressPct}%"></div></div>
+                    <button class="btn btn-primary btn-sm" onclick="openTextCourse('${course.title.replace(/'/g, "\\'")}')"><i data-lucide="book-open-text"></i> ${textCompleted ? 'Continue Text Course' : 'Read Text Course'}</button>
+                </div>
             </div>
 
             <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
@@ -8718,6 +8926,116 @@ function renderCourses() {
         grid.appendChild(card);
     });
     lucide.createIcons();
+}
+
+function textLessonId(courseTitle, lessonIndex) {
+    return `${courseTitle}::${lessonIndex}`;
+}
+
+function getTextCourseProgress(courseTitle) {
+    const completed = [0, 1, 2, 3, 4].filter(index => completedTextLessons.includes(textLessonId(courseTitle, index))).length;
+    return { completed, total: 5, percent: Math.round((completed / 5) * 100) };
+}
+
+function openTextCourse(courseTitle, requestedLessonIndex = null) {
+    const course = COURSES_DATABASE.find(item => item.title === courseTitle);
+    if (!course) return;
+    activeTextCourseTitle = courseTitle;
+    if (requestedLessonIndex === null) {
+        const firstIncomplete = [0, 1, 2, 3, 4].find(index => !completedTextLessons.includes(textLessonId(courseTitle, index)));
+        activeTextLessonIndex = firstIncomplete === undefined ? 0 : firstIncomplete;
+    } else {
+        activeTextLessonIndex = Math.max(0, Math.min(4, requestedLessonIndex));
+    }
+    const reader = document.getElementById("text-course-reader");
+    reader.classList.remove("hidden");
+    renderTextCourseReader();
+    reader.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeTextCourse() {
+    const reader = document.getElementById("text-course-reader");
+    if (reader) reader.classList.add("hidden");
+    activeTextCourseTitle = null;
+    document.getElementById("learning-course-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function selectTextLesson(lessonIndex) {
+    activeTextLessonIndex = Math.max(0, Math.min(4, lessonIndex));
+    renderTextCourseReader();
+}
+
+function changeTextLesson(direction) {
+    activeTextLessonIndex = Math.max(0, Math.min(4, activeTextLessonIndex + direction));
+    renderTextCourseReader();
+}
+
+function renderTextCourseReader() {
+    const course = COURSES_DATABASE.find(item => item.title === activeTextCourseTitle);
+    const reader = document.getElementById("text-course-reader");
+    if (!course || !reader) return;
+    const lessons = buildTextCourseLessons(course);
+    const lesson = lessons[activeTextLessonIndex];
+    const progress = getTextCourseProgress(course.title);
+    const currentComplete = completedTextLessons.includes(textLessonId(course.title, activeTextLessonIndex));
+
+    document.getElementById("text-course-category").textContent = `${course.category} · ${course.difficulty}`;
+    document.getElementById("text-course-title").textContent = course.title;
+    document.getElementById("text-course-description").textContent = course.description;
+    document.getElementById("text-course-progress-value").textContent = `${progress.percent}%`;
+    document.getElementById("text-course-progress-bar").style.width = `${progress.percent}%`;
+    document.getElementById("text-lesson-number").textContent = `Lesson ${activeTextLessonIndex + 1} of ${lessons.length}`;
+    document.getElementById("text-lesson-duration").textContent = lesson.duration;
+    document.getElementById("text-lesson-title").textContent = lesson.title;
+    document.getElementById("text-lesson-summary").textContent = lesson.summary;
+
+    document.getElementById("text-course-lesson-nav").innerHTML = lessons.map((item, index) => {
+        const complete = completedTextLessons.includes(textLessonId(course.title, index));
+        return `<button class="text-course-lesson-button ${index === activeTextLessonIndex ? 'active' : ''} ${complete ? 'complete' : ''}" onclick="selectTextLesson(${index})">
+            <span>${complete ? '✓' : index + 1}</span>
+            <span><small>Lesson ${index + 1}</small><strong>${item.title}</strong><em>${item.duration}</em></span>
+        </button>`;
+    }).join("");
+
+    document.getElementById("text-lesson-content").innerHTML = lesson.sections.map(section => `
+        <section class="text-lesson-section">
+            <h4>${section.heading}</h4>
+            ${section.body ? `<p>${section.body}</p>` : ''}
+            ${section.callout ? `<div class="text-lesson-callout"><i data-lucide="sigma"></i><strong>${section.callout}</strong></div>` : ''}
+            ${section.bullets ? `<ul>${section.bullets.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+        </section>
+    `).join("");
+
+    const previousButton = document.getElementById("text-lesson-prev-btn");
+    previousButton.disabled = activeTextLessonIndex === 0;
+    const completeButton = document.getElementById("text-lesson-complete-btn");
+    if (activeTextLessonIndex === lessons.length - 1) {
+        completeButton.innerHTML = `${currentComplete ? 'Course Completed' : 'Complete Course'} <i data-lucide="check-circle-2"></i>`;
+    } else {
+        completeButton.innerHTML = `${currentComplete ? 'Continue' : 'Complete & Continue'} <i data-lucide="arrow-right"></i>`;
+    }
+    if (window.lucide) lucide.createIcons();
+}
+
+function completeCurrentTextLesson() {
+    const course = COURSES_DATABASE.find(item => item.title === activeTextCourseTitle);
+    if (!course) return;
+    const lessonId = textLessonId(course.title, activeTextLessonIndex);
+    if (!completedTextLessons.includes(lessonId)) completedTextLessons.push(lessonId);
+    localStorage.setItem("completedTextLessons", JSON.stringify(completedTextLessons));
+
+    const progress = getTextCourseProgress(course.title);
+    if (progress.completed === progress.total && !userCompletedCourses.includes(course.title)) {
+        userCompletedCourses.push(course.title);
+        userXP += 100;
+        localStorage.setItem("userXP", userXP);
+        localStorage.setItem("userCompletedCourses", JSON.stringify(userCompletedCourses));
+    }
+
+    if (activeTextLessonIndex < 4) activeTextLessonIndex += 1;
+    updateLearningStats();
+    renderTextCourseReader();
+    renderCourses();
 }
 
 function toggleCourseBookmark(title) {

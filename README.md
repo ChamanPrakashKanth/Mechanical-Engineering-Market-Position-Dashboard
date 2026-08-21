@@ -53,8 +53,11 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Explore, filter, and paginate through the 100,000 anonymized candidate database.
 - Filter by target region (India vs. Global) or career cluster, and search for specific colleges, degrees, or tools.
 
-### 8. Comprehensive Written Courses & Quizzes (Streamlit Exclusive)
-- Includes detailed written lecture notes, industrial guidelines, and LaTeX equations for each career cluster:
+### 8. Comprehensive Text Course Academy
+- Includes **51 complete subject courses with 255 structured text lessons** in the SPA Learning Hub, spanning engineering mathematics, mechanics, design, manufacturing, materials, thermal sciences, fluids, controls, robotics, computation, energy, aerospace, automotive, marine, biomedical, environmental, safety, management, and career readiness.
+- Every course has five progressive lessons: orientation, first principles and vocabulary, methods and limitations, professional workflow, and a worked mastery challenge.
+- Provides a focused in-app reader, formulas and engineering rules, practical applications, previous/next navigation, deep concept search, completion tracking, saved local progress, and automatic course completion.
+- Includes detailed written lecture notes, industrial guidelines, and LaTeX equations for each career cluster in the Streamlit experience:
   - *CAD Design*: ASME Y14.5 GD&T controls, DFM principles, Worst-Case vs. RSS tolerance stack-ups, and the Lewis Bending Equation.
   - *CAE/Simulation*: Element formulations, stiffness matrices ($\mathbf{K}\mathbf{u}=\mathbf{f}$), cantilever deflection, Von Mises yield criteria, Navier-Stokes, and $y^+$ wall distance.
   - *Robotics*: Closed-loop PID control theory, ADC step voltage resolution calculations, and active RC low-pass filters.
@@ -66,6 +69,7 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Organizes the 18 embedded Manim MP4 lessons into five guided courses: Mechanical Design, Simulation Engineering, Thermal & Fluids, Smart Manufacturing, and Controls & Robotics.
 - Saves lesson completion and active-course progress locally, provides a sequenced module queue, and resumes from the next unfinished lesson.
 - Automatically marks a lesson complete when playback ends, with a manual completion control for review workflows.
+- Keeps video learning in the dedicated **Video Academy**, separate from the text-first Learning Hub.
 
 ### 10. Mathematics Shorts Library
 - Includes **1,000 separate 20-second visual mathematics lessons** inside Video Academy: 20 topics with 50 worked examples per topic.
@@ -105,8 +109,8 @@ The project includes automated video production tooling inside the `manim_course
        ```
      - Update the returned YouTube video ID in `COURSE_CATALOG` in `app_streamlit.py` to embed the videos.
 
-4. **Embedded in the SPA Learning Hub**:
-   - The rendered MP4s are embedded directly inside the matching course cards in the client-side app (`Machine Design`, `Finite Element Analysis`, `Robotics`, `Six Sigma`, and `Heat Transfer`) via the `VIDEO_LESSONS` mapping in `app.js`.
+4. **Embedded in the SPA Video Academy**:
+   - The rendered MP4s are organized in the dedicated client-side Video Academy (`Machine Design`, `Finite Element Analysis`, `Robotics`, `Six Sigma`, and `Heat Transfer`) via the `VIDEO_LESSONS` mapping in `app.js`.
    - When served with the repo present, the `<video>` players load the MP4s from `manim_courses/renders/`. The single-file builds (`compile_single_file.py`, `compile_blogspot_safe.py`) automatically inline the videos as base64 `data:` URIs so they play in fully self-contained deployments.
    - If a video asset is unavailable, the player falls back to a graceful notice so the course stays usable.
 
