@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MechIntel Defense Engineering Reading Feed</title>
+    <link>https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html</link>
+    <description>Curated defense engineering and military technology reading from Defense Affairs.</description>
+    <language>en</language>
+    <atom:link href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>This Is The New Blackbeard “Cheap” Hypersonic Weapon</title>
+      <link>https://defenseaffairs814.blogspot.com/2026/08/this-is-new-blackbeard-cheap-hypersonic.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/2026/08/this-is-new-blackbeard-cheap-hypersonic.html</guid>
+      <description>Boost-glide architecture, engineering trade-offs, cost, and production strategy.</description>
+    </item>
+    <item>
+      <title>How Ukraine tries to intercept Russian drones more effectively</title>
+      <link>https://defenseaffairs814.blogspot.com/2026/08/how-ukraine-tries-to-intercept-russian.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/2026/08/how-ukraine-tries-to-intercept-russian.html</guid>
+      <description>Counter-UAS sensing, tracking, interception, and operational adaptation.</description>
+    </item>
+    <item>
+      <title>Taiwan Drone Defences Fall Short Against PLA’s Evolving Tech</title>
+      <link>https://defenseaffairs814.blogspot.com/2026/08/taiwan-drone-defences-fall-short.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/2026/08/taiwan-drone-defences-fall-short.html</guid>
+      <description>Drone-defense readiness, layered sensing, and technology gaps.</description>
+    </item>
+    <item>
+      <title>Putting Armageddon on Autopilot</title>
+      <link>https://defenseaffairs814.blogspot.com/2026/08/putting-armageddon-on-autopilot-how.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/2026/08/putting-armageddon-on-autopilot-how.html</guid>
+      <description>Military AI, command-and-control, reliability, and escalation risk.</description>
+    </item>
+    <item>
+      <title>Pentagon Demands Faster Weapons Production</title>
+      <link>https://defenseaffairs814.blogspot.com/2026/08/pentagon-demands-faster-weapons.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/2026/08/pentagon-demands-faster-weapons.html</guid>
+      <description>Defense manufacturing throughput, supply-chain resilience, and stockpile pressure.</description>
+    </item>
+    <item>
+      <title>Global Defense OSINT Dashboard</title>
+      <link>https://defenseaffairs814.blogspot.com/p/global-defense-osint-dashboard.html</link>
+      <guid isPermaLink="true">https://defenseaffairs814.blogspot.com/p/global-defense-osint-dashboard.html</guid>
+      <description>A structured dashboard for exploring publicly available defense information.</description>
+    </item>
+  </channel>
+</rss>
+

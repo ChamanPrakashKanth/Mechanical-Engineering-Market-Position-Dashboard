@@ -1,0 +1,20 @@
+# MechIntel AI
+
+> Mechanical-engineering career intelligence, learning resources, and a curated bridge to defense engineering analysis.
+
+## Primary resources
+
+- [MechIntel AI](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Mechanical engineering career benchmarking, skill-gap analysis, text courses, video academy, and learning roadmaps.
+- [Defense Engineering Reading Hub](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html): Curated technical reading for aerospace, propulsion, unmanned systems, defense manufacturing, sensing, and military AI.
+- [Defense Affairs](https://defenseaffairs814.blogspot.com/): Independent modern-warfare, military-technology, defense-economics, and geopolitics analysis.
+- [Global Defense OSINT Dashboard](https://defenseaffairs814.blogspot.com/p/global-defense-osint-dashboard.html): Structured exploration of publicly available global defense information.
+- [Defense Engineering RSS Feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml): Machine-readable list of selected Defense Affairs resources.
+
+## Selected Defense Affairs analysis
+
+- [Blackbeard hypersonic weapon engineering and production](https://defenseaffairs814.blogspot.com/2026/08/this-is-new-blackbeard-cheap-hypersonic.html)
+- [Ukraine counter-drone interception](https://defenseaffairs814.blogspot.com/2026/08/how-ukraine-tries-to-intercept-russian.html)
+- [Taiwan drone-defense readiness](https://defenseaffairs814.blogspot.com/2026/08/taiwan-drone-defences-fall-short.html)
+- [Artificial intelligence in nuclear command and deterrence](https://defenseaffairs814.blogspot.com/2026/08/putting-armageddon-on-autopilot-how.html)
+- [Defense production capacity and stockpile pressure](https://defenseaffairs814.blogspot.com/2026/08/pentagon-demands-faster-weapons.html)
+
