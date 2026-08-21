@@ -321,6 +321,16 @@ function calculateScores(profile, proficiencyValues = softwareProficiency) {
 }
 
 // Plotly renderers
+function getResponsivePlotWidth(elementId, fallback = 320) {
+    const node = document.getElementById(elementId);
+    if (!node) return fallback;
+
+    const ownWidth = node.getBoundingClientRect().width;
+    const parentWidth = node.parentElement?.getBoundingClientRect().width || 0;
+    const availableWidth = ownWidth || parentWidth || fallback;
+    return Math.max(180, Math.floor(availableWidth));
+}
+
 function drawGaugeChart(score) {
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const trace = {
@@ -342,7 +352,7 @@ function drawGaugeChart(score) {
         }
     };
     const layout = {
-        width: 250,
+        width: getResponsivePlotWidth("plotly-gauge-chart", 250),
         height: 180,
         margin: { t: 30, r: 30, l: 30, b: 30 },
         paper_bgcolor: "rgba(0,0,0,0)",
@@ -387,7 +397,7 @@ function drawRadarChart() {
             angularaxis: { color: textTheme, gridcolor: gridTheme },
             bgcolor: 'rgba(0,0,0,0)'
         },
-        width: 320,
+        width: getResponsivePlotWidth("plotly-radar-chart", 320),
         height: 250,
         margin: { t: 30, b: 30, l: 40, r: 40 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -436,7 +446,7 @@ function drawSalaryChart(score) {
     ];
 
     const layout = {
-        width: 250,
+        width: getResponsivePlotWidth("plotly-salary-chart", 250),
         height: 180,
         margin: { t: 40, b: 30, l: 30, r: 30 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -471,10 +481,11 @@ function drawHeatmapChart() {
         showscale: false
     }];
 
+    const plotWidth = getResponsivePlotWidth("plotly-heatmap-chart-jobs", 700);
     const layout = {
-        width: 700,
+        width: plotWidth,
         height: 220,
-        margin: { t: 20, b: 40, l: 100, r: 20 },
+        margin: { t: 20, b: 40, l: plotWidth < 480 ? 72 : 100, r: 20 },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
         font: { color: textTheme, size: 9 },
@@ -503,7 +514,7 @@ function drawTimelineChart() {
     }];
 
     const layout = {
-        width: 320,
+        width: getResponsivePlotWidth("plotly-timeline-chart", 320),
         height: 200,
         margin: { t: 10, b: 40, l: 110, r: 20 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -856,6 +867,9 @@ function buildDashboard(profile) {
     // Render competency matrices
     renderDomainReadinessGrid(profile);
     expandDomainDetails(selectedDomainName, profile);
+
+    // Plotly must measure visible containers; hidden panes fall back to a 700px canvas.
+    showPane("dashboard-panel");
     
     // Draw Plotly widgets
     drawGaugeChart(scores.readiness);
@@ -874,7 +888,6 @@ function buildDashboard(profile) {
     // Database render
     renderDatabaseTable();
     
-    showPane("dashboard-panel");
     lucide.createIcons();
 }
 
@@ -1143,9 +1156,32 @@ function initParticles() {
 }
 
 function showPane(paneId) {
+    closeDashboardMobileMenu();
     document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
     document.getElementById(paneId).classList.remove("hidden");
     window.scrollTo(0,0);
+}
+
+function resizeVisiblePlots() {
+    if (!window.Plotly?.Plots?.resize) return;
+    document.querySelectorAll(".js-plotly-plot").forEach(plot => {
+        if (plot.offsetParent !== null) Plotly.Plots.resize(plot);
+    });
+}
+
+function setDashboardMobileMenu(open) {
+    const sidebar = document.querySelector(".dashboard-sidebar");
+    const backdrop = document.getElementById("dashboard-sidebar-backdrop");
+    const toggle = document.getElementById("dashboard-menu-toggle");
+    if (!sidebar || !backdrop || !toggle) return;
+    sidebar.classList.toggle("mobile-open", open);
+    backdrop.classList.toggle("active", open);
+    document.body.classList.toggle("dashboard-menu-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+}
+
+function closeDashboardMobileMenu() {
+    setDashboardMobileMenu(false);
 }
 
 function showDashboardView(viewId) {
@@ -1164,6 +1200,12 @@ function showDashboardView(viewId) {
             item.classList.remove("active");
         }
     });
+
+    const activeNavItem = document.querySelector(`.sidebar-nav-item[data-view="${viewId}"]`);
+    const mobileLabel = document.getElementById("dashboard-mobile-current-label");
+    if (activeNavItem && mobileLabel) mobileLabel.textContent = activeNavItem.textContent.trim();
+    closeDashboardMobileMenu();
+    requestAnimationFrame(resizeVisiblePlots);
 
     if (viewId === "dashboard-learning") {
         initLearningHub();
@@ -1247,11 +1289,13 @@ function drawBenchmarkDistribution(score, profile) {
 
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+    const plotWidth = getResponsivePlotWidth("plotly-benchmark-distribution", 700);
     Plotly.newPlot("plotly-benchmark-distribution", [{
         x: sorted, type: "histogram", nbinsx: 24, histnorm: "percent",
         marker: { color: "rgba(56,189,248,0.62)", line: { color: "rgba(56,189,248,0.95)", width: 1 } },
         hovertemplate: "Score %{x}<br>% of cohort %{y:.1f}%<extra></extra>"
     }], {
+        width: plotWidth,
         margin: { l: 42, r: 16, t: 18, b: 42 },
         paper_bgcolor: "transparent", plot_bgcolor: "transparent", font: { color: textTheme, size: 11 },
         xaxis: { title: "Career readiness score", gridcolor: gridTheme, range: [0, 100] },
@@ -1554,6 +1598,24 @@ document.addEventListener("DOMContentLoaded", () => {
             if(view) showDashboardView(view);
         });
     });
+
+    const dashboardMenuToggle = document.getElementById("dashboard-menu-toggle");
+    const dashboardMenuClose = document.getElementById("dashboard-menu-close");
+    const dashboardMenuBackdrop = document.getElementById("dashboard-sidebar-backdrop");
+    const dashboardMobileHome = document.getElementById("dashboard-mobile-home");
+    dashboardMenuToggle?.addEventListener("click", () => setDashboardMobileMenu(true));
+    dashboardMenuClose?.addEventListener("click", closeDashboardMobileMenu);
+    dashboardMenuBackdrop?.addEventListener("click", closeDashboardMobileMenu);
+    dashboardMobileHome?.addEventListener("click", () => showPane("landing-page-container"));
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeDashboardMobileMenu();
+    });
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 992) closeDashboardMobileMenu();
+        window.clearTimeout(window.__mechIntelResizeTimer);
+        window.__mechIntelResizeTimer = window.setTimeout(resizeVisiblePlots, 120);
+    }, { passive: true });
+    window.addEventListener("orientationchange", () => window.setTimeout(resizeVisiblePlots, 220), { passive: true });
 
     document.getElementById("sidebar-logout-btn").addEventListener("click", () => {
         showPane("landing-page-container");

@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MechIntel AI | Mechanical Engineering Career Intelligence</title>
     <meta name="description" content="Benchmark your mechanical engineering career against 100,000 anonymized profiles. Discover skill gaps, improve your ATS score, follow learning roadmaps, and access 1,000 mathematics shorts.">
     <meta name="keywords" content="mechanical engineering career, mechanical engineering skills, engineering employability, CAD career, CAE career, ATS resume checker, engineering mathematics, MechIntel AI">
@@ -10,6 +10,10 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="google-site-verification" content="gxpjwJqeO1mhWvrb5OA0MwlofJWbj1u92KRqSDog0Zc">
     <meta name="theme-color" content="#0b3b3b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/">
     <link rel="alternate" type="application/rss+xml" title="MechIntel Defense Engineering Reading Feed" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml">
 
@@ -82,7 +86,7 @@
                 <i data-lucide="sun" id="theme-icon-sun"></i>
                 <i data-lucide="moon" id="theme-icon-moon" class="hidden"></i>
             </button>
-            <button id="nav-cta-btn" class="btn btn-primary">Enter Dashboard</button>
+            <button id="nav-cta-btn" class="btn btn-primary"><span class="nav-cta-long">Enter Dashboard</span><span class="nav-cta-short" aria-hidden="true">Dashboard</span></button>
         </div>
     </nav>
 
@@ -502,7 +506,7 @@
                         <span class="preset-chip" data-preset="global-robotics">Global Robotics (Tier 1 B.S.)</span>
                     
                     <button class="btn btn-secondary btn-sm" id="btn-linkedin-sim-modal" style="margin-left: auto;">
-                        <i data-lucide="linkedin"></i> Import LinkedIn Profile
+                        <i data-lucide="link-2"></i> Import LinkedIn Profile
                     </button>
                     <!-- Web Audio & Certificate Exporter -->
                     <button class="btn btn-primary btn-sm" id="btn-cert-modal" style="display: flex; align-items: center; gap: 0.4rem;">
@@ -598,10 +602,11 @@
     <section id="dashboard-panel" class="view-panel hidden">
         <div class="dashboard-layout-wrapper">
             <!-- DASHBOARD SIDEBAR -->
-            <aside class="dashboard-sidebar print-hide">
+            <aside class="dashboard-sidebar print-hide" id="dashboard-sidebar">
                 <div class="sidebar-header">
                     <i data-lucide="atom" class="sidebar-brand-icon"></i>
                     <span>MechIntel AI</span>
+                    <button class="icon-btn mobile-sidebar-close" id="dashboard-menu-close" type="button" aria-label="Close dashboard navigation"><i data-lucide="x"></i></button>
                 </div>
                 
                 <div class="sidebar-user-summary">
@@ -689,8 +694,18 @@
                 </div>
             </aside>
 
+            <button class="dashboard-sidebar-backdrop print-hide" id="dashboard-sidebar-backdrop" type="button" aria-label="Close dashboard navigation"></button>
+
             <!-- DASHBOARD MAIN PANEL CONTENT -->
             <main class="dashboard-main-content">
+                <div class="dashboard-mobile-bar print-hide">
+                    <button class="icon-btn dashboard-mobile-menu-btn" id="dashboard-menu-toggle" type="button" aria-label="Open dashboard navigation" aria-controls="dashboard-sidebar" aria-expanded="false"><i data-lucide="menu"></i></button>
+                    <div class="dashboard-mobile-current">
+                        <span>Dashboard</span>
+                        <strong id="dashboard-mobile-current-label">Overview &amp; Analytics</strong>
+                    </div>
+                    <button class="icon-btn dashboard-mobile-home-btn" id="dashboard-mobile-home" type="button" aria-label="Return to home"><i data-lucide="home"></i></button>
+                </div>
                 
                 <!-- Print Summary Header (Only shown during printing) -->
                 <div class="print-header-block print-only">
@@ -2245,7 +2260,7 @@
 
 <div id="linkedin-overlay" class="scanner-modal-overlay">
         <div class="scanner-modal-card glass-card" style="max-width: 480px;">
-            <div class="scanner-modal-title" style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="linkedin" style="color:#0077b5;"></i> LinkedIn Profile Import Simulator</div>
+            <div class="scanner-modal-title" style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="link-2" style="color:#0077b5;"></i> LinkedIn Profile Import Simulator</div>
             <p style="font-size:0.8rem; color:var(--text-secondary); text-align:center;">Enter any LinkedIn Profile URL below to simulate an automated credentials extraction pipeline.</p>
             
             <input type="text" id="linkedin-url-input" placeholder="https://www.linkedin.com/in/username" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:8px; padding:0.6rem; outline:none; margin-top:0.5rem; margin-bottom:0.5rem;">

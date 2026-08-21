@@ -89,6 +89,11 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Includes campaign attribution parameters, privacy-friendly local click counters, Open Graph/X social cards, JSON-LD, canonical metadata, `robots.txt`, and an XML sitemap.
 - Deploys the crawlable static frontend through the GitHub Pages workflow in `.github/workflows/pages.yml`.
 
+### 12. Responsive Desktop, Android & iOS Experience
+- Adapts the landing page, profile builder, dashboard, Learning Hub, Video Academy, course reader, charts, tables, and modals across desktop, tablet, Android, and iPhone screen sizes.
+- Adds an accessible mobile dashboard drawer, compact two-column score cards, touch-friendly controls, responsive Plotly charts, and internal scrolling for wide lesson and data content.
+- Supports iOS safe areas, dynamic viewport height, 16 px mobile form controls, orientation changes, coarse pointers, and reduced-motion preferences.
+
 ---
 
 ## 🎥 Video Course Production (Manim)

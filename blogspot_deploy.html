@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MechIntel AI | Mechanical Engineering Career Intelligence</title>
     <meta name="description" content="Benchmark your mechanical engineering career against 100,000 anonymized profiles. Discover skill gaps, improve your ATS score, follow learning roadmaps, and access 1,000 mathematics shorts.">
     <meta name="keywords" content="mechanical engineering career, mechanical engineering skills, engineering employability, CAD career, CAE career, ATS resume checker, engineering mathematics, MechIntel AI">
@@ -10,6 +10,10 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="google-site-verification" content="gxpjwJqeO1mhWvrb5OA0MwlofJWbj1u92KRqSDog0Zc">
     <meta name="theme-color" content="#0b3b3b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/">
     <link rel="alternate" type="application/rss+xml" title="MechIntel Defense Engineering Reading Feed" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml">
 
@@ -1518,6 +1522,7 @@ h1, h2, h3, h4, h5, h6 {
 .plot-card {
     padding: 1.25rem;
     flex: 1;
+    overflow: hidden;
 }
 
 .dashboard-plots-row {
@@ -3254,6 +3259,300 @@ input:focus, textarea:focus, select:focus,
     .text-lesson-actions .btn { width: 100%; }
 }
 
+/* ===========================================================================
+   CROSS-DEVICE RESPONSIVE SYSTEM — desktop, Android, and iOS
+   ========================================================================== */
+:root { --app-nav-height: 72px; }
+
+html {
+    width: 100%;
+    min-width: 0;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-attachment: scroll;
+    overscroll-behavior-y: none;
+}
+
+img, video, iframe { max-width: 100%; }
+button, a, input, select, textarea { touch-action: manipulation; }
+button, a { -webkit-tap-highlight-color: rgba(0,108,103,.16); }
+
+.nav-cta-short,
+.dashboard-mobile-bar,
+.mobile-sidebar-close,
+.dashboard-sidebar-backdrop { display: none; }
+
+#dashboard-panel { padding-top: var(--app-nav-height); }
+.dashboard-layout-wrapper { grid-template-columns: var(--sidebar-width, 260px) minmax(0, 1fr); min-width: 0; }
+.dashboard-main-content,
+.dashboard-view-pane,
+.dashboard-view-tab,
+.dashboard-data-grid,
+.grid-col-8,
+.grid-col-4,
+.element-card,
+.plot-card,
+.metric-card,
+.metric-data { min-width: 0; }
+.dashboard-main-content { width: 100%; max-width: 100%; }
+.plotly-chart-node, .js-plotly-plot {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    contain: inline-size;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(0,108,103,.28);
+    outline-offset: 2px;
+}
+
+@media (min-width: 993px) and (max-width: 1240px) {
+    .navbar { padding-inline: 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .hero-section { gap: clamp(2rem,4vw,3.5rem); padding-inline: 2rem; }
+    .dashboard-layout-wrapper { --sidebar-width: 240px; }
+    .dashboard-sidebar { padding: 1.2rem; }
+    .dashboard-main-content { padding: 1.75rem 1.5rem 3rem; }
+}
+
+@media (max-width: 992px) {
+    body.dashboard-menu-open { overflow: hidden; }
+
+    .dashboard-layout-wrapper { display: block; min-height: calc(100dvh - var(--app-nav-height)); }
+    .dashboard-main-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 1rem 1rem 3rem;
+        overflow: clip;
+    }
+
+    .dashboard-mobile-bar {
+        position: sticky;
+        top: var(--app-nav-height);
+        z-index: 92;
+        display: grid;
+        grid-template-columns: 44px minmax(0,1fr) 44px;
+        align-items: center;
+        gap: .7rem;
+        min-height: 62px;
+        margin: -1rem -1rem 1rem;
+        padding: .55rem 1rem;
+        background: rgba(246,243,236,.96);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 8px 22px rgba(24,52,49,.08);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+    }
+    .dashboard-mobile-bar .icon-btn { width: 44px; height: 44px; min-width: 44px; }
+    .dashboard-mobile-current { display: flex; min-width: 0; flex-direction: column; }
+    .dashboard-mobile-current span { color: var(--primary); font-size: .6rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .dashboard-mobile-current strong { overflow: hidden; color: var(--text-primary); font-size: .82rem; white-space: nowrap; text-overflow: ellipsis; }
+
+    .dashboard-sidebar {
+        position: fixed;
+        inset: var(--app-nav-height) auto 0 0;
+        z-index: 121;
+        display: flex;
+        width: min(86vw, 320px);
+        height: calc(100vh - var(--app-nav-height));
+        height: calc(100dvh - var(--app-nav-height));
+        min-height: 0;
+        padding: 1rem;
+        transform: translate3d(-105%,0,0);
+        transition: transform .26s cubic-bezier(.22,1,.36,1);
+        box-shadow: 16px 0 38px rgba(6,34,34,.28);
+        overflow: hidden;
+    }
+    .dashboard-sidebar.mobile-open { transform: translate3d(0,0,0); }
+    .dashboard-sidebar .sidebar-header { flex: 0 0 auto; }
+    .dashboard-sidebar .sidebar-nav { min-height: 0; padding-right: .25rem; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+    .dashboard-sidebar .sidebar-footer { flex: 0 0 auto; padding-bottom: env(safe-area-inset-bottom); }
+    .mobile-sidebar-close { display: grid; place-items: center; width: 40px; height: 40px; margin-left: auto; color: #d9eee7; background: rgba(255,255,255,.08); }
+    .dashboard-sidebar-backdrop {
+        position: fixed;
+        inset: var(--app-nav-height) 0 0;
+        z-index: 120;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        background: rgba(7,24,25,.54);
+        border: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .22s ease;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
+    .dashboard-sidebar-backdrop.active { display: block; opacity: 1; pointer-events: auto; }
+
+    .dashboard-pane-header { align-items: flex-start; }
+    .dashboard-pane-header > div { min-width: 0; max-width: 100%; }
+    .dashboard-pane-header > div[style*="display: flex"] { width: 100%; flex-wrap: wrap; }
+    .dashboard-pane-header > div[style*="display: flex"] .btn { flex: 1 1 180px; }
+    .dashboard-pane-header h1 { font-size: clamp(1.55rem,5.2vw,2rem); overflow-wrap: anywhere; }
+
+    .metrics-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+    .metric-card { padding: .9rem; gap: .65rem; }
+    .metric-icon { width: 38px; height: 38px; flex: 0 0 38px; }
+    .metric-label { font-size: .68rem; overflow-wrap: anywhere; }
+    .metric-value { font-size: 1.25rem; }
+    .metric-change { font-size: .64rem; overflow-wrap: anywhere; }
+
+    .dashboard-data-grid,
+    .market-insights-grid,
+    .benchmark-intelligence-layout,
+    .career-move-layout { grid-template-columns: minmax(0,1fr); }
+    .dashboard-plots-row { display: grid; grid-template-columns: minmax(0,1fr); gap: 1rem; }
+    .plot-card { width: 100%; }
+    .dashboard-percentiles-strip { grid-template-columns: repeat(2,minmax(0,1fr)); gap: .8rem; }
+    .benchmark-kpi-stack { grid-template-columns: repeat(2,minmax(0,1fr)); }
+
+    .db-controls-row { align-items: stretch; flex-direction: column; }
+    .search-input-wrapper { width: 100%; max-width: none; }
+    .db-filters { width: 100%; flex-wrap: wrap; }
+    .db-filters select { flex: 1 1 180px; min-width: 0; }
+    .table-container { max-width: 100%; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+    .db-table { min-width: 720px; }
+
+    #learning-course-grid,
+    #video-academy-grid,
+    .features-grid,
+    .testimonials-grid,
+    .pricing-grid,
+    .placeholders-grid,
+    .calc-card-grid { grid-template-columns: minmax(0,1fr) !important; }
+    .course-card, .video-card, .calculator-node { min-width: 0; }
+    .video-course-track-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .video-course-module { grid-template-columns: 32px minmax(0,1fr) 18px; }
+    .video-course-queue-heading { align-items: flex-start; gap: .6rem; flex-direction: column; }
+    .math-short-theater, .math-short-stage, .math-short-stage canvas { max-width: 100%; }
+    .text-course-reader { max-width: 100%; }
+
+    .scanner-modal-overlay { width: 100%; height: 100vh; height: 100dvh; padding: .75rem; }
+    .scanner-modal-card { width: min(100%,680px) !important; max-height: calc(100dvh - 1.5rem); padding: 1.35rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 760px) {
+    :root { --app-nav-height: calc(64px + env(safe-area-inset-top)); }
+
+    .navbar {
+        height: var(--app-nav-height);
+        padding: env(safe-area-inset-top) max(1rem,env(safe-area-inset-right)) 0 max(1rem,env(safe-area-inset-left));
+        gap: .6rem;
+    }
+    .nav-links { display: none; }
+    .nav-actions { gap: .45rem; margin-left: auto; }
+    .nav-actions .icon-btn { width: 42px; height: 42px; min-width: 42px; }
+    .nav-cta-long { display: none; }
+    .nav-cta-short { display: inline; }
+    #nav-cta-btn { min-height: 42px; padding: .55rem .9rem; font-size: .78rem; }
+
+    .view-panel { min-height: 100dvh; padding-top: var(--app-nav-height); }
+    #dashboard-panel { padding-top: var(--app-nav-height); }
+    .hero-section {
+        min-height: auto;
+        padding: 3.6rem 1rem 2.5rem;
+        gap: 2.25rem;
+    }
+    .hero-title { font-size: clamp(2.35rem,11.5vw,3.2rem); line-height: 1.02; letter-spacing: -.045em; }
+    .hero-subtitle { margin-bottom: 1.4rem; font-size: 1rem; line-height: 1.6; }
+    .hero-badge { justify-content: center; max-width: 100%; padding: .45rem .75rem; text-align: center; line-height: 1.35; }
+    .hero-creator-note { align-items: flex-start; text-align: left; }
+    .hero-ingest-card { width: 100%; padding: 1.25rem; gap: 1.15rem; }
+    .drag-drop-zone { padding: 1.4rem 1rem; }
+
+    .container { padding-inline: 1rem; }
+    .stats-strip { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 1rem; padding: 1.5rem .75rem; gap: 1.35rem .75rem; }
+    .stat-number { font-size: 1.75rem; }
+    .features-section, .testimonials-section, .pricing-section, .faq-section { padding: 3rem 1rem; }
+    .section-header { margin-bottom: 2rem; }
+    .section-header h2 { font-size: clamp(1.7rem,7vw,2.1rem); }
+    .feature-card, .testimonial-card, .pricing-card { padding: 1.4rem; }
+    .creator-funnel-card { min-height: 0; }
+    .footer { margin-top: 2.5rem; padding: 2.5rem max(1rem,env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left)); }
+    .footer-top, .footer-bottom { align-items: flex-start; flex-direction: column; }
+    .footer-creator-links a { min-height: 44px; }
+
+    #manual-setup-panel { padding: calc(var(--app-nav-height) + 1.5rem) 1rem 3rem; }
+    .setup-left, .setup-right { padding: 1.1rem; }
+    #resume-paste-box { height: 220px; }
+    .form-grid { grid-template-columns: minmax(0,1fr); gap: 1rem; }
+    .preset-chip, .domain-chip { min-height: 42px; }
+
+    input, select, textarea,
+    .form-group select,
+    .form-group input[type="number"],
+    .form-group input[type="text"],
+    .form-group input[type="email"] { font-size: 16px !important; }
+    select, input, textarea { max-width: 100%; }
+
+    .dashboard-main-content { padding: .85rem .75rem calc(2rem + env(safe-area-inset-bottom)); }
+    .dashboard-mobile-bar { margin: -.85rem -.75rem 1rem; padding-inline: max(.75rem,env(safe-area-inset-left)) max(.75rem,env(safe-area-inset-right)); }
+    .element-card, .plot-card, .math-shorts-section { padding: 1rem; }
+    .benchmark-card-heading { align-items: flex-start; flex-direction: column; }
+    .benchmark-model-badge { white-space: normal; }
+
+    .math-short-player-bar { gap: .4rem; padding: .6rem; }
+    .math-short-player-bar button { min-width: 40px; height: 40px; }
+    .math-short-time { min-width: 0; font-size: .62rem; }
+    .math-short-now-playing > span { white-space: normal; }
+    .math-shorts-pagination { flex-wrap: wrap; }
+    .text-course-reader-header h2 { font-size: 1.25rem; }
+    .text-course-lesson-nav { grid-template-columns: repeat(5,minmax(155px,1fr)); }
+}
+
+@media (max-width: 430px) {
+    .navbar { padding-inline: max(.7rem,env(safe-area-inset-left)) max(.7rem,env(safe-area-inset-right)); }
+    .brand-icon { width: 24px; height: 24px; }
+    .brand-text { font-size: 1.05rem; }
+    .nav-brand { gap: .35rem; }
+    .nav-actions .icon-btn { width: 40px; height: 40px; min-width: 40px; }
+    #nav-cta-btn { min-height: 40px; padding-inline: .72rem; font-size: .72rem; }
+
+    .hero-section { padding-top: 3rem; }
+    .hero-title { font-size: clamp(2.2rem,11vw,2.8rem); }
+    .stats-strip { margin-inline: .75rem; }
+    .stat-label { font-size: .72rem; }
+
+    .metric-card { padding: .75rem; gap: .55rem; }
+    .metric-icon { width: 34px; height: 34px; flex-basis: 34px; }
+    .metric-value { font-size: 1.12rem; }
+    .dashboard-percentiles-strip, .benchmark-kpi-stack { grid-template-columns: minmax(0,1fr); }
+    .video-course-track-grid { grid-template-columns: minmax(0,1fr); }
+    .sim-meters-row { grid-template-columns: minmax(0,1fr); }
+    .booster-row { align-items: flex-start; flex-direction: column; gap: .65rem; }
+    .portfolio-theme-selector { flex-direction: column; }
+}
+
+@media (max-width: 350px) {
+    .brand-text { font-size: .95rem; }
+    .nav-actions .icon-btn { display: none; }
+    .metrics-grid, .stats-strip { grid-template-columns: minmax(0,1fr); }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .btn, .icon-btn, .sidebar-nav-item, .sim-choice-btn, .course-card, .video-card { min-height: 44px; }
+    .glass-card:hover, .creator-funnel-card:hover, .course-card:hover, .video-card:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
 
 
 </style>
@@ -3285,7 +3584,7 @@ input:focus, textarea:focus, select:focus,
                 <i data-lucide="sun" id="theme-icon-sun"></i>
                 <i data-lucide="moon" id="theme-icon-moon" class="hidden"></i>
             </button>
-            <button id="nav-cta-btn" class="btn btn-primary">Enter Dashboard</button>
+            <button id="nav-cta-btn" class="btn btn-primary"><span class="nav-cta-long">Enter Dashboard</span><span class="nav-cta-short" aria-hidden="true">Dashboard</span></button>
         </div>
     </nav>
 
@@ -3705,7 +4004,7 @@ input:focus, textarea:focus, select:focus,
                         <span class="preset-chip" data-preset="global-robotics">Global Robotics (Tier 1 B.S.)</span>
                     
                     <button class="btn btn-secondary btn-sm" id="btn-linkedin-sim-modal" style="margin-left: auto;">
-                        <i data-lucide="linkedin"></i> Import LinkedIn Profile
+                        <i data-lucide="link-2"></i> Import LinkedIn Profile
                     </button>
                     <!-- Web Audio & Certificate Exporter -->
                     <button class="btn btn-primary btn-sm" id="btn-cert-modal" style="display: flex; align-items: center; gap: 0.4rem;">
@@ -3801,10 +4100,11 @@ input:focus, textarea:focus, select:focus,
     <section id="dashboard-panel" class="view-panel hidden">
         <div class="dashboard-layout-wrapper">
             <!-- DASHBOARD SIDEBAR -->
-            <aside class="dashboard-sidebar print-hide">
+            <aside class="dashboard-sidebar print-hide" id="dashboard-sidebar">
                 <div class="sidebar-header">
                     <i data-lucide="atom" class="sidebar-brand-icon"></i>
                     <span>MechIntel AI</span>
+                    <button class="icon-btn mobile-sidebar-close" id="dashboard-menu-close" type="button" aria-label="Close dashboard navigation"><i data-lucide="x"></i></button>
                 </div>
                 
                 <div class="sidebar-user-summary">
@@ -3892,8 +4192,18 @@ input:focus, textarea:focus, select:focus,
                 </div>
             </aside>
 
+            <button class="dashboard-sidebar-backdrop print-hide" id="dashboard-sidebar-backdrop" type="button" aria-label="Close dashboard navigation"></button>
+
             <!-- DASHBOARD MAIN PANEL CONTENT -->
             <main class="dashboard-main-content">
+                <div class="dashboard-mobile-bar print-hide">
+                    <button class="icon-btn dashboard-mobile-menu-btn" id="dashboard-menu-toggle" type="button" aria-label="Open dashboard navigation" aria-controls="dashboard-sidebar" aria-expanded="false"><i data-lucide="menu"></i></button>
+                    <div class="dashboard-mobile-current">
+                        <span>Dashboard</span>
+                        <strong id="dashboard-mobile-current-label">Overview &amp; Analytics</strong>
+                    </div>
+                    <button class="icon-btn dashboard-mobile-home-btn" id="dashboard-mobile-home" type="button" aria-label="Return to home"><i data-lucide="home"></i></button>
+                </div>
                 
                 <!-- Print Summary Header (Only shown during printing) -->
                 <div class="print-header-block print-only">
@@ -5768,6 +6078,16 @@ function calculateScores(profile, proficiencyValues = softwareProficiency) {
 }
 
 // Plotly renderers
+function getResponsivePlotWidth(elementId, fallback = 320) {
+    const node = document.getElementById(elementId);
+    if (!node) return fallback;
+
+    const ownWidth = node.getBoundingClientRect().width;
+    const parentWidth = node.parentElement?.getBoundingClientRect().width || 0;
+    const availableWidth = ownWidth || parentWidth || fallback;
+    return Math.max(180, Math.floor(availableWidth));
+}
+
 function drawGaugeChart(score) {
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const trace = {
@@ -5789,7 +6109,7 @@ function drawGaugeChart(score) {
         }
     };
     const layout = {
-        width: 250,
+        width: getResponsivePlotWidth("plotly-gauge-chart", 250),
         height: 180,
         margin: { t: 30, r: 30, l: 30, b: 30 },
         paper_bgcolor: "rgba(0,0,0,0)",
@@ -5834,7 +6154,7 @@ function drawRadarChart() {
             angularaxis: { color: textTheme, gridcolor: gridTheme },
             bgcolor: 'rgba(0,0,0,0)'
         },
-        width: 320,
+        width: getResponsivePlotWidth("plotly-radar-chart", 320),
         height: 250,
         margin: { t: 30, b: 30, l: 40, r: 40 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -5883,7 +6203,7 @@ function drawSalaryChart(score) {
     ];
 
     const layout = {
-        width: 250,
+        width: getResponsivePlotWidth("plotly-salary-chart", 250),
         height: 180,
         margin: { t: 40, b: 30, l: 30, r: 30 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -5918,10 +6238,11 @@ function drawHeatmapChart() {
         showscale: false
     }];
 
+    const plotWidth = getResponsivePlotWidth("plotly-heatmap-chart-jobs", 700);
     const layout = {
-        width: 700,
+        width: plotWidth,
         height: 220,
-        margin: { t: 20, b: 40, l: 100, r: 20 },
+        margin: { t: 20, b: 40, l: plotWidth < 480 ? 72 : 100, r: 20 },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
         font: { color: textTheme, size: 9 },
@@ -5950,7 +6271,7 @@ function drawTimelineChart() {
     }];
 
     const layout = {
-        width: 320,
+        width: getResponsivePlotWidth("plotly-timeline-chart", 320),
         height: 200,
         margin: { t: 10, b: 40, l: 110, r: 20 },
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -6303,6 +6624,9 @@ function buildDashboard(profile) {
     // Render competency matrices
     renderDomainReadinessGrid(profile);
     expandDomainDetails(selectedDomainName, profile);
+
+    // Plotly must measure visible containers; hidden panes fall back to a 700px canvas.
+    showPane("dashboard-panel");
     
     // Draw Plotly widgets
     drawGaugeChart(scores.readiness);
@@ -6321,7 +6645,6 @@ function buildDashboard(profile) {
     // Database render
     renderDatabaseTable();
     
-    showPane("dashboard-panel");
     lucide.createIcons();
 }
 
@@ -6590,9 +6913,32 @@ function initParticles() {
 }
 
 function showPane(paneId) {
+    closeDashboardMobileMenu();
     document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
     document.getElementById(paneId).classList.remove("hidden");
     window.scrollTo(0,0);
+}
+
+function resizeVisiblePlots() {
+    if (!window.Plotly?.Plots?.resize) return;
+    document.querySelectorAll(".js-plotly-plot").forEach(plot => {
+        if (plot.offsetParent !== null) Plotly.Plots.resize(plot);
+    });
+}
+
+function setDashboardMobileMenu(open) {
+    const sidebar = document.querySelector(".dashboard-sidebar");
+    const backdrop = document.getElementById("dashboard-sidebar-backdrop");
+    const toggle = document.getElementById("dashboard-menu-toggle");
+    if (!sidebar || !backdrop || !toggle) return;
+    sidebar.classList.toggle("mobile-open", open);
+    backdrop.classList.toggle("active", open);
+    document.body.classList.toggle("dashboard-menu-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+}
+
+function closeDashboardMobileMenu() {
+    setDashboardMobileMenu(false);
 }
 
 function showDashboardView(viewId) {
@@ -6611,6 +6957,12 @@ function showDashboardView(viewId) {
             item.classList.remove("active");
         }
     });
+
+    const activeNavItem = document.querySelector(`.sidebar-nav-item[data-view="${viewId}"]`);
+    const mobileLabel = document.getElementById("dashboard-mobile-current-label");
+    if (activeNavItem && mobileLabel) mobileLabel.textContent = activeNavItem.textContent.trim();
+    closeDashboardMobileMenu();
+    requestAnimationFrame(resizeVisiblePlots);
 
     if (viewId === "dashboard-learning") {
         initLearningHub();
@@ -6694,11 +7046,13 @@ function drawBenchmarkDistribution(score, profile) {
 
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+    const plotWidth = getResponsivePlotWidth("plotly-benchmark-distribution", 700);
     Plotly.newPlot("plotly-benchmark-distribution", [{
         x: sorted, type: "histogram", nbinsx: 24, histnorm: "percent",
         marker: { color: "rgba(56,189,248,0.62)", line: { color: "rgba(56,189,248,0.95)", width: 1 } },
         hovertemplate: "Score %{x}<br>% of cohort %{y:.1f}%<extra></extra>"
     }], {
+        width: plotWidth,
         margin: { l: 42, r: 16, t: 18, b: 42 },
         paper_bgcolor: "transparent", plot_bgcolor: "transparent", font: { color: textTheme, size: 11 },
         xaxis: { title: "Career readiness score", gridcolor: gridTheme, range: [0, 100] },
@@ -7001,6 +7355,24 @@ document.addEventListener("DOMContentLoaded", () => {
             if(view) showDashboardView(view);
         });
     });
+
+    const dashboardMenuToggle = document.getElementById("dashboard-menu-toggle");
+    const dashboardMenuClose = document.getElementById("dashboard-menu-close");
+    const dashboardMenuBackdrop = document.getElementById("dashboard-sidebar-backdrop");
+    const dashboardMobileHome = document.getElementById("dashboard-mobile-home");
+    dashboardMenuToggle?.addEventListener("click", () => setDashboardMobileMenu(true));
+    dashboardMenuClose?.addEventListener("click", closeDashboardMobileMenu);
+    dashboardMenuBackdrop?.addEventListener("click", closeDashboardMobileMenu);
+    dashboardMobileHome?.addEventListener("click", () => showPane("landing-page-container"));
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeDashboardMobileMenu();
+    });
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 992) closeDashboardMobileMenu();
+        window.clearTimeout(window.__mechIntelResizeTimer);
+        window.__mechIntelResizeTimer = window.setTimeout(resizeVisiblePlots, 120);
+    }, { passive: true });
+    window.addEventListener("orientationchange", () => window.setTimeout(resizeVisiblePlots, 220), { passive: true });
 
     document.getElementById("sidebar-logout-btn").addEventListener("click", () => {
         showPane("landing-page-container");
@@ -10872,7 +11244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <div id="linkedin-overlay" class="scanner-modal-overlay">
         <div class="scanner-modal-card glass-card" style="max-width: 480px;">
-            <div class="scanner-modal-title" style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="linkedin" style="color:#0077b5;"></i> LinkedIn Profile Import Simulator</div>
+            <div class="scanner-modal-title" style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="link-2" style="color:#0077b5;"></i> LinkedIn Profile Import Simulator</div>
             <p style="font-size:0.8rem; color:var(--text-secondary); text-align:center;">Enter any LinkedIn Profile URL below to simulate an automated credentials extraction pipeline.</p>
             
             <input type="text" id="linkedin-url-input" placeholder="https://www.linkedin.com/in/username" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:8px; padding:0.6rem; outline:none; margin-top:0.5rem; margin-bottom:0.5rem;">
