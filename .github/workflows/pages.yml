@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Prepare static site
+      - name: Validate JavaScript\n        run: node --check app.js\n\n      - name: Prepare static site
         run: |
           mkdir -p _site/assets _site/manim_courses/renders
           cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css candidates_100k.json robots.txt sitemap.xml .nojekyll _site/
