@@ -5485,3 +5485,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById("upload-dropzone").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); document.getElementById("hero-file-input").click(); } });
+
+/* Guided video lesson controls */
+document.addEventListener("DOMContentLoaded", () => {
+  const player=document.getElementById("theater-video-player");
+  if(!player || document.getElementById("lesson-play-btn")?.dataset.bound) return;
+  const play=document.getElementById("lesson-play-btn"), fill=document.getElementById("lesson-progress-fill");
+  const focus=document.getElementById("lesson-focus-btn");
+  const sync=()=>{ play.textContent=player.paused ? "▶ Play lesson" : "❚❚ Pause lesson"; if(fill && player.duration) fill.style.width=((player.currentTime/player.duration)*100)+"%"; };
+  play.dataset.bound="1";
+  play.onclick=()=>player.paused?player.play():player.pause();
+  document.getElementById("lesson-back-btn").onclick=()=>{player.currentTime=Math.max(0,player.currentTime-10)};
+  document.getElementById("lesson-forward-btn").onclick=()=>{player.currentTime=Math.min(player.duration||0,player.currentTime+10)};
+  document.getElementById("lesson-speed-select").onchange=e=>{player.playbackRate=Number(e.target.value)};
+  focus.onclick=()=>{document.body.classList.toggle("lesson-focus-mode");focus.textContent=document.body.classList.contains("lesson-focus-mode")?"Exit focus":"Focus mode"};
+  player.addEventListener("timeupdate",sync); player.addEventListener("play",sync); player.addEventListener("pause",sync); sync();
+});
