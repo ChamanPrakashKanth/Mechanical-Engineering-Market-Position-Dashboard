@@ -5482,6 +5482,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
-document.getElementById("upload-dropzone").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); document.getElementById("hero-file-input").click(); } });
