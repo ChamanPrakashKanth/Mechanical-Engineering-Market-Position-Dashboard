@@ -142,7 +142,10 @@ const HR_QA = [
     { q: "Tell me about a time you had to resolve a major technical failure in a group project.", a: "Guideline: Use the STAR method. S: Situation (Identify the group task), T: Task (Specify the structural failure or design clash), A: Action (Show how you ran FEA/CAD diagnostics), R: Result (Verify that the prototype passed tests)." }
 ];
 
-
+// Seeded dataset generator (Generates 100,000 anonymized competitor profiles deterministically)
+function generateDataset() {
+    const random = createRandom(42);
+    const data = [];
     const regions = ["India", "Global"];
     const tiers = ["Tier 1", "Tier 2", "Tier 3"];
     const degrees = ["B.Tech/B.S.", "M.Tech/M.S.", "Ph.D."];
@@ -5505,13 +5508,3 @@ const q=n("calc-k")*n("calc-area")*(n("calc-delta-t")/(n("calc-thickness")/1000)
 const p=1000*9.81*(n("calc-flow")/1000)*n("calc-head")/(n("calc-eff")/100);put("calc-pump-result",`Input power: ${(p/1000).toFixed(2)} kW`);
 const hoop=n("calc-pressure")*n("calc-vessel-d")/(2*n("calc-vessel-t")),long=n("calc-pressure")*n("calc-vessel-d")/(4*n("calc-vessel-t"));put("calc-vessel-result",`Hoop: ${hoop.toFixed(1)} MPa · Longitudinal: ${long.toFixed(1)} MPa`)};
 ["calc-torque","calc-shaft-d","calc-k","calc-area","calc-thickness","calc-delta-t","calc-flow","calc-head","calc-eff","calc-pressure","calc-vessel-d","calc-vessel-t"].forEach(id=>document.getElementById(id)?.addEventListener("input",calc));calc();});
-
-/* Advanced design calculator suite */
-document.addEventListener("DOMContentLoaded",()=>{const n=id=>Number(document.getElementById(id)?.value)||0,p=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};const c=()=>{
-p("calc-buck-result",`Critical load: ${(Math.PI**2*n("calc-buck-e")*1e9*(n("calc-buck-i")*1e-8)/n("calc-buck-l")**2/1000).toFixed(1)} kN`);
-p("calc-darcy-result",`Head loss: ${(n("calc-darcy-f")*n("calc-darcy-l")/n("calc-darcy-d")*n("calc-darcy-v")**2/(2*9.81)).toFixed(2)} m`);
-const a=n("calc-lmtd-a"),b=n("calc-lmtd-b");p("calc-lmtd-result",`LMTD: ${(a===b?a:(a-b)/Math.log(a/b)).toFixed(1)} K`);
-const life=(n("calc-bearing-c")/n("calc-bearing-p"))**3; p("calc-bearing-result",`L10: ${life.toFixed(1)} million rev · ${(life*1e6/(60*n("calc-bearing-n"))).toFixed(0)} h`);
-p("calc-spring-result",`Rate: ${(n("calc-spring-g")*1000*n("calc-spring-d")**4/(8*n("calc-spring-D")**3*n("calc-spring-n"))).toFixed(2)} N/mm`);
-p("calc-weld-result",`Throat stress: ${(n("calc-weld-p")*1000/(.707*n("calc-weld-s")*n("calc-weld-l"))).toFixed(1)} MPa`)};["calc-buck-e","calc-buck-i","calc-buck-l","calc-darcy-f","calc-darcy-l","calc-darcy-d","calc-darcy-v","calc-lmtd-a","calc-lmtd-b","calc-bearing-c","calc-bearing-p","calc-bearing-n","calc-spring-d","calc-spring-D","calc-spring-n","calc-spring-g","calc-weld-p","calc-weld-l","calc-weld-s"].forEach(id=>document.getElementById(id)?.addEventListener("input",c));c()});
-
