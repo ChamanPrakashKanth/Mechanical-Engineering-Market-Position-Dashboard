@@ -5485,26 +5485,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById("upload-dropzone").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); document.getElementById("hero-file-input").click(); } });
-
-/* Guided video lesson controls */
-document.addEventListener("DOMContentLoaded", () => {
-  const player=document.getElementById("theater-video-player");
-  if(!player || document.getElementById("lesson-play-btn")?.dataset.bound) return;
-  const play=document.getElementById("lesson-play-btn"), fill=document.getElementById("lesson-progress-fill");
-  const focus=document.getElementById("lesson-focus-btn");
-  const sync=()=>{ play.textContent=player.paused ? "▶ Play lesson" : "❚❚ Pause lesson"; if(fill && player.duration) fill.style.width=((player.currentTime/player.duration)*100)+"%"; };
-  play.dataset.bound="1";
-  play.onclick=()=>player.paused?player.play():player.pause();
-  document.getElementById("lesson-back-btn").onclick=()=>{player.currentTime=Math.max(0,player.currentTime-10)};
-  document.getElementById("lesson-forward-btn").onclick=()=>{player.currentTime=Math.min(player.duration||0,player.currentTime+10)};
-  document.getElementById("lesson-speed-select").onchange=e=>{player.playbackRate=Number(e.target.value)};
-  focus.onclick=()=>{document.body.classList.toggle("lesson-focus-mode");focus.textContent=document.body.classList.contains("lesson-focus-mode")?"Exit focus":"Focus mode"};
-  player.addEventListener("timeupdate",sync); player.addEventListener("play",sync); player.addEventListener("pause",sync); sync();
-});
-/* Expanded calculator suite */
-document.addEventListener("DOMContentLoaded",()=>{const n=id=>Number(document.getElementById(id)?.value)||0, put=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-const calc=()=>{const tau=16*n("calc-torque")*1000/(Math.PI*Math.pow(n("calc-shaft-d"),3));put("calc-torque-result",`Shear stress: ${tau.toFixed(1)} MPa`);
-const q=n("calc-k")*n("calc-area")*(n("calc-delta-t")/(n("calc-thickness")/1000));put("calc-thermal-result",`Heat flow: ${q.toLocaleString(undefined,{maximumFractionDigits:0})} W`);
-const p=1000*9.81*(n("calc-flow")/1000)*n("calc-head")/(n("calc-eff")/100);put("calc-pump-result",`Input power: ${(p/1000).toFixed(2)} kW`);
-const hoop=n("calc-pressure")*n("calc-vessel-d")/(2*n("calc-vessel-t")),long=n("calc-pressure")*n("calc-vessel-d")/(4*n("calc-vessel-t"));put("calc-vessel-result",`Hoop: ${hoop.toFixed(1)} MPa · Longitudinal: ${long.toFixed(1)} MPa`)};
-["calc-torque","calc-shaft-d","calc-k","calc-area","calc-thickness","calc-delta-t","calc-flow","calc-head","calc-eff","calc-pressure","calc-vessel-d","calc-vessel-t"].forEach(id=>document.getElementById(id)?.addEventListener("input",calc));calc();});
