@@ -652,6 +652,7 @@
                     <button class="sidebar-nav-item" data-view="dashboard-jobs">
                         <i data-lucide="briefcase"></i> Job Intelligence
                     </button>
+                    <button class="sidebar-nav-item" data-view="dashboard-daily-jobs"><i data-lucide="calendar-search"></i> Daily Jobs</button>
                     <button class="sidebar-nav-item" data-view="dashboard-database">
                         <i data-lucide="users"></i> Competitor Database
                     </button>
@@ -1433,6 +1434,12 @@
                         </div>
                     </div>
                 </div>
+
+<div id="view-dashboard-daily-jobs" class="dashboard-view-pane">
+<header class="dashboard-pane-header"><div><h1>Daily Jobs · LinkedIn Search Desk</h1><p>Curated searches, rank-fit scoring, and a role-specific preparation roadmap. Refresh the searches daily for new listings.</p></div></header>
+<div class="glass-card element-card" style="margin-bottom:1.25rem;padding:1.25rem;border-left:3px solid var(--primary)"><strong>How matching works</strong><p class="section-subtitle" style="margin-top:.4rem">Your fit score uses the saved dashboard readiness, software proficiency, projects, internships, and target domain. It is a guidance score, not a hiring decision. Links open LinkedIn search results so listings stay current without an API.</p><div id="daily-jobs-profile-snapshot" style="font-size:.9rem;color:var(--text-secondary);margin-top:.7rem"></div></div>
+<div id="daily-jobs-grid" class="features-grid"></div>
+</div>
 
                 <!-- Dashboard Sub-View: Job Intelligence -->
                 <div id="view-dashboard-jobs" class="dashboard-view-pane">
