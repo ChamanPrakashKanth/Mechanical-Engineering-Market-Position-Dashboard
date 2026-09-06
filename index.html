@@ -2014,6 +2014,14 @@
                     </div>
                 </div>
 
+<!-- Expanded mechanical design calculators -->
+<div class="calculator-node-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.5rem;">
+<div class="glass-card calculator-node"><h4>🔩 Shaft Torsion & Shear Stress</h4><p class="section-subtitle">Solid circular shaft under torque.</p><div class="calculator-input-row"><label>Torque (N·m)</label><input type="number" id="calc-torque" value="500"></div><div class="calculator-input-row"><label>Diameter (mm)</label><input type="number" id="calc-shaft-d" value="30"></div><div class="calc-result-box" id="calc-torque-result">Shear stress: 47.2 MPa</div></div>
+<div class="glass-card calculator-node"><h4>🌡️ Thermal Conduction</h4><p class="section-subtitle">Steady 1D heat transfer through a wall.</p><div class="calculator-input-row"><label>Conductivity k (W/m·K)</label><input type="number" id="calc-k" value="45"></div><div class="calculator-input-row"><label>Area (m²) / Thickness (mm)</label><input type="number" id="calc-area" value="2"><input type="number" id="calc-thickness" value="10"></div><div class="calculator-input-row"><label>Temperature drop (K)</label><input type="number" id="calc-delta-t" value="50"></div><div class="calc-result-box" id="calc-thermal-result">Heat flow: 450,000 W</div></div>
+<div class="glass-card calculator-node"><h4>💧 Pump Power & Head</h4><p class="section-subtitle">Hydraulic power with efficiency.</p><div class="calculator-input-row"><label>Flow (L/s)</label><input type="number" id="calc-flow" value="12"></div><div class="calculator-input-row"><label>Head (m) / Efficiency (%)</label><input type="number" id="calc-head" value="30"><input type="number" id="calc-eff" value="75"></div><div class="calc-result-box" id="calc-pump-result">Input power: 4.71 kW</div></div>
+<div class="glass-card calculator-node"><h4>🛢️ Thin-Wall Pressure Vessel</h4><p class="section-subtitle">Hoop and longitudinal stress estimate.</p><div class="calculator-input-row"><label>Pressure (MPa)</label><input type="number" id="calc-pressure" value="2"></div><div class="calculator-input-row"><label>Diameter (mm) / Wall (mm)</label><input type="number" id="calc-vessel-d" value="500"><input type="number" id="calc-vessel-t" value="8"></div><div class="calc-result-box" id="calc-vessel-result">Hoop: 62.5 MPa · Longitudinal: 31.3 MPa</div></div>
+</div>
+
                 <!-- Dashboard Sub-View: Video Academy (MP4) -->
                 <div id="dashboard-videos" class="dashboard-view-tab hidden">
                     <!-- Academy Header Banner -->
