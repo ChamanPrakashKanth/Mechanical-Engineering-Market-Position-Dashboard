@@ -24,7 +24,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site/assets _site/manim_courses/renders
-          cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css candidates_100k.json robots.txt sitemap.xml .nojekyll _site/
+          cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css candidates_100k.json robots.txt sitemap.xml .nojekyll _site/
           cp assets/mechintel-social-cover.png _site/assets/
           cp manim_courses/renders/*.mp4 _site/manim_courses/renders/
 
