@@ -135,17 +135,7 @@ const TECHNICAL_QA = [
     { q: "Under what conditions is Root-Sum-Square (RSS) tolerance stackup preferred over Worst-Case?", a: "RSS assumes components are manufactured in a normal distribution, meaning the probability of all parts being at their extreme limits simultaneously is very low. It is preferred in large assemblies to avoid unnecessarily tight tolerances and higher costs." },
     { q: "Why is a y+ value near 1.0 targeted when setting up boundary layer meshes for CFD?", a: "A y+ value near 1.0 ensures the first inflation layer cell sits directly inside the viscous sublayer of the boundary flow. This allows the solver to resolve viscous forces directly rather than relying on wall functions." },
     { q: "Explain the difference between 1D (Truss) and 2D (Shell) elements in structural FEA.", a: "Truss elements only carry axial tension/compression. Shell elements model thin structures (thickness is small compared to length/width) and support both bending moments and membrane forces." },
-    { q: "What is the physical meaning of the Von Mises Yield Criterion?", a: "It is an equivalent stress model used to predict yielding in ductile materials under multi-axial loads. It states yielding occurs when the distortion energy per unit volume exceeds the yield point distortion energy in simple tension." },
-    { q: "A pressure vessel has a biaxial stress state with σ₁=180 MPa, σ₂=75 MPa, and τ₁₂=60 MPa. Derive the principal stresses and maximum in-plane shear stress.", a: "Use Mohr’s circle: σ_avg=(σ₁+σ₂)/2, R=sqrt(((σ₁−σ₂)/2)^2+τ²). Principal stresses are σ_avg±R and τ_max=R." },
-    { q: "For a rotating shaft under combined bending moment M and torque T, derive the equivalent von Mises stress and explain how a design factor changes the allowable condition.", a: "Use σ_b=32M/(πd³), τ_t=16T/(πd³), then σ_vm=sqrt(σ_b²+3τ_t²). Require σ_vm ≤ S_y/n." },
-    { q: "Derive the natural frequency of a damped single-degree-of-freedom system and distinguish underdamped, critically damped, and overdamped response.", a: "ω_n=sqrt(k/m), c_c=2sqrt(km), ζ=c/c_c, and ω_d=ω_n sqrt(1−ζ²) for 0<ζ<1." },
-    { q: "A thin rectangular plate has a central crack under tensile stress. Explain why linear-elastic fracture mechanics uses K_I rather than nominal stress alone.", a: "K_I=Yσsqrt(πa) includes crack size and geometry. Unstable growth begins when K_I reaches the material fracture toughness K_IC." },
-    { q: "Explain the difference between geometric, material, and follower nonlinearities in finite-element analysis, and give one example of each.", a: "Geometric: large deformation; material: plasticity or hyperelasticity; follower: load direction changes with deformation." },
-    { q: "Derive the dimensionless groups governing forced convection over a flat plate and explain when the boundary layer becomes turbulent.", a: "Reynolds number governs transition; Nusselt relates convection to conduction; Prandtl compares momentum and thermal diffusivity. Transition is commonly near Re_x≈5×10⁵ for a smooth plate." },
-    { q: "For a four-bar mechanism, explain how Grashof’s criterion predicts continuous crank rotation and identify the change-point condition.", a: "With shortest s, longest l, and remaining p,q, Grashof requires s+l≤p+q. Equality is the change-point configuration." },
-    { q: "Explain why a numerically converged CFD solution can still be physically wrong. Give four validation checks.", a: "Check conservation residuals, mesh independence, boundary-condition realism, timestep independence, experimental comparison, and dimensional/scaling consistency." },
-    { q: "Derive the Euler buckling load for a column with effective-length factor K and explain why inelastic buckling requires a different model.", a: "P_cr=π²EI/(KL)². Euler assumes elastic behavior; inelastic regimes require tangent-modulus or Johnson-type formulations." },
-    { q: "Compare fatigue damage predicted by S–N and ε–N methods and state when each is appropriate.", a: "S–N is stress-life for mostly elastic high-cycle fatigue; ε–N is strain-life for plastic low-cycle fatigue and local notch behavior." },
+    { q: "What is the physical meaning of the Von Mises Yield Criterion?", a: "It is an equivalent stress model used to predict yielding in ductile materials under multi-axial loads. It states yielding occurs when the distortion energy per unit volume exceeds the yield point distortion energy in simple tension." }
 ];
 
 const HR_QA = [
@@ -153,19 +143,6 @@ const HR_QA = [
 ];
 
 
-const HARD_APTITUDE_QUESTIONS = [
- "A flywheel’s angular speed is ω(t)=12t²−4t+8 rad/s. Find angular acceleration and total angular displacement from t=0 to 5 s.",
- "A simply supported beam carries a central point load P. Derive the maximum deflection using Euler–Bernoulli theory and state the assumptions behind the result.",
- "Use Newton–Raphson to solve x cos(x)−0.35=0 starting from x₀=0.8. Show three iterations and estimate the residual.",
- "A system has stiffness matrix K=[[12,−4], [−4,8]] kN/mm and force vector [2,1] kN. Solve the nodal displacements and check equilibrium.",
- "A manufacturing process has mean 50.02 mm, σ=0.015 mm, and specification limits 50±0.05 mm. Calculate Cp, Cpk, and expected fallout direction.",
- "For a two-stage gear train with ratios 3.2 and 4.5, 92% efficiency per stage, and 15 kW input, find output speed and power.",
- "A thermal wall has three layers in series with different k, thickness, and contact resistance. Derive total heat rate and identify the dominant resistance.",
- "A random variable represents defect count with Poisson mean 2.4. Calculate the probability of at most one defect and the expected defects in 500 parts."
-];\n// Seeded dataset generator (Generates 100,000 anonymized competitor profiles deterministically)
-function generateDataset() {
-    const random = createRandom(42);
-    const data = [];
     const regions = ["India", "Global"];
     const tiers = ["Tier 1", "Tier 2", "Tier 3"];
     const degrees = ["B.Tech/B.S.", "M.Tech/M.S.", "Ph.D."];
@@ -5538,5 +5515,3 @@ const life=(n("calc-bearing-c")/n("calc-bearing-p"))**3; p("calc-bearing-result"
 p("calc-spring-result",`Rate: ${(n("calc-spring-g")*1000*n("calc-spring-d")**4/(8*n("calc-spring-D")**3*n("calc-spring-n"))).toFixed(2)} N/mm`);
 p("calc-weld-result",`Throat stress: ${(n("calc-weld-p")*1000/(.707*n("calc-weld-s")*n("calc-weld-l"))).toFixed(1)} MPa`)};["calc-buck-e","calc-buck-i","calc-buck-l","calc-darcy-f","calc-darcy-l","calc-darcy-d","calc-darcy-v","calc-lmtd-a","calc-lmtd-b","calc-bearing-c","calc-bearing-p","calc-bearing-n","calc-spring-d","calc-spring-D","calc-spring-n","calc-spring-g","calc-weld-p","calc-weld-l","calc-weld-s"].forEach(id=>document.getElementById(id)?.addEventListener("input",c));c()});
 
-/* Render the advanced aptitude set below the interactive question. */
-document.addEventListener("DOMContentLoaded",()=>setTimeout(()=>{const w=document.getElementById("aptitude-practice-wrapper");if(w&&!w.querySelector(".advanced-aptitude-set")){const d=document.createElement("details");d.className="advanced-aptitude-set";d.style.marginTop="1rem";d.innerHTML="<summary style='cursor:pointer;font-weight:700;color:var(--primary)'>⚡ Advanced aptitude challenge set (8)</summary><ol style='margin-top:.75rem;padding-left:1.25rem;line-height:1.65'>"+HARD_APTITUDE_QUESTIONS.map(q=>"<li style='margin-bottom:.55rem'>"+q+"</li>").join("")+"</ol>";w.appendChild(d)}},100));
