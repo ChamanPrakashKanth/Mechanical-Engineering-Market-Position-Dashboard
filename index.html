@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MechIntel AI | Mechanical Engineering Career Intelligence</title>
-    <meta name="description" content="Benchmark your mechanical engineering career against 100,000 anonymized profiles. Discover skill gaps, improve your ATS score, follow learning roadmaps, and access 1,000 mathematics shorts.">
+    <meta name="description" content="Explore your mechanical engineering skills against a simulated career benchmark. Discover skill gaps, improve your ATS score, follow learning roadmaps, and access 1,000 mathematics shorts.">
     <meta name="keywords" content="mechanical engineering career, mechanical engineering skills, engineering employability, CAD career, CAE career, ATS resume checker, engineering mathematics, MechIntel AI">
     <meta name="author" content="Chaman Prakash Kanth">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -58,12 +58,14 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="refinement.css">
     <!-- CDNs -->
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#upload-dropzone">Skip to career assessment</a>
     <!-- Ambient Geometric Particle Background Canvas -->
     <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; opacity: 0.45;"></canvas>
     <canvas id="particle-canvas"></canvas>
@@ -100,28 +102,28 @@
                     <span class="pulse-dot"></span> Structured Career Diagnostics v3.0
                 </div>
                 <h1 class="hero-title animate-slide-up">
-                    Mechanical Engineering Career, <span class="gradient-text">Engineered by Data</span>.
+                    Know your strengths.<br><span class="gradient-text">Engineer your next move.</span>
                 </h1>
                 <p class="hero-subtitle animate-slide-up-delayed">
-                    Audit your software and domain competencies against 14 mechanical disciplines and 100,000 anonymized candidate profiles. Identify skill gaps, estimate salary curves, and plan certifications.
+                    Assess your mechanical engineering skills, compare 14 career paths, and turn the gaps into a practical learning plan.
                 </p>
                 <div class="hero-ctas animate-slide-up-delayed2">
                     <button class="btn btn-large btn-primary" id="hero-get-started-btn">
-                        Get Started Free <i data-lucide="arrow-right"></i>
+                        Build my profile <i data-lucide="arrow-right"></i>
                     </button>
                     <a href="https://www.youtube.com/@Strategic814?sub_confirmation=1" class="btn btn-large btn-secondary funnel-link" data-funnel-platform="youtube" target="_blank" rel="noopener me">
                         <i data-lucide="circle-play"></i> Watch on YouTube
                     </a>
                 </div>
-                <p class="hero-creator-note"><i data-lucide="sparkles"></i> Continue learning with videos, long-form analysis, and live commentary from the creator.</p>
+                <p class="model-note">Benchmark rankings use a deterministic simulated cohort, not verified applicant records. Scores and salary estimates are directional, not hiring predictions.</p>
             </div>
             
             <div class="hero-ingest-card glass-card animate-scale-in">
                 <div class="ingest-header">
-                    <h3>📊 Instant Career Assessment</h3>
+                    <h3>Start your career assessment</h3>
                     <p>Provide your resume PDF or details to generate a competency scorecard.</p>
                 </div>
-                <div class="drag-drop-zone" id="upload-dropzone">
+                <div class="drag-drop-zone" id="upload-dropzone" tabindex="0" role="button" aria-label="Choose a resume PDF">
                     <i data-lucide="file-text" class="upload-icon"></i>
                     <p class="upload-title">Drag & Drop Resume PDF</p>
                     <p class="upload-subtitle">or click to browse local files</p>
@@ -130,7 +132,7 @@
                 </div>
                 <div class="or-divider"><span>OR</span></div>
                 <button class="btn btn-outline" id="hero-manual-btn">
-                    <i data-lucide="edit-3"></i> Manual Profile Constructor
+                    <i data-lucide="edit-3"></i> Enter profile manually
                 </button>
             </div>
         </section>
@@ -138,8 +140,8 @@
         <!-- STATS STRIP -->
         <section class="stats-strip">
             <div class="stat-item">
-                <span class="stat-number">100K+</span>
-                <span class="stat-label">Anonymized Competitor Database</span>
+                <span class="stat-number">100K</span>
+                <span class="stat-label">Simulated benchmark profiles</span>
             </div>
             <div class="stat-item">
                 <span class="stat-number">14</span>
@@ -150,8 +152,8 @@
                 <span class="stat-label">Engineering Software Tools Mapped</span>
             </div>
             <div class="stat-item">
-                <span class="stat-number">0% AI</span>
-                <span class="stat-label">100% Structured Data & Analytics</span>
+                <span class="stat-number">Local</span>
+                <span class="stat-label">Resume processing in your browser</span>
             </div>
         </section>
 
