@@ -1,11 +1,11 @@
 # MechIntel AI
 
-> Private engineering career intelligence across 12 major engineering domains, with transparent synthetic-reference methodology and deeper mechanical-engineering learning resources.
+> Private engineering career intelligence across 12 major engineering domains, with 650,000-record anonymized benchmark database (100k Mechanical, 50k+ each for 11 other disciplines), interactive peer candidate comparison, and deeper mechanical-engineering learning resources.
 
 ## Primary resources
 
-- [Engineering Career Intelligence Desk](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/): Five-question career assessment covering current evidence, role fit, skill gaps, weekly action and observed opportunity signals.
-- [Benchmark and Privacy Methodology](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/methodology.html): Explains synthetic reference data, prohibited claims, browser-local processing and no server-side career-profile retention.
+- [Engineering Career Intelligence Desk](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/): Dual-mode resume & skill-based assessment covering 12 engineering domains, 6-axis radar charts, 50k/100k benchmark percentile ranking, peer candidate comparison table, career move simulator, and 7-day action sprint.
+- [Benchmark and Privacy Methodology](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/methodology.html): Explains the 650,000-profile anonymized candidate benchmark methodology, mathematical percentile computation, browser-local zero-retention processing, and complete absence of server-side data retention.
 - [MechIntel AI](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Mechanical engineering career benchmarking, skill-gap analysis, text courses, video academy, and learning roadmaps.
 
 ## Engineering domain guides
