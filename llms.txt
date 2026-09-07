@@ -1,10 +1,17 @@
 # MechIntel AI
 
-> Mechanical-engineering career intelligence, learning resources, and a curated bridge to defense engineering analysis.
+> Private engineering career intelligence across 12 major engineering domains, with transparent synthetic-reference methodology and deeper mechanical-engineering learning resources.
 
 ## Primary resources
 
+- [Engineering Career Intelligence Desk](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/): Five-question career assessment covering current evidence, role fit, skill gaps, weekly action and observed opportunity signals.
+- [Benchmark and Privacy Methodology](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/methodology.html): Explains synthetic reference data, prohibited claims, browser-local processing and no server-side career-profile retention.
 - [MechIntel AI](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Mechanical engineering career benchmarking, skill-gap analysis, text courses, video academy, and learning roadmaps.
+
+## Engineering domain guides
+
+- Mechanical, civil, electrical, electronics and communication, computer and software, chemical, aerospace, automotive, biomedical, environmental, industrial and production, and mechatronics and robotics engineering are available as crawlable pages under `/engineering-careers/`.
+- Domain pages provide editorial starting points, not live labor-market measurements. Users are told to verify claims against current vacancies, professional bodies and applicable regulations.
 - [Defense Engineering Reading Hub](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html): Curated technical reading for aerospace, propulsion, unmanned systems, defense manufacturing, sensing, and military AI.
 - [Defense Affairs](https://defenseaffairs814.blogspot.com/): Independent modern-warfare, military-technology, defense-economics, and geopolitics analysis.
 - [Global Defense OSINT Dashboard](https://defenseaffairs814.blogspot.com/p/global-defense-osint-dashboard.html): Structured exploration of publicly available global defense information.
@@ -17,4 +24,3 @@
 - [Taiwan drone-defense readiness](https://defenseaffairs814.blogspot.com/2026/08/taiwan-drone-defences-fall-short.html)
 - [Artificial intelligence in nuclear command and deterrence](https://defenseaffairs814.blogspot.com/2026/08/putting-armageddon-on-autopilot-how.html)
 - [Defense production capacity and stockpile pressure](https://defenseaffairs814.blogspot.com/2026/08/pentagon-demands-faster-weapons.html)
-
