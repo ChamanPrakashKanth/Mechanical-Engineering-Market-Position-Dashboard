@@ -1445,10 +1445,44 @@
                 <div id="view-dashboard-jobs" class="dashboard-view-pane">
                     <header class="dashboard-pane-header">
                         <div>
-                            <h1>Job Intelligence & Placement Insights</h1>
-                            <p>Internship readiness indicators, salary estimations, company prep checklists, and market trends</p>
+                            <h1>LinkedIn Job Finder & Match Ranking</h1>
+                            <p>Profile-ranked mechanical engineering searches, refreshed daily in your browser without AI tokens or paid APIs</p>
                         </div>
                     </header>
+
+                    <section class="glass-card element-card linkedin-job-finder" aria-labelledby="linkedin-job-finder-title">
+                        <div class="job-finder-heading">
+                            <div>
+                                <span class="job-finder-eyebrow"><i data-lucide="linkedin"></i> LinkedIn opportunity radar</span>
+                                <h2 id="linkedin-job-finder-title">Best-fit searches for your current rank</h2>
+                                <p id="job-finder-refresh-status" class="section-subtitle">Preparing today's recommendations…</p>
+                            </div>
+                            <button id="btn-refresh-job-matches" class="btn btn-secondary btn-sm" type="button"><i data-lucide="refresh-cw"></i> Refresh matches</button>
+                        </div>
+                        <div class="job-finder-controls">
+                            <label>Location
+                                <input id="job-finder-location" class="form-control" type="text" value="India" placeholder="e.g. Bengaluru, India">
+                            </label>
+                            <label>Experience level
+                                <select id="job-finder-experience" class="form-control">
+                                    <option value="1,2">Internship + Entry level</option>
+                                    <option value="2">Entry level</option>
+                                    <option value="3">Associate</option>
+                                    <option value="4">Mid-Senior level</option>
+                                    <option value="">Any level</option>
+                                </select>
+                            </label>
+                            <label>Sort results
+                                <select id="job-finder-sort" class="form-control">
+                                    <option value="match">Best match</option>
+                                    <option value="demand">Market demand</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="job-finder-summary" id="job-finder-summary"></div>
+                        <div class="job-match-list" id="linkedin-job-match-list" aria-live="polite"></div>
+                        <p class="job-finder-disclaimer"><i data-lucide="shield-check"></i> Matching happens locally. “View jobs” opens LinkedIn’s live results filtered to posts from the last 24 hours. MechIntel does not scrape LinkedIn, store credentials, or send resume data.</p>
+                    </section>
 
                     <div class="dashboard-data-grid">
                         <div class="grid-col-8">

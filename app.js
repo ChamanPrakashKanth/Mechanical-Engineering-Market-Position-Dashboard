@@ -495,6 +495,79 @@ function drawHeatmapChart() {
     Plotly.newPlot("plotly-heatmap-chart-jobs", data, layout, {responsive: true, displayModeBar: false});
 }
 
+// Token-free LinkedIn discovery: rank search intents locally and hand off to
+// LinkedIn's public results page, filtered to listings posted in the last day.
+const LINKEDIN_JOB_ROLES = [
+    { title: "Mechanical Design Engineer", domain: "Design Engineering", keywords: ["GD&T (Geometric Dimensioning & Tolerancing)", "Product Design", "Tolerance Analysis"], software: ["SolidWorks", "Creo", "AutoCAD"], certs: ["CSWP (Certified SolidWorks Professional)"], demand: 96 },
+    { title: "FEA / Structural Analysis Engineer", domain: "FEA", keywords: ["Finite Element Analysis (FEA)", "Structural Analysis", "Vibration Analysis"], software: ["ANSYS", "Abaqus", "Siemens NX"], certs: ["FEA Specialist Certification"], demand: 91 },
+    { title: "CFD / Thermal Engineer", domain: "CFD", keywords: ["Computational Fluid Dynamics (CFD)", "Fluid Mechanics", "Heat Transfer"], software: ["ANSYS", "Fluent", "MATLAB"], certs: ["ANSYS Certified Professional"], demand: 94 },
+    { title: "Manufacturing Engineer", domain: "Manufacturing Engineering", keywords: ["Lean Manufacturing", "CNC Programming", "DFM (Design for Manufacturing)"], software: ["SolidWorks", "AutoCAD", "Excel"], certs: ["SME Certified Manufacturing Engineer (CMfgE)"], demand: 84 },
+    { title: "Quality Engineer", domain: "Quality Engineering", keywords: ["Quality Control & Assurance", "Six Sigma", "Tolerance Analysis"], software: ["Excel", "Python"], certs: ["ASQ Certified Quality Engineer (CQE)"], demand: 82 },
+    { title: "HVAC Design Engineer", domain: "HVAC", keywords: ["HVAC Design", "Thermodynamics", "Piping Design"], software: ["AutoCAD", "Revit"], certs: ["HVAC Design Certificate", "ASHRAE Member Certification"], demand: 86 },
+    { title: "Automotive Design Engineer", domain: "Automotive", keywords: ["Kinematics & Dynamics", "Vibration Analysis", "Product Design"], software: ["CATIA", "SolidWorks", "ANSYS"], certs: ["SAE Automotive Design Certificate"], demand: 89 },
+    { title: "Robotics / Mechatronics Engineer", domain: "Mechatronics", keywords: ["Mechatronics", "Control Systems", "Robotics"], software: ["MATLAB", "Simulink", "Python"], certs: ["Certified LabVIEW Associate (CLAD)"], demand: 93 },
+    { title: "Maintenance Engineer", domain: "Maintenance Engineering", keywords: ["Control Systems", "Lean Manufacturing", "Embedded Systems"], software: ["Excel", "MATLAB"], certs: ["ASME Maintenance Certificate"], demand: 75 },
+    { title: "Graduate Mechanical Engineer", domain: "Design Engineering", keywords: ["Product Design", "Thermodynamics", "GD&T (Geometric Dimensioning & Tolerancing)"], software: ["SolidWorks", "AutoCAD", "Excel"], certs: [], demand: 88 }
+];
+
+function normalizeJobTerm(value) {
+    return String(value || "").toLowerCase().replace(/[^a-z0-9+#]+/g, " ").trim();
+}
+
+function scoreLinkedInRole(role, profile) {
+    const profileSkills = (profile?.skills || []).map(normalizeJobTerm);
+    const profileCerts = (profile?.certifications || []).map(normalizeJobTerm);
+    const selectedDomains = resolveSpecialtyDomains(profile?.cluster || selectedDomainName);
+    const skillHits = role.keywords.filter(item => profileSkills.includes(normalizeJobTerm(item)));
+    const certHits = role.certs.filter(item => profileCerts.includes(normalizeJobTerm(item)));
+    const softwareHits = role.software.filter(item => (softwareProficiency[item] || 0) >= 40);
+    const softwareScore = role.software.length ? role.software.reduce((sum, item) => sum + Math.min(100, softwareProficiency[item] || 0), 0) / role.software.length : 0;
+    const skillScore = role.keywords.length ? (skillHits.length / role.keywords.length) * 100 : 0;
+    const certScore = role.certs.length ? (certHits.length / role.certs.length) * 100 : 100;
+    const domainScore = selectedDomains.includes(role.domain) || profile?.cluster === role.domain ? 100 : 30;
+    const evidenceScore = Math.min(100, ((Number(profile?.projects) || 0) * 14) + ((Number(profile?.internships) || 0) * 24));
+    const score = Math.round((skillScore * .32) + (softwareScore * .28) + (domainScore * .20) + (certScore * .08) + (evidenceScore * .12));
+    const missing = [...role.keywords.filter(item => !skillHits.includes(item)), ...role.software.filter(item => !softwareHits.includes(item))].slice(0, 3);
+    return { ...role, score: Math.max(1, Math.min(99, score)), skillHits, softwareHits, missing };
+}
+
+function buildLinkedInJobUrl(role, location, experience) {
+    const params = new URLSearchParams({ keywords: role.title, location: location || "India", f_TPR: "r86400", sortBy: "DD" });
+    if (experience) params.set("f_E", experience);
+    return `https://www.linkedin.com/jobs/search/?${params.toString()}`;
+}
+
+function renderLinkedInJobMatches(forceRefresh = false) {
+    const list = document.getElementById("linkedin-job-match-list");
+    if (!list) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const previousDay = localStorage.getItem("mechintelJobMatchDay");
+    const location = document.getElementById("job-finder-location")?.value.trim() || "India";
+    const experience = document.getElementById("job-finder-experience")?.value || "";
+    const sort = document.getElementById("job-finder-sort")?.value || "match";
+    const profile = targetProfile || { skills: [], certifications: [], cluster: selectedDomainName, projects: 0, internships: 0 };
+    const matches = LINKEDIN_JOB_ROLES.map(role => scoreLinkedInRole(role, profile))
+        .sort((a, b) => sort === "demand" ? b.demand - a.demand || b.score - a.score : b.score - a.score || b.demand - a.demand)
+        .slice(0, 6);
+    const best = matches[0];
+    const summary = document.getElementById("job-finder-summary");
+    if (summary) summary.innerHTML = `<strong>${best.score}% best match</strong><span>${best.title}</span><span>Top ${matches.filter(item => item.score >= 70).length} strong-fit searches</span>`;
+    list.innerHTML = matches.map((role, index) => {
+        const level = role.score >= 80 ? "Strong match" : role.score >= 60 ? "Good match" : "Growth match";
+        const matched = [...role.skillHits, ...role.softwareHits].slice(0, 3);
+        return `<article class="job-match-card">
+            <div class="job-match-rank">#${index + 1}</div>
+            <div class="job-match-main"><div class="job-match-title-row"><h3>${role.title}</h3><span class="job-match-pill">${level}</span></div><p>${role.domain} · Market demand ${role.demand}/100</p><div class="job-match-reasons"><span>Matches: ${matched.length ? matched.join(", ") : "profile baseline"}</span><span>Build next: ${role.missing.length ? role.missing.join(", ") : "interview portfolio"}</span></div></div>
+            <div class="job-match-score"><strong>${role.score}%</strong><span>profile fit</span></div>
+            <a class="btn btn-primary btn-sm job-match-link" href="${buildLinkedInJobUrl(role, location, experience)}" target="_blank" rel="noopener noreferrer">View jobs <i data-lucide="external-link"></i></a>
+        </article>`;
+    }).join("");
+    localStorage.setItem("mechintelJobMatchDay", today);
+    const status = document.getElementById("job-finder-refresh-status");
+    if (status) status.textContent = `${forceRefresh || previousDay !== today ? "Updated" : "Current"} for ${new Date().toLocaleDateString(undefined, { dateStyle: "medium" })} · LinkedIn filter: past 24 hours`;
+    if (window.lucide) lucide.createIcons();
+}
+
 function drawTimelineChart() {
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
@@ -1215,6 +1288,8 @@ function showDashboardView(viewId) {
         renderActiveRoadmap();
     } else if (viewId === "dashboard-videos") {
         renderVideoAcademy();
+    } else if (viewId === "dashboard-jobs") {
+        renderLinkedInJobMatches();
     }
 }
 
@@ -4662,6 +4737,14 @@ showDashboardView = function(viewId) {
 document.addEventListener("DOMContentLoaded", () => {
     initInterviewSimulator();
     initPortfolioGenerator();
+    document.getElementById("btn-refresh-job-matches")?.addEventListener("click", () => renderLinkedInJobMatches(true));
+    ["job-finder-location", "job-finder-experience", "job-finder-sort"].forEach(id => {
+        document.getElementById(id)?.addEventListener("change", () => renderLinkedInJobMatches(true));
+    });
+    document.addEventListener("visibilitychange", () => {
+        const today = new Date().toISOString().slice(0, 10);
+        if (!document.hidden && localStorage.getItem("mechintelJobMatchDay") !== today) renderLinkedInJobMatches(true);
+    });
     
     // Bind Optimize Resume Button
     const optResumeBtn = document.getElementById("btn-optimize-resume-doc");

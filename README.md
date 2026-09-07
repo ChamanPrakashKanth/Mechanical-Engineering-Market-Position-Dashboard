@@ -54,6 +54,7 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Recommends the top 3 high-ROI skills, tools, or certifications needed to bridge technical gaps.
 - Links to relevant professional certification pathways (e.g. CSWA/CSWP, Lean Six Sigma Green Belt, ASHRAE, or ANSYS Certified Professional) and external course targets.
 - **Offline Networking Strategies**: Provides custom job placement guidance, specifically tailoring advice for Tier 3 college graduates (e.g. building portfolios on GrabCAD/GitHub, targeting local manufacturing SMEs, cold outreach tactics) and candidates with zero internship experience.
+- **LinkedIn Job Match Ranking**: Ranks mechanical-engineering job search lanes locally from profile skills, software proficiency, certifications, portfolio projects, internships, and specialty alignment. Daily links open LinkedIn results posted within the last 24 hours, with no scraping, paid API, account token, or AI-token usage.
 
 ### 7. Interactive Competitor Database Viewer
 - Explore, filter, and paginate through the 100,000 anonymized candidate database.
