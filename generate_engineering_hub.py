@@ -1,13 +1,14 @@
 """Generate the complete, authoritative Engineering Career Intelligence Desk across 12 disciplines.
 
-Incorporates:
-- ABET, ASME, ASCE, IEEE, ACM, AIChE, AIAA, SAE, BMES, EPA, IISE standards and competencies
-- 50,000+ anonymized benchmark records per domain (100,000 for Mechanical, 50,000 each for the other 11 domains = 650,000 total)
-- Interactive Peer Candidate Comparison Table (compare against direct peers in your score bracket)
+Optimizations:
+- Fixed skill-based checkbox selection (resolved double-toggle event bug, bidirectional matching, slider sync)
+- Quick Select Core / Clear buttons for rapid mobile skill picking
+- Fully optimized for phone & mobile screens down to 320px (touch ergonomics, swipe stepper, responsive charts, 2x2 scorecards)
+- High-DPI Retina responsive HTML5 canvas for 6-axis Radar & Benchmark Distribution charts
+- 650,000 anonymized benchmark candidate cohort (100k Mechanical, 50k each for other 11 disciplines)
+- Interactive Peer Comparison Table with mobile swipe hint
 - Recruiter Talent Pool Filter Sandbox
 - Dual-mode Assessment: In-browser Resume Assessment (PDF/TXT) AND Interactive Skill-Based Assessment
-- Multi-dimensional ranking (Global, Regional, College Tier, and Specialty Cluster percentiles)
-- Visualizations: 6-Axis Interactive Radar Chart, Benchmark Bell Curve, Skill Gap Matrix, Role Fit Percentages, and Real-Time Career Move Simulator
 - Zero-retention client-side execution (no server storage, no cookies, no tracking)
 """
 from __future__ import annotations
@@ -598,6 +599,9 @@ def generate_css():
   --font-heading: 'Manrope', system-ui, sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  -webkit-text-size-adjust: 100%;
+}
 body {
   background: radial-gradient(circle at 50% -10%, #0d2838 0%, var(--bg-primary) 55%);
   color: var(--text-main);
@@ -606,6 +610,8 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 a { color: var(--accent); text-decoration: none; transition: all .2s; }
 a:hover { text-decoration: underline; }
@@ -614,19 +620,19 @@ header, main, footer { max-width: 1240px; margin: 0 auto; padding: 24px 20px; }
 /* Navigation */
 .nav-bar {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 24px; background: rgba(12, 24, 34, 0.6); backdrop-filter: blur(14px);
-  border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 32px;
+  padding: 16px 24px; background: rgba(12, 24, 34, 0.65); backdrop-filter: blur(14px);
+  border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 28px;
 }
 .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; }
 .brand-dot { color: var(--accent); }
-.nav-links { display: flex; gap: 20px; font-size: 0.92rem; align-items: center; }
+.nav-links { display: flex; gap: 18px; font-size: 0.92rem; align-items: center; flex-wrap: wrap; }
 .nav-badge { background: rgba(0, 242, 254, 0.1); color: var(--accent); border: 1px solid var(--border-focus); padding: 4px 10px; border-radius: 99px; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* Hero */
-.hero { text-align: center; padding: 40px 10px 30px; }
+.hero { text-align: center; padding: 36px 10px 24px; }
 .eyebrow { color: var(--accent); font-weight: 800; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 12px; }
-h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.12; font-weight: 800; margin-bottom: 18px; color: #fff; letter-spacing: -0.02em; }
-.lead { max-width: 840px; margin: 0 auto 28px; color: var(--text-muted); font-size: 1.15rem; }
+h1 { font-family: var(--font-heading); font-size: clamp(2rem, 5.5vw, 3.8rem); line-height: 1.14; font-weight: 800; margin-bottom: 18px; color: #fff; letter-spacing: -0.02em; }
+.lead { max-width: 840px; margin: 0 auto 28px; color: var(--text-muted); font-size: 1.12rem; line-height: 1.65; }
 .hero-cta { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
 /* Buttons */
@@ -634,15 +640,16 @@ h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.8rem); li
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
   color: #051821; font-weight: 800; padding: 13px 24px; border-radius: var(--radius-sm);
-  border: 0; cursor: pointer; font-size: 0.96rem; transition: transform .15s, box-shadow .2s;
-  text-decoration: none;
+  border: 0; cursor: pointer; font-size: 0.96rem; min-height: 44px; transition: transform .15s, box-shadow .2s;
+  text-decoration: none; user-select: none;
 }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); text-decoration: none; }
+.btn:active { transform: translateY(0); }
 .btn-secondary {
   background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid var(--border);
 }
 .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); box-shadow: none; }
-.btn-sm { padding: 8px 14px; font-size: 0.84rem; }
+.btn-sm { padding: 8px 14px; font-size: 0.84rem; min-height: 36px; }
 
 /* Cards & Layout */
 .card {
@@ -653,36 +660,38 @@ h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.8rem); li
 .card:hover { border-color: rgba(0, 242, 254, 0.35); }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
 /* Process Stepper */
-.workflow-stepper { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 30px 0; }
+.workflow-stepper { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 28px 0; }
 .step-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; position: relative; }
 .step-num { font-size: 1.4rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
 .step-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; }
 
 /* Assessment Desk */
-.desk-container { margin-top: 36px; border: 1px solid var(--border-focus); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); }
+.desk-container { margin-top: 32px; border: 1px solid var(--border-focus); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); }
 .desk-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
 .domain-select-wrap { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
 .domain-select-wrap label { font-weight: 700; color: var(--accent); min-width: 140px; }
+
+/* Inputs with iOS Zoom Prevention (16px) */
 select, input[type="text"], textarea {
   width: 100%; padding: 12px 14px; background: #07131d; border: 1px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text-main); font-family: inherit; font-size: 0.95rem;
+  border-radius: var(--radius-sm); color: var(--text-main); font-family: inherit; font-size: 16px;
   transition: border-color .2s;
 }
 select:focus, input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
 /* Mode Switch Tabs */
-.mode-toggle { display: flex; background: #07131d; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 24px; gap: 4px; }
+.mode-toggle { display: grid; grid-template-columns: 1fr 1fr; background: #07131d; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 24px; gap: 4px; }
 .mode-btn {
-  flex: 1; padding: 12px 16px; background: transparent; border: 0; color: var(--text-muted);
-  font-weight: 700; font-size: 0.95rem; border-radius: 6px; cursor: pointer; transition: all .2s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 14px; background: transparent; border: 0; color: var(--text-muted);
+  font-weight: 700; font-size: 0.94rem; min-height: 44px; border-radius: 6px; cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center;
 }
 .mode-btn.active { background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.1)); color: #fff; border: 1px solid var(--border-focus); }
 
-/* Upload Area */
+/* Upload Area (Tappable on mobile) */
 .dropzone {
   border: 2px dashed var(--border); border-radius: var(--radius-md); padding: 32px 20px; text-align: center;
   background: rgba(0, 242, 254, 0.02); transition: all .2s; cursor: pointer; margin-bottom: 18px;
@@ -692,22 +701,25 @@ select:focus, input[type="text"]:focus, textarea:focus { outline: none; border-c
 .file-status { margin-top: 10px; font-weight: 600; color: var(--accent-emerald); font-size: 0.92rem; }
 
 /* Skill Category Pills */
-.skill-category-title { font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 800; margin: 16px 0 8px; }
+.skill-category-title { font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 800; margin: 18px 0 10px; }
 .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .skill-pill {
-  display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px;
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
   background: #081622; border: 1px solid var(--border); border-radius: 99px;
   color: var(--text-muted); font-size: 0.88rem; cursor: pointer; user-select: none; transition: all .15s;
+  min-height: 38px;
 }
 .skill-pill:hover { border-color: var(--accent); color: var(--text-main); }
 .skill-pill input { display: none; }
-.skill-pill.selected { background: rgba(0, 242, 254, 0.16); border-color: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+.skill-pill.selected { background: rgba(0, 242, 254, 0.18); border-color: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 0 10px rgba(0, 242, 254, 0.25); }
 
 /* Software Sliders */
 .slider-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 16px 0; }
 .slider-item { background: #07131d; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
 .slider-header { display: flex; justify-content: space-between; font-size: 0.86rem; font-weight: 700; margin-bottom: 6px; }
-input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+input[type="range"] {
+  width: 100%; height: 32px; accent-color: var(--accent); cursor: pointer;
+}
 
 /* Results Section */
 .results-container { margin-top: 40px; animation: fadeIn .4s ease-out; }
@@ -723,11 +735,11 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .score-val { font-size: 2.2rem; font-weight: 800; font-family: var(--font-heading); color: var(--accent); line-height: 1; margin-bottom: 6px; }
 .score-card small { font-size: 0.8rem; color: var(--text-dim); }
 
-/* Radar & Distribution Charts */
+/* Responsive Canvas Charts */
 .charts-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; margin-bottom: 24px; }
-.chart-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; }
+.chart-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; overflow: hidden; }
 .chart-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-canvas { width: 100%; height: auto; max-height: 340px; }
+canvas { width: 100% !important; max-width: 100%; height: auto !important; display: block; }
 
 /* Role Match List */
 .role-match-card {
@@ -736,33 +748,43 @@ canvas { width: 100%; height: auto; max-height: 340px; }
 }
 .role-match-info strong { display: block; font-size: 1rem; color: #fff; margin-bottom: 4px; }
 .role-match-info small { color: var(--text-muted); font-size: 0.84rem; }
-.role-badge { font-size: 1.1rem; font-weight: 800; color: var(--accent-emerald); white-space: nowrap; }
+.role-badge { font-size: 1.05rem; font-weight: 800; color: var(--accent-emerald); white-space: nowrap; }
 
 /* Skill Gap Matrix */
-.gap-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 0.84rem; font-weight: 600; margin: 3px; }
+.gap-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; font-size: 0.84rem; font-weight: 600; margin: 3px; }
 .gap-tag.met { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
 .gap-tag.missing { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
 .gap-tag.in-demand { background: rgba(0, 242, 254, 0.15); color: var(--accent); border: 1px solid rgba(0, 242, 254, 0.4); }
 
 /* Career Simulator */
 .simulator-box { background: linear-gradient(145deg, rgba(0, 242, 254, 0.05), #0a1924); border: 1px solid var(--border-focus); border-radius: var(--radius-md); padding: 24px; margin-top: 24px; }
-.sim-controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 18px 0; }
+.sim-controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0; }
 .sim-control { background: #07131d; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); text-align: center; }
 .sim-control label { font-size: 0.82rem; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 8px; }
 .sim-stepper { display: flex; align-items: center; justify-content: center; gap: 10px; }
-.sim-btn { width: 32px; height: 32px; border-radius: 6px; background: #162c3e; border: 1px solid var(--border); color: #fff; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+.sim-btn {
+  width: 42px; height: 42px; border-radius: 8px; background: #162c3e; border: 1px solid var(--border);
+  color: #fff; font-size: 1.25rem; cursor: pointer; font-weight: bold; min-height: 42px; min-width: 42px;
+  display: flex; align-items: center; justify-content: center;
+}
 .sim-btn:hover { background: var(--accent); color: #000; }
-.sim-val { font-size: 1.15rem; font-weight: 800; min-width: 24px; }
+.sim-val { font-size: 1.15rem; font-weight: 800; min-width: 28px; }
 .sim-impact { background: #071520; border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.95rem; }
 
 /* Peer Benchmark & Recruiter Sandbox Tables */
-.table-responsive { overflow-x: auto; margin-top: 14px; }
-.benchmark-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left; }
+.table-responsive {
+  width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 14px;
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+}
+.mobile-table-hint {
+  display: none; font-size: 0.8rem; color: var(--accent); margin: 6px 0; font-weight: 600;
+}
+.benchmark-table { width: 100%; min-width: 660px; border-collapse: collapse; font-size: 0.88rem; text-align: left; }
 .benchmark-table th { background: #081622; color: var(--accent); padding: 12px 14px; font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .benchmark-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); color: var(--text-main); }
 .benchmark-table tr:hover td { background: rgba(0, 242, 254, 0.04); }
 .benchmark-table tr.user-row td { background: rgba(0, 242, 254, 0.12); border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent); font-weight: 700; color: #fff; }
-.standing-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; }
+.standing-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
 .standing-badge.ahead { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
 .standing-badge.peer { background: rgba(0, 242, 254, 0.2); color: var(--accent); }
 .standing-badge.behind { background: rgba(16, 185, 129, 0.2); color: #34d399; }
@@ -778,11 +800,102 @@ canvas { width: 100%; height: auto; max-height: 340px; }
 .muted { color: var(--text-muted); }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Responsive */
+/* =========================================================
+   PHONE & TABLET OPTIMIZATION MEDIA QUERIES
+   ========================================================= */
+
+/* Tablet & Mobile (<=960px) */
 @media (max-width: 960px) {
-  .workflow-stepper, .score-overview, .charts-grid, .sim-controls { grid-template-columns: 1fr; }
+  .charts-grid { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
-  .nav-bar { flex-direction: column; gap: 14px; }
+  .nav-bar { flex-direction: column; gap: 12px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Smartphone Portrait & Landscape (<=768px) */
+@media (max-width: 768px) {
+  header, main, footer { padding: 16px 14px; }
+  .mobile-table-hint { display: block; }
+  .score-overview { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sim-controls { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 24px 6px 16px; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; }
+}
+
+/* Dedicated Smartphone Small Screens (<=640px) */
+@media (max-width: 640px) {
+  header, main, footer { padding: 12px 10px; }
+  
+  /* Compact Mobile Nav */
+  .nav-bar { padding: 12px 14px; margin-bottom: 20px; }
+  .brand { justify-content: center; font-size: 1.1rem; }
+  .nav-links { justify-content: center; gap: 8px 12px; font-size: 0.82rem; }
+  
+  /* Hero typography */
+  h1 { font-size: clamp(1.75rem, 6.8vw, 2.6rem); line-height: 1.16; margin-bottom: 14px; }
+  .lead { font-size: 1rem; margin-bottom: 20px; }
+
+  /* Swipeable Horizontal Workflow Stepper */
+  .workflow-stepper {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; gap: 8px; padding-bottom: 8px; margin: 18px 0;
+  }
+  .step-item {
+    min-width: 140px; flex: 0 0 140px; scroll-snap-align: start; padding: 12px;
+  }
+  .step-num { font-size: 1.2rem; }
+  .step-label { font-size: 0.82rem; }
+
+  /* Desk Card */
+  .desk-container { padding: 16px 12px; margin-top: 18px; }
+  .desk-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+  .domain-select-wrap { flex-direction: column; align-items: stretch; gap: 6px; }
+  .domain-select-wrap label { min-width: unset; font-size: 0.86rem; }
+  
+  /* Mode buttons */
+  .mode-btn { padding: 10px 8px; font-size: 0.84rem; min-height: 44px; }
+
+  /* Dropzone touch padding */
+  .dropzone { padding: 22px 12px; }
+  .dropzone-icon { font-size: 1.8rem; }
+
+  /* Skill Pills */
+  .skill-pill { padding: 8px 12px; font-size: 0.82rem; min-height: 38px; }
+  
+  /* Demographics grid */
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+  
+  /* Run Assessment Button */
+  #run-assessment-btn { width: 100%; min-height: 50px; font-size: 1.02rem; padding: 14px 20px; }
+
+  /* Scorecard 2x2 layout on mobile */
+  .score-overview { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .score-card { padding: 14px 8px; }
+  .score-val { font-size: 1.7rem; }
+  .score-card span { font-size: 0.74rem; }
+
+  /* Charts */
+  .chart-box { padding: 14px 10px; }
+  
+  /* Role match card */
+  .role-match-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+  
+  /* Career simulator */
+  .simulator-box { padding: 16px 12px; }
+  .sim-controls { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sim-btn { width: 44px; height: 44px; font-size: 1.3rem; }
+
+  /* Sprint plan */
+  .sprint-item { flex-direction: column; gap: 6px; }
+
+  /* Domain directory */
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* Extra Narrow Phones (<=360px) */
+@media (max-width: 360px) {
+  .grid-4, .score-overview, .sim-controls, .mode-toggle { grid-template-columns: 1fr; }
 }
 """
 
@@ -791,7 +904,7 @@ def shell_page(title, description, body_content, canonical, active_slug=""):
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>{title}</title>
   <meta name="description" content="{description}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -879,6 +992,7 @@ def generate_hub_html():
       </div>
     </section>
 
+    <!-- Swipeable Workflow Stepper on Phone -->
     <div class="workflow-stepper">
       <div class="step-item"><div class="step-num">01</div><div class="step-label">Resume / Skills</div><small class="muted">Upload PDF or pick skills</small></div>
       <div class="step-item"><div class="step-num">02</div><div class="step-label">Role Alignment</div><small class="muted">Match specialized roles</small></div>
@@ -921,7 +1035,7 @@ def generate_hub_html():
       <div id="panel-resume" class="mode-panel">
         <div id="resume-dropzone" class="dropzone">
           <div class="dropzone-icon">📥</div>
-          <h3 style="font-size:1.15rem; color:#fff; margin-bottom:4px;">Drag & Drop Engineering Resume</h3>
+          <h3 style="font-size:1.15rem; color:#fff; margin-bottom:4px;">Tap or Drop Engineering Resume</h3>
           <p class="muted" style="font-size:0.9rem;">Supports PDF or TXT. Extracted locally via PDF.js. Zero data is uploaded.</p>
           <input id="resume-file-input" type="file" accept=".pdf,.txt,text/plain,application/pdf" style="display:none;">
           <button class="btn btn-secondary btn-sm" style="margin-top:14px;" type="button" onclick="document.getElementById('resume-file-input').click()">
@@ -938,9 +1052,15 @@ def generate_hub_html():
 
       <!-- MODE 2: SKILL & PROFILE PICKER -->
       <div id="panel-skills" class="mode-panel hide">
-        <p class="muted" style="font-size:0.92rem; margin-bottom:14px;">
+        <p class="muted" style="font-size:0.92rem; margin-bottom:12px;">
           Select skills and tools you can substantiate with an academic project, thesis, internship, or verified portfolio work.
         </p>
+
+        <!-- Quick Selection Buttons for Mobile -->
+        <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
+          <button id="btn-quick-core" type="button" class="btn btn-secondary btn-sm">⚡ Select Core Foundations</button>
+          <button id="btn-clear-skills" type="button" class="btn btn-secondary btn-sm">🧹 Clear Selection</button>
+        </div>
 
         <!-- Search / Filter -->
         <input id="skill-search-input" type="text" placeholder="🔍 Search domain skills, software, codes..." style="margin-bottom:16px;">
@@ -1006,7 +1126,7 @@ def generate_hub_html():
     <!-- RESULTS DISPLAY SECTION (Revealed upon calculation) -->
     <section id="results-panel" class="results-container hide">
       
-      <!-- Key Scores -->
+      <!-- Key Scores (2x2 on phones) -->
       <div class="score-overview">
         <div class="score-card highlight">
           <span>Market Readiness</span>
@@ -1030,27 +1150,27 @@ def generate_hub_html():
         </div>
       </div>
 
-      <!-- Visual Charts Grid: Radar & Bell Curve -->
+      <!-- Visual Charts Grid: Radar & Bell Curve (Responsive) -->
       <div class="charts-grid">
         <div class="chart-box">
           <div class="chart-title">
             <span>6-Axis Competency Profile</span>
             <small style="font-size:0.8rem; color:var(--text-dim);">Profile vs Industry Ideal</small>
           </div>
-          <canvas id="radarChartCanvas" width="450" height="320"></canvas>
+          <canvas id="radarChartCanvas"></canvas>
         </div>
         <div class="chart-box">
           <div class="chart-title">
             <span>Benchmark Distribution Curve</span>
             <small id="dist-curve-subtitle" style="font-size:0.8rem; color:var(--text-dim);">Cohort Distribution</small>
           </div>
-          <canvas id="distributionCanvas" width="450" height="320"></canvas>
+          <canvas id="distributionCanvas"></canvas>
         </div>
       </div>
 
       <!-- Interactive Peer Candidate Comparison Table -->
       <div class="card" style="margin-bottom:24px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
           <div>
             <span class="eyebrow">Peer Standing Comparison</span>
             <h3 style="font-size:1.25rem; color:#fff;">Candidates in Your Immediate Score Bracket</h3>
@@ -1060,6 +1180,7 @@ def generate_hub_html():
         <p class="muted" style="font-size:0.9rem;">
           Compare your readiness standing against verified anonymized candidate profiles surrounding your exact score on the benchmark board.
         </p>
+        <div class="mobile-table-hint">📱 Swipe table horizontally to inspect peer details →</div>
 
         <div class="table-responsive">
           <table class="benchmark-table">
@@ -1123,7 +1244,7 @@ def generate_hub_html():
         </div>
         <div class="grid-4" style="margin-bottom:16px;">
           <div>
-            <label style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">Min Score Threshold: <span id="recruiter-score-val" style="color:var(--accent);">70</span></label>
+            <label style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">Min Score: <span id="recruiter-score-val" style="color:var(--accent);">70</span></label>
             <input id="recruiter-score-slider" type="range" min="40" max="95" value="70" style="margin-top:6px;">
           </div>
           <div>
@@ -1151,6 +1272,7 @@ def generate_hub_html():
           </div>
         </div>
 
+        <div class="mobile-table-hint">📱 Swipe table horizontally to inspect candidates →</div>
         <div class="table-responsive">
           <table class="benchmark-table">
             <thead>
@@ -1436,12 +1558,13 @@ def generate_methodology_html():
     )
 
 def generate_app_js():
-    """Generates the comprehensive client-side logic engine for engineering-careers/app.js."""
+    """Generates the comprehensive, mobile-optimized client-side logic engine for engineering-careers/app.js."""
     domains_json = json.dumps(DOMAINS, ensure_ascii=False)
     
     return f"""/**
  * Engineering Career Intelligence Desk - Client Logic Engine
  * 100% Client-Side, Zero-Retention, Multi-Discipline Assessment & 50k/100k Benchmark Engine
+ * Optimized for Mobile, Touch Ergonomics, and High-DPI Canvas Rendering
  */
 (function() {{
   'use strict';
@@ -1496,9 +1619,14 @@ def generate_app_js():
       }}
     }});
 
-    // Drag and drop for resume
+    // Drag and drop / Tap for resume file
     const dropzone = $('resume-dropzone');
     const fileInput = $('resume-file-input');
+
+    // On mobile & desktop, tap anywhere on the dropzone card to select file
+    dropzone.addEventListener('click', (e) => {{
+      if (e.target !== fileInput) fileInput.click();
+    }});
 
     ['dragenter', 'dragover'].forEach(eventName => {{
       dropzone.addEventListener(eventName, (e) => {{
@@ -1528,12 +1656,16 @@ def generate_app_js():
     $('sim-reset-btn').addEventListener('click', resetSim);
     $('export-csv-btn').addEventListener('click', exportCSV);
 
+    // Quick selection buttons in skill mode
+    $('btn-quick-core').addEventListener('click', selectCoreFoundations);
+    $('btn-clear-skills').addEventListener('click', clearSkillsSelection);
+
     // Live search filter in skill mode
     $('skill-search-input').addEventListener('input', (e) => {{
-      const q = e.target.value.toLowerCase();
+      const q = e.target.value.toLowerCase().trim();
       $$('.skill-pill').forEach(pill => {{
         const text = pill.textContent.toLowerCase();
-        pill.style.display = text.includes(q) ? 'inline-flex' : 'none';
+        pill.style.display = (!q || text.includes(q)) ? 'inline-flex' : 'none';
       }});
     }});
 
@@ -1545,6 +1677,18 @@ def generate_app_js():
     $('recruiter-region-filter').addEventListener('change', renderRecruiterSandbox);
     $('recruiter-tier-filter').addEventListener('change', renderRecruiterSandbox);
     $('recruiter-cluster-filter').addEventListener('change', renderRecruiterSandbox);
+
+    // Responsive Canvas Resize Listener
+    let resizeTimer;
+    window.addEventListener('resize', () => {{
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {{
+        if (lastAssessment) {{
+          drawRadarChart(lastAssessment);
+          drawDistributionCurve(parseFloat($('res-readiness-score').textContent) || lastAssessment.baseReadiness);
+        }}
+      }}, 150);
+    }});
   }}
 
   window.switchMode = function(mode) {{
@@ -1584,17 +1728,21 @@ def generate_app_js():
     }}
   }}
 
+  /**
+   * Renders skill options with reliable change listeners
+   */
   function renderSkillModeUI() {{
     const d = DOMAINS[currentDomainKey];
     const catContainer = $('skill-categories-container');
     catContainer.innerHTML = '';
 
     const categories = [
-      {{ title: 'Foundational Theory & Mechanics', items: d.fundamentals }},
-      {{ title: 'Core Engineering Analysis & Methods', items: d.methods }},
-      {{ title: 'Industry Codes, Standards & Safety', items: d.standards }},
-      {{ title: 'Emerging & High-Demand 2025/2026', items: d.in_demand }},
-      {{ title: 'Industry Recognized Certifications', items: d.certifications }}
+      {{ title: 'Foundational Theory & Mechanics', items: d.fundamentals, isCore: true }},
+      {{ title: 'Core Engineering Analysis & Methods', items: d.methods, isCore: true }},
+      {{ title: 'Industry-Standard Software & Tools', items: d.software, isCore: false }},
+      {{ title: 'Industry Codes, Standards & Safety', items: d.standards, isCore: false }},
+      {{ title: 'Emerging & High-Demand 2025/2026', items: d.in_demand, isCore: false }},
+      {{ title: 'Industry Recognized Certifications', items: d.certifications, isCore: false }}
     ];
 
     categories.forEach(cat => {{
@@ -1609,12 +1757,15 @@ def generate_app_js():
       cat.items.forEach(item => {{
         const label = document.createElement('label');
         label.className = 'skill-pill';
+        label.dataset.core = cat.isCore ? '1' : '0';
         label.innerHTML = `<input type="checkbox" value="${{item}}"> <span>${{item}}</span>`;
-        label.addEventListener('click', (e) => {{
-          const cb = label.querySelector('input');
-          if (e.target !== cb) cb.checked = !cb.checked;
+
+        // Proper change event handler (no double-toggle)
+        const cb = label.querySelector('input');
+        cb.addEventListener('change', () => {{
           label.classList.toggle('selected', cb.checked);
         }});
+
         pillsDiv.appendChild(label);
       }});
 
@@ -1627,15 +1778,32 @@ def generate_app_js():
     d.software.slice(0, 8).forEach(sw => {{
       const item = document.createElement('div');
       item.className = 'slider-item';
+      const cleanId = sw.replace(/[^a-zA-Z0-9]/g, '');
       item.innerHTML = `
         <div class="slider-header">
           <span>${{sw}}</span>
-          <span id="sw-val-${{sw.replace(/[^a-zA-Z0-9]/g, '')}}">40%</span>
+          <span id="sw-val-${{cleanId}}">40%</span>
         </div>
-        <input type="range" min="0" max="100" value="40" data-sw="${{sw}}" oninput="document.getElementById('sw-val-${{sw.replace(/[^a-zA-Z0-9]/g, '')}}').textContent = this.value + '%'">
+        <input type="range" min="0" max="100" value="40" data-sw="${{sw}}" oninput="document.getElementById('sw-val-${{cleanId}}').textContent = this.value + '%'">
       `;
       sliderContainer.appendChild(item);
     }});
+  }}
+
+  function selectCoreFoundations() {{
+    $$('#skill-categories-container label[data-core="1"] input[type="checkbox"]').forEach(cb => {{
+      cb.checked = true;
+      cb.parentElement.classList.add('selected');
+    }});
+  }}
+
+  function clearSkillsSelection() {{
+    $$('#skill-categories-container input[type="checkbox"]').forEach(cb => {{
+      cb.checked = false;
+      cb.parentElement.classList.remove('selected');
+    }});
+    $('skill-search-input').value = '';
+    $$('.skill-pill').forEach(pill => pill.style.display = 'inline-flex');
   }}
 
   function updateRecruiterClusterOptions() {{
@@ -1716,11 +1884,22 @@ def generate_app_js():
         if (match) detectedSkills.push(item);
       }});
     }} else {{
+      // Gather checked skill pills
       $$('#skill-categories-container input[type="checkbox"]:checked').forEach(cb => {{
         detectedSkills.push(cb.value);
       }});
+
+      // Also include any software from sliders if proficiency >= 20%
+      $$('#software-sliders-container input[type="range"]').forEach(s => {{
+        const val = parseInt(s.value, 10);
+        const swName = s.dataset.sw;
+        if (val >= 20 && swName && !detectedSkills.includes(swName)) {{
+          detectedSkills.push(swName);
+        }}
+      }});
+
       if (detectedSkills.length === 0) {{
-        alert('Please select at least 2 skills or tools you can demonstrate.');
+        alert('Please select at least 2 skills or adjust software proficiency sliders.');
         return;
       }}
     }}
@@ -1738,7 +1917,7 @@ def generate_app_js():
 
     const totalDomainSkills = d.fundamentals.length + d.methods.length + d.standards.length + d.in_demand.length;
     const matchedCount = detectedSkills.length;
-    const techScore = Math.min(100, Math.round((matchedCount / Math.max(6, totalDomainSkills * 0.45)) * 100));
+    const techScore = Math.min(100, Math.round((matchedCount / Math.max(6, totalDomainSkills * 0.40)) * 100));
 
     // Software Score
     let swAvg = 50;
@@ -1817,11 +1996,18 @@ def generate_app_js():
     $('peer-cohort-badge').textContent = `Benchmark Database: ${{poolSize.toLocaleString()}} Candidates`;
     $('dist-curve-subtitle').textContent = `${{poolSize.toLocaleString()}} Anonymized Cohort Distribution`;
 
-    // Render Role Matches
+    // Render Role Matches (Bidirectional matching)
     const roleListEl = $('role-matches-list');
     roleListEl.innerHTML = '';
     d.roles.forEach((role) => {{
-      const focusMatches = role.focus.filter(f => a.detectedSkills.some(ds => ds.toLowerCase().includes(f.toLowerCase())));
+      const focusMatches = role.focus.filter(f => {{
+        const fLower = f.toLowerCase();
+        return a.detectedSkills.some(ds => {{
+          const dsLower = ds.toLowerCase();
+          return dsLower.includes(fLower) || fLower.includes(dsLower) ||
+            fLower.split(/[\\s(/]+/).filter(w => w.length > 3).some(w => dsLower.includes(w));
+        }});
+      }});
       const matchPct = Math.min(98, Math.round(45 + (focusMatches.length / role.focus.length) * 50));
       const roleCard = document.createElement('div');
       roleCard.className = 'role-match-card';
@@ -1865,7 +2051,7 @@ def generate_app_js():
     // Render Recruiter Sandbox Table
     renderRecruiterSandbox();
 
-    // Render Canvas Charts
+    // Render Canvas Charts (Responsive & Retina Scaled)
     drawRadarChart(a);
     drawDistributionCurve(effectiveReadiness);
 
@@ -1949,15 +2135,32 @@ def generate_app_js():
     }});
   }}
 
-  function drawRadarChart(a) {{
-    const canvas = $('radarChartCanvas');
-    if (!canvas) return;
+  /**
+   * Sets up a high-DPI Retina responsive canvas matching container dimensions perfectly
+   */
+  function setupResponsiveCanvas(canvasId, aspect = 0.72) {{
+    const canvas = $(canvasId);
+    if (!canvas || !canvas.parentElement) return null;
+    const dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    const box = canvas.parentElement.getBoundingClientRect();
+    const width = Math.max(260, Math.floor(box.width - 24));
+    const height = Math.min(320, Math.max(220, Math.floor(width * aspect)));
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
     const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return {{ ctx, w: width, h: height }};
+  }}
+
+  function drawRadarChart(a) {{
+    const setup = setupResponsiveCanvas('radarChartCanvas', 0.74);
+    if (!setup) return;
+    const {{ ctx, w, h }} = setup;
     const cx = w / 2;
     const cy = h / 2 + 10;
-    const r = Math.min(w, h) * 0.38;
+    const r = Math.min(w, h) * 0.36;
 
     ctx.clearRect(0, 0, w, h);
 
@@ -1984,8 +2187,9 @@ def generate_app_js():
       ctx.stroke();
     }}
 
-    // Axis Lines & Labels
-    ctx.font = '11px DM Sans, sans-serif';
+    // Axis Lines & Labels - font size adjusts for mobile width
+    const fontSize = w < 360 ? 9 : (w < 440 ? 10 : 11);
+    ctx.font = `${{fontSize}}px 'DM Sans', sans-serif`;
     ctx.fillStyle = '#94a3b8';
     ctx.textAlign = 'center';
     for (let i = 0; i < n; i++) {{
@@ -1998,8 +2202,9 @@ def generate_app_js():
       ctx.strokeStyle = 'rgba(64, 180, 210, 0.2)';
       ctx.stroke();
 
-      const labelX = cx + (r + 20) * Math.cos(angle);
-      const labelY = cy + (r + 14) * Math.sin(angle);
+      const labelDist = r + (w < 360 ? 14 : 18);
+      const labelX = cx + labelDist * Math.cos(angle);
+      const labelY = cy + labelDist * Math.sin(angle) + (angle > 0 && angle < Math.PI ? 4 : -2);
       ctx.fillText(axes[i], labelX, labelY);
     }}
 
@@ -2026,7 +2231,7 @@ def generate_app_js():
     ctx.fillStyle = 'rgba(0, 242, 254, 0.22)';
     ctx.fill();
     ctx.strokeStyle = '#00f2fe';
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 2.2;
     ctx.stroke();
 
     // Ideal Role Benchmark Polygon (dotted)
@@ -2048,18 +2253,18 @@ def generate_app_js():
   }}
 
   function drawDistributionCurve(score) {{
-    const canvas = $('distributionCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
+    const setup = setupResponsiveCanvas('distributionCanvas', 0.72);
+    if (!setup) return;
+    const {{ ctx, w, h }} = setup;
     ctx.clearRect(0, 0, w, h);
 
-    const padL = 40, padR = 20, padT = 30, padB = 40;
+    const padL = w < 360 ? 30 : 38;
+    const padR = 16;
+    const padT = 26;
+    const padB = 34;
     const plotW = w - padL - padR;
     const plotH = h - padT - padB;
 
-    // Gaussian bell curve: mean 64.5, stdDev 13
     const mean = 64.5;
     const stdDev = 13;
     function gaussian(x) {{
@@ -2068,7 +2273,7 @@ def generate_app_js():
 
     const maxP = gaussian(mean);
 
-    // Draw area fill
+    // Area fill
     ctx.beginPath();
     ctx.moveTo(padL, padT + plotH);
     for (let xVal = 0; xVal <= 100; xVal += 1) {{
@@ -2085,7 +2290,7 @@ def generate_app_js():
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Axis line
+    // Baseline axis
     ctx.beginPath();
     ctx.moveTo(padL, padT + plotH);
     ctx.lineTo(padL + plotW, padT + plotH);
@@ -2093,16 +2298,16 @@ def generate_app_js():
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Axis ticks
+    // Ticks
     ctx.fillStyle = '#64748b';
-    ctx.font = '10px DM Sans, sans-serif';
+    ctx.font = '10px "DM Sans", sans-serif';
     ctx.textAlign = 'center';
     [20, 40, 60, 80, 100].forEach(tick => {{
       const x = padL + (tick / 100) * plotW;
-      ctx.fillText(tick, x, padT + plotH + 16);
+      ctx.fillText(tick, x, padT + plotH + 15);
     }});
 
-    // User vertical pin
+    // User pin
     const userX = padL + (Math.max(0, Math.min(100, score)) / 100) * plotW;
     ctx.beginPath();
     ctx.moveTo(userX, padT);
@@ -2111,16 +2316,17 @@ def generate_app_js():
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // Pin marker badge
+    // Marker badge
     ctx.fillStyle = '#00f2fe';
     ctx.beginPath();
-    ctx.arc(userX, padT + 8, 5, 0, Math.PI * 2);
+    ctx.arc(userX, padT + 6, 5, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 11px DM Sans, sans-serif';
-    ctx.textAlign = userX > w - 100 ? 'right' : 'left';
-    ctx.fillText(`YOU: ${{score}} pts`, userX > w - 100 ? userX - 10 : userX + 10, padT + 12);
+    ctx.font = 'bold 10px "DM Sans", sans-serif';
+    const isRightEdge = userX > w - 85;
+    ctx.textAlign = isRightEdge ? 'right' : 'left';
+    ctx.fillText(`YOU: ${{score}} pts`, isRightEdge ? userX - 8 : userX + 8, padT + 10);
   }}
 
   function renderSprintPlan(d, focusGap) {{
@@ -2194,10 +2400,7 @@ def generate_app_js():
     $('resume-paste-area').value = '';
     $('file-status').classList.add('hide');
     $('results-panel').classList.add('hide');
-    $$('#skill-categories-container input[type="checkbox"]').forEach(cb => {{
-      cb.checked = false;
-      cb.parentElement.classList.remove('selected');
-    }});
+    clearSkillsSelection();
     lastAssessment = null;
     resetSim();
     window.scrollTo({{ top: 0, behavior: 'smooth' }});

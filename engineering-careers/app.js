@@ -1,6 +1,7 @@
 /**
  * Engineering Career Intelligence Desk - Client Logic Engine
  * 100% Client-Side, Zero-Retention, Multi-Discipline Assessment & 50k/100k Benchmark Engine
+ * Optimized for Mobile, Touch Ergonomics, and High-DPI Canvas Rendering
  */
 (function() {
   'use strict';
@@ -55,9 +56,14 @@
       }
     });
 
-    // Drag and drop for resume
+    // Drag and drop / Tap for resume file
     const dropzone = $('resume-dropzone');
     const fileInput = $('resume-file-input');
+
+    // On mobile & desktop, tap anywhere on the dropzone card to select file
+    dropzone.addEventListener('click', (e) => {
+      if (e.target !== fileInput) fileInput.click();
+    });
 
     ['dragenter', 'dragover'].forEach(eventName => {
       dropzone.addEventListener(eventName, (e) => {
@@ -87,12 +93,16 @@
     $('sim-reset-btn').addEventListener('click', resetSim);
     $('export-csv-btn').addEventListener('click', exportCSV);
 
+    // Quick selection buttons in skill mode
+    $('btn-quick-core').addEventListener('click', selectCoreFoundations);
+    $('btn-clear-skills').addEventListener('click', clearSkillsSelection);
+
     // Live search filter in skill mode
     $('skill-search-input').addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase();
+      const q = e.target.value.toLowerCase().trim();
       $$('.skill-pill').forEach(pill => {
         const text = pill.textContent.toLowerCase();
-        pill.style.display = text.includes(q) ? 'inline-flex' : 'none';
+        pill.style.display = (!q || text.includes(q)) ? 'inline-flex' : 'none';
       });
     });
 
@@ -104,6 +114,18 @@
     $('recruiter-region-filter').addEventListener('change', renderRecruiterSandbox);
     $('recruiter-tier-filter').addEventListener('change', renderRecruiterSandbox);
     $('recruiter-cluster-filter').addEventListener('change', renderRecruiterSandbox);
+
+    // Responsive Canvas Resize Listener
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (lastAssessment) {
+          drawRadarChart(lastAssessment);
+          drawDistributionCurve(parseFloat($('res-readiness-score').textContent) || lastAssessment.baseReadiness);
+        }
+      }, 150);
+    });
   }
 
   window.switchMode = function(mode) {
@@ -143,17 +165,21 @@
     }
   }
 
+  /**
+   * Renders skill options with reliable change listeners
+   */
   function renderSkillModeUI() {
     const d = DOMAINS[currentDomainKey];
     const catContainer = $('skill-categories-container');
     catContainer.innerHTML = '';
 
     const categories = [
-      { title: 'Foundational Theory & Mechanics', items: d.fundamentals },
-      { title: 'Core Engineering Analysis & Methods', items: d.methods },
-      { title: 'Industry Codes, Standards & Safety', items: d.standards },
-      { title: 'Emerging & High-Demand 2025/2026', items: d.in_demand },
-      { title: 'Industry Recognized Certifications', items: d.certifications }
+      { title: 'Foundational Theory & Mechanics', items: d.fundamentals, isCore: true },
+      { title: 'Core Engineering Analysis & Methods', items: d.methods, isCore: true },
+      { title: 'Industry-Standard Software & Tools', items: d.software, isCore: false },
+      { title: 'Industry Codes, Standards & Safety', items: d.standards, isCore: false },
+      { title: 'Emerging & High-Demand 2025/2026', items: d.in_demand, isCore: false },
+      { title: 'Industry Recognized Certifications', items: d.certifications, isCore: false }
     ];
 
     categories.forEach(cat => {
@@ -168,12 +194,15 @@
       cat.items.forEach(item => {
         const label = document.createElement('label');
         label.className = 'skill-pill';
+        label.dataset.core = cat.isCore ? '1' : '0';
         label.innerHTML = `<input type="checkbox" value="${item}"> <span>${item}</span>`;
-        label.addEventListener('click', (e) => {
-          const cb = label.querySelector('input');
-          if (e.target !== cb) cb.checked = !cb.checked;
+
+        // Proper change event handler (no double-toggle)
+        const cb = label.querySelector('input');
+        cb.addEventListener('change', () => {
           label.classList.toggle('selected', cb.checked);
         });
+
         pillsDiv.appendChild(label);
       });
 
@@ -186,15 +215,32 @@
     d.software.slice(0, 8).forEach(sw => {
       const item = document.createElement('div');
       item.className = 'slider-item';
+      const cleanId = sw.replace(/[^a-zA-Z0-9]/g, '');
       item.innerHTML = `
         <div class="slider-header">
           <span>${sw}</span>
-          <span id="sw-val-${sw.replace(/[^a-zA-Z0-9]/g, '')}">40%</span>
+          <span id="sw-val-${cleanId}">40%</span>
         </div>
-        <input type="range" min="0" max="100" value="40" data-sw="${sw}" oninput="document.getElementById('sw-val-${sw.replace(/[^a-zA-Z0-9]/g, '')}').textContent = this.value + '%'">
+        <input type="range" min="0" max="100" value="40" data-sw="${sw}" oninput="document.getElementById('sw-val-${cleanId}').textContent = this.value + '%'">
       `;
       sliderContainer.appendChild(item);
     });
+  }
+
+  function selectCoreFoundations() {
+    $$('#skill-categories-container label[data-core="1"] input[type="checkbox"]').forEach(cb => {
+      cb.checked = true;
+      cb.parentElement.classList.add('selected');
+    });
+  }
+
+  function clearSkillsSelection() {
+    $$('#skill-categories-container input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+      cb.parentElement.classList.remove('selected');
+    });
+    $('skill-search-input').value = '';
+    $$('.skill-pill').forEach(pill => pill.style.display = 'inline-flex');
   }
 
   function updateRecruiterClusterOptions() {
@@ -275,11 +321,22 @@
         if (match) detectedSkills.push(item);
       });
     } else {
+      // Gather checked skill pills
       $$('#skill-categories-container input[type="checkbox"]:checked').forEach(cb => {
         detectedSkills.push(cb.value);
       });
+
+      // Also include any software from sliders if proficiency >= 20%
+      $$('#software-sliders-container input[type="range"]').forEach(s => {
+        const val = parseInt(s.value, 10);
+        const swName = s.dataset.sw;
+        if (val >= 20 && swName && !detectedSkills.includes(swName)) {
+          detectedSkills.push(swName);
+        }
+      });
+
       if (detectedSkills.length === 0) {
-        alert('Please select at least 2 skills or tools you can demonstrate.');
+        alert('Please select at least 2 skills or adjust software proficiency sliders.');
         return;
       }
     }
@@ -297,7 +354,7 @@
 
     const totalDomainSkills = d.fundamentals.length + d.methods.length + d.standards.length + d.in_demand.length;
     const matchedCount = detectedSkills.length;
-    const techScore = Math.min(100, Math.round((matchedCount / Math.max(6, totalDomainSkills * 0.45)) * 100));
+    const techScore = Math.min(100, Math.round((matchedCount / Math.max(6, totalDomainSkills * 0.40)) * 100));
 
     // Software Score
     let swAvg = 50;
@@ -376,11 +433,18 @@
     $('peer-cohort-badge').textContent = `Benchmark Database: ${poolSize.toLocaleString()} Candidates`;
     $('dist-curve-subtitle').textContent = `${poolSize.toLocaleString()} Anonymized Cohort Distribution`;
 
-    // Render Role Matches
+    // Render Role Matches (Bidirectional matching)
     const roleListEl = $('role-matches-list');
     roleListEl.innerHTML = '';
     d.roles.forEach((role) => {
-      const focusMatches = role.focus.filter(f => a.detectedSkills.some(ds => ds.toLowerCase().includes(f.toLowerCase())));
+      const focusMatches = role.focus.filter(f => {
+        const fLower = f.toLowerCase();
+        return a.detectedSkills.some(ds => {
+          const dsLower = ds.toLowerCase();
+          return dsLower.includes(fLower) || fLower.includes(dsLower) ||
+            fLower.split(/[\s(/]+/).filter(w => w.length > 3).some(w => dsLower.includes(w));
+        });
+      });
       const matchPct = Math.min(98, Math.round(45 + (focusMatches.length / role.focus.length) * 50));
       const roleCard = document.createElement('div');
       roleCard.className = 'role-match-card';
@@ -424,7 +488,7 @@
     // Render Recruiter Sandbox Table
     renderRecruiterSandbox();
 
-    // Render Canvas Charts
+    // Render Canvas Charts (Responsive & Retina Scaled)
     drawRadarChart(a);
     drawDistributionCurve(effectiveReadiness);
 
@@ -508,15 +572,32 @@
     });
   }
 
-  function drawRadarChart(a) {
-    const canvas = $('radarChartCanvas');
-    if (!canvas) return;
+  /**
+   * Sets up a high-DPI Retina responsive canvas matching container dimensions perfectly
+   */
+  function setupResponsiveCanvas(canvasId, aspect = 0.72) {
+    const canvas = $(canvasId);
+    if (!canvas || !canvas.parentElement) return null;
+    const dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    const box = canvas.parentElement.getBoundingClientRect();
+    const width = Math.max(260, Math.floor(box.width - 24));
+    const height = Math.min(320, Math.max(220, Math.floor(width * aspect)));
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
     const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: width, h: height };
+  }
+
+  function drawRadarChart(a) {
+    const setup = setupResponsiveCanvas('radarChartCanvas', 0.74);
+    if (!setup) return;
+    const { ctx, w, h } = setup;
     const cx = w / 2;
     const cy = h / 2 + 10;
-    const r = Math.min(w, h) * 0.38;
+    const r = Math.min(w, h) * 0.36;
 
     ctx.clearRect(0, 0, w, h);
 
@@ -543,8 +624,9 @@
       ctx.stroke();
     }
 
-    // Axis Lines & Labels
-    ctx.font = '11px DM Sans, sans-serif';
+    // Axis Lines & Labels - font size adjusts for mobile width
+    const fontSize = w < 360 ? 9 : (w < 440 ? 10 : 11);
+    ctx.font = `${fontSize}px 'DM Sans', sans-serif`;
     ctx.fillStyle = '#94a3b8';
     ctx.textAlign = 'center';
     for (let i = 0; i < n; i++) {
@@ -557,8 +639,9 @@
       ctx.strokeStyle = 'rgba(64, 180, 210, 0.2)';
       ctx.stroke();
 
-      const labelX = cx + (r + 20) * Math.cos(angle);
-      const labelY = cy + (r + 14) * Math.sin(angle);
+      const labelDist = r + (w < 360 ? 14 : 18);
+      const labelX = cx + labelDist * Math.cos(angle);
+      const labelY = cy + labelDist * Math.sin(angle) + (angle > 0 && angle < Math.PI ? 4 : -2);
       ctx.fillText(axes[i], labelX, labelY);
     }
 
@@ -585,7 +668,7 @@
     ctx.fillStyle = 'rgba(0, 242, 254, 0.22)';
     ctx.fill();
     ctx.strokeStyle = '#00f2fe';
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 2.2;
     ctx.stroke();
 
     // Ideal Role Benchmark Polygon (dotted)
@@ -607,18 +690,18 @@
   }
 
   function drawDistributionCurve(score) {
-    const canvas = $('distributionCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
+    const setup = setupResponsiveCanvas('distributionCanvas', 0.72);
+    if (!setup) return;
+    const { ctx, w, h } = setup;
     ctx.clearRect(0, 0, w, h);
 
-    const padL = 40, padR = 20, padT = 30, padB = 40;
+    const padL = w < 360 ? 30 : 38;
+    const padR = 16;
+    const padT = 26;
+    const padB = 34;
     const plotW = w - padL - padR;
     const plotH = h - padT - padB;
 
-    // Gaussian bell curve: mean 64.5, stdDev 13
     const mean = 64.5;
     const stdDev = 13;
     function gaussian(x) {
@@ -627,7 +710,7 @@
 
     const maxP = gaussian(mean);
 
-    // Draw area fill
+    // Area fill
     ctx.beginPath();
     ctx.moveTo(padL, padT + plotH);
     for (let xVal = 0; xVal <= 100; xVal += 1) {
@@ -644,7 +727,7 @@
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Axis line
+    // Baseline axis
     ctx.beginPath();
     ctx.moveTo(padL, padT + plotH);
     ctx.lineTo(padL + plotW, padT + plotH);
@@ -652,16 +735,16 @@
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Axis ticks
+    // Ticks
     ctx.fillStyle = '#64748b';
-    ctx.font = '10px DM Sans, sans-serif';
+    ctx.font = '10px "DM Sans", sans-serif';
     ctx.textAlign = 'center';
     [20, 40, 60, 80, 100].forEach(tick => {
       const x = padL + (tick / 100) * plotW;
-      ctx.fillText(tick, x, padT + plotH + 16);
+      ctx.fillText(tick, x, padT + plotH + 15);
     });
 
-    // User vertical pin
+    // User pin
     const userX = padL + (Math.max(0, Math.min(100, score)) / 100) * plotW;
     ctx.beginPath();
     ctx.moveTo(userX, padT);
@@ -670,16 +753,17 @@
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // Pin marker badge
+    // Marker badge
     ctx.fillStyle = '#00f2fe';
     ctx.beginPath();
-    ctx.arc(userX, padT + 8, 5, 0, Math.PI * 2);
+    ctx.arc(userX, padT + 6, 5, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 11px DM Sans, sans-serif';
-    ctx.textAlign = userX > w - 100 ? 'right' : 'left';
-    ctx.fillText(`YOU: ${score} pts`, userX > w - 100 ? userX - 10 : userX + 10, padT + 12);
+    ctx.font = 'bold 10px "DM Sans", sans-serif';
+    const isRightEdge = userX > w - 85;
+    ctx.textAlign = isRightEdge ? 'right' : 'left';
+    ctx.fillText(`YOU: ${score} pts`, isRightEdge ? userX - 8 : userX + 8, padT + 10);
   }
 
   function renderSprintPlan(d, focusGap) {
@@ -753,10 +837,7 @@
     $('resume-paste-area').value = '';
     $('file-status').classList.add('hide');
     $('results-panel').classList.add('hide');
-    $$('#skill-categories-container input[type="checkbox"]').forEach(cb => {
-      cb.checked = false;
-      cb.parentElement.classList.remove('selected');
-    });
+    clearSkillsSelection();
     lastAssessment = null;
     resetSim();
     window.scrollTo({ top: 0, behavior: 'smooth' });
