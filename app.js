@@ -568,6 +568,20 @@ function renderLinkedInJobMatches(forceRefresh = false) {
     if (window.lucide) lucide.createIcons();
 }
 
+function switchJobsWorkspaceTab(tabName) {
+    document.querySelectorAll(".jobs-workspace-tab").forEach(button => {
+        const active = button.dataset.jobsTab === tabName;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll(".jobs-tab-panel").forEach(panel => {
+        panel.classList.toggle("active", panel.id === `jobs-tab-${tabName}`);
+    });
+    if (tabName === "daily") renderLinkedInJobMatches();
+    if (tabName === "intelligence") requestAnimationFrame(resizeVisiblePlots);
+    localStorage.setItem("mechintelJobsTab", tabName);
+}
+
 function drawTimelineChart() {
     const textTheme = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
     const gridTheme = activeTheme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
@@ -4738,6 +4752,10 @@ document.addEventListener("DOMContentLoaded", () => {
     initInterviewSimulator();
     initPortfolioGenerator();
     document.getElementById("btn-refresh-job-matches")?.addEventListener("click", () => renderLinkedInJobMatches(true));
+    document.querySelectorAll(".jobs-workspace-tab").forEach(button => {
+        button.addEventListener("click", () => switchJobsWorkspaceTab(button.dataset.jobsTab));
+    });
+    switchJobsWorkspaceTab(localStorage.getItem("mechintelJobsTab") || "daily");
     ["job-finder-location", "job-finder-experience", "job-finder-sort"].forEach(id => {
         document.getElementById(id)?.addEventListener("change", () => renderLinkedInJobMatches(true));
     });

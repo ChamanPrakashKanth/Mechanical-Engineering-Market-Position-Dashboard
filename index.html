@@ -650,9 +650,8 @@
                         <i data-lucide="graduation-cap"></i> Interview Prep
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-jobs">
-                        <i data-lucide="briefcase"></i> Job Intelligence
+                        <i data-lucide="briefcase-business"></i> Jobs &amp; Market
                     </button>
-                    <button class="sidebar-nav-item" data-view="dashboard-daily-jobs"><i data-lucide="calendar-search"></i> Daily Jobs</button>
                     <button class="sidebar-nav-item" data-view="dashboard-database">
                         <i data-lucide="users"></i> Competitor Database
                     </button>
@@ -669,7 +668,7 @@
                         <i data-lucide="book-open"></i> Learning Hub
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-videos">
-                        <i data-lucide="video"></i> Video Academy (MP4)
+                        <i data-lucide="orbit"></i> Mechanical Academy
                     </button>
                     <button class="sidebar-nav-item" data-view="dashboard-roadmaps">
                         <i data-lucide="map"></i> Learning Roadmaps
@@ -1435,21 +1434,21 @@
                     </div>
                 </div>
 
-<div id="view-dashboard-daily-jobs" class="dashboard-view-pane">
-<header class="dashboard-pane-header"><div><h1>Daily Jobs · LinkedIn Search Desk</h1><p>Curated searches, rank-fit scoring, and a role-specific preparation roadmap. Refresh the searches daily for new listings.</p></div></header>
-<div class="glass-card element-card" style="margin-bottom:1.25rem;padding:1.25rem;border-left:3px solid var(--primary)"><strong>How matching works</strong><p class="section-subtitle" style="margin-top:.4rem">Your fit score uses the saved dashboard readiness, software proficiency, projects, internships, and target domain. It is a guidance score, not a hiring decision. Links open LinkedIn search results so listings stay current without an API.</p><div id="daily-jobs-profile-snapshot" style="font-size:.9rem;color:var(--text-secondary);margin-top:.7rem"></div></div>
-<div id="daily-jobs-grid" class="features-grid"></div>
-</div>
-
                 <!-- Dashboard Sub-View: Job Intelligence -->
                 <div id="view-dashboard-jobs" class="dashboard-view-pane">
                     <header class="dashboard-pane-header">
                         <div>
-                            <h1>LinkedIn Job Finder & Match Ranking</h1>
-                            <p>Profile-ranked mechanical engineering searches, refreshed daily in your browser without AI tokens or paid APIs</p>
+                            <h1>Jobs &amp; Mechanical Market</h1>
+                            <p>Move from profile ranking to fresh opportunities and focused market preparation</p>
                         </div>
                     </header>
 
+                    <div class="jobs-workspace-tabs" role="tablist" aria-label="Jobs workspace">
+                        <button class="jobs-workspace-tab active" type="button" role="tab" aria-selected="true" data-jobs-tab="daily"><i data-lucide="calendar-search"></i><span><strong>Daily Jobs</strong><small>Fresh LinkedIn searches</small></span></button>
+                        <button class="jobs-workspace-tab" type="button" role="tab" aria-selected="false" data-jobs-tab="intelligence"><i data-lucide="chart-no-axes-combined"></i><span><strong>Job Intelligence</strong><small>Demand, readiness &amp; trends</small></span></button>
+                    </div>
+
+                    <div class="jobs-tab-panel active" id="jobs-tab-daily" role="tabpanel">
                     <section class="glass-card element-card linkedin-job-finder" aria-labelledby="linkedin-job-finder-title">
                         <div class="job-finder-heading">
                             <div>
@@ -1483,7 +1482,9 @@
                         <div class="job-match-list" id="linkedin-job-match-list" aria-live="polite"></div>
                         <p class="job-finder-disclaimer"><i data-lucide="shield-check"></i> Matching happens locally. “View jobs” opens LinkedIn’s live results filtered to posts from the last 24 hours. MechIntel does not scrape LinkedIn, store credentials, or send resume data.</p>
                     </section>
+                    </div>
 
+                    <div class="jobs-tab-panel" id="jobs-tab-intelligence" role="tabpanel">
                     <div class="dashboard-data-grid">
                         <div class="grid-col-8">
                             <!-- Domain demand heatmaps -->
@@ -1531,6 +1532,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -2079,10 +2081,10 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                             <div>
                                 <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(99,102,241,0.2); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; color: #818cf8; font-weight: 600; margin-bottom: 0.5rem;">
-                                    <span class="pulse-dot"></span> 18 Visual Manim Video Lessons
+                                    <span class="pulse-dot"></span> Mechanical Engineering Academy
                                 </div>
                                 <h2 style="font-size: 1.6rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.6rem;">
-                                    <i data-lucide="video" style="color: var(--accent-primary); width: 28px; height: 28px;"></i> Visual Video Academy
+                                    <i data-lucide="orbit" style="color: var(--accent-primary); width: 28px; height: 28px;"></i> Learn Engineering Visually
                                 </h2>
                                 <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 650px; margin: 0;">
                                     Master complex mechanical engineering concepts through high-definition mathematical animations (Manim). All 18 lessons are Base64 embedded for instant offline playback.
@@ -2104,6 +2106,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <section class="academy-visual-map" aria-labelledby="academy-map-title">
+                        <div class="academy-map-copy">
+                            <span class="video-course-eyebrow">Your visual curriculum</span>
+                            <h3 id="academy-map-title">From fundamentals to engineering practice</h3>
+                            <p>Explore the connected systems behind machines. Each pathway links equations, physical behavior, simulation, and design decisions.</p>
+                            <div class="academy-map-legend"><span><i class="legend-dot foundation"></i> Foundation</span><span><i class="legend-dot analysis"></i> Analysis</span><span><i class="legend-dot application"></i> Application</span></div>
+                        </div>
+                        <div class="academy-orbit" aria-label="Mechanical engineering learning pathways">
+                            <div class="academy-orbit-ring ring-one"></div><div class="academy-orbit-ring ring-two"></div>
+                            <div class="academy-core"><i data-lucide="settings"></i><strong>ME</strong><span>Academy</span></div>
+                            <div class="academy-node node-design"><i data-lucide="pen-tool"></i><span>Design</span></div>
+                            <div class="academy-node node-thermal"><i data-lucide="flame"></i><span>Thermal</span></div>
+                            <div class="academy-node node-fluids"><i data-lucide="waves"></i><span>Fluids</span></div>
+                            <div class="academy-node node-simulation"><i data-lucide="scan-line"></i><span>CAE</span></div>
+                            <div class="academy-node node-manufacturing"><i data-lucide="factory"></i><span>Manufacturing</span></div>
+                            <div class="academy-node node-robotics"><i data-lucide="bot"></i><span>Robotics</span></div>
+                        </div>
+                    </section>
 
                     <!-- Structured video course tracks built from the lesson library -->
                     <div class="video-course-section">
@@ -2325,7 +2346,7 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=jobfinder-20260907"></script>
+    <script src="app.js?v=jobs-academy-20260907"></script>
 
 <div id="linkedin-overlay" class="scanner-modal-overlay">
         <div class="scanner-modal-card glass-card" style="max-width: 480px;">
