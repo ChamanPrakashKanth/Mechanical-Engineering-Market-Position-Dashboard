@@ -4741,6 +4741,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ["job-finder-location", "job-finder-experience", "job-finder-sort"].forEach(id => {
         document.getElementById(id)?.addEventListener("change", () => renderLinkedInJobMatches(true));
     });
+    // Render immediately as well as on sidebar navigation, so a fresh dashboard
+    // never gets stuck on the placeholder state while the pane is hidden.
+    renderLinkedInJobMatches();
     document.addEventListener("visibilitychange", () => {
         const today = new Date().toISOString().slice(0, 10);
         if (!document.hidden && localStorage.getItem("mechintelJobMatchDay") !== today) renderLinkedInJobMatches(true);
