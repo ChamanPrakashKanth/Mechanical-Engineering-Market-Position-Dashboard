@@ -79,7 +79,6 @@
         <div class="nav-links">
             <a href="#features-section" class="nav-item">Features</a>
             <a href="#creator-hub" class="nav-item">Creator Hub</a>
-            <a href="#testimonials-section" class="nav-item">Testimonials</a>
             <a href="#faq-section" class="nav-item">FAQ</a>
         </div>
         <div class="nav-actions">
@@ -232,62 +231,47 @@
             </div>
         </section>
 
-        <!-- TESTIMONIALS SECTION -->
-        <section id="testimonials-section" class="features-section" style="border-top: 1px solid var(--border-color); padding-top: 3rem; margin-top: 2rem;">
-            <div class="section-header">
-                <h2>Loved by Engineers Globally</h2>
-                <p>See how students and working professionals are mapping their career trajectories with MechIntel.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card glass-card" style="padding: 1.5rem;">
-                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"MechIntel's software tracker helped me identify that I needed ANSYS Fluent alongside my CAD skills to land my target CFD job. The roadmap was incredibly accurate."</p>
-                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Rohan Mehta, Automotive CFD Engineer</div>
-                </div>
-                <div class="feature-card glass-card" style="padding: 1.5rem;">
-                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"As a Tier 3 graduate, I struggled to pass automated ATS filters. MechIntel's resume scanner pointed out the exact keywords I was missing."</p>
-                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Priya Sharma, Junior Design Engineer</div>
-                </div>
-                <div class="feature-card glass-card" style="padding: 1.5rem;">
-                    <p style="font-style: italic; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">"The 40-course Learning Hub is outstanding. Sourcing lectures from MIT OCW and NPTEL saved me hours of searching for quality study materials."</p>
-                    <div style="margin-top: 1rem; font-weight: 700; font-size: 0.85rem; color: var(--primary);">— Alex Mercer, Robotics Student</div>
-                </div>
-            </div>
-        </section>
-
         <!-- FAQ SECTION -->
         <section id="faq-section" class="faq-section">
             <div class="section-header">
                 <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about the MechIntel benchmarking algorithm.</p>
+                <p>Clear answers about scoring, privacy, jobs, learning content, and the limits of the platform.</p>
             </div>
             <div class="faq-accordion-container">
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question" type="button" aria-expanded="false">
                         <span>How are the readiness scores calculated?</span>
                         <i data-lucide="chevron-down"></i>
-                    </div>
+                    </button>
                     <div class="faq-answer">
                         <p>Scores are calculated out of 100 using a balanced weight matrix: Academics (25% based on college tier and degree), Skills & Tools (35% based on breadth and tool usage), Experience (30% based on internships, project counts, and FSAE/Baja engineering competitions), and Extras (10% based on publications and certificates).</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question" type="button" aria-expanded="false">
                         <span>Is my resume data safe?</span>
                         <i data-lucide="chevron-down"></i>
-                    </div>
+                    </button>
                     <div class="faq-answer">
-                        <p>Yes. Your privacy is our priority. All parsing is done locally in your browser using pdf.js, and personally identifiable information (PII) like names, email addresses, phone numbers, and social URLs are automatically stripped out before running analysis. No resume data is saved on external databases.</p>
+                        <p>Resume parsing runs locally in your browser using pdf.js. Personal details such as email addresses, phone numbers, and profile URLs are removed from analysis text, and the static website does not upload your resume to a MechIntel server. Browser progress may be stored locally on your device.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question" type="button" aria-expanded="false">
                         <span>How is the 100,000 competitor database sourced?</span>
                         <i data-lucide="chevron-down"></i>
-                    </div>
+                    </button>
                     <div class="faq-answer">
-                        <p>The dataset represents entry-level mechanical engineering candidates, seeded and scaled deterministically in the client environment using a Linear Congruential Generator. It models real-world distributions of freshers in regions like India and major global hubs across college tiers and specialties.</p>
+                        <p>It is a deterministic simulated benchmark—not a database of real applicants. The browser generates a representative 10,000-profile sample and scales rank counts to a 100,000-profile model across regions, college tiers, degrees, and specialties. Rankings are directional comparisons, not verified census data.</p>
                     </div>
                 </div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What does the job match percentage mean?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The local matcher compares your selected skills, software proficiency, certifications, specialty, projects, and internships with each mechanical role template. It measures profile alignment only; it is not an employer score, interview guarantee, or hiring probability.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Are the LinkedIn jobs imported into MechIntel?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. MechIntel creates ranked LinkedIn search links with your location and experience filters. Selecting “View jobs” opens LinkedIn’s current results for that role, sorted by date and filtered to the last 24 hours. The app does not scrape LinkedIn or request your LinkedIn password.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>How do Daily Jobs refresh without an API or AI tokens?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The matching formula and role library run entirely in JavaScript. Recommendations are recalculated when the page opens, when you change a filter, or when the calendar day changes. Live vacancies remain on LinkedIn, so refreshing uses no paid data API and no generative-AI request.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What is the difference between Daily Jobs and Job Intelligence?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>Daily Jobs ranks role searches and sends you to fresh listings. Job Intelligence explains domain demand, internship readiness, preparation actions, and market trends. Both are now organized as tabs inside one Jobs &amp; Market workspace.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Are salary estimates and market forecasts guaranteed?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. Salary ranges and demand indicators are educational estimates based on the app’s structured model. Actual compensation and hiring conditions vary by employer, location, experience, economic conditions, and the date of the vacancy.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What is included in the Mechanical Engineering Academy?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The academy combines structured text courses, guided video tracks, visual Manim lessons, mathematics shorts, progress tracking, and pathways across design, thermal systems, fluids, CAE, manufacturing, and robotics. Progress is saved in your browser.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Can MechIntel replace a recruiter, career adviser, or accredited course?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. MechIntel is a self-assessment and learning-planning tool. Use its results as guidance, verify job and certification requirements with official sources, and seek qualified advice when making important education or career decisions.</p></div></div>
             </div>
         </section>
 
@@ -2346,7 +2330,7 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=jobs-academy-20260907"></script>
+    <script src="app.js?v=jobs-academy-faq-20260907"></script>
 
 <div id="linkedin-overlay" class="scanner-modal-overlay">
         <div class="scanner-modal-card glass-card" style="max-width: 480px;">

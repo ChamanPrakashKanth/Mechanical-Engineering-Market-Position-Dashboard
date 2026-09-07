@@ -857,7 +857,12 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.3s ease;
 }
 .faq-question {
+    width: 100%;
     padding: 1.5rem;
+    color: var(--text-primary);
+    text-align: left;
+    background: transparent;
+    border: 0;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -865,6 +870,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     user-select: none;
 }
+.faq-question:focus-visible { outline: 3px solid rgba(10,102,194,.3); outline-offset: -3px; }
 .faq-question i {
     transition: transform 0.3s ease;
 }

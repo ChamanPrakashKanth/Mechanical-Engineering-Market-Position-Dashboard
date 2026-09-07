@@ -4751,6 +4751,13 @@ showDashboardView = function(viewId) {
 document.addEventListener("DOMContentLoaded", () => {
     initInterviewSimulator();
     initPortfolioGenerator();
+    document.querySelectorAll(".faq-question").forEach(question => {
+        question.addEventListener("click", () => {
+            const item = question.closest(".faq-item");
+            const expanded = item.classList.toggle("active");
+            question.setAttribute("aria-expanded", String(expanded));
+        });
+    });
     document.getElementById("btn-refresh-job-matches")?.addEventListener("click", () => renderLinkedInJobMatches(true));
     document.querySelectorAll(".jobs-workspace-tab").forEach(button => {
         button.addEventListener("click", () => switchJobsWorkspaceTab(button.dataset.jobsTab));
