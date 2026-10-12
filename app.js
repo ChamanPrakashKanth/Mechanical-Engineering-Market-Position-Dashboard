@@ -981,6 +981,10 @@ function buildDashboard(profile) {
     renderDatabaseTable();
     
     lucide.createIcons();
+    if (window.location.hash === "#career-planner") {
+        showDashboardView("dashboard-resume");
+        requestAnimationFrame(() => document.getElementById("career-planner-card")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    }
 }
 
 // Database paging & filtering
@@ -1249,6 +1253,9 @@ function initParticles() {
 
 function showPane(paneId) {
     closeDashboardMobileMenu();
+    if (paneId !== "resume-builder-panel" && window.location.hash === "#resume-builder") {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
     document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
     document.getElementById(paneId).classList.remove("hidden");
     window.scrollTo(0,0);
@@ -5649,4 +5656,41 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('mechintelCreatorFunnel', JSON.stringify(saved));
         });
     });
+});
+
+// Public tool routes: resume drafting is available without an assessment profile.
+document.addEventListener("DOMContentLoaded", () => {
+    const openPublicTool = () => {
+        const hash = window.location.hash;
+        if (hash === "#resume-builder") {
+            showPane("resume-builder-panel");
+            if (!document.getElementById("btn-print-resume").disabled) buildResumeDraft();
+            document.getElementById("resume-workspace-title").focus({ preventScroll: true });
+        } else if (hash === "#career-planner") {
+            if (targetProfile) {
+                showPane("dashboard-panel");
+                showDashboardView("dashboard-resume");
+                document.getElementById("career-planner-card").scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                showPane("manual-setup-panel");
+                document.querySelector("#manual-setup-panel .setup-header p").textContent = "First, add your skills and experience. Select Generate Dashboard to open your Career Path Simulator.";
+            }
+        } else if (hash === "#home") {
+            showPane("landing-page-container");
+        }
+    };
+    document.querySelectorAll('.resume-builder-form input, .resume-builder-form textarea').forEach(input => {
+        input.addEventListener("input", buildResumeDraft);
+    });
+    document.querySelectorAll('a[href="#resume-builder"], a[href="#career-planner"], a[href="#home"]').forEach(link => {
+        link.addEventListener("click", event => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            if (window.location.hash === link.hash) {
+                event.preventDefault();
+                openPublicTool();
+            }
+        });
+    });
+    window.addEventListener("hashchange", openPublicTool);
+    openPublicTool();
 });
