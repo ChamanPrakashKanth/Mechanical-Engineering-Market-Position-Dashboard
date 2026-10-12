@@ -1,8 +1,8 @@
 {
-  "dataset_name": "Engineering Anonymized Candidate Benchmark Database",
-  "description": "650,000 normalized candidate records across 12 disciplines (100,000 for Mechanical, 50,000 each for other 11 domains).",
+  "dataset_name": "Engineering Simulated Benchmark Profile Pools",
+  "description": "650,000 deterministically generated simulated profiles across 12 disciplines (100,000 for Mechanical, 50,000 each for other 11 domains). These are not real or anonymized applicant records.",
   "total_benchmark_records": 650000,
-  "pii_redacted": true,
+  "synthetic_profiles": true, "pii_redacted": false,
   "domains": {
     "mechanical": {
       "domain_name": "Mechanical Engineering",

@@ -1,26 +1,25 @@
-# MechIntel AI
+# MechIntel
 
-> Private engineering career intelligence across 12 major engineering domains, with 650,000-record anonymized benchmark database (100k Mechanical, 50k+ each for 11 other disciplines), interactive peer candidate comparison, and deeper mechanical-engineering learning resources.
+> Free, browser-based engineering career assessment and planning tools. Mechanical engineering is covered in depth, with guides for 11 related engineering fields. Scores and benchmark comparisons are deterministic models, not hiring predictions or real applicant data.
 
-## Primary resources
+## Main tools
 
-- [Engineering Career Intelligence Desk](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/): Dual-mode resume & skill-based assessment covering 12 engineering domains, 6-axis radar charts, 50k/100k benchmark percentile ranking, peer candidate comparison table, career move simulator, and 7-day action sprint.
-- [Benchmark and Privacy Methodology](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/methodology.html): Explains the 650,000-profile anonymized candidate benchmark methodology, mathematical percentile computation, browser-local zero-retention processing, and complete absence of server-side data retention.
-- [MechIntel AI](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Mechanical engineering career benchmarking, skill-gap analysis, text courses, video academy, and learning roadmaps.
+- [Engineering Career Assessment](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Build a profile, review skill gaps and role matches, explore learning content, and plan next steps.
+- [Resume Builder and ATS Review](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Create a structured resume draft from user-provided facts. Resume parsing and deterministic drafting run in the browser; no generative AI token or GPU is used.
+- [Career Path Simulator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Compare a profile with a selected engineering pathway, adjust study hours and plan duration, and review suggested milestones. The projection is a planning estimate, not a hiring forecast.
+- [Engineering Career Guides](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/): Searchable guides and browser-based profile assessment across 12 engineering fields.
+- [Mechanical Engineering Guide](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical.html): Mechanical engineering roles, skills, software, standards, and portfolio evidence.
+- [Scoring and Benchmark Methodology](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/methodology.html): Explains score weights and generated comparison pool sizes. Profiles are deterministic simulations, not real or anonymized candidate records.
 
-## Engineering domain guides
+## Privacy and limitations
 
-- Mechanical, civil, electrical, electronics and communication, computer and software, chemical, aerospace, automotive, biomedical, environmental, industrial and production, and mechatronics and robotics engineering are available as crawlable pages under `/engineering-careers/`.
-- Domain pages provide editorial starting points, not live labor-market measurements. Users are told to verify claims against current vacancies, professional bodies and applicable regulations.
-- [Defense Engineering Reading Hub](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html): Curated technical reading for aerospace, propulsion, unmanned systems, defense manufacturing, sensing, and military AI.
-- [Defense Affairs](https://defenseaffairs814.blogspot.com/): Independent modern-warfare, military-technology, defense-economics, and geopolitics analysis.
-- [Global Defense OSINT Dashboard](https://defenseaffairs814.blogspot.com/p/global-defense-osint-dashboard.html): Structured exploration of publicly available global defense information.
-- [Defense Engineering RSS Feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml): Machine-readable list of selected Defense Affairs resources.
+- Resume text is processed in the browser and is not sent to a MechIntel backend. The main dashboard may save progress in browser storage.
+- Scores, salary ranges, role matches, and simulated ranks are directional educational outputs. They are not live labor-market statistics, employer ratings, or guarantees of interviews, hiring, or compensation.
+- Job search links open external job boards; MechIntel does not scrape or import live job listings.
 
-## Selected Defense Affairs analysis
+## Other resources
 
-- [Blackbeard hypersonic weapon engineering and production](https://defenseaffairs814.blogspot.com/2026/08/this-is-new-blackbeard-cheap-hypersonic.html)
-- [Ukraine counter-drone interception](https://defenseaffairs814.blogspot.com/2026/08/how-ukraine-tries-to-intercept-russian.html)
-- [Taiwan drone-defense readiness](https://defenseaffairs814.blogspot.com/2026/08/taiwan-drone-defences-fall-short.html)
-- [Artificial intelligence in nuclear command and deterrence](https://defenseaffairs814.blogspot.com/2026/08/putting-armageddon-on-autopilot-how.html)
-- [Defense production capacity and stockpile pressure](https://defenseaffairs814.blogspot.com/2026/08/pentagon-demands-faster-weapons.html)
+- [Defense Engineering Reading Hub](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html)
+- [Defense Engineering RSS Feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml)
+- [Creator's YouTube channel](https://www.youtube.com/@Strategic814)
+- [Defense Affairs 814](https://defenseaffairs814.blogspot.com/)

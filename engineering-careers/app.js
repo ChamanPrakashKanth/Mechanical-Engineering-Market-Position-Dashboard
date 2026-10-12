@@ -1,6 +1,6 @@
 /**
  * Engineering Career Intelligence Desk - Client Logic Engine
- * 100% Client-Side, Zero-Retention, Multi-Discipline Assessment & 50k/100k Benchmark Engine
+ * Browser-based multi-discipline assessment with deterministic simulated profile pools
  * Optimized for Mobile, Touch Ergonomics, and High-DPI Canvas Rendering
  */
 (function() {
@@ -430,8 +430,8 @@
     $('res-cluster-rank').textContent = '#' + clusterRank.toLocaleString();
 
     // Update Subtitles
-    $('peer-cohort-badge').textContent = `Benchmark Database: ${poolSize.toLocaleString()} Candidates`;
-    $('dist-curve-subtitle').textContent = `${poolSize.toLocaleString()} Anonymized Cohort Distribution`;
+    $('peer-cohort-badge').textContent = `Simulated benchmark: ${poolSize.toLocaleString()} profiles`;
+    $('dist-curve-subtitle').textContent = `${poolSize.toLocaleString()} Simulated Profile Score Distribution`;
 
     // Render Role Matches (Bidirectional matching)
     const roleListEl = $('role-matches-list');
@@ -850,7 +850,7 @@
 
     let csv = 'Category,Value\n';
     csv += `Domain,"${d.name}"\n`;
-    csv += `Benchmark Database Size,"${d.benchmark_size.toLocaleString()} Candidates"\n`;
+    csv += `Simulated Profile Pool Size,"${d.benchmark_size.toLocaleString()} profiles"\n`;
     csv += `Readiness Score,${$('res-readiness-score').textContent}\n`;
     csv += `Global Rank,"${$('res-global-rank').textContent}"\n`;
     csv += `Percentile,"${$('res-global-pct').textContent}"\n`;

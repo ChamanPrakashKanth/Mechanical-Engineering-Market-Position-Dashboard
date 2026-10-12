@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Engineering Career Intelligence Desk | Roles, Skills &amp; Weekly Plan</title>
-    <meta name="description" content="Career intelligence for 12 engineering domains. Assess where you are, explore suitable roles, identify skill gaps, plan this week and track real opportunity signals privately.">
-    <meta name="keywords" content="engineering career paths, engineering skill gap analysis, engineering jobs, career readiness, mechanical engineering, civil engineering, electrical engineering, software engineering">
+    <title>Engineering Career Assessment &amp; Resume Builder | MechIntel</title>
+    <meta name="description" content="Free engineering career assessment and ATS resume builder for mechanical and 11 other fields. Check skill gaps, compare a simulated benchmark, and plan your next move in your browser.">
     <meta name="author" content="Chaman Prakash Kanth">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="google-site-verification" content="gxpjwJqeO1mhWvrb5OA0MwlofJWbj1u92KRqSDog0Zc">
@@ -20,14 +19,14 @@
     <!-- Social sharing metadata -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MechIntel AI">
-    <meta property="og:title" content="Engineering Career Intelligence Desk">
-    <meta property="og:description" content="Know where you are, which engineering roles fit, what is missing, what to do this week and whether opportunities improved.">
+    <meta property="og:title" content="Engineering Career Assessment &amp; Resume Builder | MechIntel">
+    <meta property="og:description" content="Build a browser-based engineering profile, check role skill gaps, draft an ATS-friendly resume, and plan your next career move.">
     <meta property="og:url" content="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/">
     <meta property="og:image" content="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/assets/mechintel-social-cover.png">
     <meta property="og:image:alt" content="MechIntel AI mechanical engineering career intelligence dashboard">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Engineering Career Intelligence Desk">
-    <meta name="twitter:description" content="A private five-question career loop for 12 major engineering domains.">
+    <meta name="twitter:title" content="Engineering Career Assessment &amp; Resume Builder | MechIntel">
+    <meta name="twitter:description" content="Free engineering profile assessment, local resume builder, skill-gap checker, and career path simulator.">
     <meta name="twitter:image" content="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/assets/mechintel-social-cover.png">
 
     <script type="application/ld+json">
@@ -36,8 +35,9 @@
       "@type": "WebApplication",
       "name": "MechIntel AI",
       "url": "https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/",
-      "description": "Private engineering career diagnostics across 12 major domains, with role exploration, skill-gap analysis, weekly actions and opportunity-signal tracking.",
+      "description": "Free browser-based engineering career assessment, ATS resume builder, skill-gap analysis, simulated cohort comparison, and career path planning across 12 engineering fields.",
       "applicationCategory": "EducationalApplication",
+      "featureList": ["Engineering career assessment", "ATS-friendly resume draft builder", "Role skill-gap analysis", "Career path simulator", "Mechanical engineering courses"],
       "operatingSystem": "Web",
       "isAccessibleForFree": true,
       "creator": {
@@ -52,6 +52,18 @@
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Does the MechIntel resume builder use generative AI?","acceptedAnswer":{"@type":"Answer","text":"No. The resume builder uses deterministic browser-side templates and only the facts you enter. It does not need an AI API token or GPU and does not invent achievements, skills, or credentials."}},
+        {"@type":"Question","name":"How does the career path simulator work?","acceptedAnswer":{"@type":"Answer","text":"The simulator compares the skills, software, and project experience in your profile with a selected engineering pathway. It applies a fixed local formula and turns missing requirements into suggested milestones. The estimate is a planning aid, not a hiring prediction."}},
+        {"@type":"Question","name":"Are MechIntel's benchmark candidates real people?","acceptedAnswer":{"@type":"Answer","text":"No. Benchmark profiles are generated deterministically for comparison. They are simulated profiles, not real applicants or anonymized records, so rankings are directional model outputs."}},
+        {"@type":"Question","name":"Is the engineering career assessment free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The web assessment and browser-side career tools are currently available free of charge and do not require an account or AI token."}}
+      ]
+    }
+    </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,9 +72,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="refinement.css">
     <!-- CDNs -->
-    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script defer src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#upload-dropzone">Skip to career assessment</a>
@@ -101,10 +113,10 @@
                     <span class="pulse-dot"></span> Structured Career Diagnostics v3.0
                 </div>
                 <h1 class="hero-title animate-slide-up">
-                    Know your strengths.<br><span class="gradient-text">Engineer your next move.</span>
+                    Engineering Career Assessment<br><span class="gradient-text">Resume Builder &amp; Career Simulator</span>
                 </h1>
                 <p class="hero-subtitle animate-slide-up-delayed">
-                    Assess your engineering evidence, explore fitting roles, find the most important gap, and turn it into a practical seven-day career move.
+                    Assess your skills for mechanical engineering and 11 related fields. Check role fit, build an ATS-friendly resume draft, and turn skill gaps into a practical seven-day plan.
                 </p>
                 <div class="hero-ctas animate-slide-up-delayed2">
                     <button class="btn btn-large btn-primary" id="hero-get-started-btn">
@@ -137,6 +149,20 @@
                     <i data-lucide="edit-3"></i> Enter profile manually
                 </button>
             </div>
+        </section>
+
+        <section class="features-section seo-answer-section" aria-labelledby="seo-answer-title">
+            <div class="section-header">
+                <h2 id="seo-answer-title">A free engineering career assessment you can use in your browser</h2>
+                <p>MechIntel helps engineering students and early-career professionals turn skills, projects, and experience into a clearer job-search plan. It covers mechanical engineering in depth and includes guides for 11 related engineering fields.</p>
+            </div>
+            <div class="features-grid">
+                <article class="feature-card glass-card"><h3>1. Check your profile</h3><p>Upload a resume PDF or enter skills and tools to see a readiness score, role matches, and gaps. Resume parsing runs locally in your browser.</p></article>
+                <article class="feature-card glass-card"><h3>2. Build your resume draft</h3><p>Organize your summary, education, project evidence, experience, and skills in an ATS-friendly layout. The deterministic builder uses only details you provide.</p></article>
+                <article class="feature-card glass-card"><h3>3. Simulate a career plan</h3><p>Choose a target pathway, study hours, and time horizon. The local simulator estimates role alignment and suggests milestones; it does not predict hiring outcomes.</p></article>
+            </div>
+            <p class="benchmark-disclosure">Benchmark rankings use deterministic simulated profiles, not real applicants. Scores are directional self-assessment tools and are not employer ratings or hiring guarantees.</p>
+            <p class="section-subtitle">Explore the <a href="engineering-careers/mechanical.html">mechanical engineering skills and career guide</a>, browse <a href="engineering-careers/">all 12 engineering career guides</a>, or read the <a href="engineering-careers/methodology.html">benchmark and scoring methodology</a>.</p>
         </section>
 
         <!-- STATS STRIP -->
@@ -261,13 +287,17 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" type="button" aria-expanded="false">
-                        <span>How is the 100,000 competitor database sourced?</span>
+                        <span>How is the 100,000-profile simulated benchmark generated?</span>
                         <i data-lucide="chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>It is a deterministic simulated benchmark—not a database of real applicants. The browser generates a representative 10,000-profile sample and scales rank counts to a 100,000-profile model across regions, college tiers, degrees, and specialties. Rankings are directional comparisons, not verified census data.</p>
+                        <p>It is a deterministic simulated benchmark—not a database of real or anonymized applicants. The browser generates comparison profiles from fixed distributions and a seeded process. Rankings are directional model comparisons, not verified census data.</p>
                     </div>
                 </div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Does the MechIntel resume builder use generative AI?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. The resume builder uses deterministic browser-side templates and only the facts you enter. It does not need an AI API token or GPU and does not invent achievements, skills, or credentials.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>How does the career path simulator work?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The simulator compares the skills, software, and project experience in your profile with a selected engineering pathway. It applies a fixed local formula and turns missing requirements into suggested milestones. The estimate is a planning aid, not a hiring prediction.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Are MechIntel's benchmark candidates real people?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. Benchmark profiles are generated deterministically for comparison. They are simulated profiles, not real applicants or anonymized records, so rankings are directional model outputs.</p></div></div>
+                <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Is the engineering career assessment free?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>Yes. The web assessment and browser-side career tools are currently available free of charge and do not require an account or AI token.</p></div></div>
                 <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What does the job match percentage mean?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The local matcher compares your selected skills, software proficiency, certifications, specialty, projects, and internships with each mechanical role template. It measures profile alignment only; it is not an employer score, interview guarantee, or hiring probability.</p></div></div>
                 <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Are the LinkedIn jobs imported into MechIntel?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>No. MechIntel creates ranked LinkedIn search links with your location and experience filters. Selecting “View jobs” opens LinkedIn’s current results for that role, sorted by date and filtered to the last 24 hours. The app does not scrape LinkedIn or request your LinkedIn password.</p></div></div>
                 <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>How do Daily Jobs refresh without an API or AI tokens?</span><i data-lucide="chevron-down"></i></button><div class="faq-answer"><p>The matching formula and role library run entirely in JavaScript. Recommendations are recalculated when the page opens, when you change a filter, or when the calendar day changes. Live vacancies remain on LinkedIn, so refreshing uses no paid data API and no generative-AI request.</p></div></div>
@@ -433,15 +463,15 @@
                     </div>
                     
                     <div class="glass-card element-card">
-                        <h3 class="card-section-title"><i data-lucide="info"></i> Department Cohort Diagnostic Insights</h3>
+                        <h3 class="card-section-title"><i data-lucide="info"></i> Illustrative Department Insights</h3>
                         <div class="market-insights-grid">
                             <div class="market-insight-column">
                                 <h4>Top Skill Gaps Identified</h4>
-                                <p>Analysis of current cohort profiles indicates <strong>72% of graduating students lack formal GD&T credentials</strong>, and <strong>65% show beginner levels in FEA mesh analysis</strong>. Instructors are recommended to add practical lab sessions on tolerances.</p>
+                                <p>This panel is an example, not a measured graduate survey. GD&T and FEA mesh practice are useful portfolio topics for mechanical engineering students; check course and employer requirements for your target role.</p>
                             </div>
                             <div class="market-insight-column">
-                                <h4>Hiring Recruiter Feedbacks</h4>
-                                <p>Recruiters accessing the database are seeking candidates with verified SolidWorks CSWP badges. Integrating CSWP preparatory tests inside semesters is forecast to improve average campus placement callbacks by <strong>3.4x</strong>.</p>
+                                <h4>Portfolio Evidence to Consider</h4>
+                                <p>A CAD portfolio can show design intent, drawings, tolerances, and revision history. A SolidWorks certification may be relevant for some roles, but its value varies by employer; verify current job requirements before investing.</p>
                             </div>
                         </div>
                     </div>
@@ -837,7 +867,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="benchmark-disclosure"><i data-lucide="info"></i> Standing is calculated from a deterministic, anonymized market model. The browser uses a representative 10,000-profile sample and scales rank counts to the 100,000-profile benchmark; it is directional, not a live census of applicants.</p>
+                                <p class="benchmark-disclosure"><i data-lucide="info"></i> Standing is calculated from a seeded, deterministic model. The browser generates a 10,000-profile sample and scales rank counts to a 100,000-profile pool; all comparison profiles are simulated, not real applicants.</p>
                             </div>
 
                             <!-- Interactive rank-impact planning -->
@@ -899,11 +929,11 @@
                                 <div class="market-insights-grid">
                                     <div class="market-insight-column">
                                         <h4>Employment Trend Forecast</h4>
-                                        <p>CFD and Robotics engineering show an estimated <strong>12% YoY hiring growth</strong> due to electric vehicle thermal management needs and industrial warehouse automation. Conventional manufacturing roles are transitioning towards CAD/CAM automation integration.</p>
+                                        <p>CFD, robotics, electric vehicle thermal management, warehouse automation, and CAD/CAM integration are examples of engineering areas to explore. This static guide is not a measured year-over-year hiring forecast; compare the advice with current vacancies in your location.</p>
                                     </div>
                                     <div class="market-insight-column">
                                         <h4>Emerging Tech Watch</h4>
-                                        <p>Generative CAD design tools, digital twin simulation solvers, and robotic ROS2 frameworks represent the <strong>highest ROI tools for freshers</strong> to master. ASME certification boosts recruiter callbacks by 2.5x in competitive global markets.</p>
+                                        <p>Generative CAD tools, digital twins, simulation, and ROS 2 can be useful learning topics when they match your target roles. Certification and tool value varies by employer; this dashboard has no verified callback or return-on-investment data.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1031,7 +1061,7 @@
                 <!-- Skills Radar Engine & Market Percentile Diagnostic -->
                 <div class="glass-card element-card" style="margin-top: 1.5rem; padding: 1.5rem;">
                     <h3 class="card-section-title"><i data-lucide="radar"></i> 6-Axis Engineering Competency Radar & Market Percentile</h3>
-                    <p class="section-subtitle">Real-time benchmark diagnostic comparing your skillset against 100,000+ candidate profiles.</p>
+                    <p class="section-subtitle">Benchmark diagnostic comparing your skillset with a deterministic 100,000-profile simulated pool.</p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; align-items: center;">
                         <div style="display: flex; justify-content: center;">
@@ -1298,21 +1328,39 @@
                                 </div>
                             </div>
 
-                            <!-- Smart Resume Optimizer & Score Booster -->
+                            <!-- Deterministic Resume Builder -->
                             <div class="glass-card element-card booster-panel">
-                                <h3 class="card-section-title"><i data-lucide="zap"></i> Dynamic Resume Score Optimizer</h3>
-                                <p class="section-subtitle">Implement these target keywords and items to boost your recruiter matching score:</p>
-                                <div class="booster-list" id="booster-recommendations-list">
-                                    <!-- Populated dynamically via JS -->
+                                <h3 class="card-section-title"><i data-lucide="file-pen-line"></i> AI-Style Resume Builder</h3>
+                                <p class="section-subtitle">Generate a tailored, ATS-friendly resume draft with deterministic templates. It uses only facts you enter and runs in this browser—no token, server, or GPU.</p>
+                                <div class="resume-builder-form">
+                                    <label>Full name<input id="rb-name" type="text" autocomplete="name" placeholder="Your name"></label>
+                                    <label>Email or phone<input id="rb-contact" type="text" autocomplete="email" placeholder="you@example.com · +91…"></label>
+                                    <label>Target role<input id="rb-role" type="text" placeholder="Mechanical Design Engineer"></label>
+                                    <label>Education<input id="rb-education" type="text" placeholder="B.Tech Mechanical Engineering, University"></label>
+                                    <label>Professional summary<textarea id="rb-summary" rows="3" placeholder="Your focus, strongest evidence, and target role"></textarea></label>
+                                    <label>Experience and project evidence<textarea id="rb-experience" rows="5" placeholder="One achievement per line. Include what you did, tools used, and measured results. Do not add claims you cannot verify."></textarea></label>
+                                    <label>Skills and tools<textarea id="rb-skills" rows="3" placeholder="GD&T, SolidWorks, ANSYS…"></textarea></label>
                                 </div>
-                                <button class="btn btn-primary" id="btn-optimize-resume-doc" style="width: 100%; margin-top: 1rem;">
-                                    <i data-lucide="sparkles"></i> Auto-Optimize Keywords Structure
-                                </button>
-                                <div id="optimizer-status-text" style="margin-top: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--success); font-weight: 600;"></div>
+                                <div class="resume-builder-actions">
+                                    <button class="btn btn-primary" id="btn-build-resume"><i data-lucide="wand-sparkles"></i> Build resume draft</button>
+                                    <button class="btn btn-outline" id="btn-print-resume" disabled><i data-lucide="printer"></i> Print / Save PDF</button>
+                                </div>
+                                <p class="resume-builder-note" id="resume-builder-status" aria-live="polite">Review every generated line before using it. The builder does not invent credentials or results.</p>
+                                <article class="resume-preview" id="resume-builder-preview" aria-live="polite"><p>Your draft preview will appear here.</p></article>
                             </div>
                         </div>
 
                         <div class="grid-col-4">
+                            <div class="glass-card element-card career-simulation-card">
+                                <h3 class="card-section-title"><i data-lucide="route"></i> Career Path Simulator</h3>
+                                <p class="section-subtitle">Compare a focused skill-building plan with your current profile. All estimates use a fixed local formula.</p>
+                                <label class="career-sim-field">Target pathway<select id="career-sim-role"></select></label>
+                                <label class="career-sim-field">Weekly learning hours <strong id="career-sim-hours-value">5</strong><input type="range" id="career-sim-hours" min="1" max="15" value="5"></label>
+                                <label class="career-sim-field">Plan duration<select id="career-sim-months"><option value="3">3 months</option><option value="6" selected>6 months</option><option value="12">12 months</option></select></label>
+                                <div class="career-sim-score"><span>Projected role alignment</span><strong id="career-sim-score">—</strong><small id="career-sim-delta">Run your profile to begin</small></div>
+                                <h4>Suggested milestones</h4><ol id="career-sim-milestones"><li>Build your profile to see a pathway plan.</li></ol>
+                                <p class="resume-builder-note">Planning estimate only; completing hours does not automatically add skills or change your profile or rank.</p>
+                            </div>
                             <!-- Enhanced Portfolio HTML Generator -->
                             <div class="glass-card element-card">
                                 <h3 class="card-section-title"><i data-lucide="layout-template"></i> Visual Portfolio Generator</h3>
@@ -1528,7 +1576,7 @@
                     <header class="dashboard-pane-header">
                         <div>
                             <h1>Competitor Database Explorer</h1>
-                            <p>Filter, search, and paginate through the database of 100,000 anonymized mechanical engineers</p>
+                            <p>Filter and browse a deterministic model of 100,000 simulated mechanical engineering profiles</p>
                         </div>
                     </header>
 
@@ -2333,7 +2381,7 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=jobs-academy-faq-20260907"></script>
+    <script defer src="app.js?v=resume-career-sim-20261012"></script>
 
 <div id="linkedin-overlay" class="scanner-modal-overlay">
         <div class="scanner-modal-card glass-card" style="max-width: 480px;">

@@ -5,7 +5,7 @@ Optimizations:
 - Quick Select Core / Clear buttons for rapid mobile skill picking
 - Fully optimized for phone & mobile screens down to 320px (touch ergonomics, swipe stepper, responsive charts, 2x2 scorecards)
 - High-DPI Retina responsive HTML5 canvas for 6-axis Radar & Benchmark Distribution charts
-- 650,000 anonymized benchmark candidate cohort (100k Mechanical, 50k each for other 11 disciplines)
+- 650,000 deterministically simulated benchmark profiles (100k Mechanical, 50k each for other 11 disciplines)
 - Interactive Peer Comparison Table with mobile swipe hint
 - Recruiter Talent Pool Filter Sandbox
 - Dual-mode Assessment: In-browser Resume Assessment (PDF/TXT) AND Interactive Skill-Based Assessment
@@ -549,7 +549,7 @@ DOMAINS = {
 }
 
 def generate_benchmark_summary():
-    """Generates a summary metadata object detailing the 650,000 total candidate benchmark distributions."""
+    """Generate metadata for deterministic simulated benchmark profile pools."""
     domains_meta = {}
     total_records = 0
     for slug, d in DOMAINS.items():
@@ -568,10 +568,11 @@ def generate_benchmark_summary():
             "roles": [r["name"] for r in d["roles"]]
         }
     return {
-        "dataset_name": "Engineering Anonymized Candidate Benchmark Database",
-        "description": "650,000 normalized candidate records across 12 disciplines (100,000 for Mechanical, 50,000 each for other 11 domains).",
+        "dataset_name": "Engineering Simulated Benchmark Profile Pools",
+        "description": "650,000 deterministically generated simulated profiles across 12 disciplines (100,000 for Mechanical, 50,000 each for other 11 domains). These are not real or anonymized applicant records.",
         "total_benchmark_records": total_records,
-        "pii_redacted": True,
+        "synthetic_profiles": True,
+        "pii_redacted": False,
         "domains": domains_meta
     }
 
@@ -935,9 +936,9 @@ def shell_page(title, description, body_content, canonical, active_slug=""):
       </a>
       <div class="nav-links">
         <a href="index.html#desk">Career Assessment</a>
-        <a href="methodology.html">Anonymized Benchmark & Privacy</a>
+        <a href="methodology.html">Simulated Benchmark & Privacy</a>
         <a href="../index.html">MechIntel Core</a>
-        <span class="nav-badge">Zero Retention</span>
+        <span class="nav-badge">Browser-based</span>
       </div>
     </nav>
   </header>
@@ -946,8 +947,8 @@ def shell_page(title, description, body_content, canonical, active_slug=""):
   </main>
   <footer>
     <div style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 48px; text-align: center; color: var(--text-dim); font-size: 0.88rem;">
-      <p>Engineering Career Intelligence Desk · Client-side processing with zero personal data retention.</p>
-      <p style="margin-top: 6px;">All candidate benchmarks are derived from cleansed, anonymized professional distributions across 12 disciplines (100k Mechanical, 50k+ each for other 11 disciplines). No data is stored, tracked, or transmitted.</p>
+      <p>Engineering Career Intelligence Desk · Client-side assessment with simulated benchmark profiles.</p>
+      <p style="margin-top: 6px;">Benchmark counts describe deterministic simulated profiles, not real applicants or anonymized records. Resume text is processed in your browser and is not sent to a MechIntel backend.</p>
       <p style="margin-top: 8px;"><a href="methodology.html">Read Full Benchmark & Privacy Methodology</a> | <a href="../sitemap.xml">Sitemap</a> | <a href="../llms.txt">llms.txt</a></p>
     </div>
   </footer>
@@ -956,7 +957,7 @@ def shell_page(title, description, body_content, canonical, active_slug=""):
 """
 
 def generate_hub_html():
-    domain_options = "".join(f'<option value="{s}">{d["name"]} ({d["benchmark_size"]:,} candidate cohort)</option>' for s, d in DOMAINS.items())
+    domain_options = "".join(f'<option value="{s}">{d["name"]} ({d["benchmark_size"]:,} simulated profiles)</option>' for s, d in DOMAINS.items())
     domain_cards = "".join(f'''
     <a class="card" href="{s}.html" style="display:flex; flex-direction:column; justify-content:space-between;">
       <div>
@@ -971,7 +972,7 @@ def generate_hub_html():
         </div>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.06); padding-top:10px; margin-top:8px;">
-        <span style="font-size:0.8rem; color:var(--accent-emerald); font-weight:700;">{d["benchmark_size"]:,} Candidates</span>
+        <span style="font-size:0.8rem; color:var(--accent-emerald); font-weight:700;">{d["benchmark_size"]:,} Simulated Profiles</span>
         <span style="color:var(--accent); font-weight:700; font-size:0.88rem;">Explore Guide →</span>
       </div>
     </a>
@@ -979,12 +980,10 @@ def generate_hub_html():
 
     body = f'''
     <section class="hero">
-      <p class="eyebrow">Zero-Retention Multi-Discipline Assessment</p>
+      <p class="eyebrow">Free Browser-Based Engineering Career Assessment</p>
       <h1>Engineering Career Intelligence Desk</h1>
       <p class="lead">
-        Analyze your resume or select demonstrable skills across 12 major engineering domains. 
-        Benchmark your profile against <strong>650,000+ anonymized engineering records</strong> (100k for Mechanical, 50k+ each for 11 other disciplines), 
-        visualize your 6-axis skill profile, compare directly with peer candidates, and simulate career moves.
+        Analyze your resume or select demonstrable skills across 12 engineering domains. Compare your role alignment against <strong>650,000 deterministically simulated profiles</strong> (100,000 Mechanical and 50,000 each for 11 other fields), visualize skill gaps, and plan career moves. These profiles are not real applicants.
       </p>
       <div class="hero-cta">
         <a class="btn" href="#desk">Start Free Assessment</a>
@@ -1173,12 +1172,12 @@ def generate_hub_html():
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
           <div>
             <span class="eyebrow">Peer Standing Comparison</span>
-            <h3 style="font-size:1.25rem; color:#fff;">Candidates in Your Immediate Score Bracket</h3>
+            <h3 style="font-size:1.25rem; color:#fff;">Simulated Profiles in Your Score Bracket</h3>
           </div>
-          <span id="peer-cohort-badge" class="nav-badge">Cohort: 50,000 Candidates</span>
+          <span id="peer-cohort-badge" class="nav-badge">Simulated pool: 50,000 profiles</span>
         </div>
         <p class="muted" style="font-size:0.9rem;">
-          Compare your readiness standing against verified anonymized candidate profiles surrounding your exact score on the benchmark board.
+          Compare your readiness standing with deterministically simulated profiles near your score. The benchmark is a model, not a collection of real or anonymized applicants.
         </p>
         <div class="mobile-table-hint">📱 Swipe table horizontally to inspect peer details →</div>
 
@@ -1238,7 +1237,7 @@ def generate_hub_html():
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
           <div>
             <span class="eyebrow">Recruiter Benchmark Sandbox</span>
-            <h3 style="font-size:1.25rem; color:#fff;">Explore the Anonymized Talent Pool</h3>
+            <h3 style="font-size:1.25rem; color:#fff;">Explore the Simulated Profile Pool</h3>
           </div>
           <span id="recruiter-match-counter" style="color:var(--accent); font-weight:700; font-size:0.92rem;">Filter to explore</span>
         </div>
@@ -1379,8 +1378,8 @@ def generate_hub_html():
     <script src="app.js"></script>
     '''
     return shell_page(
-        "Engineering Career Intelligence Desk | Multi-Discipline Resume Assessment & Benchmark",
-        "Evaluate your engineering profile against 650,000+ anonymized candidate records across 12 disciplines (100k Mechanical, 50k+ each for others). Detect skill gaps, match specialized roles, and compare with direct peers.",
+        "Free Engineering Career Assessment & Resume Skill Checker | MechIntel",
+        "Free engineering career assessment across 12 fields. Check resume skills, explore role matches, and compare with a deterministic simulated benchmark. No real applicant records are used.",
         body,
         f"{BASE}/engineering-careers/"
     )
@@ -1403,7 +1402,7 @@ def generate_domain_page(slug, d):
 
     body = f'''
     <section class="hero" style="text-align:left; padding:20px 0 30px;">
-      <p class="eyebrow">{d["authority"]} Guideline · {d["benchmark_size"]:,} Candidate Cohort</p>
+      <p class="eyebrow">{d["authority"]} Guideline · {d["benchmark_size"]:,} Simulated Profiles</p>
       <h1>{d["name"]} Career Intelligence</h1>
       <p class="lead">{d["intro"]}</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -1486,73 +1485,72 @@ def generate_methodology_html():
     body = '''
     <section class="hero" style="text-align:left; padding:20px 0 30px;">
       <p class="eyebrow">Integrity & Scientific Methodology</p>
-      <h1>Engineering Benchmark & Zero-Retention Architecture</h1>
+      <h1>Engineering Benchmark & Scoring Methodology</h1>
       <p class="lead">
-        Transparent methodology detailing how our <strong>650,000 candidate benchmark database</strong> was established, 
-        how percentiles are mathematically computed, and how our client-side privacy architecture guarantees zero retention.
+        This page explains the score formula and generated comparison pool. Benchmark profiles are deterministic simulations, not real or anonymized candidates. The assessment runs in your browser.
       </p>
     </section>
 
     <div class="card" style="margin-bottom:24px;">
-      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">1. Benchmark Cohort Scale (650,000 Records)</h2>
+      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">1. Simulated Benchmark Pool Sizes</h2>
       <p class="muted" style="margin-bottom:12px;">
-        To ensure robust percentile resolution and defensible peer comparisons:
+        The displayed pool sizes are deterministic model sizes used to calculate relative ranks. They do not represent collected applicant records:
       </p>
       <ul style="padding-left:22px; line-height:1.8;" class="muted">
-        <li><strong>Mechanical Engineering:</strong> Benchmarked against a <strong>100,000 candidate dataset</strong>, preserving alignment with our original MechIntel candidate distribution.</li>
-        <li><strong>11 Other Engineering Disciplines:</strong> Each domain (Civil, Electrical, Electronics, Computer, Chemical, Aerospace, Automotive, Biomedical, Environmental, Industrial, Mechatronics) is benchmarked against <strong>at least 50,000 anonymized candidate records</strong>.</li>
-        <li><strong>Total Represented Cohort:</strong> 100,000 + (11 × 50,000) = <strong>650,000 total candidate records</strong>.</li>
-        <li><strong>Strict PII Sanitization:</strong> All names, email addresses, phone numbers, and direct identifiers have been excised from the benchmark distributions.</li>
+        <li><strong>Mechanical Engineering:</strong> Compared with a generated pool sized at <strong>100,000 simulated profiles</strong>.</li>
+        <li><strong>11 Other Engineering Disciplines:</strong> Each uses a generated pool sized at <strong>50,000 simulated profiles</strong>.</li>
+        <li><strong>Total Modeled Pool Size:</strong> 100,000 + (11 × 50,000) = <strong>650,000 simulated profiles across 12 pools</strong>.</li>
+        <li><strong>Data source:</strong> Profiles are generated from fixed domain templates and a seeded random process; they are not sourced from people, resumes, surveys, or hiring records.</li>
       </ul>
     </div>
 
     <div class="card" style="margin-bottom:24px;">
-      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">2. Multi-Dimensional Scoring Mathematical Model</h2>
+      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">2. Readiness Score Formula</h2>
       <p class="muted" style="margin-bottom:14px;">
         Rather than an unexplainable score, the Market Readiness Index is calculated via an explicit multi-factor weighted formula:
       </p>
       <div style="background:#07131d; padding:18px; border-radius:var(--radius-sm); border:1px solid var(--border); font-family:monospace; font-size:0.92rem; color:var(--accent); margin-bottom:16px;">
-        Readiness Score = (Academic & Tier Weight × 0.20) + (Core Technical & Software Coverage × 0.45) + (Practical Evidence & Artifacts × 0.35)
+        Readiness = 20% academics + 45% skills/software + 35% practical evidence
       </div>
       <ul style="padding-left:22px; line-height:1.8;" class="muted">
-        <li><strong>Academic & Institution Factor (20%):</strong> Evaluates degree level and university tier context (Tier 1, Tier 2, Tier 3).</li>
-        <li><strong>Technical & Software Coverage (45%):</strong> Evaluates demonstrated engineering science foundations (55%) and computational/CAD tool proficiency (45%).</li>
-        <li><strong>Practical Evidence Factor (35%):</strong> Calibrates tangible proof—completed projects (20 pts each), verified internships (30 pts each), industry certifications (15 pts each), and research/competition milestones.</li>
+        <li><strong>Academic & Institution Factor (20%):</strong> Combines the selected institution tier (60%) and degree level (40%), then weights that subtotal at 20%.</li>
+        <li><strong>Technical & Software Coverage (45%):</strong> Combines the detected domain-skill score (55%) and software score (45%); this subtotal contributes 45% of readiness.</li>
+        <li><strong>Practical Evidence Factor (35%):</strong> Capped at 100, this uses project count plus a fixed baseline; resume mode adds a small signal when internship language is detected. The text match does not verify work history.</li>
       </ul>
     </div>
 
     <div class="card" style="margin-bottom:24px;">
       <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">3. Percentile & Ranking Computation</h2>
       <p class="muted" style="margin-bottom:12px;">
-        Every assessment evaluates your computed Readiness Score against the sorted empirical cohort:
+        Every assessment evaluates your computed Readiness Score against a sorted seeded, simulated score pool:
       </p>
       <ul style="padding-left:22px; line-height:1.8;" class="muted">
-        <li><strong>Global Domain Standing:</strong> Your exact rank out of 50,000 candidates (or 100,000 for Mechanical).</li>
-        <li><strong>Peer Tier Standing:</strong> Your percentile specifically among candidates from the same university tier.</li>
+        <li><strong>Global Domain Standing:</strong> Your rank within the generated pool size for the selected domain (50,000 or 100,000 simulated profiles).</li>
+        <li><strong>Peer Tier Standing:</strong> Your rank among generated profiles assigned to the same university tier.</li>
         <li><strong>Specialty Cluster Standing:</strong> Your rank among specialists in your focus area (e.g. Aerodynamics vs Structural vs EV Powertrain).</li>
       </ul>
     </div>
 
     <div class="card" style="margin-bottom:24px;">
-      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">4. Zero-Retention Client-Side Architecture</h2>
+      <h2 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">4. Browser-Based Resume Privacy</h2>
       <p class="muted" style="margin-bottom:12px;">
-        Your privacy is guaranteed:
+        The assessment is client-side:
       </p>
       <ul style="padding-left:22px; line-height:1.8;" class="muted">
-        <li><strong>100% In-Browser Execution:</strong> PDF parsing is handled locally via Mozilla PDF.js. Text never leaves your browser tab.</li>
-        <li><strong>No Network Transmission:</strong> Assessment inputs (resume text, selected skills, sliders) are never sent over the network to any server.</li>
-        <li><strong>No Cookies or Tracking:</strong> We do not store cookies, session identifiers, tracking telemetry, or local storage profiles.</li>
+        <li><strong>PDF parsing:</strong> Resume PDFs are parsed locally via Mozilla PDF.js. The assessment code does not send resume text to a MechIntel backend.</li>
+        <li><strong>Network requests:</strong> Assessment inputs are processed in the browser. Your browser still requests the site and static assets from their hosting and CDN providers.</li>
+        <li><strong>Browser storage:</strong> This assessment page does not save profiles to local storage or use a MechIntel account system. The main dashboard may save progress in browser storage.</li>
       </ul>
     </div>
 
     <div class="card" style="text-align:center; padding:28px 20px;">
-      <h3 style="font-size:1.25rem; color:#fff; margin-bottom:10px;">Verify Your Standing with Absolute Privacy</h3>
-      <a class="btn" href="index.html#desk">Run the Zero-Retention Assessment →</a>
+      <h3 style="font-size:1.25rem; color:#fff; margin-bottom:10px;">Explore Your Engineering Career Profile</h3>
+      <a class="btn" href="index.html#desk">Run the Free Browser-Based Assessment →</a>
     </div>
     '''
     return shell_page(
-        "Engineering Benchmark & Zero-Retention Privacy Methodology",
-        "Transparent methodology for our 650,000 anonymized candidate benchmark database (100k Mechanical, 50k+ each for others), mathematical percentile computation, and browser-local zero-retention guarantee.",
+        "Engineering Readiness Score & Benchmark Methodology | MechIntel",
+        "See how MechIntel calculates engineering readiness scores and compares profiles with generated benchmark cohorts. The cohort is simulated, not real or anonymized applicant data.",
         body,
         f"{BASE}/engineering-careers/methodology.html"
     )
@@ -1993,8 +1991,8 @@ def generate_app_js():
     $('res-cluster-rank').textContent = '#' + clusterRank.toLocaleString();
 
     // Update Subtitles
-    $('peer-cohort-badge').textContent = `Benchmark Database: ${{poolSize.toLocaleString()}} Candidates`;
-    $('dist-curve-subtitle').textContent = `${{poolSize.toLocaleString()}} Anonymized Cohort Distribution`;
+    $('peer-cohort-badge').textContent = `Simulated benchmark: ${{poolSize.toLocaleString()}} profiles`;
+    $('dist-curve-subtitle').textContent = `${{poolSize.toLocaleString()}} Simulated Profile Score Distribution`;
 
     // Render Role Matches (Bidirectional matching)
     const roleListEl = $('role-matches-list');
@@ -2413,7 +2411,7 @@ def generate_app_js():
 
     let csv = 'Category,Value\\n';
     csv += `Domain,"${{d.name}}"\\n`;
-    csv += `Benchmark Database Size,"${{d.benchmark_size.toLocaleString()}} Candidates"\\n`;
+    csv += `Simulated Profile Pool Size,"${{d.benchmark_size.toLocaleString()}} profiles"\\n`;
     csv += `Readiness Score,${{$('res-readiness-score').textContent}}\\n`;
     csv += `Global Rank,"${{$('res-global-rank').textContent}}"\\n`;
     csv += `Percentile,"${{$('res-global-pct').textContent}}"\\n`;

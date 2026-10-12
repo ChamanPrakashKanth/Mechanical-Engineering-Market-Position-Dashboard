@@ -1,6 +1,6 @@
 # Mech-Eng Pathfinder: Market Position & Career Intelligence Dashboard
 
-An interactive, premium career intelligence dashboard designed for Mechanical Engineering graduates to parse resumes, evaluate technical skills, map profiles to career clusters, and compute rankings against a database of **1 Lakh (100,000+) mechanical engineering graduates** worldwide and in India.
+An interactive engineering career assessment designed for students and early-career engineers. It parses resumes locally, evaluates skills, maps profiles to career paths, and compares readiness against a **deterministically simulated 100,000-profile mechanical engineering benchmark**. Benchmark profiles are generated examples, not real or anonymized applicants.
 
 Public SEO site: **https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/**
 
@@ -24,15 +24,19 @@ This project offers two fully functional UI versions:
 - Extracts core mechanical engineering skills, CAD/CAE software packages, and professional certifications.
 - Automatically counts internships, academic projects, publications, and engineering competition involvement.
 - Removes PII (personally identifiable information) such as emails, phone numbers, and social URLs to ensure data privacy.
+- Includes a deterministic resume builder in the Resume & ATS workspace. It formats user-entered education, skills, experience, and project evidence into an ATS-friendly draft with browser print / Save as PDF support. It does not invent achievements, credentials, or metrics.
+- Resume drafting and recommendations run in the browser with fixed templates and rules; no AI API token, server processing, or GPU is required.
 
 ### 2. Double-Percentile Ranking Heuristics
 Computes a custom **Employability Score** (from 0 to 100) based on weighted resume attributes, and calculates the candidate's exact percentile and ordinal rank across four key dimensions:
-- **Global / Worldwide Rank**: Position against the entire 100,000 candidate dataset.
-- **National (India) Rank**: Position against the subset of Indian candidates (~36,000 records).
+- **Global / Worldwide Rank**: Position against the generated 100,000-profile mechanical benchmark.
+- **National (India) Rank**: Position against the generated India-region subset of that simulated cohort.
 - **Tier Group Rank**: Performance relative to peers from the same college tier.
 - **Specialization Cluster Rank**: Ranking within the matched career discipline.
 
-The dashboard also includes an anonymized cohort distribution and a **What Moves My Rank?** simulator. Engineers can model additional projects, internships, certifications, and software-proficiency gains to compare projected readiness and ranking impact without changing their saved profile.
+The dashboard also includes a simulated cohort distribution and a **What Moves My Rank?** simulator. Engineers can model additional projects, internships, certifications, and software-proficiency gains to compare projected readiness and model ranking impact without changing their saved profile.
+
+The **Career Path Simulator** compares a profile with a selected engineering pathway, estimates role alignment using a deterministic formula, and suggests milestones from the pathway's listed skills, software, and certifications. Weekly learning hours and plan duration change the estimate; they do not alter profile facts or guarantee hiring outcomes.
 
 ### 3. Specialty Career Clustering
 Using technical keyword intersections, profiles are matched to one of five key disciplines:
@@ -57,7 +61,7 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - **LinkedIn Job Match Ranking**: Ranks mechanical-engineering job search lanes locally from profile skills, software proficiency, certifications, portfolio projects, internships, and specialty alignment. Daily links open LinkedIn results posted within the last 24 hours, with no scraping, paid API, account token, or AI-token usage.
 
 ### 7. Interactive Competitor Database Viewer
-- Explore, filter, and paginate through the 100,000 anonymized candidate database.
+- Explore, filter, and paginate through the deterministic 100,000-profile simulated benchmark.
 - Filter by target region (India vs. Global) or career cluster, and search for specific colleges, degrees, or tools.
 
 ### 8. Comprehensive Text Course Academy
@@ -148,7 +152,7 @@ The Employability Score is calculated out of 100 points using the following weig
 ├── index.html                 # Frontend SPA HTML entry point (glassmorphism template)
 ├── app.js                     # SPA application logic (local resume parser, score calculator)
 ├── styles.css                 # SPA glassmorphic CSS styling sheet
-├── candidates_100k.json       # Main benchmark database of 1 Lakh (100,000) anonymized candidates
+├── candidates_100k.json       # Local benchmark data artifact; not required by the deployed SPA
 ├── extract_web_data.py        # Resume parsing helpers and parser normalization taxonomy
 ├── requirements.txt           # Python application dependencies
 ├── compile_single_file.py     # Combines HTML, CSS, and JS into blogspot_deploy.html
@@ -197,7 +201,7 @@ The frontend client requires zero external package installations.
 
 #### 2. Running without a local server:
 - Double-click `index.html` to open it in any modern browser.
-- *Note*: If opening `index.html` directly as a local file, browsers may block loading the local `candidates_100k.json` due to CORS. In this case, `app.js` automatically falls back to generating a deterministic, seeded dataset of 100,000 candidates directly in the browser so that the app remains fully functional.
+- *Note*: Benchmark scores use a seeded, simulated profile model. They do not represent real applicant records or a verified labor-market sample.
 
 ---
 
@@ -205,4 +209,4 @@ The frontend client requires zero external package installations.
 
 - **No Data Exfiltration**: Resume content is parsed purely on the client (or on the local Streamlit server instance) and is never sent to third-party endpoints.
 - **PII Stripping**: The parser actively strips out email addresses, phone numbers, GitHub/LinkedIn profile handles, and URLs.
-- **Competitor Database Anonymity**: The candidate database is composed entirely of randomized, non-identifiable candidate markers (e.g. `Candidate #ME-10023`) to serve as secure, compliant benchmarks.
+- **Simulated Benchmark**: The comparison pool uses generated profile markers and fixed distributions; it is not a collection of anonymized real applicants.

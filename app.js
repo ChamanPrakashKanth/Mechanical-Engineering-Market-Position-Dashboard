@@ -142,7 +142,7 @@ const HR_QA = [
     { q: "Tell me about a time you had to resolve a major technical failure in a group project.", a: "Guideline: Use the STAR method. S: Situation (Identify the group task), T: Task (Specify the structural failure or design clash), A: Action (Show how you ran FEA/CAD diagnostics), R: Result (Verify that the prototype passed tests)." }
 ];
 
-// Seeded dataset generator (Generates 100,000 anonymized competitor profiles deterministically)
+// Seeded dataset generator (Generates a deterministic 100,000-profile simulated benchmark)
 function generateDataset() {
     const random = createRandom(42);
     const data = [];
@@ -965,6 +965,11 @@ function buildDashboard(profile) {
     drawSalaryChart(scores.readiness);
     drawBenchmarkDistribution(scores.readiness, profile);
     renderCareerMoveScenario();
+    if (window.renderCareerPathSimulator) window.renderCareerPathSimulator();
+    const resumeSkills = document.getElementById("rb-skills");
+    if (resumeSkills && !resumeSkills.value) resumeSkills.value = [...(profile.skills || []), ...(profile.software_tools || []), ...(profile.certifications || [])].join(", ");
+    const resumeRole = document.getElementById("rb-role");
+    if (resumeRole && !resumeRole.value) resumeRole.value = profile.cluster || "Mechanical Engineer";
     
     // ATS checklist
     renderAtsScorecard(profile);
@@ -1472,6 +1477,68 @@ function initCareerMoveSimulator() {
     }
 }
 
+// Deterministic resume draft and career pathway tools. No profile claims are
+// added automatically; user supplied text is escaped before it enters the DOM.
+const escapeResumeHtml = value => String(value || "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+function buildResumeDraft() {
+    const value = id => document.getElementById(id)?.value.trim() || "";
+    const name = value("rb-name") || "Your Name";
+    const contact = value("rb-contact");
+    const role = value("rb-role") || "Mechanical Engineer";
+    const education = value("rb-education");
+    const summary = value("rb-summary");
+    const bullets = value("rb-experience").split(/\n+/).map(line => line.replace(/^[-•*]\s*/, "").trim()).filter(Boolean);
+    const skills = value("rb-skills").split(/[,;\n]+/).map(skill => skill.trim()).filter(Boolean);
+    const sections = [
+        contact ? `<p class="resume-contact">${escapeResumeHtml(contact)}</p>` : "",
+        `<h2>${escapeResumeHtml(role)}</h2>`,
+        summary ? `<h3>Professional Summary</h3><p>${escapeResumeHtml(summary)}</p>` : "",
+        bullets.length ? `<h3>Experience &amp; Projects</h3><ul>${bullets.map(line => `<li>${escapeResumeHtml(line)}</li>`).join("")}</ul>` : "",
+        skills.length ? `<h3>Skills &amp; Tools</h3><p>${skills.map(escapeResumeHtml).join(" · ")}</p>` : "",
+        education ? `<h3>Education</h3><p>${escapeResumeHtml(education)}</p>` : ""
+    ].filter(Boolean).join("");
+    const preview = document.getElementById("resume-builder-preview");
+    preview.innerHTML = `<header><h1>${escapeResumeHtml(name)}</h1>${sections}</header>`;
+    document.getElementById("resume-builder-status").textContent = bullets.length || skills.length || education || summary
+        ? "Draft built from your entries. Check dates, measurements, and credentials before printing."
+        : "Add your own experience, skills, education, or summary to make this draft useful.";
+    document.getElementById("btn-print-resume").disabled = false;
+}
+
+function initCareerPathSimulator() {
+    const roleSelect = document.getElementById("career-sim-role");
+    if (!roleSelect) return;
+    roleSelect.innerHTML = Object.keys(DOMAINS_CATALOG).map(role => `<option value="${escapeResumeHtml(role)}">${escapeResumeHtml(role)}</option>`).join("");
+    const render = () => {
+        const hours = Number(document.getElementById("career-sim-hours").value);
+        const months = Number(document.getElementById("career-sim-months").value);
+        document.getElementById("career-sim-hours-value").textContent = String(hours);
+        const domain = DOMAINS_CATALOG[roleSelect.value];
+        const profile = targetProfile;
+        if (!profile || !domain) return;
+        const currentSkills = [...profile.skills, ...profile.certifications].map(item => item.toLowerCase());
+        const presentSkills = domain.skills.filter(skill => currentSkills.some(item => item.includes(skill.toLowerCase()) || skill.toLowerCase().includes(item)));
+        const missingSkills = domain.skills.filter(skill => !presentSkills.includes(skill));
+        const currentTools = profile.software_tools.map(item => item.toLowerCase());
+        const presentTools = domain.software.filter(tool => currentTools.includes(tool.toLowerCase()));
+        const baseAlignment = ((presentSkills.length / Math.max(domain.skills.length, 1)) * 55) + ((presentTools.length / Math.max(domain.software.length, 1)) * 30) + Math.min(profile.projects * 3, 15);
+        const effortGain = Math.min(20, (hours * months / 12) * 0.22);
+        const score = Math.min(100, Math.round(baseAlignment + effortGain));
+        document.getElementById("career-sim-score").textContent = `${score}%`;
+        document.getElementById("career-sim-delta").textContent = `${presentSkills.length}/${domain.skills.length} listed skills · ${presentTools.length}/${domain.software.length} listed tools · ${hours * months} planned hours`;
+        const milestones = [];
+        if (missingSkills.length) milestones.push(`Practice and document: ${missingSkills.slice(0, 2).join("; ")}.`);
+        if (presentTools.length < domain.software.length) milestones.push(`Build a small portfolio artifact using ${domain.software.find(tool => !presentTools.includes(tool))}.`);
+        milestones.push(`Complete one role-relevant project and record the method, constraints, and measured result.`);
+        if (domain.certs.length) milestones.push(`Review the pathway for ${domain.certs[0]}; list it only after earning it.`);
+        document.getElementById("career-sim-milestones").innerHTML = milestones.slice(0, 4).map(item => `<li>${escapeResumeHtml(item)}</li>`).join("");
+    };
+    [roleSelect, document.getElementById("career-sim-hours"), document.getElementById("career-sim-months")].forEach(control => control.addEventListener("input", render));
+    roleSelect.addEventListener("change", render);
+    window.renderCareerPathSimulator = render;
+    render();
+}
+
 // App initial setup
 document.addEventListener("DOMContentLoaded", () => {
     candidates = generateDataset();
@@ -1484,6 +1551,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Technical Accordions
     populateQuestionBanks();
     initCareerMoveSimulator();
+    initCareerPathSimulator();
+    document.getElementById("btn-build-resume")?.addEventListener("click", buildResumeDraft);
+    document.getElementById("btn-print-resume")?.addEventListener("click", () => {
+        const preview = document.getElementById("resume-builder-preview");
+        const printWindow = window.open("", "_blank");
+        if (!printWindow) {
+            document.getElementById("resume-builder-status").textContent = "Allow a new tab to open, then use Print / Save PDF again.";
+            return;
+        }
+        printWindow.document.write(`<!doctype html><html><head><title>Resume Draft</title><style>body{font:11pt/1.5 Arial,sans-serif;max-width:800px;margin:36px auto;color:#172033}h1{font-size:24pt;margin:0}h2{font-size:15pt;color:#2865a5;border-bottom:1px solid #ccd5e0;padding-bottom:6px}h3{font-size:11pt;text-transform:uppercase;margin:20px 0 5px}li{margin:5px 0}.resume-contact{color:#526174}</style></head><body>${preview.innerHTML}</body></html>`);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
 
     // Theme toggle listener
     const themeBtn = document.getElementById("theme-toggle-btn");
@@ -4294,31 +4375,7 @@ function renderResumeScoreBoosters() {
 }
 
 function runResumeOptimizer() {
-    const statusText = document.getElementById("optimizer-status-text");
-    statusText.innerText = "Analyzing document nodes & running local ATS cleaner...";
-    
-    setTimeout(() => {
-        // Upgrade targetProfile directly
-        if (targetProfile) {
-            const extraSkills = ["GD&T (Geometric Dimensioning & Tolerancing)", "Tolerance Stackup Analysis"];
-            const extraSoftware = ["SolidWorks", "ANSYS"];
-            const extraCerts = ["CSWP (Certified SolidWorks Professional)"];
-            
-            extraSkills.forEach(s => { if (!targetProfile.skills.includes(s)) targetProfile.skills.push(s); });
-            extraSoftware.forEach(sw => { if (!targetProfile.software_tools.includes(sw)) targetProfile.software_tools.push(sw); });
-            extraCerts.forEach(c => { if (!targetProfile.certifications.includes(c)) targetProfile.certifications.push(c); });
-            
-            // Recalculate and display scores
-            userXP += 100;
-            localStorage.setItem("userXP", userXP);
-            buildDashboard(targetProfile);
-            
-            statusText.innerText = "✅ Resume cleaned and standardized! Recruiter match rating boosted.";
-            renderResumeScoreBoosters();
-        } else {
-            statusText.innerText = "No profile active. Please paste resume first.";
-        }
-    }, 1500);
+    buildResumeDraft();
 }
 
 
