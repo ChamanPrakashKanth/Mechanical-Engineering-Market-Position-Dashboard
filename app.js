@@ -5675,7 +5675,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showPane("manual-setup-panel");
                 document.querySelector("#manual-setup-panel .setup-header p").textContent = "First, add your skills and experience. Select Generate Dashboard to open your Career Path Simulator.";
             }
-        } else if (hash === "#home") {
+        } else if (hash === "#home" || !hash) {
             showPane("landing-page-container");
         }
     };
