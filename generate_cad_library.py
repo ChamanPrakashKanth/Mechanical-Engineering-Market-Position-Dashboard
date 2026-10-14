@@ -227,6 +227,22 @@ profiles={
  'stepped-hollow-pin':('Stepped hollow pin blank',[(2,0),(8,0),(8,5),(5,5),(5,30),(2,30)]),
  'recessed-end-button':('Recessed end button blank',[(0,0),(12,0),(14,2),(14,6),(12,8),(7,8),(7,5),(0,5)]),
  'flared-collar-ring':('Flared collar ring',[(5,0),(9,0),(9,10),(16,15),(16,17),(7,12),(5,12)]),
+ 'flanged-drill-guide':('Flanged drill guide blank',[(3,0),(8,0),(8,18),(13,18),(13,22),(4,22),(3,21)]),
+ 'double-counterbore-spacer':('Double-counterbore spacer',[(6,0),(11,0),(11,24),(6,24),(6,19),(3,19),(3,5),(6,5)]),
+ 'chamfered-hub-sleeve':('Chamfered hub sleeve',[(5,0),(11,0),(12,1),(12,23),(11,24),(5,24),(4,23),(4,1)]),
+ 'thin-rim-cap':('Thin rim cap study',[(0,0),(14,0),(14,15),(17,15),(17,17),(12.5,17),(12.5,1.5),(0,1.5)]),
+ 'recessed-guide-roller':('Recessed guide roller blank',[(4,0),(18,0),(18,3),(13,3),(13,19),(18,19),(18,22),(10,22),(10,17),(4,17)]),
+ 'tapered-shoulder-sleeve':('Tapered shoulder sleeve',[(4,0),(14,0),(14,3),(9,3),(6,24),(4,24)]),
+ 'stepped-seat-ring':('Stepped seat ring blank',[(6,0),(17,0),(17,4),(13,4),(13,9),(9,9),(9,5),(6,5)]),
+ 'long-hollow-mandrel':('Long hollow mandrel blank',[(3,0),(10,0),(10,6),(7,6),(5,50),(3,50)]),
+ 'twin-rib-sleeve':('Twin-rib sleeve',[(4,0),(7,0),(7,5),(10,5),(10,8),(7,8),(7,22),(10,22),(10,25),(7,25),(7,30),(4,30)]),
+ 'rounded-seat-washer':('Rounded seat washer study',[(4,0),(14,0),(15,1),(15,3),(14,4),(11,5),(7,5),(4,2)]),
+ 'stepped-cable-eyelet':('Stepped cable eyelet study',[(3,0),(9,0),(9,2),(6,2),(6,8),(8,8),(8,10),(3,10)]),
+ 'flared-nozzle-sleeve':('Flared nozzle sleeve study',[(3,0),(5,0),(5,16),(10,24),(9,25),(3,17)]),
+ 'recessed-support-ring':('Recessed support ring blank',[(5,0),(19,0),(19,4),(16,4),(16,2),(9,2),(9,10),(5,10)]),
+ 'thin-bell-cap':('Thin bell cap study',[(0,0),(10,0),(11,5),(14,10),(18,14),(17,15),(13,11),(10,6),(9,1.5),(0,1.5)]),
+ 'stepped-flange-pin':('Stepped flange pin blank',[(0,0),(12,0),(12,4),(8,4),(8,12),(5,12),(5,30),(0,30)]),
+ 'wide-groove-drum':('Wide-groove drum blank',[(5,0),(22,0),(22,5),(14,9),(14,21),(22,25),(22,30),(5,30)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
