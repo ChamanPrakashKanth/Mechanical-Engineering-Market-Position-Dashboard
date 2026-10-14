@@ -243,6 +243,22 @@ profiles={
  'thin-bell-cap':('Thin bell cap study',[(0,0),(10,0),(11,5),(14,10),(18,14),(17,15),(13,11),(10,6),(9,1.5),(0,1.5)]),
  'stepped-flange-pin':('Stepped flange pin blank',[(0,0),(12,0),(12,4),(8,4),(8,12),(5,12),(5,30),(0,30)]),
  'wide-groove-drum':('Wide-groove drum blank',[(5,0),(22,0),(22,5),(14,9),(14,21),(22,25),(22,30),(5,30)]),
+ 'stepped-guide-boss':('Stepped guide boss blank',[(3,0),(15,0),(15,4),(10,4),(10,12),(7,12),(7,24),(3,24)]),
+ 'thin-flange-eyelet':('Thin-flange eyelet study',[(3,0),(10,0),(10,1),(5,1),(5,10),(3,10)]),
+ 'tapered-roller-hub':('Tapered roller hub blank',[(4,0),(12,0),(18,18),(10,18),(10,24),(4,24)]),
+ 'recessed-flange-spacer':('Recessed flange spacer',[(4,0),(16,0),(16,5),(12,5),(12,2),(8,2),(8,20),(4,20)]),
+ 'shouldered-bore-plug':('Shouldered bore plug blank',[(0,0),(14,0),(14,4),(9,4),(9,20),(4,20),(4,8),(0,8)]),
+ 'triple-collar-shaft':('Triple-collar shaft blank',[(0,0),(5,0),(5,5),(10,5),(10,8),(5,8),(5,18),(10,18),(10,21),(5,21),(5,31),(10,31),(10,34),(5,34),(5,39),(0,39)]),
+ 'conical-recess-disc':('Conical recess disc blank',[(0,0),(20,0),(20,8),(16,8),(8,3),(0,3)]),
+ 'long-tapered-ferrule':('Long tapered ferrule',[(4,0),(6,0),(9,30),(7,30)]),
+ 'flanged-thin-shroud':('Flanged thin shroud study',[(10,0),(18,0),(18,2),(12,2),(8,30),(6.5,30)]),
+ 'rounded-guide-bush':('Rounded guide bush blank',[(4,0),(9,0),(11,2),(11,4),(9,6),(7,6),(7,22),(4,22)]),
+ 'counterbored-hub':('Counterbored hub blank',[(4,0),(12,0),(12,20),(7,20),(7,14),(4,14)]),
+ 'stepped-dust-ring':('Stepped dust ring study',[(6,0),(18,0),(18,1.5),(12,1.5),(12,6),(9,6),(9,1.5),(6,1.5)]),
+ 'recessed-reel':('Recessed reel blank',[(4,0),(20,0),(20,3),(9,3),(9,23),(20,23),(20,26),(12,26),(12,24),(4,24)]),
+ 'tapered-pivot-bush':('Tapered pivot bush blank',[(4,0),(9,0),(13,20),(4,20)]),
+ 'flared-support-foot':('Flared support foot blank',[(3,0),(22,0),(22,3),(10,12),(7,12),(7,18),(3,18)]),
+ 'thin-domed-cap':('Thin domed cap study',[(0,0),(14,0),(14,12),(12,17),(7,21),(0,23),(0,21.5),(6.5,19.5),(10.5,16),(12.5,11.5),(12.5,1.5),(0,1.5)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
