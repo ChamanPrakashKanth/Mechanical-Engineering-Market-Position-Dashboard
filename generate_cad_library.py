@@ -131,6 +131,22 @@ profiles={
  'retaining-groove-pin':('Retaining-groove pin blank',[(0,0),(5,0),(5,4),(4,4),(4,5.5),(5,5.5),(5,26),(4,26),(4,27.5),(5,27.5),(5,30),(0,30)]),
  'thrust-collar':('Thrust collar blank',[(6,0),(14,0),(14,3),(10,3),(10,9),(6,9)]),
  'cup-seal-profile':('Thin cup seal profile study',[(5,0),(12,0),(12,1),(11,1),(11,7),(10,8),(9,8),(10,6),(10,2),(5,2)]),
+ 'counterbored-spacer':('Counterbored spacer',[(3,0),(10,0),(10,18),(6,18),(6,13),(3,13)]),
+ 'double-flanged-bushing':('Double-flanged bushing',[(5,0),(14,0),(14,3),(9,3),(9,17),(14,17),(14,20),(5,20)]),
+ 'compression-sleeve':('Compression sleeve blank',[(4,0),(6,0),(8,4),(8,10),(6,14),(4,14)]),
+ 'face-groove-ring':('Face-groove ring',[(6,0),(18,0),(18,5),(14,5),(14,3),(11,3),(11,5),(6,5)]),
+ 'chamfered-pivot-pin':('Chamfered pivot pin',[(0,0),(5,0),(6,1),(6,29),(5,30),(0,30)]),
+ 'shoulder-pin':('Shoulder pin blank',[(0,0),(8,0),(8,5),(5,5),(5,25),(3,25),(3,31),(0,31)]),
+ 'blind-bore-boss':('Blind-bore mounting boss',[(0,0),(10,0),(10,16),(4,16),(4,4),(0,4)]),
+ 'sensor-sleeve':('Sensor sleeve study',[(4,0),(6,0),(6,20),(9,20),(9,23),(4,23)]),
+ 'dished-washer':('Dished washer study',[(4,0),(14,2),(14,3),(4,1)]),
+ 'double-groove-roller':('Double-groove roller',[(4,0),(18,0),(18,3),(13,6),(18,9),(18,12),(13,15),(18,18),(18,21),(4,21)]),
+ 'labyrinth-ring':('Labyrinth ring geometry study',[(6,0),(18,0),(18,3),(15,3),(15,8),(12,8),(12,3),(9,3),(9,8),(6,8)]),
+ 'rounded-nose-pin':('Rounded-nose pin',[(0,0),(5,0),(5,20)]+[(5*math.cos(i*math.pi/16),20+5*math.sin(i*math.pi/16)) for i in range(1,9)]),
+ 'hose-tail-blank':('Hose tail geometry blank',[(3,0),(8,0),(8,4),(5,4),(6.5,8),(5,8),(6.5,12),(5,12),(6.5,16),(5,16),(5,20),(3,20)]),
+ 'tapered-plug':('Tapered plug blank',[(0,0),(10,0),(7,20),(0,20)]),
+ 'pulley-hub-blank':('Pulley hub blank',[(5,0),(12,0),(12,8),(22,8),(22,12),(12,12),(12,20),(5,20)]),
+ 'flared-tube-mouth':('Flared tube mouth study',[(5,0),(6.5,0),(6.5,15),(11,23),(9.5,23),(5,15)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
