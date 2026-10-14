@@ -138,6 +138,48 @@ PARTS = [
  for(x=[28,62]) for(y=[30,50]) translate([x,y,-1]) cylinder(d=8.5,h=wall+2);
 }''',
  notes='Two upright slots are 7 mm wide, with endpoint centers at Z 30/58 and X 28/62, giving 28 mm center travel. Four base Ø8.5 holes are at X 28/62, Y 30/50. Side ribs are 6 mm thick. Load capacity, weld details and manufacturing radii are not specified.'),
+ dict(slug='industrial-t-slot-table-plate',title='T-slot table plate study',dims='120 × 90 × 20 mm · three longitudinal T-slots',
+ params='length=120; width=90; thickness=20; neck=8; cavity=16;',
+ code='''difference(){
+ cube([length,width,thickness]);
+ for(y=[20,45,70]){
+  translate([-1,y-neck/2,12]) cube([length+2,neck,9]);
+  translate([-1,y-cavity/2,8]) cube([length+2,cavity,5]);
+ }
+ for(x=[12,108]) for(y=[7,83]) translate([x,y,-1]) cylinder(d=6.5,h=thickness+2);
+}''',
+ notes='Three slots run along X at Y 20/45/70 mm. Each has an 8 mm neck from Z 12 to the top and a 16 mm cavity spanning Z 8–13, leaving an 8 mm floor. Four Ø6.5 mounting holes are at X 12/108, Y 7/83. This is a custom T-section, not a standardized T-nut interface; cutter access, radii, tolerances and clamping loads need review.'),
+ dict(slug='industrial-pillow-support',title='Pillow support with bolt pattern',dims='110 × 55 × 60 mm · Ø26 shaft passage · four base slots',
+ params='length=110; depth=55; base=10; height=60; bore=26;',
+ code='''difference(){
+ union(){cube([length,depth,base]);translate([30,0,base]) cube([50,depth,height-base]);}
+ translate([length/2,-1,35]) rotate([-90,0,0]) cylinder(d=bore,h=depth+2);
+ for(x=[13,97]) for(y=[14,41]) hull(){
+  translate([x-3,y,-1]) cylinder(d=8.5,h=base+2);
+  translate([x+3,y,-1]) cylinder(d=8.5,h=base+2);
+ }
+ for(x=[38,72]) translate([x,depth/2,height-10]) cylinder(d=5,h=11);
+}''',
+ notes='Bore axis runs along Y at X 55, Z 35 mm. Four base slots have 6 mm endpoint-center travel, 8.5 mm width and centers X 13/97, Y 14/41. Two Ø5 blind pilot holes are 10 mm deep from the top at X 38/72, Y 27.5. No bearing retention, threads, lubrication or fit specification is included.'),
+ dict(slug='industrial-shaft-flange-coupler',title='Shaft flange coupler blank',dims='Ø80 flange × 10 mm · Ø40 hub × 30 mm · Ø16 bore',
+ params='flange=80; flange_thickness=10; hub=40; hub_length=30; bore=16; bolt_circle=60;',
+ code='''difference(){
+ union(){cylinder(d=flange,h=flange_thickness);translate([0,0,flange_thickness]) cylinder(d=hub,h=hub_length);}
+ translate([0,0,-1]) cylinder(d=bore,h=flange_thickness+hub_length+2);
+ for(a=[0,90,180,270]) rotate([0,0,a]) translate([bolt_circle/2,0,-1]) cylinder(d=8.5,h=flange_thickness+2);
+ translate([0,0,25]) rotate([0,90,0]) cylinder(d=5,h=hub/2+1);
+}''',
+ notes='Four Ø8.5 flange holes lie on a Ø60 bolt circle. Total height is 40 mm. A Ø5 radial pilot hole opens to the Ø16 bore at Z 25 mm. No keyway, thread, shaft fit, balance specification or torque capacity is established. Do not interpret the plain bore and pilot hole as a verified shaft-retention system.'),
+ dict(slug='industrial-pocketed-sensor-bracket',title='Pocketed sensor mounting bracket',dims='80 × 50 × 60 mm · 8 mm walls · Ø18 upright aperture',
+ params='length=80; depth=50; height=60; wall=8;',
+ code='''difference(){
+ union(){cube([length,depth,wall]);cube([length,wall,height]);}
+ translate([length/2,-1,35]) rotate([-90,0,0]) cylinder(d=18,h=wall+2);
+ for(x=[20,60]) translate([x,-1,35]) rotate([-90,0,0]) cylinder(d=5.5,h=wall+2);
+ translate([20,18,wall-3]) cube([40,20,4]);
+ for(x=[12,68]) for(y=[20,40]) translate([x,y,-1]) cylinder(d=6.5,h=wall+2);
+}''',
+ notes='The upright Ø18 aperture is centered at X 40, Z 35; adjacent Ø5.5 holes are at X 20/60, Z 35. A 40 × 20 × 3 mm top pocket occupies X 20–60, Y 18–38. Base mounting holes are X 12/68, Y 20/40. This is a custom geometry study, not a specified sensor interface; pocket corners and manufacturing radii are idealized.'),
 ]
 
 if __name__ == '__main__':
