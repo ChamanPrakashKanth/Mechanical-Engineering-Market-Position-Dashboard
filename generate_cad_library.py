@@ -142,7 +142,7 @@ profiles={
  'dished-washer':('Dished washer study',[(4,0),(14,2),(14,3),(4,1)]),
  'double-groove-roller':('Double-groove roller',[(4,0),(18,0),(18,3),(13,6),(18,9),(18,12),(13,15),(18,18),(18,21),(4,21)]),
  'labyrinth-ring':('Labyrinth ring geometry study',[(6,0),(18,0),(18,3),(15,3),(15,8),(12,8),(12,3),(9,3),(9,8),(6,8)]),
- 'rounded-nose-pin':('Rounded-nose pin',[(0,0),(5,0),(5,20)]+[(5*math.cos(i*math.pi/16),20+5*math.sin(i*math.pi/16)) for i in range(1,9)]),
+ 'rounded-nose-pin':('Rounded-nose pin',[(0,0),(5,0),(5,20)]+[(5*math.cos(i*math.pi/16),20+5*math.sin(i*math.pi/16)) for i in range(1,8)]+[(0,25)]),
  'hose-tail-blank':('Hose tail geometry blank',[(3,0),(8,0),(8,4),(5,4),(6.5,8),(5,8),(6.5,12),(5,12),(6.5,16),(5,16),(5,20),(3,20)]),
  'tapered-plug':('Tapered plug blank',[(0,0),(10,0),(7,20),(0,20)]),
  'pulley-hub-blank':('Pulley hub blank',[(5,0),(12,0),(12,8),(22,8),(22,12),(12,12),(12,20),(5,20)]),
