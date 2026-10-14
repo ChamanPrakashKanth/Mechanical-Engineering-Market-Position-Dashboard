@@ -179,6 +179,22 @@ profiles={
  'double-cone-roller':('Double-cone roller blank',[(4,0),(9,0),(17,15),(9,30),(4,30)]),
  'tapered-end-cap':('Tapered end cap study',[(0,0),(12,0),(9,18),(7.5,18),(10.2,2),(0,2)]),
  'small-reel':('Small winding reel blank',[(3,0),(16,0),(16,2),(7,2),(7,18),(16,18),(16,20),(3,20)]),
+ 'stepped-flange-adapter':('Stepped flange adapter',[(4,0),(18,0),(18,4),(11,4),(11,12),(7,12),(7,24),(4,24)]),
+ 'long-guide-bushing':('Long guide bushing blank',[(3,0),(7,0),(7,35),(10,35),(10,38),(3,38)]),
+ 'chamfered-spool':('Chamfered spool blank',[(3,0),(17,0),(18,1),(18,3),(9,3),(9,21),(18,21),(18,23),(17,24),(3,24)]),
+ 'stepped-thrust-washer':('Stepped thrust washer',[(5,0),(18,0),(18,2),(12,2),(12,5),(5,5)]),
+ 'tapered-bearing-seat':('Tapered bearing-seat blank',[(5,0),(16,0),(16,4),(11,20),(8,20),(5,12)]),
+ 'double-recess-disc':('Double-recess disc blank',[(0,2),(12,2),(12,0),(20,0),(20,8),(12,8),(12,6),(0,6)]),
+ 'bell-mouth-sleeve':('Bell-mouth sleeve study',[(4,0),(6,0),(6,15),(7,19),(10,23),(14,25),(13,26),(9,24),(5,20),(4,16)]),
+ 'nose-cone-blank':('Nose cone blank',[(0,0),(12,0),(11,6),(8,14),(4,21),(0,25)]),
+ 'rounded-flange-pin':('Rounded flange pin blank',[(0,0),(10,0),(12,2),(12,4),(10,6),(5,6),(5,25),(0,25)]),
+ 'cable-drum-blank':('Cable drum blank',[(5,0),(25,0),(25,4),(16,4),(16,36),(25,36),(25,40),(5,40)]),
+ 'thin-stepped-sleeve':('Thin stepped sleeve study',[(5,0),(6,0),(6,12),(9,12),(9,24),(8,24),(8,13),(5,13)]),
+ 'double-collar-shaft':('Double-collar shaft blank',[(0,0),(6,0),(6,8),(11,8),(11,12),(6,12),(6,28),(11,28),(11,32),(6,32),(6,40),(0,40)]),
+ 'chamfered-insert-blank':('Chamfered insert blank',[(3,0),(6,0),(7,1),(7,11),(6,12),(3,12)]),
+ 'seal-carrier-ring':('Seal carrier ring study',[(6,0),(15,0),(15,10),(12,10),(12,6),(9,6),(9,10),(6,10)]),
+ 'hollow-tapered-roller':('Hollow tapered roller blank',[(4,0),(10,0),(16,25),(13,25),(7,3),(4,3)]),
+ 'stepped-end-plug':('Stepped end plug blank',[(0,0),(15,0),(15,3),(10,3),(10,12),(7,12),(7,20),(0,20)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
