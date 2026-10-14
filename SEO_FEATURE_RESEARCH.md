@@ -51,3 +51,8 @@ Measurement reference: https://developers.google.com/search/docs/monitor-debug/g
 Priorities for later research (not implemented or validated demand): an engineering interview practice tool, a role-specific learning plan, and more transparent project evidence review. Choose among them using actual queries and visitor needs, not an automatic page quota.
 
 The user reports no query history because the site is new. Baseline is currently unavailable, not assumed zero traffic. Continue launch improvements and defer performance conclusions until search data appears.
+
+
+## CAD utility expansion
+
+Expanded to 44 original educational parts, including shoulder washers, guide bushings, tapered locating pins, grommet studies and thin ferrules. Supplier catalogs establish that configurable locating pins and bushings are an existing CAD use case, but do not establish keyword volume or likely traffic: https://us.misumi-ec.com/vona2/detail/110302666420/ . No supplier geometry or specifications were copied. Each part now has a canonical technical page showing actual source dimensions, full source code, downloads, and limitations; these are not certified replacement components. Search traffic remains unmeasured.
