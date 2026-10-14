@@ -211,6 +211,22 @@ profiles={
  'stepped-hollow-axle':('Stepped hollow axle blank',[(3,0),(8,0),(8,8),(6,8),(6,32),(8,32),(8,40),(3,40)]),
  'tapered-seat-washer':('Tapered seat washer',[(4,0),(14,0),(14,3),(10,7),(7,7),(4,4)]),
  'flared-reel':('Flared reel blank',[(3,0),(20,0),(20,2),(9,6),(9,18),(20,22),(20,24),(3,24)]),
+ 'stepped-idler-roller':('Stepped idler roller blank',[(4,0),(12,0),(12,4),(18,4),(18,18),(12,18),(12,22),(4,22)]),
+ 'flanged-counterbore-sleeve':('Flanged counterbore sleeve',[(3,0),(14,0),(14,3),(8,3),(8,22),(5,22),(5,16),(3,16)]),
+ 'thin-dust-shield':('Thin dust shield study',[(6,0),(20,0),(20,1),(8,1),(8,8),(6,8)]),
+ 'conical-hub':('Conical hub blank',[(4,0),(18,0),(18,4),(10,20),(4,20)]),
+ 'rimmed-bush':('Rimmed bush blank',[(5,0),(12,0),(14,2),(14,5),(12,7),(9,7),(9,20),(5,20)]),
+ 'recessed-pulley-blank':('Recessed pulley blank',[(4,0),(20,0),(20,3),(15,7),(20,11),(20,14),(11,14),(11,10),(4,10)]),
+ 'shouldered-taper-plug':('Shouldered taper plug blank',[(0,0),(14,0),(14,3),(10,3),(6,23),(0,23)]),
+ 'twin-bore-adapter':('Twin-bore adapter blank',[(3,0),(10,0),(10,24),(6,24),(6,12),(3,12)]),
+ 'grooved-guide-bush':('Grooved guide bush blank',[(4,0),(10,0),(10,5),(8,5),(8,7),(10,7),(10,17),(8,17),(8,19),(10,19),(10,24),(4,24)]),
+ 'thin-tapered-eyelet':('Thin tapered eyelet study',[(3,0),(5,0),(8,8),(8,10),(6.5,10),(3,2)]),
+ 'stepped-drum':('Stepped drum blank',[(5,0),(22,0),(22,4),(15,4),(15,14),(12,14),(12,26),(22,26),(22,30),(5,30)]),
+ 'annular-support-foot':('Annular support foot blank',[(4,0),(20,0),(20,3),(14,8),(9,8),(9,15),(4,15)]),
+ 'flanged-bearing-spacer':('Flanged bearing spacer',[(6,0),(16,0),(16,3),(10,3),(10,18),(6,18)]),
+ 'stepped-hollow-pin':('Stepped hollow pin blank',[(2,0),(8,0),(8,5),(5,5),(5,30),(2,30)]),
+ 'recessed-end-button':('Recessed end button blank',[(0,0),(12,0),(14,2),(14,6),(12,8),(7,8),(7,5),(0,5)]),
+ 'flared-collar-ring':('Flared collar ring',[(5,0),(9,0),(9,10),(16,15),(16,17),(7,12),(5,12)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
