@@ -259,6 +259,22 @@ profiles={
  'tapered-pivot-bush':('Tapered pivot bush blank',[(4,0),(9,0),(13,20),(4,20)]),
  'flared-support-foot':('Flared support foot blank',[(3,0),(22,0),(22,3),(10,12),(7,12),(7,18),(3,18)]),
  'thin-domed-cap':('Thin domed cap study',[(0,0),(14,0),(14,12),(12,17),(7,21),(0,23),(0,21.5),(6.5,19.5),(10.5,16),(12.5,11.5),(12.5,1.5),(0,1.5)]),
+ 'stepped-collet-blank':('Stepped collet blank without slots',[(3,0),(8,0),(8,6),(10,6),(6,30),(3,30)]),
+ 'deep-counterbore-hub':('Deep counterbore hub blank',[(4,0),(15,0),(15,28),(10,28),(10,8),(4,8)]),
+ 'double-shoulder-sleeve':('Double-shoulder sleeve',[(4,0),(8,0),(8,6),(12,6),(12,10),(9,10),(9,22),(14,22),(14,26),(4,26)]),
+ 'thin-rimmed-cone':('Thin rimmed cone study',[(12,0),(20,0),(20,1.5),(14,1.5),(6,26),(4.5,26)]),
+ 'recessed-thrust-collar':('Recessed thrust collar blank',[(6,0),(18,0),(18,6),(14,6),(14,3),(10,3),(10,12),(6,12)]),
+ 'tapered-drum-hub':('Tapered drum hub blank',[(5,0),(24,0),(24,4),(14,10),(10,28),(5,28)]),
+ 'rounded-eyelet-ring':('Rounded eyelet ring study',[(3,0),(7,0),(10,2),(11,5),(10,8),(7,10),(3,10),(2,8),(2,2)]),
+ 'flanged-step-roller':('Flanged step roller blank',[(4,0),(20,0),(20,3),(13,3),(13,12),(10,12),(10,22),(20,22),(20,25),(4,25)]),
+ 'thin-reducer-cap':('Thin reducer cap study',[(0,0),(16,0),(16,6),(10,18),(8,18),(14,5),(14,2),(0,2)]),
+ 'long-neck-boss':('Long-neck boss blank',[(3,0),(17,0),(17,4),(7,4),(7,35),(3,35)]),
+ 'annular-groove-hub':('Annular groove hub blank',[(5,0),(15,0),(15,12),(13,12),(13,8),(10,8),(10,12),(8,12),(8,20),(5,20)]),
+ 'stepped-ferrule-eyelet':('Stepped ferrule eyelet study',[(3,0),(9,0),(9,2),(5,2),(5,14),(7,16),(7,18),(3,18)]),
+ 'conical-thrust-ring':('Conical thrust ring study',[(5,0),(17,0),(17,4),(10,10),(7,10),(5,8)]),
+ 'twin-recess-roller':('Twin-recess roller blank',[(4,4),(10,4),(10,0),(18,0),(18,24),(10,24),(10,20),(4,20)]),
+ 'thin-profiled-cover':('Thin profiled cover study',[(0,0),(13,0),(13,8),(16,12),(16,16),(14.5,16),(14.5,12.5),(11.5,8.5),(11.5,1.5),(0,1.5)]),
+ 'short-tapered-arbor':('Short tapered arbor blank',[(0,0),(12,0),(12,4),(7,4),(4,24),(0,24)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
