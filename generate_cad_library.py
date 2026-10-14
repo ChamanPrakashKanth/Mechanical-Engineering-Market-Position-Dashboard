@@ -275,6 +275,22 @@ profiles={
  'twin-recess-roller':('Twin-recess roller blank',[(4,4),(10,4),(10,0),(18,0),(18,24),(10,24),(10,20),(4,20)]),
  'thin-profiled-cover':('Thin profiled cover study',[(0,0),(13,0),(13,8),(16,12),(16,16),(14.5,16),(14.5,12.5),(11.5,8.5),(11.5,1.5),(0,1.5)]),
  'short-tapered-arbor':('Short tapered arbor blank',[(0,0),(12,0),(12,4),(7,4),(4,24),(0,24)]),
+ 'stepped-pulley-sleeve':('Stepped pulley sleeve',[(4,0),(10,0),(10,8),(14,8),(14,12),(8,12),(8,26),(4,26)]),
+ 'thin-hat-cover':('Thin hat cover study',[(0,0),(12,0),(12,18),(20,18),(20,20),(10,20),(10,2),(0,2)]),
+ 'recessed-bearing-ring':('Recessed bearing ring blank',[(6,0),(18,0),(18,8),(14,8),(14,5),(10,5),(10,12),(6,12)]),
+ 'rounded-shoulder-pin':('Rounded shoulder pin blank',[(0,0),(9,0),(11,2),(11,4),(9,6),(5,6),(5,26),(4,28),(0,28)]),
+ 'long-counterbore-bush':('Long counterbore bush',[(4,0),(10,0),(10,36),(7,36),(7,26),(4,26)]),
+ 'tapered-lip-ring':('Tapered lip ring study',[(5,0),(15,0),(15,3),(10,9),(9,9),(13,3),(5,3)]),
+ 'flanged-crowned-roller':('Flanged crowned roller blank',[(4,0),(19,0),(19,3),(12,3),(14,9),(15,15),(14,21),(12,27),(19,27),(19,30),(4,30)]),
+ 'hollow-stepped-arbor':('Hollow stepped arbor blank',[(3,0),(12,0),(12,6),(8,6),(8,24),(5,24),(5,40),(3,40)]),
+ 'thin-cable-funnel':('Thin cable funnel study',[(5,0),(7,0),(7,8),(18,24),(16.5,25),(5,9)]),
+ 'double-face-groove-ring':('Double-face groove ring',[(5,0),(9,0),(9,2),(12,2),(12,0),(17,0),(17,8),(12,8),(12,6),(9,6),(9,8),(5,8)]),
+ 'shouldered-reducer':('Shouldered reducer sleeve',[(4,0),(10,0),(10,4),(8,4),(8,14),(13,24),(11,24),(6,14),(4,14)]),
+ 'deep-lip-cap':('Deep lip cap study',[(0,0),(15,0),(15,22),(18,22),(18,25),(13,25),(13,2),(0,2)]),
+ 'twin-step-idler':('Twin-step idler blank',[(4,0),(10,0),(10,5),(14,5),(14,10),(18,10),(18,20),(14,20),(14,25),(10,25),(10,30),(4,30)]),
+ 'annular-mounting-boss':('Annular mounting boss blank',[(5,0),(20,0),(20,4),(11,4),(11,18),(8,18),(8,10),(5,10)]),
+ 'thin-conical-sleeve-flange':('Thin conical sleeve with flange',[(6,0),(15,0),(15,2),(8,2),(12,28),(10.5,28)]),
+ 'rounded-drum-blank':('Rounded drum blank',[(5,0),(16,0),(20,3),(22,7),(22,19),(20,23),(16,26),(5,26)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
