@@ -147,6 +147,22 @@ profiles={
  'tapered-plug':('Tapered plug blank',[(0,0),(10,0),(7,20),(0,20)]),
  'pulley-hub-blank':('Pulley hub blank',[(5,0),(12,0),(12,8),(22,8),(22,12),(12,12),(12,20),(5,20)]),
  'flared-tube-mouth':('Flared tube mouth study',[(5,0),(6.5,0),(6.5,15),(11,23),(9.5,23),(5,15)]),
+ 'top-hat-spacer':('Top-hat spacer',[(3,0),(12,0),(12,2),(6,2),(6,15),(3,15)]),
+ 'stepped-bore-bushing':('Stepped-bore bushing',[(4,0),(10,0),(10,22),(7,22),(7,12),(4,12)]),
+ 'double-taper-sleeve':('Double-taper sleeve',[(4,0),(6,0),(10,12),(6,24),(4,24),(8,12)]),
+ 'flanged-guide-roller':('Flanged guide roller',[(4,0),(18,0),(18,3),(12,3),(12,22),(18,22),(18,25),(4,25)]),
+ 'wire-guide-eyelet':('Wire guide eyelet study',[(3,0),(7,0),(9,2),(9,5),(7,7),(3,7),(2,6),(2,1)]),
+ 'chamfered-thrust-ring':('Chamfered thrust ring',[(6,0),(15,0),(16,1),(16,5),(15,6),(6,6),(5,5),(5,1)]),
+ 'stepped-piston-blank':('Stepped piston blank',[(0,0),(14,0),(14,5),(12,5),(12,8),(14,8),(14,16),(8,16),(8,22),(0,22)]),
+ 'turned-handle-blank':('Turned handle blank',[(0,0),(5,0),(5,8),(8,12),(10,24),(8,36),(5,40),(0,40)]),
+ 'venturi-tube-study':('Venturi tube geometry study',[(10,0),(12,0),(12,40),(10,40),(5,24),(5,16)]),
+ 'double-lip-ring':('Double-lip ring study',[(5,0),(12,0),(12,2),(10,2),(10,8),(9,8),(9,2),(7,2),(7,8),(6,8),(6,2),(5,2)]),
+ 'grooved-mandrel-blank':('Grooved mandrel blank',[(0,0),(8,0),(8,8),(6,8),(6,10),(8,10),(8,24),(6,24),(6,26),(8,26),(8,34),(0,34)]),
+ 'tapered-ferrule':('Tapered ferrule',[(4,0),(6,0),(8,16),(7,18),(6,18)]),
+ 'recessed-mounting-foot':('Recessed mounting foot blank',[(0,0),(18,0),(18,4),(10,4),(10,16),(4,16),(4,5),(0,5)]),
+ 'axial-stop-ring':('Axial stop ring blank',[(6,0),(12,0),(12,8),(10,8),(10,5),(6,5)]),
+ 'conical-roller':('Conical roller blank',[(4,0),(10,0),(18,25),(4,25)]),
+ 'thin-flared-cup':('Thin flared cup study',[(0,0),(12,0),(18,20),(16.5,20),(10.8,1.5),(0,1.5)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
