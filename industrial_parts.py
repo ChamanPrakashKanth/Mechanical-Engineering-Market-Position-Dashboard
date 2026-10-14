@@ -98,6 +98,46 @@ PARTS = [
  for(x=[10,length-10]) for(y=[12,depth-12]) translate([x,y,-1]) cylinder(d=8.5,h=base+2);
 }''',
  notes='Ear inner faces are X 24 and 56 mm, giving a 32 mm fork gap. Ears are 10 mm thick. Coaxial Ø12 pin holes are centered on Y 30, Z 45. Base mounting holes are at X 10/70, Y 12/48. Pin retention, bearing stress, ear bending, tolerances and fatigue require separate design work.'),
+ dict(slug='industrial-v-block',title='V-block fixture study',dims='90 × 60 × 45 mm · 90° V groove · four Ø6.5 holes',
+ params='length=90; width=60; height=45; groove_depth=20;',
+ code='''difference(){
+ cube([length,width,height]);
+ translate([-1,width/2,height-groove_depth]) rotate([90,0,90]) linear_extrude(height=length+2)
+ polygon([[0,0],[groove_depth+2,groove_depth+2],[-groove_depth-2,groove_depth+2]]);
+ for(x=[12,length-12]) for(y=[8,width-8]) translate([x,y,-1]) cylinder(d=6.5,h=height+2);
+}''',
+ notes='V groove runs along X with its apex at Y 30, Z 25 mm; its included angle is 90°. Four vertical Ø6.5 through holes are at X 12/78, Y 8/52. No clamp strap, hardened surfaces, alignment tolerances or holding-force rating is supplied.'),
+ dict(slug='industrial-four-bolt-flange',title='Four-bolt pipe flange study',dims='Ø100 × 12 mm plate · Ø32 bore · Ø56 × 18 mm hub',
+ params='diameter=100; thickness=12; hub=56; hub_height=18; bore=32; bolt_circle=76;',
+ code='''difference(){
+ union(){cylinder(d=diameter,h=thickness);translate([0,0,thickness]) cylinder(d=hub,h=hub_height);}
+ translate([0,0,-1]) cylinder(d=bore,h=thickness+hub_height+2);
+ for(a=[0,90,180,270]) rotate([0,0,a]) translate([bolt_circle/2,0,-1]) cylinder(d=11,h=thickness+2);
+}''',
+ notes='Four Ø11 through holes are equally spaced on a Ø76 bolt circle. Nominal bore is Ø32 and total height is 30 mm. This custom geometry is not an ASME, EN or pressure-class flange. Gasket seating, bolt preload, material and pressure suitability are unspecified.'),
+ dict(slug='industrial-pocketed-fixture-plate',title='Pocketed fixture plate',dims='120 × 90 × 16 mm · 70 × 40 × 6 mm pocket · six Ø6.5 holes',
+ params='length=120; width=90; thickness=16; pocket_length=70; pocket_width=40; pocket_depth=6;',
+ code='''difference(){
+ cube([length,width,thickness]);
+ translate([(length-pocket_length)/2,(width-pocket_width)/2,thickness-pocket_depth]) cube([pocket_length,pocket_width,pocket_depth+1]);
+ for(x=[15,60,105]) for(y=[12,78]) translate([x,y,-1]) cylinder(d=6.5,h=thickness+2);
+ for(x=[35,85]) translate([x,width/2,-1]) cylinder(d=5,h=thickness+2);
+}''',
+ notes='Centered rectangular pocket has sharp internal corners in the model: actual milling requires corner radii or relief. Six Ø6.5 through holes are at X 15/60/105, Y 12/78. Two Ø5 locating-hole blanks are at X 35/85, Y 45. No dowel-fit tolerances or clamping scheme is established.'),
+ dict(slug='industrial-ribbed-angle-mount',title='Ribbed angle mount with slots',dims='90 × 65 × 75 mm · 8 mm walls · two upright slots',
+ params='width=90; depth=65; height=75; wall=8; slot=7;',
+ code='''difference(){
+ union(){
+ cube([width,depth,wall]);cube([width,wall,height]);
+ for(x=[8,width-14]) translate([x,wall,wall]) rotate([90,0,90]) linear_extrude(height=6) polygon([[0,0],[40,0],[0,50]]);
+ }
+ for(x=[28,62]) hull(){
+ translate([x,-1,30]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);
+ translate([x,-1,58]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);
+ }
+ for(x=[28,62]) for(y=[30,50]) translate([x,y,-1]) cylinder(d=8.5,h=wall+2);
+}''',
+ notes='Two upright slots are 7 mm wide, with endpoint centers at Z 30/58 and X 28/62, giving 28 mm center travel. Four base Ø8.5 holes are at X 28/62, Y 30/50. Side ribs are 6 mm thick. Load capacity, weld details and manufacturing radii are not specified.'),
 ]
 
 if __name__ == '__main__':

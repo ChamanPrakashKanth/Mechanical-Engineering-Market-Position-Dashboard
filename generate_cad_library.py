@@ -362,6 +362,7 @@ html=html.replace('<p><label for="search">','<section class="card"><p class="eye
 for slug in industrial_by_slug:
     title=industrial_by_slug[slug]['title'].lower()
     html=html.replace('data-part="'+title+'"','data-part="industrial '+title+'"')
+html=html.replace('The first 8 models','The first '+str(len(INDUSTRIAL_PARTS))+' models')
 (ROOT/'engineering-careers/cad-library.html').write_text(html,encoding='utf-8')
 
 # Each part page exposes its actual dimensions and source, not a keyword-only stub.
