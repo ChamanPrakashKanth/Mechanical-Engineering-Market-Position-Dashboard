@@ -195,6 +195,22 @@ profiles={
  'seal-carrier-ring':('Seal carrier ring study',[(6,0),(15,0),(15,10),(12,10),(12,6),(9,6),(9,10),(6,10)]),
  'hollow-tapered-roller':('Hollow tapered roller blank',[(4,0),(10,0),(16,25),(13,25),(7,3),(4,3)]),
  'stepped-end-plug':('Stepped end plug blank',[(0,0),(15,0),(15,3),(10,3),(10,12),(7,12),(7,20),(0,20)]),
+ 'rimmed-wheel-blank':('Rimmed wheel blank',[(4,0),(18,0),(18,3),(24,3),(24,10),(18,10),(18,13),(4,13)]),
+ 'recessed-hub':('Recessed hub blank',[(4,0),(14,0),(14,18),(10,18),(10,13),(6,13),(6,6),(4,6)]),
+ 'flanged-nozzle':('Flanged nozzle blank',[(2,0),(16,0),(16,3),(8,3),(4,22),(2,22)]),
+ 'ribbed-cable-sleeve':('Ribbed cable sleeve study',[(4,0),(7,0),(7,3),(6,3),(6,6),(7,6),(7,9),(6,9),(6,12),(7,12),(7,15),(6,15),(6,18),(7,18),(7,21),(4,21)]),
+ 'stepped-cup':('Stepped cup blank',[(0,0),(15,0),(15,8),(12,8),(12,22),(10,22),(10,6),(13,6),(13,2),(0,2)]),
+ 'countersunk-spacer':('Countersunk spacer',[(3,0),(9,0),(9,16),(6,16),(3,13)]),
+ 'twin-flange-adapter':('Twin-flange adapter blank',[(4,0),(16,0),(16,4),(8,4),(8,18),(16,18),(16,22),(6,22),(6,12),(4,12)]),
+ 'tapered-guide-pin':('Tapered guide pin blank',[(0,0),(7,0),(7,5),(5,5),(5,20),(2,28),(0,28)]),
+ 'deep-flanged-cup':('Deep flanged cup study',[(0,0),(12,0),(12,30),(18,30),(18,33),(10,33),(10,2),(0,2)]),
+ 'thin-conical-ring':('Thin conical ring study',[(8,0),(9,0),(15,12),(14,12)]),
+ 'three-step-spacer':('Three-step spacer',[(3,0),(12,0),(12,5),(9,5),(9,12),(6,12),(6,20),(3,20)]),
+ 'rounded-rim-ring':('Rounded rim ring study',[(5,0),(12,0),(15,2),(16,4),(15,6),(12,8),(5,8)]),
+ 'short-bearing-boss':('Short bearing boss blank',[(5,0),(18,0),(18,3),(11,3),(11,14),(8,14),(8,8),(5,8)]),
+ 'stepped-hollow-axle':('Stepped hollow axle blank',[(3,0),(8,0),(8,8),(6,8),(6,32),(8,32),(8,40),(3,40)]),
+ 'tapered-seat-washer':('Tapered seat washer',[(4,0),(14,0),(14,3),(10,7),(7,7),(4,4)]),
+ 'flared-reel':('Flared reel blank',[(3,0),(20,0),(20,2),(9,6),(9,18),(20,22),(20,24),(3,24)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
