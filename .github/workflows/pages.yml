@@ -27,7 +27,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site/assets _site/manim_courses/renders _site/engineering-careers
-          cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css robots.txt sitemap.xml .nojekyll _site/
+          cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css robots.txt sitemap.xml cad-sitemap.xml .nojekyll _site/
           cp engineering_reference_profiles.json _site/
           cp engineering-careers/*.html _site/engineering-careers/
           cp engineering-careers/app.js _site/engineering-careers/
