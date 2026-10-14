@@ -4,6 +4,8 @@
 
 ## Main tools
 
+- [Mechanical Engineering Portfolio Project Planner and Resume Bullet Builder](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-engineering-portfolio-planner.html): Four educational project briefs with requirements, deliverables, verification prompts, and editorial effort estimates. Drafts factual resume bullets from user-entered details. Runs locally with no tokens or persistence.
+
 - [Mechanical Engineering Resume–Job Match Checker](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-engineering-resume-checker.html): Free local technical keyword comparison with explicit aliases, resume excerpts, evidence prompts, and downloadable report. Coverage is not an ATS score.
 
 - [Engineering Career Assessment](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Build a profile, review skill gaps and role matches, explore learning content, and plan next steps.
