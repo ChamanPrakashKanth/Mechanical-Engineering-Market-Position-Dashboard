@@ -163,6 +163,22 @@ profiles={
  'axial-stop-ring':('Axial stop ring blank',[(6,0),(12,0),(12,8),(10,8),(10,5),(6,5)]),
  'conical-roller':('Conical roller blank',[(4,0),(10,0),(18,25),(4,25)]),
  'thin-flared-cup':('Thin flared cup study',[(0,0),(12,0),(18,20),(16.5,20),(10.8,1.5),(0,1.5)]),
+ 'bearing-seat-sleeve':('Bearing-seat sleeve blank',[(5,0),(11,0),(11,5),(9,5),(9,25),(7,25),(7,12),(5,12)]),
+ 'flanged-ferrule':('Flanged ferrule',[(4,0),(11,0),(11,2),(6,2),(6,18),(4,18)]),
+ 'recessed-disc':('Recessed disc blank',[(0,0),(20,0),(20,6),(16,6),(16,3),(0,3)]),
+ 'crowned-roller':('Crowned roller study',[(4,0),(12,0),(14,6),(15,12),(14,18),(12,24),(4,24)]),
+ 'triple-groove-pulley':('Triple-groove pulley blank',[(4,0),(20,0),(20,2),(15,5),(20,8),(20,10),(15,13),(20,16),(20,18),(15,21),(20,24),(20,26),(4,26)]),
+ 'two-step-shaft':('Two-step shaft blank',[(0,0),(12,0),(12,10),(8,10),(8,35),(5,35),(5,50),(0,50)]),
+ 'cable-pass-sleeve':('Cable pass-through sleeve study',[(5,0),(9,0),(9,3),(7,3),(7,25),(9,25),(9,28),(5,28)]),
+ 'thin-conical-shroud':('Thin conical shroud',[(18,0),(19,0),(9,30),(8,30)]),
+ 'dished-roller':('Dished roller blank',[(4,0),(18,0),(18,12),(15,12),(9,6),(4,6)]),
+ 'tapered-mandrel':('Tapered mandrel blank',[(0,0),(8,0),(8,5),(5,5),(3,40),(0,40)]),
+ 'cup-with-bore':('Bored cup blank',[(3,0),(16,0),(16,20),(14,20),(14,3),(3,3)]),
+ 'annular-recess-spacer':('Annular recess spacer',[(5,0),(13,0),(13,10),(11,10),(11,7),(8,7),(8,10),(5,10)]),
+ 'shouldered-guide-sleeve':('Shouldered guide sleeve',[(4,0),(8,0),(8,16),(12,16),(12,20),(7,20),(7,25),(4,25)]),
+ 'double-cone-roller':('Double-cone roller blank',[(4,0),(9,0),(17,15),(9,30),(4,30)]),
+ 'tapered-end-cap':('Tapered end cap study',[(0,0),(12,0),(9,18),(7.5,18),(10.2,2),(0,2)]),
+ 'small-reel':('Small winding reel blank',[(3,0),(16,0),(16,2),(7,2),(7,18),(16,18),(16,20),(3,20)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
