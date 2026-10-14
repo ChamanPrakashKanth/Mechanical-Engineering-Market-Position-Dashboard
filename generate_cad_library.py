@@ -50,12 +50,36 @@ parts=[
  ('rectangular-plate','Rectangular plate','Length 60 · width 40 · thickness 5 mm',box(60,40,5),
   'length=60;\nwidth=40;\nheight=5;', 'cube([length,width,height]);',60,40,5)
 ]
+# Reuse the same primitives for a compact collection of useful stock shapes.
+for slug,title,od,inner,h in [
+ ('thin-shim','Thin shim',30,12,0.5),
+ ('heavy-washer','Heavy washer',36,14,5),
+ ('short-bushing','Short bushing',22,12,15),
+ ('long-sleeve','Long sleeve',20,12,50),
+ ('round-disk','Round disk',40,0,6),
+ ('dowel-pin','Plain dowel pin',6,0,30),
+ ('tube-section','Tube section',30,24,60),
+ ('annular-flange-blank','Annular flange blank',60,24,8),
+]:
+    params=f'outer_diameter={od};\ninner_diameter={inner};\nheight={h};'
+    model='difference(){ cylinder(d=outer_diameter,h=height); if(inner_diameter>0) translate([0,0,-1]) cylinder(d=inner_diameter,h=height+2); }'
+    dims=f'OD {od} · '+(f'ID {inner} · ' if inner else '')+f'height {h} mm'
+    parts.append((slug,title,dims,ring(od/2,inner/2,h),params,model,od,inner,h))
+for slug,title,x,y,z in [
+ ('square-plate','Square plate',50,50,6),
+ ('rectangular-bar','Rectangular bar',100,20,10),
+ ('stock-block','Stock block',40,30,25),
+]:
+    parts.append((slug,title,f'{x} × {y} × {z} mm',box(x,y,z),f'length={x};\nwidth={y};\nheight={z};','cube([length,width,height]);',x,y,z))
+parts.append(('hexagonal-blank','Hexagonal blank','Across corners 24 · length 15 mm',ring(12,0,15,6),'across_corners=24;\nheight=15;','cylinder(d=across_corners,h=height,$fn=6);',24,0,15))
 cards=[]
 for slug,title,dims,faces,params,model,od,inside,height in parts:
     stl(OUT/(slug+'.stl'),faces)
     (OUT/(slug+'.scad')).write_text('// Original MechIntel educational model. CC0-1.0. Units: mm.\n// Not a standardized or load-rated component.\n$fn=96;\n'+params+'\n'+model+'\n',encoding='utf-8')
-    if slug=='rectangular-plate':
+    if model.startswith('cube'):
         drawing='<path d="M65 65L190 45L245 90L120 115Z" fill="#a3ecd5"/><path d="M65 65V85L120 135V115Z" fill="#548e80"/><path d="M120 115V135L245 110V90Z" fill="#76b9a5"/>'
+    elif slug=='hexagonal-blank':
+        drawing='<polygon points="145,90 117.5,137.63 62.5,137.63 35,90 62.5,42.37 117.5,42.37" fill="#a3ecd5"/><rect x="180" y="70" width="65" height="75" fill="#76b9a5"/><text x="90" y="170">TOP</text><text x="210" y="170">SIDE</text>'
     else:
         # Orthographic top and side views derived from model dimensions.
         scale=55/(od/2); outer=55; inner=inside/2*scale
@@ -64,7 +88,7 @@ for slug,title,dims,faces,params,model,od,inside,height in parts:
     (OUT/(slug+'.svg')).write_text(svg,encoding='utf-8')
     cards.append(f'<article class="card" data-part="{title.lower()}"><img src="../assets/cad/{slug}.svg" alt="{title}: illustrative geometry preview" width="300" height="190"><h2>{title}</h2><p>{dims}</p><small>Original simplified geometry · no threads, chamfers, tolerances or material specification</small><div class="actions"><a class="cta" download href="../assets/cad/{slug}.stl">Download STL</a><a class="cta secondary" download href="../assets/cad/{slug}.scad">OpenSCAD source</a></div></article>')
 
-(OUT/'README.txt').write_text('MechIntel CAD starter library\nOriginal educational geometry, released under CC0 1.0 Universal.\nhttps://creativecommons.org/publicdomain/zero/1.0/\n\nAll dimensions are millimetres. STL does not encode units: select mm when importing.\nSTL is a faceted mesh (96 segments around circles), not editable STEP or a native feature tree.\nOpen the .scad sources in OpenSCAD to change the dimensions and regenerate geometry.\nThe four models have no tolerances, threads, chamfers, fits, material specifications, or load ratings.\nThey are not representations of standardized catalog hardware. Check dimensions and suitability before fabrication.\nSVG previews are illustrative and are not dimensioned manufacturing drawings.\n',encoding='utf-8')
+(OUT/'README.txt').write_text('MechIntel CAD starter library\nOriginal educational geometry, released under CC0 1.0 Universal.\nhttps://creativecommons.org/publicdomain/zero/1.0/\n\nAll dimensions are millimetres. STL does not encode units: select mm when importing.\nSTL is a faceted mesh (96 segments around circles), not editable STEP or a native feature tree.\nOpen the .scad sources in OpenSCAD to change the dimensions and regenerate geometry.\nThe models have no tolerances, threads, chamfers, fits, material specifications, or load ratings.\nThey are not representations of standardized catalog hardware. Check dimensions and suitability before fabrication.\nSVG previews are illustrative and are not dimensioned manufacturing drawings.\n',encoding='utf-8')
 with zipfile.ZipFile(OUT/'mechintel-simple-parts.zip','w',zipfile.ZIP_DEFLATED) as z:
     for p in sorted(OUT.iterdir()):
         if p.suffix in ('.stl','.scad','.svg','.txt'): z.write(p,p.name)
@@ -73,4 +97,5 @@ base=(ROOT/'engineering-careers/mechanical-engineering-resume-checker.html').rea
 css=base.split('<style>')[1].split('</style>')[0]
 url='https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/cad-library.html'
 html='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Free Mechanical CAD Library: STL & OpenSCAD Parts | MechIntel</title><meta name="description" content="Download four simple mechanical CAD parts: washer, spacer, shaft and plate. Free STL meshes and editable parametric OpenSCAD sources, with dimensions in millimetres."><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'''+url+'''"><meta name="theme-color" content="#0b1216"><style>'''+css+''' .card img{width:100%;height:190px;object-fit:contain}input{background:#132127;color:#edf5f1;border:1px solid #49685d;border-radius:10px;padding:14px;font:inherit;width:100%;max-width:480px}.grid .card{margin-top:0}#parts{margin-top:25px}</style></head><body><header><a class="brand" href="../">MechIntel.ai</a><nav aria-label="Main"><a href="../#resume-builder">Resume Builder</a><a href="mechanical-engineering-portfolio-planner.html">Project Planner</a><a href="./">Career Guides</a></nav></header><main><p class="eyebrow">Small parts · useful starting points</p><h1>Mechanical CAD Library</h1><p class="intro">Four original, simple parts for learning CAD and starting your own models. Download a ready-made STL mesh or edit the dimensions in the parametric OpenSCAD source.</p><div class="pills"><span>Free · CC0</span><span>Millimetres</span><span>No signup, tokens or GPU</span></div><div class="actions"><a class="cta" download href="../assets/cad/mechintel-simple-parts.zip">Download all four parts (.zip)</a><a href="../assets/cad/README.txt">Read file notes</a></div><section class="card"><h2>What is included?</h2><p>Each part includes an STL mesh and an editable .scad source. Circles use 96 segments. STL is a faceted format and does not encode units: select <strong>millimetres</strong> when importing. These downloads do not include STEP or native SolidWorks files.</p><p>These are simplified educational models, not standardized catalog hardware. No tolerances, material properties, threads, chamfers, fits or load ratings are specified. Confirm suitability before fabrication.</p></section><p><label for="search">Find a part</label></p><input id="search" type="search" placeholder="Washer, spacer, shaft, plate…"><p id="count" role="status">4 parts</p><div id="parts" class="grid">'''+''.join(cards)+'''</div><section class="card"><h2>How do I change the dimensions?</h2><ol><li>Download a part’s OpenSCAD source.</li><li>Open it in OpenSCAD and edit the named dimensions at the top. Keep dimensions positive; for hollow parts, keep the inside diameter smaller than the outside diameter.</li><li>Render the model and export a new mesh. Check dimensions in your CAD or slicing application.</li></ol><h2>Can I use these models commercially?</h2><p>MechIntel releases these original geometries under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</a>. Attribution is appreciated but not required. There is no warranty or certification. File dimensions, not preview scaling, define the geometry.</p><p>Created October 14, 2026. Sources are included so you can inspect and modify the geometry. <a href="mechanical-engineering-portfolio-planner.html">Turn a part study into a portfolio project →</a></p></section></main><footer><p>MechIntel · Original educational CAD geometry</p></footer><script>const search=document.getElementById('search');search.addEventListener('input',()=>{let visible=0;document.querySelectorAll('[data-part]').forEach(card=>{card.hidden=!card.dataset.part.includes(search.value.trim().toLowerCase());if(!card.hidden)visible++;});document.getElementById('count').textContent=visible+' parts'+(visible?'':' — try washer, spacer, shaft, or plate');});</script></body></html>'''
+html=html.replace('Download four simple mechanical CAD parts: washer, spacer, shaft and plate.','Download 16 simple mechanical CAD parts: washers, bushings, sleeves, stock plates, pins and blanks.').replace('Four original, simple parts','16 original, simple parts').replace('Download all four parts','Download all 16 parts').replace('>4 parts<','>16 parts<').replace('Washer, spacer, shaft, plate…','Washer, bushing, sleeve, disk, bar…')
 (ROOT/'engineering-careers/cad-library.html').write_text(html,encoding='utf-8')
