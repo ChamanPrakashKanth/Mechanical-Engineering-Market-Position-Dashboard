@@ -4,6 +4,8 @@
 
 ## Main tools
 
+- [Mechanical Engineering Resume–Job Match Checker](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-engineering-resume-checker.html): Free local technical keyword comparison with explicit aliases, resume excerpts, evidence prompts, and downloadable report. Coverage is not an ATS score.
+
 - [Engineering Career Assessment](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Build a profile, review skill gaps and role matches, explore learning content, and plan next steps.
 - [Resume Builder and ATS Review](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Create a structured resume draft from user-provided facts. Resume parsing and deterministic drafting run in the browser; no generative AI token or GPU is used.
 - [Career Path Simulator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/): Compare a profile with a selected engineering pathway, adjust study hours and plan duration, and review suggested milestones. The projection is a planning estimate, not a hiring forecast.
