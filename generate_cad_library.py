@@ -291,6 +291,22 @@ profiles={
  'annular-mounting-boss':('Annular mounting boss blank',[(5,0),(20,0),(20,4),(11,4),(11,18),(8,18),(8,10),(5,10)]),
  'thin-conical-sleeve-flange':('Thin conical sleeve with flange',[(6,0),(15,0),(15,2),(8,2),(12,28),(10.5,28)]),
  'rounded-drum-blank':('Rounded drum blank',[(5,0),(16,0),(20,3),(22,7),(22,19),(20,23),(16,26),(5,26)]),
+ 'stepped-flange-roller':('Stepped flange roller blank',[(4,0),(21,0),(21,3),(14,3),(14,10),(11,10),(11,24),(21,24),(21,27),(4,27)]),
+ 'thin-shoulder-cap':('Thin shoulder cap study',[(0,0),(13,0),(13,10),(16,10),(16,19),(14.5,19),(14.5,11.5),(11.5,11.5),(11.5,1.5),(0,1.5)]),
+ 'long-flanged-eyelet':('Long flanged eyelet study',[(3,0),(11,0),(11,2),(5,2),(5,24),(3,24)]),
+ 'recessed-conical-hub':('Recessed conical hub blank',[(4,0),(18,0),(18,4),(11,22),(7,22),(7,15),(4,15)]),
+ 'rounded-thrust-collar':('Rounded thrust collar blank',[(5,0),(13,0),(16,2),(17,5),(16,8),(13,10),(9,10),(9,16),(5,16)]),
+ 'double-flare-sleeve':('Double-flare sleeve study',[(8,0),(10,0),(6,8),(6,22),(10,30),(8,30),(4,22),(4,8)]),
+ 'grooved-shoulder-pin':('Grooved shoulder pin blank',[(0,0),(10,0),(10,5),(6,5),(6,12),(4.5,12),(4.5,14),(6,14),(6,30),(0,30)]),
+ 'thin-annular-cover':('Thin annular cover study',[(5,0),(20,0),(20,10),(18.5,10),(18.5,1.5),(5,1.5)]),
+ 'tapered-bore-bush':('Tapered-bore bush blank',[(3,0),(10,0),(10,25),(7,25)]),
+ 'deep-recess-button':('Deep recess button blank',[(0,0),(14,0),(16,2),(16,12),(14,14),(8,14),(8,4),(0,4)]),
+ 'triple-step-hub':('Triple-step hub blank',[(4,0),(18,0),(18,6),(14,6),(14,14),(10,14),(10,24),(4,24)]),
+ 'rimmed-conical-wheel':('Rimmed conical wheel blank',[(4,0),(16,0),(16,3),(24,3),(24,8),(14,24),(4,24)]),
+ 'thin-necked-cover':('Thin necked cover study',[(0,0),(16,0),(16,12),(10,18),(10,25),(8.5,25),(8.5,17.5),(14.5,11.5),(14.5,1.5),(0,1.5)]),
+ 'counterbore-seat-ring':('Counterbore seat ring',[(4,0),(15,0),(15,12),(9,12),(9,7),(6,7),(6,3),(4,3)]),
+ 'hollow-flanged-arbor':('Hollow flanged arbor blank',[(3,0),(16,0),(16,4),(8,4),(6,35),(3,35)]),
+ 'recessed-double-collar':('Recessed double collar blank',[(5,0),(16,0),(16,4),(10,4),(10,18),(16,18),(16,22),(9,22),(9,16),(5,16)]),
 }
 for slug,(title,profile) in profiles.items():
     radius=max(p[0] for p in profile);height=max(p[1] for p in profile)
