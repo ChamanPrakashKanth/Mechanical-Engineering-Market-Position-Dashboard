@@ -337,14 +337,18 @@ for slug,title,dims,faces,params,model,od,inside,height in parts:
     if faces is not None:
         stl(mesh_path,faces)
     (OUT/(slug+'.scad')).write_text('// Original MechIntel educational model. CC0-1.0. Units: mm.\n// Not a standardized or load-rated component.\n$fn=96;\n'+params+'\n'+model+'\n',encoding='utf-8')
-    if slug in industrial_by_slug and faces:
+    if slug in industrial_by_slug and faces and mesh_path.exists():
         drawing=mesh_preview(faces)
     elif slug in industrial_by_slug:
-        schematic={
+        drawing={
           'industrial-conveyor-photoeye-mount':'<path d="M35 145H245V164H35Z M100 145V38H120V145Z M78 143L101 111V143Z M119 145L152 111V145Z M120 55H170V72H120Z" fill="#a3ecd5"/><circle cx="160" cy="63" r="9" fill="#0b161b" stroke="#a3ecd5" stroke-width="4"/><path d="M55 152H78 M200 152H224 M106 62V85 M106 104V126" stroke="#0b161b" stroke-width="5" stroke-linecap="round"/>',
           'industrial-conveyor-takeup-slide-carriage':'<path d="M55 58H245V144H55Z" fill="#76b9a5"/><path d="M72 137H91V158H72ZM209 137H228V158H209Z" fill="#a3ecd5"/><circle cx="150" cy="101" r="29" fill="#0b161b" stroke="#a3ecd5" stroke-width="7"/><circle cx="150" cy="101" r="13" fill="#a3ecd5"/><path d="M56 101H103 M197 101H244" stroke="#a3ecd5" stroke-width="6"/><path d="M59 76V126 M241 76V126" stroke="#0b161b" stroke-width="5"/>',
           'industrial-pivot-idler-tensioner-bracket':'<path d="M55 145V52H78V129H222V52H245V145Z" fill="#76b9a5"/><circle cx="66" cy="119" r="9" fill="#0b161b" stroke="#a3ecd5" stroke-width="4"/><circle cx="234" cy="119" r="9" fill="#0b161b" stroke="#a3ecd5" stroke-width="4"/><path d="M79 121L180 65L195 84L93 139Z" fill="#a3ecd5"/><circle cx="88" cy="132" r="10" fill="#0b161b" stroke="#a3ecd5" stroke-width="4"/><circle cx="187" cy="74" r="12" fill="#0b161b" stroke="#a3ecd5" stroke-width="4"/><path d="M71 151H229" stroke="#a3ecd5" stroke-width="8"/>',
-          'industrial-conveyor-scraper-blade-holder':'<path d="M48 62H252V84H48Z M70 82H91V134H70ZM209 82H230V134H209Z" fill="#76b9a5"/><path d="M108 82H192V104H108Z" fill="#a3ecd5"/><path d="M130 104H170V153H130Z" fill="#a3ecd5"/><path d="M60 150H240" stroke="#a3ecd5" stroke-width="8"/><circle cx="82" cy="150" r="7" fill="#0b161b"/><circle cx="218" cy="150" r="7" fill="#0b161b"/>'
+          'industrial-conveyor-scraper-blade-holder':'<path d="M48 62H252V84H48Z M70 82H91V134H70ZM209 82H230V134H209Z" fill="#76b9a5"/><path d="M108 82H192V104H108Z" fill="#a3ecd5"/><path d="M130 104H170V153H130Z" fill="#a3ecd5"/><path d="M60 150H240" stroke="#a3ecd5" stroke-width="8"/><circle cx="82" cy="150" r="7" fill="#0b161b"/><circle cx="218" cy="150" r="7" fill="#0b161b"/>',
+          'industrial-cable-tray-cantilever-shelf-support':'<path d="M58 33H82V157H58Z M82 122H239V148H82Z" fill="#76b9a5"/><path d="M82 122L143 61V122Z M82 148L143 148L82 172Z" fill="#a3ecd5"/><path d="M61 53H79 M61 77H79 M61 111H79 M61 136H79" stroke="#0b161b" stroke-width="6" stroke-linecap="round"/><path d="M226 119V149" stroke="#0b161b" stroke-width="5"/>',
+          'industrial-cable-tray-hold-down-clamp':'<path d="M72 128V70H90V115H210V70H228V128Z" fill="#76b9a5"/><path d="M62 127H102V144H62Z M198 127H238V144H198Z" fill="#a3ecd5"/><path d="M71 133H93 M207 133H229" stroke="#0b161b" stroke-width="5" stroke-linecap="round"/>',
+          'industrial-wire-basket-splice-plate':'<rect x="45" y="70" width="210" height="66" rx="9" fill="#76b9a5"/><rect x="65" y="95" width="42" height="16" rx="8" fill="#0b161b" stroke="#a3ecd5" stroke-width="3"/><rect x="129" y="95" width="42" height="16" rx="8" fill="#0b161b" stroke="#a3ecd5" stroke-width="3"/><rect x="193" y="95" width="42" height="16" rx="8" fill="#0b161b" stroke="#a3ecd5" stroke-width="3"/>',
+          'industrial-cable-tray-trapeze-saddle':'<path d="M65 60H88V142H65Z M212 60H235V142H212Z M88 122H212V145H88Z" fill="#76b9a5"/><path d="M88 120L130 77V120Z M170 120L212 77V120Z" fill="#a3ecd5"/><circle cx="130" cy="133" r="8" fill="#0b161b" stroke="#a3ecd5" stroke-width="3"/><circle cx="170" cy="133" r="8" fill="#0b161b" stroke="#a3ecd5" stroke-width="3"/>'
         }[slug]
     elif slug in profiles:
         drawing=mesh_preview(revolve(profiles[slug][1],24))

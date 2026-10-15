@@ -94,3 +94,25 @@ Primary application references:
 - ASGCO, secondary belt-cleaner mounting bracket: https://www.asgco.com/products/secondary-mounting-bracket/
 
 The new shapes were authored independently from the referenced catalogs. OpenSCAD source is provided. STL export was attempted with the installed Windows OpenSCAD command-line binary, which failed before exporting because of a Windows system DLL relocation error. The pages therefore omit STL download links for this batch and direct users to render the editable source locally. Geometry is not load-, fit-, tension-, sanitation- or safety-rated. Revisit topic priority when Search Console collects query impressions and clicks.
+
+## Fifth batch — cable-tray supports, retention and splice hardware
+
+On 15 October 2026, searched web results for industrial cable-tray CAD models and specific hold-down clamp, cantilever shelf support, wire-basket splice plate and trapeze saddle phrases. Search results showed established product catalogs and some downloadable supplier CAD, including nVent CADDY, Legrand and ABB. This confirms product-family and design use; it does not establish monthly query volume. Search-result counts and sparse exact phrase matches are not reliable keyword-difficulty measures, so treat these as long-tail topic hypotheses and validate with Search Console after indexing.
+
+| Original model | Demand/use-case evidence | Search opportunity hypothesis and competition |
+|---|---|---|
+| Cable tray cantilever shelf support bracket study | nVent CADDY publishes a wire-basket shelf support as a downloadable CAD model; Gripple has a broad cable-tray support CAD detail catalog | Vendor CAD is direct competition. A dimensioned, editable custom bracket page may serve layout and learning queries such as cable tray cantilever support bracket dimensions; not a load-rated replacement. |
+| Cable tray hold-down bridge clamp study | Legrand documents ladder-tray hold-down supports and publishes product drawings; field material lists frequently include hold-down clamps | Standard hardware has supplier competition. The page provides an adjustable study shape and explicit dimensions, while exact tray profile/fit demand remains unmeasured. |
+| Wire basket cable tray splice plate study | EAE illustrates basket joint fittings; ABB offers a broad cable-tray CAD catalog | Manufacturer CAD and product catalogs exist. A generic editable splice-plate model may address custom slot layouts and hole spacing, but does not claim compatibility with a specific wire pattern. |
+| Cable tray trapeze support saddle study | nVent CADDY product families and EAE application drawings show cable-tray support layouts | Generic tray-support terms are competitive. Narrower layout/clearance queries may be less served by independent editable models; actual search volume and difficulty were not verified. |
+
+Primary application references:
+
+- nVent CADDY cable-tray shelf-support CAD model: https://www.traceparts.com/en/product/nvent-caddy-wbt-performance-cable-tray-shelf-support?Product=90-11032024-027642
+- Gripple cable-tray clips and support CAD details: https://www.gripple.com/downloads-hub/2d-cad-details/
+- Legrand ladder-tray hold-down support family: https://www.legrand.ca/wire-and-cable-management/cable-tray-and-reels/ladder-trays/itray-aluminum-ladder-tray-hold-down-supports/p/series-itray-supports-hd
+- Legrand A833 heavy-duty hold-down drawing: https://www.legrand.ca/p/view-asset?downloadUrl=https%3A%2F%2Flegrand.webdamdb.com%2Fdirectdownload.php%3Fti%3D577441954%26tok%3DaTOqagWbcCVT52TCEJMEBwRR%26token%3D%242y%2410%24%2FVLlr2nN7rWy1cg..wp.8OGLQ0fdsB%2FKNuvdEvnVKtHu6pO1K6GZK&title=Ladder+Cable+Tray+Hold+Down+Bracket+-+A833+Heavy+Duty
+- EAE cable-tray joint fittings and support applications: https://www.eae.com.de/storage/en/catalogs/cable-trays/e-line-tls.pdf
+- ABB T&B cable-tray design tools and CAD downloads: https://tnb.ca.abb.com/en/cable-tray-design-tools/
+
+The four new OpenSCAD models use custom dimensions and independently authored geometry. No manufacturer geometry was copied. They are educational layouts without established loads, deflection, anchorage, seismic suitability, grounding, corrosion performance, tray compatibility or installation compliance. These four have editable sources and dimension pages; STL meshes are not included in this build.

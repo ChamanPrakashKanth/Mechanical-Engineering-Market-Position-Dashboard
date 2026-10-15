@@ -357,6 +357,51 @@ PARTS = [
  for(x=[25,width-25]) translate([x,depth-wall-1,height-10]) rotate([-90,0,0]) cylinder(d=5.5,h=wall+2);
 }''',
  notes='Blade-holder geometry study with a continuous smooth slot for a separately designed scraper blade, a reinforced rear web and two base mounting slots with 25 mm travel. Two Ø5.5 holes through the rear web are generic clamp-fastener clearances; no clamp screws or compliant blade are supplied. This is not a belt-cleaning assembly and has no wear, food-contact, belt-contact, torque or safety rating. Verify blade section, retention, belt clearance, debris behavior and manufacturer guidance before any real installation.'),
+ dict(published='2026-10-15',slug='industrial-cable-tray-cantilever-shelf-support',title='Cable tray cantilever shelf support bracket study',dims='160 × 90 × 8 mm · 120 mm arm reach · slotted wall plate',
+ params='plate_height=90; plate_width=60; plate_thickness=8; arm_reach=120; arm_width=35; gusset=6; slot=8.5;',
+ code='''difference(){
+ union(){
+  cube([plate_thickness,plate_width,plate_height]);
+  translate([plate_thickness,0,plate_height-arm_width]) cube([arm_reach,plate_width,arm_width]);
+  for(y=[0,plate_width-gusset]) translate([plate_thickness,y,plate_height-arm_width]) rotate([90,0,0]) linear_extrude(height=gusset) polygon([[0,0],[arm_reach,0],[0,plate_height-arm_width]]);
+  translate([plate_thickness+arm_reach-18,0,plate_height-arm_width]) cube([18,plate_width,5]);
+ }
+ for(y=[plate_width/2-18,plate_width/2+18]) for(z=[16,plate_height-16]) translate([-1,y,z]) rotate([0,90,0]) cylinder(d=slot,h=plate_thickness+2);
+ for(x=[plate_thickness+arm_reach-12]) for(y=[plate_width/2-12,plate_width/2+12]) translate([x,y,plate_height-arm_width-1]) cylinder(d=8.5,h=8);
+}''',
+ notes='Original wall-mounted cantilever layout study with a slotted upright plate, horizontal tray shelf and two side gussets. The 8.5 mm wall-plate slots are centered at Y12/48 and Z16/74; the arm reaches 120 mm from the plate. The outer shelf tab includes two Ø8.5 vertical clearance holes. This is not a rated support: verify anchor type, substrate, section stiffness, buckling, load distribution, tray width, cable mass, corrosion protection and required support spacing.'),
+ dict(published='2026-10-15',slug='industrial-cable-tray-hold-down-clamp',title='Cable tray hold-down bridge clamp study',dims='70 × 40 × 22 mm · adjustable foot slots · 8 mm strap',
+ params='span=70; foot=18; strap=8; rise=22; depth=40; slot=7;',
+ code='''difference(){
+ union(){
+  cube([foot,depth,strap]);
+  translate([span-foot,0,0]) cube([foot,depth,strap]);
+  translate([foot,0,rise-strap]) cube([span-2*foot,depth,strap]);
+  for(y=[0,depth-strap]) translate([foot,y,strap]) rotate([0,90,0]) linear_extrude(height=span-2*foot) polygon([[0,0],[rise-strap,0],[rise-strap,strap]]);
+ }
+ for(x=[foot/2,span-foot/2]) hull(){translate([x,depth/2-8,-1]) cylinder(d=slot,h=strap+2);translate([x,depth/2+8,-1]) cylinder(d=slot,h=strap+2);}
+}''',
+ notes='Bridge-shaped clamp concept with a raised top strap and two feet containing 7 mm-wide slots with 16 mm center travel. The top is intended only to illustrate a hold-down contact surface over a tray side rail; the model does not define a tray profile, bolt, nut, spring action, clamp force or vibration retention. Check the actual tray geometry, edge distance, galvanic compatibility, fastener preload, uplift, seismic requirements and applicable installation instructions.'),
+ dict(published='2026-10-15',slug='industrial-wire-basket-splice-plate',title='Wire basket cable tray splice plate study',dims='100 × 30 × 4 mm · three slotted openings · 30 mm slot-center spacing',
+ params='length=100; width=30; thickness=4; corner=3; slot=6.5; pitch=30;',
+ code='''difference(){
+ hull(){for(x=[corner,length-corner]) for(y=[corner,width-corner]) translate([x,y,0]) cylinder(r=corner,h=thickness);}
+ for(x=[20,50,80]) hull(){translate([x-pitch/2, width/2,-1]) cylinder(d=slot,h=thickness+2);translate([x+pitch/2, width/2,-1]) cylinder(d=slot,h=thickness+2);}
+}''',
+ notes='Flat rounded splice-plate layout with three elongated openings along the length, each 30 mm overall and 6.5 mm wide. The slots allow a custom joining layout to be explored but do not represent a specific basket-wire pitch, splice bolt, tray gauge or tested joint. Create a paired plate only after confirming the real tray side-wire geometry; verify fastener bearing, edge tear-out, joint slip, corrosion, grounding and load capacity before use.'),
+ dict(published='2026-10-15',slug='industrial-cable-tray-trapeze-saddle',title='Cable tray trapeze support saddle study',dims='120 × 50 × 38 mm · twin rod-clearance holes · 80 mm spacing',
+ params='length=120; width=50; web=8; side_height=38; rod_spacing=80; rod_clearance=11;',
+ code='''difference(){
+ union(){
+  cube([length,width,web]);
+  cube([web,width,side_height]);
+  translate([length-web,0,0]) cube([web,width,side_height]);
+  for(y=[0,width-web]) translate([web,y,web]) rotate([0,90,0]) linear_extrude(height=length-2*web) polygon([[0,0],[side_height-web,0],[0,side_height-web]]);
+ }
+ for(x=[(length-rod_spacing)/2,(length+rod_spacing)/2]) translate([x,width/2,-1]) cylinder(d=rod_clearance,h=web+2);
+ for(x=[web/2,length-web/2]) translate([x,-1,side_height-15]) rotate([-90,0,0]) cylinder(d=7,h=width+2);
+}''',
+ notes='Saddle-like support concept with twin vertical side cheeks, reinforcing webs, two underside through-holes at 80 mm centers, and a crosswise clearance passage through each cheek. The 11 mm holes are generic rod-layout clearances and are not threaded; no nuts, load spreaders, strut channels or retaining hardware are included. Verify rod size and attachment, tray width, load sharing, bend/weld details, corrosion, deflection and support spacing with project requirements.'),
 ]
 
 # Public manufacturer/application pages establish the industrial use case only;
@@ -377,6 +422,22 @@ SOURCE_REFERENCES = {
  'industrial-conveyor-scraper-blade-holder': [
   ('Martin Engineering belt-cleaner hanger mounts', 'https://www.martin-eng.com/content/product/125/belt-cleaner-hanger-mounts-mount-plates'),
   ('ASGCO secondary belt-cleaner mounting bracket', 'https://www.asgco.com/products/secondary-mounting-bracket/'),
+ ],
+ 'industrial-cable-tray-cantilever-shelf-support': [
+  ('nVent CADDY wire-basket shelf support CAD model', 'https://www.traceparts.com/en/product/nvent-caddy-wbt-performance-cable-tray-shelf-support?Product=90-11032024-027642'),
+  ('Gripple cable tray clip and support CAD details', 'https://www.gripple.com/downloads-hub/2d-cad-details/'),
+ ],
+ 'industrial-cable-tray-hold-down-clamp': [
+  ('Legrand ladder-tray hold-down bracket product family', 'https://www.legrand.ca/wire-and-cable-management/cable-tray-and-reels/ladder-trays/itray-aluminum-ladder-tray-hold-down-supports/p/series-itray-supports-hd'),
+  ('Legrand A833 heavy-duty hold-down bracket drawing', 'https://www.legrand.ca/p/view-asset?downloadUrl=https%3A%2F%2Flegrand.webdamdb.com%2Fdirectdownload.php%3Fti%3D577441954%26tok%3DaTOqagWbcCVT52TCEJMEBwRR%26token%3D%242y%2410%24%2FVLlr2nN7rWy1cg..wp.8OGLQ0fdsB%2FKNuvdEvnVKtHu6pO1K6GZK&title=Ladder+Cable+Tray+Hold+Down+Bracket+-+A833+Heavy+Duty'),
+ ],
+ 'industrial-wire-basket-splice-plate': [
+  ('EAE wire-basket joint fitting application drawing', 'https://www.eae.com.de/storage/en/catalogs/cable-trays/e-line-tls.pdf'),
+  ('ABB cable-tray CAD and design tools', 'https://tnb.ca.abb.com/en/cable-tray-design-tools/'),
+ ],
+ 'industrial-cable-tray-trapeze-saddle': [
+  ('nVent CADDY cable-tray support families', 'https://www.nvent.com/caddy/products/cable-tray-supports'),
+  ('EAE cable-tray support application examples', 'https://www.eae.com.de/storage/en/catalogs/cable-trays/e-line-tls.pdf'),
  ],
 }
 
