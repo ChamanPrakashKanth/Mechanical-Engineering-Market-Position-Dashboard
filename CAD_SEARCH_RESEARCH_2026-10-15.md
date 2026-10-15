@@ -71,3 +71,26 @@ Primary references:
 - Festo valve mounting component documentation: https://ftp.festo.com/public/pneumatic/SOFTWARE_SERVICE/Documentation/2010/EN/VALVE-MOUNTING-COMPONENTS_EN.PDF
 
 These four models are original custom geometry with STL and editable OpenSCAD, not supplier STEP files. Do not describe them as standard replacements. CAD geometry checks do not establish functional fit, load, pressure, sealing, electrical or conveyor safety performance. Track relevant impressions and clicks before assuming that the content gap represents useful organic demand.
+
+## Fourth batch — conveyor sensing, take-up, idler alignment and belt cleaning
+
+On 15 October 2026, searched public web results for industrial CAD, downloadable CAD, STL, OpenSCAD and specific application phrases around conveyor sensor mounts, take-up carriages, pivoting idlers and scraper holders. Public results establish active product categories and existing competition, but do not reveal monthly search volume, click demand or keyword difficulty. No Google Trends comparison or Search Console query history was available, so these are researched topic hypotheses rather than proven high-volume/low-competition keywords.
+
+| New original model | Public demand/use-case evidence | Competition and narrower search hypothesis |
+|---|---|---|
+| Adjustable conveyor photo-eye mounting bracket | Cisco-Eagle describes a conveyor photo-eye bracket with multi-axis movement; MISUMI offers sensor adjusters; other manufacturers publish sensor mount CAD | Commercial catalog parts compete on standard interfaces. The library offers an independent custom slotted mast, hole coordinates, an editable OpenSCAD file and a dimension page; do not claim fit to a named sensor or four-axis equivalence. |
+| Conveyor take-up slide carriage housing study | PCI publishes take-up frame selection and CAD resources; CTZ explains the sliding take-up bearing housing use | UCT and branded frames already have established CAD. A generic editable carriage layout can answer custom dimensions, counterbore and rail-clearance questions, but is not a UCT/T-housing replacement. |
+| Pivoting conveyor idler tensioner bracket study | Gates documents adjustable idler brackets with pivot and slot adjustments; conveyor misalignment-control products are sold with mounting brackets | Supplier product CAD is established. A custom pivot plus discrete curved lock-hole layout may address narrower educational and configurable-model searches; all alignment and load performance remain unvalidated. |
+| Adjustable conveyor scraper blade holder study | Martin Engineering and ASGCO offer belt-cleaner hanger/mounting brackets | Existing product offerings indicate a real maintenance task. This original slotted holder is only a geometry study, not a working or food-safe cleaner; exact search demand is unverified. |
+
+Primary application references:
+
+- Cisco-Eagle, conveyor photo-eye bracket with four-axis movement: https://www.cisco-eagle.com/product/18797/conveyor-photo-eye-bracket-4-axis-movement
+- MISUMI, photoelectric sensor adjuster: https://uk.misumi-ec.com/vona2/detail/221000399556/
+- PCI, conveyor take-up frames and covers with CAD selector: https://www.pcimfg.com/products/take-up-frames-covers/
+- CTZ, take-up bearing adjustment guide: https://www.ctzbearing.com/resources/take-up-bearing-uct-adjustment-guide
+- Gates, adjustable idler brackets: https://www.gatesaustralia.com.au/products/industrial-belts-sprockets-and-equipment/innovative-new-products/idler-brackets
+- Martin Engineering, belt-cleaner hanger mounts and plates: https://www.martin-eng.com/content/product/125/belt-cleaner-hanger-mounts-mount-plates
+- ASGCO, secondary belt-cleaner mounting bracket: https://www.asgco.com/products/secondary-mounting-bracket/
+
+The new shapes were authored independently from the referenced catalogs. OpenSCAD source is provided. STL export was attempted with the installed Windows OpenSCAD command-line binary, which failed before exporting because of a Windows system DLL relocation error. The pages therefore omit STL download links for this batch and direct users to render the editable source locally. Geometry is not load-, fit-, tension-, sanitation- or safety-rated. Revisit topic priority when Search Console collects query impressions and clicks.

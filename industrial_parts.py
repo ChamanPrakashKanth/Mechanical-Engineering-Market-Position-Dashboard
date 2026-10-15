@@ -299,7 +299,86 @@ PARTS = [
  for(x=[19,73]) translate([x,25,8]) cube([wall+2,20,12]);
 }''',
  notes='Raised mechanical mounting deck only; no pneumatic manifold passages or valve interface standard. Deck spans X20–80 at Z24–30. Two 4.5 mm wide deck slots lie at X40/60 with endpoint centers Y15/55 (40 mm travel). Four Ø6.5 foot holes lie at X10/90/Y15/55. Each supporting web has a 20 × 12 mm service window spanning Y25–45/Z8–20. Confirm valve bolt pattern, port and connector access, vibration, material and reaction loads; do not use as a pressure-containing component.'),
+ dict(published='2026-10-15',slug='industrial-conveyor-photoeye-mount',title='Adjustable conveyor photo-eye mounting bracket',dims='120 × 70 × 90 mm · twin 7 mm height slots · Ø18 sensor aperture',
+ params='base_length=120; base_depth=70; base_thickness=8; mast_width=70; mast_height=90; wall=8; slot=7; sensor_bore=18;',
+ code='''difference(){
+ union(){
+  cube([base_length,base_depth,base_thickness]);
+  translate([(base_length-mast_width)/2,0,0]) cube([mast_width,wall,mast_height]);
+  for(x=[18,base_length-24]) translate([x,wall,base_thickness]) rotate([90,0,90]) linear_extrude(height=6) polygon([[0,0],[38,0],[0,52]]);
+  translate([(base_length-48)/2,wall,68]) cube([48,22,8]);
+ }
+ for(x=[20,base_length-20]) hull(){translate([x,22,-1]) cylinder(d=slot,h=base_thickness+2);translate([x,48,-1]) cylinder(d=slot,h=base_thickness+2);}
+ for(x=[base_length/2-20,base_length/2+20]) hull(){translate([x,-1,36]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);translate([x,-1,68]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);}
+ translate([base_length/2,wall+11,67]) rotate([90,0,0]) cylinder(d=sensor_bore,h=24);
+ for(x=[base_length/2-12,base_length/2+12]) translate([x,wall+10,67]) rotate([90,0,0]) cylinder(d=5.5,h=24);
+}''',
+ notes='Custom sensor mast study for conveyor layout and clearance planning. Base slots are 7 mm wide with 26 mm center travel; mast slots are 7 mm wide with 32 mm center travel. A forward tab carries a smooth Ø18 sensor aperture plus two Ø5.5 fastener holes on 24 mm centers. Sensor bore is not threaded and does not claim compatibility with a particular photo-eye, reflector, scanner or switch. Verify optical alignment, frame interface, stiffness, vibration and sensor manufacturer clearances.'),
+ dict(published='2026-10-15',slug='industrial-conveyor-takeup-slide-carriage',title='Conveyor take-up slide carriage housing study',dims='90 × 70 × 55 mm · Ø30 bearing-seat study · 40 mm adjuster axis',
+ params='width=90; depth=70; height=55; seat=30; seat_depth=12; passage=16; rail_width=12; rail_depth=8;',
+ code='''difference(){
+ union(){
+  cube([width,depth,height]);
+  translate([width/2,depth/2,height]) cylinder(d=56,h=8);
+ }
+ translate([width/2,depth/2,-1]) cylinder(d=passage,h=height+10);
+ translate([width/2,depth/2,height-seat_depth]) cylinder(d=seat,h=seat_depth+9);
+ for(x=[0,width-rail_width]) translate([x,-1,8]) cube([rail_width,depth+2,rail_depth]);
+ translate([-1,depth/2,20]) rotate([0,90,0]) cylinder(d=10,h=width+2);
+ translate([-1,depth/2,20]) rotate([0,90,0]) cylinder(d=16,h=12);
+ translate([width-11,depth/2,20]) rotate([0,90,0]) cylinder(d=16,h=12);
+ for(x=[15,width-15]) for(y=[12,depth-12]) translate([x,y,-1]) cylinder(d=7,h=height+2);
+}''',
+ notes='Custom sliding support concept: a through passage, shallow counterbore seat, underside guide channels and coaxial end-face adjuster clearances. The nominal Ø30 × 12 mm seat is not a UCT/T-housing or bearing interface. The Ø16 passage and 10 mm adjuster clearance are smooth and unthreaded. End-face counterbores do not include nuts or thrust bearings. Confirm the actual bearing, rail geometry, adjustment screw retention, belt loads, alignment and guarding; no conveyor tension or load rating is established.'),
+ dict(published='2026-10-15',slug='industrial-pivot-idler-tensioner-bracket',title='Pivoting conveyor idler tensioner bracket study',dims='100 × 60 × 75 mm · Ø12 pivot · Ø16 roller axle · curved adjustment slot',
+ params='base_length=100; depth=60; base=10; ear=8; height=75; pivot=12; axle=16; arm=10;',
+ code='''difference(){
+ union(){
+  cube([base_length,depth,base]);
+  for(x=[0,base_length-ear]) translate([x,0,base]) cube([ear,depth,height-base]);
+  hull(){translate([ear,depth/2,base+18]) rotate([0,90,0]) cylinder(d=30,h=arm);translate([base_length-ear-arm,depth/2,base+50]) rotate([0,90,0]) cylinder(d=28,h=arm);}
+ }
+ translate([-1,depth/2,base+18]) rotate([0,90,0]) cylinder(d=pivot,h=base_length+2);
+ translate([-1,depth/2,base+50]) rotate([0,90,0]) cylinder(d=axle,h=base_length+2);
+ for(x=[15,base_length-15]) for(y=[12,depth-12]) translate([x,y,-1]) cylinder(d=8.5,h=base+2);
+ for(x=[ear/2,base_length-ear/2]) for(a=[-24:6:24]) translate([x,depth/2+26*cos(a),base+18+26*sin(a)]) rotate([0,90,0]) cylinder(d=7,h=ear+2);
+}''',
+ notes='Concept bracket with a base, paired side cheeks, coaxial pivot passage and a curved row of locking-hole positions around the pivot. The opposite cross-hole is a smooth roller-axle clearance. Model dimensions do not define a bearing, bolt preload, idler size or conveyor belt tension. Check pivot shear, cheek bending, roller alignment, adjustment range, fastener retention and machine guarding; no operating load or belt-tracking performance is claimed.'),
+ dict(published='2026-10-15',slug='industrial-conveyor-scraper-blade-holder',title='Adjustable conveyor scraper blade holder study',dims='110 × 55 × 50 mm · 9 mm blade slot · 25 mm mounting travel',
+ params='width=110; depth=55; height=50; wall=8; blade_slot=9; travel=25; clamp_hole=6.5;',
+ code='''difference(){
+ union(){
+  cube([width,depth,wall]);
+  translate([0,depth-wall,wall]) cube([width,wall,height-wall]);
+  for(x=[10,width-18]) translate([x,depth-wall-10,wall]) rotate([0,90,0]) linear_extrude(height=8) polygon([[0,0],[28,0],[0,25]]);
+ }
+ translate([width/2,depth-wall-10,height/2]) cube([width+2,blade_slot,27],center=true);
+ for(x=[20,width-20]) hull(){translate([x,depth/2,-1]) cylinder(d=clamp_hole,h=wall+2);translate([x,depth/2+travel,-1]) cylinder(d=clamp_hole,h=wall+2);}
+ for(x=[25,width-25]) translate([x,depth-wall-1,height-10]) rotate([-90,0,0]) cylinder(d=5.5,h=wall+2);
+}''',
+ notes='Blade-holder geometry study with a continuous smooth slot for a separately designed scraper blade, a reinforced rear web and two base mounting slots with 25 mm travel. Two Ø5.5 holes through the rear web are generic clamp-fastener clearances; no clamp screws or compliant blade are supplied. This is not a belt-cleaning assembly and has no wear, food-contact, belt-contact, torque or safety rating. Verify blade section, retention, belt clearance, debris behavior and manufacturer guidance before any real installation.'),
 ]
+
+# Public manufacturer/application pages establish the industrial use case only;
+# they are not sources for the geometry or dimensions of these original studies.
+SOURCE_REFERENCES = {
+ 'industrial-conveyor-photoeye-mount': [
+  ('Cisco-Eagle adjustable conveyor photo-eye bracket', 'https://www.cisco-eagle.com/product/18797/conveyor-photo-eye-bracket-4-axis-movement'),
+  ('MISUMI photoelectric sensor adjuster', 'https://uk.misumi-ec.com/vona2/detail/221000399556/'),
+ ],
+ 'industrial-conveyor-takeup-slide-carriage': [
+  ('PCI conveyor take-up frame and CAD selector', 'https://www.pcimfg.com/products/take-up-frames-covers/'),
+  ('CTZ take-up bearing adjustment guide', 'https://www.ctzbearing.com/resources/take-up-bearing-uct-adjustment-guide'),
+ ],
+ 'industrial-pivot-idler-tensioner-bracket': [
+  ('Gates adjustable idler bracket application', 'https://www.gatesaustralia.com.au/products/industrial-belts-sprockets-and-equipment/innovative-new-products/idler-brackets'),
+  ('Safety Controls belt misalignment control bracket', 'https://safetycontrols.com/product/ta-belt-misalignment-control-mounting-bracket/'),
+ ],
+ 'industrial-conveyor-scraper-blade-holder': [
+  ('Martin Engineering belt-cleaner hanger mounts', 'https://www.martin-eng.com/content/product/125/belt-cleaner-hanger-mounts-mount-plates'),
+  ('ASGCO secondary belt-cleaner mounting bracket', 'https://www.asgco.com/products/secondary-mounting-bracket/'),
+ ],
+}
 
 if __name__ == '__main__':
  import argparse
