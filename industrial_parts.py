@@ -402,6 +402,36 @@ PARTS = [
  for(x=[web/2,length-web/2]) translate([x,-1,side_height-15]) rotate([-90,0,0]) cylinder(d=7,h=width+2);
 }''',
  notes='Saddle-like support concept with twin vertical side cheeks, reinforcing webs, two underside through-holes at 80 mm centers, and a crosswise clearance passage through each cheek. The 11 mm holes are generic rod-layout clearances and are not threaded; no nuts, load spreaders, strut channels or retaining hardware are included. Verify rod size and attachment, tray width, load sharing, bend/weld details, corrosion, deflection and support spacing with project requirements.'),
+ dict(published='2026-10-15',slug='industrial-adjustable-leveling-foot',title='Swivel-pad machine leveling foot study',dims='Ø60 mm pad · M16 nominal stud envelope · 24 mm spherical seat',
+ params='pad_diameter=60; pad_height=12; stud_diameter=16; stud_length=70; seat_diameter=24; seat_depth=5; washer_diameter=28; locknut_height=8;',
+ code='''// Geometry layout only: nominal stud is an envelope cylinder, not a modeled thread.
+module pad(){difference(){cylinder(d=pad_diameter,h=pad_height);translate([0,0,pad_height-seat_depth]) sphere(d=seat_diameter);}}
+module stud(){translate([0,0,pad_height-seat_depth+stud_length/2]) cylinder(d=stud_diameter,h=stud_length,center=true);}
+module locknut(){translate([0,0,pad_height-seat_depth+stud_length-18]) difference(){cylinder(d=washer_diameter,h=locknut_height,$fn=6);translate([0,0,-1]) cylinder(d=stud_diameter+1,h=locknut_height+2);}}
+pad(); stud(); locknut();''',
+ notes='Three-part layout study showing a shallow spherical swivel interface, nominal smooth stud envelope and hexagonal locknut envelope. The pad is Ø60 × 12 mm; the generic M16 envelope is 70 mm long. These disconnected solids are a visualization, not a validated joint. No thread, retention, bearing contact, floor grip, elastomer, load rating or material is defined; choose a catalog foot against actual machine mass, floor and adjustment needs.'),
+ dict(published='2026-10-15',slug='industrial-anti-vibration-mount-layout',title='Anti-vibration machine mount layout study',dims='Ø70 × 48 mm envelope · Ø12 center stud passage · 4-hole base pattern',
+ params='base_diameter=70; base_height=8; elastomer_diameter=52; elastomer_height=24; top_plate_diameter=58; top_plate_height=8; passage=12; bolt_circle=52; bolt_hole=8.5;',
+ code='''// Exploded-free geometry layout; elastomer is represented as a plain cylinder.
+module annulus(d,h){difference(){cylinder(d=d,h=h);translate([0,0,-1]) cylinder(d=passage,h=h+2);}}
+difference(){union(){cylinder(d=base_diameter,h=base_height);translate([0,0,base_height]) annulus(elastomer_diameter,elastomer_height);translate([0,0,base_height+elastomer_height]) cylinder(d=top_plate_diameter,h=top_plate_height);}translate([0,0,-1]) cylinder(d=passage,h=base_height+elastomer_height+top_plate_height+2);for(a=[45:90:315]) translate([bolt_circle/2*cos(a),bolt_circle/2*sin(a),-1]) cylinder(d=bolt_hole,h=base_height+2);}
+''',
+ notes='Concentric layout comprises a base flange, annular elastomer placeholder and top plate, with Ø12 axial passage and four Ø8.5 base clearances on a 52 mm bolt circle. The plain cylindrical middle does not represent a compound rubber-metal bond or stiffness curve. No isolation efficiency, resonance, compression, shear, fatigue, temperature, chemical compatibility or load rating is claimed. Select a tested mount from measured excitation and equipment data.'),
+ dict(published='2026-10-15',slug='industrial-leveling-foot-anchor-plate',title='Slotted machine-foot anchor plate study',dims='110 × 90 × 8 mm · 70 × 50 mm anchor-slot pattern · Ø34 pad seat',
+ params='length=110; width=90; thickness=8; slot_width=11; slot_length=24; pad_seat=34; seat_depth=2;',
+ code='''difference(){cube([length,width,thickness]);
+ for(x=[20,length-20]) for(y=[20,width-20]) hull(){translate([x-slot_length/2+slot_width/2,y,-1]) cylinder(d=slot_width,h=thickness+2);translate([x+slot_length/2-slot_width/2,y,-1]) cylinder(d=slot_width,h=thickness+2);}
+ translate([length/2,width/2,thickness-seat_depth]) cylinder(d=pad_seat,h=seat_depth+1);
+}''',
+ notes='Flat plate with four rounded anchor slots centered at X 20/90 and Y 20/70 mm, each 24 mm overall by 11 mm wide; a Ø34 × 2 mm shallow center seat locates a separately selected foot pad. This custom pattern is not an anchor standard or vendor interface. Check edge distance, washer coverage, substrate, anchor tension/shear, plate bending and foot contact.'),
+ dict(published='2026-10-15',slug='industrial-machine-isolator-retainer-cup',title='Machine isolator retainer cup study',dims='Ø64 × 24 mm · Ø42 elastomer pocket · four mounting holes',
+ params='outer_diameter=64; height=24; pocket_diameter=42; pocket_depth=16; center_bore=14; hole_circle=52; hole_diameter=6.5;',
+ code='''difference(){cylinder(d=outer_diameter,h=height);
+ translate([0,0,height-pocket_depth]) cylinder(d=pocket_diameter,h=pocket_depth+1);
+ translate([0,0,-1]) cylinder(d=center_bore,h=height+2);
+ for(a=[45:90:315]) translate([hole_circle/2*cos(a),hole_circle/2*sin(a),-1]) cylinder(d=hole_diameter,h=height+2);
+}''',
+ notes='Annular retainer concept with a 42 mm diameter, 16 mm deep cup, Ø14 center passage and four Ø6.5 mounting holes on a 52 mm circle. The pocket is a geometric envelope only; do not infer elastomer dimensions, squeeze, retention, damping, or a matching commercial series. Confirm actual isolator dimensions and clearances; assess retainer strength, fasteners and machine vibration separately.'),
 ]
 
 # Public manufacturer/application pages establish the industrial use case only;
@@ -438,6 +468,22 @@ SOURCE_REFERENCES = {
  'industrial-cable-tray-trapeze-saddle': [
   ('nVent CADDY cable-tray support families', 'https://www.nvent.com/caddy/products/cable-tray-supports'),
   ('EAE cable-tray support application examples', 'https://www.eae.com.de/storage/en/catalogs/cable-trays/e-line-tls.pdf'),
+ ],
+ 'industrial-adjustable-leveling-foot': [
+  ('ACE Controls leveling mounts and machine applications', 'https://www.acecontrols.com/us/products/vibration-control/rubber-metal-isolators/leveling-mounts.html'),
+  ('MecanoCaucho machine foot mounts', 'https://www.mecanocaucho.com/en-us/mounts/machine-foot-mounts'),
+ ],
+ 'industrial-anti-vibration-mount-layout': [
+  ('Sorbothane anti-vibration leveling mounts with CAD', 'https://www.sorbothane.com/sorbothane-products/standard-industrial-products/product/anti-vibration-leveling-mounts/'),
+  ('Mason Industries ML/MLS machine leveling mounts and CAD', 'https://mason-ind.com/ml-mls/'),
+ ],
+ 'industrial-leveling-foot-anchor-plate': [
+  ('IAC machine feet and leveling feet product family', 'https://iac-nordic.com/products/vibration-department/anti-vibration-mounts/machine-feet-levelling-feet'),
+  ('AV Products machine leveling mounts', 'https://www.avproductsinc.com/machine-leveling/mounts.html'),
+ ],
+ 'industrial-machine-isolator-retainer-cup': [
+  ('ACE Controls leveling mounts and machine applications', 'https://www.acecontrols.com/us/products/vibration-control/rubber-metal-isolators/leveling-mounts.html'),
+  ('Mason Industries ML/MLS machine leveling mounts and CAD', 'https://mason-ind.com/ml-mls/'),
  ],
 }
 
