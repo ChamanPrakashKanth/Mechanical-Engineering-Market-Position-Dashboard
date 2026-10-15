@@ -217,12 +217,59 @@ PARTS = [
  for(x=[10,70]) translate([x,15,-1]) cylinder(d=6.5,h=10);
 }''',
  notes='Concept housing with Y-axis passage centered X40/Z32. The smooth Ø22 recess opens from Y30 and extends 7 mm to a shoulder at Y23; the Ø12 passage continues through the block. Base holes Ø6.5 are at X10/70/Y15. Nominal seat dimensions are editable geometry, not a specified bearing fit. Axial sliding clearance, bearing selection, retention, shaft alignment and thermal expansion must be engineered before use; no completed floating-bearing assembly is supplied.'),
+ dict(published='2026-10-15',slug='industrial-timing-belt-clamp-plate',title='Timing belt clamp plate with editable grooves',dims='60 × 35 × 10 mm · 15 mm groove band · four Ø5.5 holes',
+ params='length=60; width=35; thickness=10; belt_width=15; pitch=5; groove_width=2.5; groove_depth=1.5;',
+ code='''difference(){
+ cube([length,width,thickness]);
+ for(x=[10:pitch:length-10]) translate([x-groove_width/2,(width-belt_width)/2,thickness-groove_depth]) cube([groove_width,belt_width,groove_depth+1]);
+ for(x=[10,length-10]) for(y=[5,width-5]) translate([x,y,-1]) cylinder(d=5.5,h=thickness+2);
+}''',
+ notes='Original grooved plate for belt-clamp layout studies. Nine rectangular grooves have X centers 10–50 at 5 mm pitch, width2.5 and depth1.5, spanning Y10–25. Four Ø5.5 holes are at X10/50 and Y5/30. The grooves do not reproduce a T5, AT5, HTD or other certified tooth profile. Design a separate mating plate and determine tooth shape, belt engagement, screw preload and allowable force for the actual belt. No belt retention or pullout rating is established.'),
+ dict(published='2026-10-15',slug='industrial-cylinder-slotted-foot-mount',title='Pneumatic cylinder slotted foot mounting bracket',dims='90 × 65 × 65 mm · Ø30 center opening · 20 mm slot travel',
+ params='width=90; depth=65; height=65; wall=8; opening=30; hole_pitch=48; slot=8.5; travel=20;',
+ code='''difference(){
+ union(){cube([width,depth,wall]);cube([width,wall,height]);}
+ translate([width/2,-1,38]) rotate([-90,0,0]) cylinder(d=opening,h=wall+2);
+ for(x=[width/2-hole_pitch/2,width/2+hole_pitch/2]) for(z=[20,56]) translate([x,-1,z]) rotate([-90,0,0]) cylinder(d=5.5,h=wall+2);
+ for(x=[16,width-16]) hull(){translate([x,30,-1]) cylinder(d=slot,h=wall+2);translate([x,30+travel,-1]) cylinder(d=slot,h=wall+2);}
+}''',
+ notes='Custom cylinder end mounting concept, not an ISO or supplier-specific bracket. Upright opening Ø30 is centered X45/Z38. Four Ø5.5 holes are at X21/69 and Z20/56 (48 × 36 mm pattern). Base slot centers run from Y30 to50 at X16/74, width8.5 and 20 mm travel. Review cylinder cap pattern, rod travel, air-port access, paired mounting alignment and reaction loads. The model has idealized sharp internal corners; bending or machining feasibility requires review.'),
+ dict(published='2026-10-15',slug='industrial-sensor-protective-hood',title='Sensor protective hood with slotted base',dims='70 × 60 × 55 mm · open front and rear · 24 mm clear width',
+ params='width=70; depth=60; height=55; base=5; wall=4; clearance=24; hood_depth=45;',
+ code='''difference(){
+ union(){
+ cube([width,depth,base]);
+ translate([(width-clearance)/2-wall,0,base]) cube([wall,hood_depth,height-base]);
+ translate([(width+clearance)/2,0,base]) cube([wall,hood_depth,height-base]);
+ translate([(width-clearance)/2-wall,0,height-wall]) cube([clearance+2*wall,hood_depth,wall]);
+ }
+ for(x=[10,width-10]) hull(){translate([x,15,-1]) cylinder(d=5.5,h=base+2);translate([x,45,-1]) cylinder(d=5.5,h=base+2);}
+ translate([width/2,53,-1]) cylinder(d=5.5,h=base+2);
+}''',
+ notes='Open-ended three-sided hood over a base plate. Inner opening is 24 mm wide and 46 mm high above the 5 mm base; hood extends 45 mm along Y. Two mounting slots at X10/60 have endpoint centers Y15/45, width5.5 and 30 mm travel; a rear Ø5.5 hole is X35/Y53. Sensor, sensor retention and cable gland are not included. Verify optical field of view or inductive sensing distances and nearby metal effects. No impact, ingress, electrical, explosion or machine-guard certification is claimed.'),
+ dict(published='2026-10-15',slug='industrial-conveyor-guide-rod-clamp',title='Conveyor guide rod split clamp block',dims='60 × 36 × 35 mm · Ø12 rod bore · 2 mm slit',
+ params='length=60; depth=36; height=35; bore=12; slit=2;',
+ code='''difference(){
+ cube([length,depth,height]);
+ translate([length/2,-1,20]) rotate([-90,0,0]) cylinder(d=bore,h=depth+2);
+ translate([length/2-slit/2,-1,20]) cube([slit,depth+2,height-19]);
+ translate([-1,depth/2,30]) rotate([0,90,0]) cylinder(d=5.5,h=length+2);
+ for(x=[10,length-10]) for(y=[8,depth-8]) translate([x,y,-1]) cylinder(d=5.5,h=height+2);
+}''',
+ notes='Smooth Y-axis Ø12 rod bore at X30/Z20 with a 2 mm slit extending upward to the top surface. A transverse Ø5.5 bolt passage runs along X at Y18/Z30; it is unthreaded and requires separately selected bolt/nut hardware. Four vertical Ø5.5 mounting holes lie at X10/50 and Y8/28. The remaining material below the bore connects both clamp halves. Rod tolerance, clamp flexure, bolt access, grip force and conveyor hygiene suitability are unvalidated; it is not a completed guide-rail system.'),
 ]
 
 if __name__ == '__main__':
+ import argparse
+ parser=argparse.ArgumentParser(description='Export all industrial studies, or only named slugs.')
+ parser.add_argument('slugs',nargs='*')
+ selected=parser.parse_args().slugs
+ unknown=set(selected)-{p['slug'] for p in PARTS}
+ if unknown: parser.error('Unknown model slugs: '+', '.join(sorted(unknown)))
  root=Path(__file__).absolute().parent
  out=root/'assets'/'cad'
  for part in PARTS:
+  if selected and part['slug'] not in selected: continue
   source=out/(part['slug']+'.scad')
   source.write_text('// Original MechIntel educational geometry. CC0-1.0. Units: mm.\n$fn=64;\n'+part['params']+'\n'+part['code']+'\n',encoding='utf-8')
   subprocess.run(['C:/Program Files/OpenSCAD/openscad.com','--export-format','binstl','-o',str(out/(part['slug']+'.stl')),str(source)],check=True)

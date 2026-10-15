@@ -25,3 +25,26 @@ Broad manufacturer CAD queries face established supplier catalogs. The opportuni
 - Tretter floating-bearing unit: https://www.tretter.de/en/floating-bearing-unit-pillow-block-bearing-wbk12s-01/
 
 Models are original custom geometry. Sources support component use cases; their vendor geometry was not copied and compatibility is not claimed. All four models are CC0 educational studies, in mm, supplied as STL and OpenSCAD. They are not certified load-bearing or lifting equipment.
+
+## Second batch — clamps, mounts and sensor protection
+
+Compared 12 queries across generic industrial CAD terms and narrower editable/parametric/OpenSCAD phrases. Narrow phrases often returned sparse or irrelevant results. This is a potential content gap, not proof of low keyword difficulty: sparse results can also indicate low demand. No monthly search counts were available. Broad timing-belt clamp searches were visibly more competitive, with supplier catalogs and existing parametric models.
+
+| Selected original study | Evidence of use | Search positioning hypothesis |
+|---|---|---|
+| Timing belt clamp plate with editable grooves | MISUMI, Robotunits and SDP/SI offer belt clamps and CAD | Serve custom plate layout and groove editing; do not promise standard tooth compatibility. Broad belt-clamp CAD is competitive. |
+| Pneumatic cylinder slotted foot mount | Festo publishes foot-mount dimensions and CAD | Offer explicit opening, four-hole pattern and mounting travel for a custom bracket study. Generic cylinder CAD is competitive; editable bracket phrasing was sparse. |
+| Sensor protective hood with slotted base | ifm lists protective sensor covers and brackets | Answer clearance, hood depth and mounting-slot questions with original geometry. Narrow OpenSCAD search had no clearly relevant hit; demand remains unknown. |
+| Conveyor guide rod split clamp block | CRS VAMIC provides guide-rail clamp CAD in several formats | Address smooth-rod passage, slit and bolt layout. Existing supplier and printable clamp models compete; custom source and exact layout are the intended value. |
+
+Primary sources for this batch:
+
+- MISUMI belt clamp plate: https://mx.misumi-ec.com/en/vona2/detail/110300414950/?HissuCode=TBCS-H100
+- Robotunits timing-belt clamp CAD: https://robotunits.com/en/shop/linear-motion-system/linear-motion-system-accessories/timing-belt-clamp/
+- SDP/SI timing-belt clamp CAD: https://shop.sdp-si.com/a-6m-3m080.html
+- Festo cylinder mounting dimensions: https://www.festo.com/media/catalog/251568_documentation.pdf
+- ifm sensor protective covers: https://www.ifm.com/us/en/category/400_050_030
+- ifm M18 sensor mounting accessories: https://www.ifm.com/us/en/us/learn-more/position/photoelectric-sensor/og/og-m18-barrel-housing/select-products-brackets
+- CRS VAMIC guide-rail clamps with CAD: https://crsvamic.ca/en/product/903clamps/
+
+Original model geometry was authored without copying catalog dimensions. Smooth passages, idealized rectangular belt grooves and sharp corners are intentional study geometry, not validated supplier interfaces. The sensor hood has no impact or ingress rating; the clamp and mount models have no load ratings. Search performance should be assessed with relevant Search Console query impressions/clicks once available.
