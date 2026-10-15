@@ -180,6 +180,43 @@ PARTS = [
  for(x=[12,68]) for(y=[20,40]) translate([x,y,-1]) cylinder(d=6.5,h=wall+2);
 }''',
  notes='The upright Ø18 aperture is centered at X 40, Z 35; adjacent Ø5.5 holes are at X 20/60, Z 35. A 40 × 20 × 3 mm top pocket occupies X 20–60, Y 18–38. Base mounting holes are X 12/68, Y 20/40. This is a custom geometry study, not a specified sensor interface; pocket corners and manufacturing radii are idealized.'),
+ dict(published='2026-10-15',slug='industrial-adjustable-m12-sensor-bracket',title='Adjustable M12 sensor bracket study',dims='60 × 40 × 55 mm · Ø12.5 aperture · 20 mm base slot travel',
+ params='width=60; depth=40; height=55; wall=5; aperture=12.5; slot=5.5; travel=20;',
+ code='''difference(){
+ union(){cube([width,depth,wall]);cube([width,wall,height]);}
+ translate([width/2,-1,35]) rotate([-90,0,0]) cylinder(d=aperture,h=wall+2);
+ for(x=[12,width-12]) hull(){
+ translate([x,12,-1]) cylinder(d=slot,h=wall+2);
+ translate([x,12+travel,-1]) cylinder(d=slot,h=wall+2);}
+}''',
+ notes='Original angle bracket for studying a nominal 12 mm cylindrical sensor envelope. The upright aperture is Ø12.5 at X30/Z35; it is smooth, not threaded. Two base slots lie at X12/48 with endpoint centers Y12/32 and width5.5, allowing 20 mm center travel. Confirm sensor body, locknut envelope, cable exit, material and mounting clearance against your selected sensor; no manufacturer compatibility is claimed.'),
+ dict(published='2026-10-15',slug='industrial-drag-chain-slotted-mount',title='Cable drag chain slotted mounting bracket',dims='70 × 50 × 30 mm · 5 mm walls · base and upright slots',
+ params='width=70; depth=50; height=30; wall=5; slot=5.5;',
+ code='''difference(){
+ union(){cube([width,depth,wall]);cube([width,wall,height]);}
+ for(x=[15,55]) hull(){translate([x,18,-1]) cylinder(d=slot,h=wall+2);translate([x,40,-1]) cylinder(d=slot,h=wall+2);}
+ for(x=[22,48]) hull(){translate([x,-1,15]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);translate([x,-1,23]) rotate([-90,0,0]) cylinder(d=slot,h=wall+2);}
+}''',
+ notes='Generic cable-carrier end mounting study with two base slots at X15/55, Y18–40 (22 mm endpoint travel) and two upright slots at X22/48, Z15–23 (8 mm travel). All slots are 5.5 mm wide. Attach a separately selected chain end fitting; this model has no chain pivot pins or proprietary snap interface. Check bend radius, moving-axis collisions, fasteners and strain relief. Square internal corners are idealized.'),
+ dict(published='2026-10-15',slug='industrial-vacuum-gripper-tooling-plate',title='Vacuum gripper adjustable tooling plate',dims='120 × 80 × 8 mm · Ø20 central passage · four radial slots',
+ params='length=120; width=80; thickness=8; passage=20; slot=8.5;',
+ code='''difference(){
+ cube([length,width,thickness]);
+ translate([60,40,-1]) cylinder(d=passage,h=thickness+2);
+ for(y=[20,60]) for(pair=[[15,40],[80,105]]) hull(){
+ translate([pair[0],y,-1]) cylinder(d=slot,h=thickness+2);translate([pair[1],y,-1]) cylinder(d=slot,h=thickness+2);}
+ for(x=[45,75]) for(y=[25,55]) translate([x,y,-1]) cylinder(d=5.5,h=thickness+2);
+}''',
+ notes='Mechanical tooling plate only: no internal pneumatic passages, sealing surfaces or suction cups. Four horizontal slots have endpoint pairs X15–40 and X80–105 at Y20/60, width8.5 and 25 mm endpoint travel. Four Ø5.5 holes are on a 30 × 30 mm square at X45/75/Y25/55. Central Ø20 opening is a clearance passage. Confirm cup stems, hose routing, payload, robot flange interface and fasteners separately; no vacuum or lifting rating.'),
+ dict(published='2026-10-15',slug='industrial-floating-bearing-support-block',title='Floating bearing support block study',dims='80 × 30 × 55 mm · Ø22 seat × 7 mm depth · Ø12 passage',
+ params='width=80; depth=30; height=55; passage=12; seat=22; seat_depth=7;',
+ code='''difference(){
+ union(){cube([width,depth,8]);translate([20,0,8]) cube([40,depth,height-8]);}
+ translate([40,-1,32]) rotate([-90,0,0]) cylinder(d=passage,h=depth+2);
+ translate([40,depth-seat_depth,32]) rotate([-90,0,0]) cylinder(d=seat,h=seat_depth+1);
+ for(x=[10,70]) translate([x,15,-1]) cylinder(d=6.5,h=10);
+}''',
+ notes='Concept housing with Y-axis passage centered X40/Z32. The smooth Ø22 recess opens from Y30 and extends 7 mm to a shoulder at Y23; the Ø12 passage continues through the block. Base holes Ø6.5 are at X10/70/Y15. Nominal seat dimensions are editable geometry, not a specified bearing fit. Axial sliding clearance, bearing selection, retention, shaft alignment and thermal expansion must be engineered before use; no completed floating-bearing assembly is supplied.'),
 ]
 
 if __name__ == '__main__':
