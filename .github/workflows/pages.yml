@@ -33,6 +33,7 @@ jobs:
           cp engineering-careers/app.js _site/engineering-careers/
           cp assets/mechintel-social-cover.png _site/assets/
           cp -r assets/cad _site/assets/
+          cp -r assets/gate-books _site/assets/
           cp manim_courses/renders/*.mp4 _site/manim_courses/renders/
 
       - name: Configure Pages

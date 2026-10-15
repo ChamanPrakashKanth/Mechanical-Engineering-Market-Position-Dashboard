@@ -4,6 +4,8 @@
 
 ## Main tools
 
+- [GATE Mechanical Engineering Books](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/gate-mechanical-books.html): Four original AI-assisted revision books covering selected foundations in mathematics, applied mechanics and design, thermal and fluid sciences, and manufacturing and industrial engineering. Sixteen chapters, sixteen worked examples, thirty-two original practice questions with reasoning. Searchable full text, offline Markdown and HTML downloads, browser print to PDF. Independent learning material; not official GATE questions or complete syllabus coverage. CC BY 4.0.
+
 - [Mechanical CAD Library](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/cad-library.html): 248 original educational parts including tapered, rounded and thin-wall profile studies with STL meshes and editable OpenSCAD sources, released under CC0. All dimensions are millimetres; no STEP, tolerances, or load ratings.
 
 - [Mechanical Engineering Portfolio Project Planner and Resume Bullet Builder](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-engineering-portfolio-planner.html): Four educational project briefs with requirements, deliverables, verification prompts, and editorial effort estimates. Drafts factual resume bullets from user-entered details. Runs locally with no tokens or persistence.
