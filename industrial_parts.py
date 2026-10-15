@@ -257,6 +257,48 @@ PARTS = [
  for(x=[10,length-10]) for(y=[8,depth-8]) translate([x,y,-1]) cylinder(d=5.5,h=height+2);
 }''',
  notes='Smooth Y-axis Ø12 rod bore at X30/Z20 with a 2 mm slit extending upward to the top surface. A transverse Ø5.5 bolt passage runs along X at Y18/Z30; it is unthreaded and requires separately selected bolt/nut hardware. Four vertical Ø5.5 mounting holes lie at X10/50 and Y8/28. The remaining material below the bore connects both clamp halves. Rod tolerance, clamp flexure, bolt access, grip force and conveyor hygiene suitability are unvalidated; it is not a completed guide-rail system.'),
+ dict(published='2026-10-15',slug='industrial-ball-screw-nut-housing',title='Ball screw nut housing with flange recess',dims='100 × 60 × 70 mm · Ø28 passage · Ø40 × 5 mm recess',
+ params='width=100; depth=60; height=70; base=10; body_width=50; bore=28; recess=40; recess_depth=5;',
+ code='''difference(){
+ union(){cube([width,depth,base]);translate([(width-body_width)/2,0,base]) cube([body_width,depth,height-base]);}
+ translate([width/2,-1,40]) rotate([-90,0,0]) cylinder(d=bore,h=depth+2);
+ translate([width/2,-1,40]) rotate([-90,0,0]) cylinder(d=recess,h=recess_depth+1);
+ for(x=[33,67]) for(z=[23,57]) translate([x,-1,z]) rotate([-90,0,0]) cylinder(d=5.5,h=9);
+ for(x=[10,90]) for(y=[15,45]) translate([x,y,-1]) cylinder(d=8.5,h=base+2);
+}''',
+ notes='Custom housing for ball-nut envelope studies, not a DSG/SFU replacement. Bore axis is along Y at X50/Z40. Front Ø40 recess spans Y0–5; Ø28 passage continues through. Four Ø5.5 blind pilot holes extend 8 mm from the front at X33/67 and Z23/57; they are smooth, not threaded. Four base Ø8.5 holes lie at X10/90/Y15/45. Select nut flange, bolt engagement, fits, alignment, lubrication access and load capacity separately. Recess size does not establish compatibility with any commercial nut.'),
+ dict(published='2026-10-15',slug='industrial-roller-axle-support',title='Conveyor roller axle support with open slots',dims='90 × 55 × 60 mm · 74 mm inner span · 10 mm axle slots',
+ params='width=90; depth=55; height=60; wall=8; slot=10; axle_height=35;',
+ code='''difference(){
+ union(){cube([width,depth,wall]);cube([wall,depth,height]);translate([width-wall,0,0]) cube([wall,depth,height]);}
+ for(x=[-1,width-wall-1]){
+ translate([x,depth/2,axle_height]) rotate([0,90,0]) cylinder(d=slot,h=wall+2);
+ translate([x,depth/2-slot/2,axle_height]) cube([wall+2,slot,height-axle_height+1]);
+ }
+ for(x=[25,65]) for(y=[12,43]) translate([x,y,-1]) cylinder(d=6.5,h=wall+2);
+}''',
+ notes='Two upright cheeks leave a 74 mm inside span for a separately designed roller assembly. Axle slots open upward, are 10 mm wide, and have bottom semicircle centers at Y27.5/Z35; the lowest slot point is Z30. Four Ø6.5 base holes are at X25/65/Y12/43. There is no axle retention cap, anti-rotation feature, bearing, roller or guarding. Engineer axle retention and alignment before operating any conveyor; no load or speed rating is established.'),
+ dict(published='2026-10-15',slug='industrial-cable-gland-layout-plate',title='Cable gland layout plate with mixed apertures',dims='150 × 90 × 4 mm · six apertures · 5 mm corner radii',
+ params='length=150; width=90; thickness=4; corner=5; entry_diameters=[16.5,20.5,25.5];',
+ code='''difference(){
+ hull(){for(x=[corner,length-corner]) for(y=[corner,width-corner]) translate([x,y,0]) cylinder(r=corner,h=thickness);}
+ for(i=[0:2]) for(y=[27,63]) translate([35+40*i,y,-1]) cylinder(d=entry_diameters[i],h=thickness+2);
+ for(x=[10,length-10]) for(y=[10,width-10]) translate([x,y,-1]) cylinder(d=5.5,h=thickness+2);
+}''',
+ notes='Six smooth clearance apertures are arranged at Y27/63: Ø16.5 at X35, Ø20.5 at X75 and Ø25.5 at X115. Column pitch is40 mm and row pitch36 mm. Mounting holes Ø5.5 are at X10/140/Y10/80. The outline uses 5 mm corner radii. Aperture diameters are custom layout values, not specified gland thread cutouts. Check actual gland datasheets, locknut and tool envelopes, gasket land, plate stiffness, grounding and enclosure attachment. No threads, glands, seals, IP rating or electrical certification are included.'),
+ dict(published='2026-10-15',slug='industrial-valve-mounting-pedestal',title='Pneumatic valve mounting pedestal with service windows',dims='100 × 70 × 30 mm · raised deck · two mounting slots',
+ params='width=100; depth=70; height=30; wall=6; slot=4.5;',
+ code='''difference(){
+ union(){
+ cube([26,depth,wall]);translate([74,0,0]) cube([26,depth,wall]);
+ translate([20,0,0]) cube([wall,depth,height]);translate([74,0,0]) cube([wall,depth,height]);
+ translate([20,0,height-wall]) cube([60,depth,wall]);
+ }
+ for(x=[10,90]) for(y=[15,55]) translate([x,y,-1]) cylinder(d=6.5,h=wall+2);
+ for(x=[40,60]) hull(){translate([x,15,height-wall-1]) cylinder(d=slot,h=wall+2);translate([x,55,height-wall-1]) cylinder(d=slot,h=wall+2);}
+ for(x=[19,73]) translate([x,25,8]) cube([wall+2,20,12]);
+}''',
+ notes='Raised mechanical mounting deck only; no pneumatic manifold passages or valve interface standard. Deck spans X20–80 at Z24–30. Two 4.5 mm wide deck slots lie at X40/60 with endpoint centers Y15/55 (40 mm travel). Four Ø6.5 foot holes lie at X10/90/Y15/55. Each supporting web has a 20 × 12 mm service window spanning Y25–45/Z8–20. Confirm valve bolt pattern, port and connector access, vibration, material and reaction loads; do not use as a pressure-containing component.'),
 ]
 
 if __name__ == '__main__':

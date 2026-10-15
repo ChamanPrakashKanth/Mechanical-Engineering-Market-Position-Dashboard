@@ -48,3 +48,26 @@ Primary sources for this batch:
 - CRS VAMIC guide-rail clamps with CAD: https://crsvamic.ca/en/product/903clamps/
 
 Original model geometry was authored without copying catalog dimensions. Smooth passages, idealized rectangular belt grooves and sharp corners are intentional study geometry, not validated supplier interfaces. The sensor hood has no impact or ingress rating; the clamp and mount models have no load ratings. Search performance should be assessed with relevant Search Console query impressions/clicks once available.
+
+## Third batch — nut housings, conveyor supports and control equipment
+
+Compared 12 further queries covering ball-screw nut housings, roller brackets, cable-gland plates and valve mounts. Searches included generic CAD/download phrasing and narrower parametric/OpenSCAD/spacing phrases. Commercial CAD and STEP downloads are established competition. Sparse exact editable-layout results are an opportunity hypothesis only; no verified search volumes or keyword difficulty scores were obtained.
+
+| Original model | Observed use and competition | Useful narrower content |
+|---|---|---|
+| Ball screw nut housing with flange recess | LiMo publishes nut-housing CAD; supplier-specific nut housings and existing editable projects already compete | Recess depth, smooth pilot holes, base coordinates, editable custom envelope; no SFU/DSG compatibility claim |
+| Conveyor roller axle support with open slots | item offers conveyor fastening bracket CAD; this confirms bracket use, not this original axle design | Inside cheek span, open-slot bottom geometry and explicit need for axle retention |
+| Cable gland layout plate with mixed apertures | Schneider and TE offer cable-entry plate CAD; broad commercial replacement searches are competitive | Mixed aperture table, hole pitch, corner radius and clearance checks, without claiming an IP rating |
+| Pneumatic valve mounting pedestal | Festo documents valve terminal mounting components and CAD support | Raised deck, two adjustable slots and access windows; mechanical mounting only |
+
+Primary references:
+
+- LiMo nut-housing family and CAD drawings: https://limobearing.com/aluminum-ball-screw-housing
+- LiMo support-unit and nut-housing CAD resources: https://limobearing.com/ball-screw-bearing
+- item conveyor fastening bracket and CAD downloads: https://www.item24.com/en-ca/roller-conveyor-6-al-fastening-bracket-u-d30-66756
+- Schneider cable gland plate and CAD resources: https://eshop.se.com/eg/plain-cable-gland-plate-panelset-sfn-panelset-sf-for-electrical-enclosure-w800-d600mm-fixed-by-clips.html
+- TE cable-entry plate CAD: https://www.te.com/en/product-1SNG603003R0000.html
+- Festo mounting component documentation: https://www.festo.com/media/catalog/202606_documentation.pdf
+- Festo valve mounting component documentation: https://ftp.festo.com/public/pneumatic/SOFTWARE_SERVICE/Documentation/2010/EN/VALVE-MOUNTING-COMPONENTS_EN.PDF
+
+These four models are original custom geometry with STL and editable OpenSCAD, not supplier STEP files. Do not describe them as standard replacements. CAD geometry checks do not establish functional fit, load, pressure, sealing, electrical or conveyor safety performance. Track relevant impressions and clicks before assuming that the content gap represents useful organic demand.
