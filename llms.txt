@@ -4,6 +4,10 @@
 
 ## Main tools
 
+- [Custom Shaft Spacer Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/shaft-spacer-generator.html): Local CPU-only nominal geometry, dimensioned preview, volume and solid mass calculation, OpenSCAD and millimetre DXF profile downloads. No API, GPU or remote processing.
+- [Shim Washer Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/shim-washer-generator.html): Original parametric annular shim geometry and offline OpenSCAD/DXF export.
+- [Bearing Spacer Clearance Calculator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/bearing-spacer-clearance-calculator.html): Nominal and worst-case axial clearance for two equal bearings and one spacer inside a housing, with stated assumptions.
+
 - [GATE Mechanical Engineering Books](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/gate-mechanical-books.html): Four original AI-assisted revision books covering selected foundations in mathematics, applied mechanics and design, thermal and fluid sciences, and manufacturing and industrial engineering. Sixteen chapters, sixteen worked examples, thirty-two original practice questions with reasoning. Searchable full text, offline Markdown and HTML downloads, browser print to PDF. Independent learning material; not official GATE questions or complete syllabus coverage. CC BY 4.0.
 
 - [Mechanical CAD Library](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/cad-library.html): 248 original educational parts including tapered, rounded and thin-wall profile studies with STL meshes and editable OpenSCAD sources, released under CC0. All dimensions are millimetres; no STEP, tolerances, or load ratings.
