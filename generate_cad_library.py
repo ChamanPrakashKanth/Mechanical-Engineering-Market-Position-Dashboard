@@ -315,6 +315,10 @@ for slug,(title,profile) in profiles.items():
     dims=f'Max OD {radius*2:g} · height {height:g} mm · section dimensions in source'
     parts.append((slug,title,dims,revolve(profile),'// Section points: [radius, height], mm. Edit to change the profile.\nsection='+str([list(point) for point in profile])+';','rotate_extrude($fn=96) polygon(points=section);',radius*2,min(p[0] for p in profile)*2,height))
 from industrial_parts import PARTS as INDUSTRIAL_PARTS, SOURCE_REFERENCES as INDUSTRIAL_SOURCES
+from drone_parts import PARTS as DRONE_PARTS, SOURCE_REFERENCES as DRONE_SOURCES, generate_meshes as generate_drone_meshes
+generate_drone_meshes()
+INDUSTRIAL_PARTS = INDUSTRIAL_PARTS + DRONE_PARTS
+INDUSTRIAL_SOURCES = dict(INDUSTRIAL_SOURCES, **DRONE_SOURCES)
 industrial_by_slug={part['slug']:part for part in INDUSTRIAL_PARTS}
 for part in INDUSTRIAL_PARTS:
     mesh_path=OUT/(part['slug']+'.stl')
@@ -386,6 +390,7 @@ html='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="v
 mesh_count=sum(1 for part in parts if (OUT/(part[0]+'.stl')).exists())
 source_only_count=len(parts)-mesh_count
 html=html.replace('four new industrial studies',str(source_only_count)+' new industrial studies')
+html=html.replace('<p class="eyebrow">Original engineering geometry', '<section class="card"><h2>New: drone parts for 3D printing</h2><p>Six original GPS and receiver trays, capacitor and antenna cable guides, an arm wire cover and a strap routing bridge. Every part includes STL, editable source, dimensions and print orientation.</p><a class="cta" href="drone-cad-library.html">Browse drone STL files →</a></section><p class="eyebrow">Original engineering geometry',1)
 html=html.replace('Circular sweeps use 96 segments; the rounded ring section uses 24 points.','Circular profile sweeps use 96 segments; the rounded ring section uses 24 points. Industrial boolean models use 64 segments for round features.')
 html=html.replace('<p><label for="search">','<section class="card"><p class="eyebrow">NEW · INDUSTRIAL DESIGN STUDIES</p><h2>Brackets, housings, couplings and manifolds</h2><p>The first 8 models include subtractive features: mounting holes, counterbores, relief slots, intersecting passages, and reinforcing ribs. They are original educational designs, not supplier replacements. Hole fits, thread forms, load ratings, sealing and pressure performance are not specified.</p><p>Search “industrial” to show only these parts. Open each dimension page for hole coordinates and feature notes.</p></section><p><label for="search">')
 for slug in industrial_by_slug:
@@ -438,4 +443,7 @@ for slug,title,dims,faces,params,model,od,inside,height in parts:
         detail=detail.replace(title+' CAD: dimensions, STL and OpenSCAD',title+' CAD: dimensions and OpenSCAD')
         detail=detail.replace('STL files.','an OpenSCAD source file.')
     if published=='2026-10-15': detail=detail.replace('October 14, 2026','October 15, 2026')
+    if slug in {p['slug'] for p in DRONE_PARTS}:
+        detail=detail.replace('October 14, 2026','October 16, 2026')
+        detail=detail.replace('<h2>Named dimensions</h2>','<p><a href="drone-cad-library.html">Browse drone parts for 3D printing →</a></p><h2>Named dimensions</h2>',1)
     (ROOT/'engineering-careers'/('cad-'+slug+'.html')).write_text(detail,encoding='utf-8')

@@ -1,0 +1,29 @@
+MechIntel drone print pack — original CC0 geometry — units mm
+Six accessories, 16 October 2026. No copied supplier CAD.
+Closed connected STL meshes checked computationally; no physical prints or flight testing.
+Import STL as millimetres. Keep installed parts clear of props, wiring and cooling.
+Edit named parameters and review all offsets in OpenSCAD, then render/export STL locally.
+
+FPV drone GPS tray for a 25 mm module
+29.4 × 29.4 × 9 mm · pocket 25.4 × 25.4 mm · 8 mm cable exit
+Open tray with two floor tie slots and a raised cable exit. The 25.4 mm pocket supplies 0.4 mm total nominal allowance for a measured 25 mm module; it is not a standardized GPS footprint. Keep a clear sky view and review compass magnetic interference. No mast, vibration isolator or enclosure lid is included. Print orientation: Base on the bed, pocket upward. A 0.2 mm layer and 0.4 mm nozzle are starting points; inspect tie-slot bridging. Try a fit coupon before a full print. PETG is a candidate for rigid fit trials; use the filament supplier profile. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
+
+FPV drone capacitor strap cradle
+34 × 18 × 5 mm · 14 mm open channel · two 2.5 × 10 mm tie slots
+An open rectangular saddle for a small cylindrical capacitor held by separate soft ties. The 14 mm space between rails is not an interference-fit cylinder. Nominally leaves 2 mm total lateral clearance around a measured 12 mm body. No clamp or tie is included. Keep the pressure relief vent and terminals unobstructed; do not tighten ties onto leads. Print orientation: Flat base on the bed, rails upward. TPU is a candidate for flexible retention trials, using the supplier TPU profile. Start with a 0.2 mm layer and verify all tie passages after slicing. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
+
+FPV drone dual antenna cable guide
+32 × 16 × 7 mm · two 5 mm open channels · two tie slots
+Three rails form two open cable channels; use separate soft ties for retention. This guides insulated coax or antenna sleeves, not bare radiating elements. It does not set an antenna angle or improve radio range. Follow the receiver manufacturer guidance and keep the antenna active area clear of conductive carbon fibre and other obstructions. Print orientation: Base on the bed, channels upward. TPU is a candidate for compliant cable support. Start with 0.2 mm layers and confirm cable bend radius and connector access before installing. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
+
+FPV receiver tray for a 20 × 12 mm board
+24.4 × 16.4 × 6 mm · pocket 20.4 × 12.4 mm · two cable exits
+Open receiver board tray with two floor tie slots and exits at both short walls. The nominal pocket leaves 0.4 mm total allowance in each axis for a measured 20 × 12 mm board outline. Component heights, solder joints, antenna clearance and insulation are not represented. No receiver brand compatibility is claimed. Print orientation: Floor on the bed, opening upward. PETG or TPU may be evaluated for fit trials. Start at 0.2 mm layers; inspect the narrow floor webs and leave room for solder joints. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
+
+Drone arm wire protector with a 14 mm tunnel
+48 × 18 × 8 mm · tunnel 14 × 6 mm · two roof tie slots
+Open-ended U cover for an arm or wire bundle within a 14 × 6 mm rectangular envelope. Two roof slots accept separate ties. It is a cable cover, not a structural arm or impact-rated guard. Check the full moving propeller envelope and keep motor cooling paths clear. Print orientation: Flip the model 180 degrees in the slicer so its outside roof lies on the bed and the open tunnel faces upward. TPU may be evaluated for a compliant cover. Start at 0.2 mm layers; remove strings from the tie slots. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
+
+Drone battery strap routing bridge for 20 mm webbing
+30 × 24 × 5 mm · open passage 20 × 2 mm
+A simple open-bottom webbing routing bridge. The 20 mm passage is nominal and may be too tight for actual 20 mm webbing; increase strap_width for measured strap width plus process allowance. The 2 mm vertical passage excludes buckles and folded seams. It does not secure a battery by itself and is not a battery enclosure, fire barrier or load-rated clamp. Print orientation: Flip 180 degrees in the slicer, exterior roof on the bed. TPU is a candidate for a soft guide. Start at 0.2 mm layers; inspect edges and prevent strap abrasion. These original accessories have not been physically printed or flight-tested. Measure your hardware; do not assume compatibility with any named frame or module. Printed fit, retention, electrical clearance and propeller clearance must be checked on the actual assembly.
