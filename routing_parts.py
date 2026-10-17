@@ -26,12 +26,12 @@ add('industrial-rectangular-sensor-strap-tray','Rectangular sensor strap tray wi
  [('wall','wall','base','inner_x','inner_y','rim+1'),('inner_x+wall-1','9','base+1','wall+2','10','rim'),('10','7','-1','3','14','base+2'),('35','7','-1','3','14','base+2')],
  'Bench positioning tray for a measured rectangular sensor envelope smaller than 40 × 20 mm. Two floor slots accept separate retention straps; no screws or electronics are included. The open short-wall exit allows cable routing. Check sensor sensing-face requirements, connector space, operating temperature and insulation. Not for safeguarding or safety-rated sensing.')
 SOURCE_REFERENCES={p['slug']:[REF,('igus: strain relief installation context','https://www.igus.com/cable-carriers/resources/energy-chains-designing-strainrelief-com')] for p in PARTS}
-def generate_meshes():
+def generate_meshes(parts=None):
  out=ROOT/'assets/cad'
- for p in PARTS:
+ for p in (PARTS if parts is None else parts):
   faces=mesh(p);volume=validate(faces)
   with (out/(p['slug']+'.stl')).open('wb') as f:
-   f.write(b'MechIntel original industrial routing; mm; CC0'.ljust(80,b'\0'));f.write(struct.pack('<I',len(faces)))
+   f.write(b'MechIntel original industrial geometry; mm; CC0'.ljust(80,b'\0'));f.write(struct.pack('<I',len(faces)))
    for a,b,c in faces:
     u=[b[i]-a[i] for i in range(3)];v=[c[i]-a[i] for i in range(3)]
     n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];norm=math.sqrt(sum(x*x for x in n));n=[x/norm for x in n]
