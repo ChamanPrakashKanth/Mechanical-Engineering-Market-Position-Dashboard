@@ -168,6 +168,20 @@ The Employability Score is calculated out of 100 points using the following weig
 
 ---
 
+## For AI Agents and Developers
+
+MechIntel provides a [portable Agent Skill](.agents/skills/mechintel/SKILL.md) and an optional local, read-only [MCP server](mcp/README.md). The server exposes deterministic profile scoring, engineering role matching, ATS keyword coverage, skill gaps, and career roadmaps through stdio. It uses the same pure scoring functions as the browser app; no API token, model request, or GPU is required for local use.
+
+- [Public developer integration guide](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/ai-agent-integration.html)
+- [Agent Skill source and installation notes](.agents/skills/mechintel/SKILL.md)
+- [MCP tools, input schemas, client configuration and examples](mcp/README.md)
+- [Shared scoring methodology and interpretation limits](.agents/skills/mechintel/references/methodology.md)
+- [Source repository](https://github.com/ChamanPrakashKanth/Mechanical-Engineering-Market-Position-Dashboard)
+
+The comparison cohort is synthetic. Scores and role matches are heuristics, not real applicant ranks or hiring probabilities. Resume text is processed in memory by the local MCP server and omitted from results. Publishing the skill does not automatically register it with assistants. The optional Cloudflare Worker is separately configured, authenticated and not deployed; GitHub Pages remains static.
+
+---
+
 ## 📦 Compilation & Blogger Deployment
 
 The dashboard has utility scripts to compile the local frontend files (`index.html`, `styles.css`, and `app.js`) into single, self-contained HTML files suitable for iframe hosting or embedding into static pages (like Blogger/Blogspot):

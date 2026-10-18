@@ -1,0 +1,20 @@
+name = "mechintel-career-mcp"
+main = "src/index.mjs"
+compatibility_date = "2026-10-18"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ALLOWED_ORIGINS = "https://chamanprakashkanth.github.io"
+# Replace with the exact deployed host (no scheme), e.g. mechintel-career-mcp.<account>.workers.dev.
+ALLOWED_HOSTS = "SET-YOUR-WORKERS-DEV-HOST"
+# Set MCP_BEARER_TOKEN with `npx wrangler secret put MCP_BEARER_TOKEN` before deployment.
+
+# Replace this example ID with a positive integer unique in your Cloudflare account.
+# The binding is per-token and the threshold should be tuned before public use.
+[[ratelimits]]
+name = "MCP_LIMITER"
+namespace_id = "763281940"
+
+  [ratelimits.simple]
+  limit = 60
+  period = 60

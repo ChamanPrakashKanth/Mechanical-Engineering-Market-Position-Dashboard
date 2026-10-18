@@ -4,6 +4,8 @@
 
 ## Main tools
 
+- [For AI Agents and Developers](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/ai-agent-integration.html): Local stdio MCP server and repository-local Agent Skill integration guide. Scores are deterministic heuristics; the comparison cohort is synthetic. No remote MCP endpoint is currently deployed.
+
 - [Drone STL and Editable CAD Library](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/drone-cad-library.html): Six original printable drone accessory studies: GPS tray, receiver tray, capacitor strap cradle, dual antenna cable guide, arm wire cover, and battery webbing routing bridge. Download STL, editable OpenSCAD, SVG and a six-part ZIP with print orientation and dimensions. Mesh closure, connectivity and positive volume checked computationally. No physical printing or flight tests. Original CC0 geometry, local CPU generation, no API or GPU.
 
 - [Custom Shaft Spacer Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/shaft-spacer-generator.html): Local CPU-only nominal geometry, dimensioned preview, volume and solid mass calculation, OpenSCAD and millimetre DXF profile downloads. No API, GPU or remote processing.

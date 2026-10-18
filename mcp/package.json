@@ -1,0 +1,17 @@
+{
+  "name": "mechintel-mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local, deterministic MCP tools for MechIntel engineering career analysis",
+  "scripts": {
+    "sync-catalog": "node scripts/sync-catalog.mjs",
+    "start": "node server.mjs",
+    "test": "node --test",
+    "check": "node --check server.mjs && node --check src/tools.mjs && node --check ../shared/mechintel-core.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.25.76"
+  }
+}

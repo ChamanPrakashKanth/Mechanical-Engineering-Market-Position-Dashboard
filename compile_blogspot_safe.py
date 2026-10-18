@@ -184,7 +184,9 @@ def compile_safe():
     workspace = os.path.dirname(os.path.abspath(__file__))
     index_path = os.path.join(workspace, "index.html")
     css_path = os.path.join(workspace, "styles.css")
+    refinement_css_path = os.path.join(workspace, "refinement.css")
     js_path = os.path.join(workspace, "app.js")
+    core_js_path = os.path.join(workspace, "shared", "mechintel-core.js")
     output_path = os.path.join(workspace, "blogspot_deploy_safe.html")
     
     if not os.path.exists(index_path) or not os.path.exists(css_path) or not os.path.exists(js_path):
@@ -196,25 +198,31 @@ def compile_safe():
         
     with open(css_path, 'r', encoding='utf-8') as f:
         css_content = f.read()
+
+    if os.path.exists(refinement_css_path):
+        with open(refinement_css_path, 'r', encoding='utf-8') as f:
+            css_content += "\n" + f.read()
         
     with open(js_path, 'r', encoding='utf-8') as f:
         js_content = f.read()
+
+    with open(core_js_path, 'r', encoding='utf-8') as f:
+        core_js_content = f.read()
     
     min_css = minify_css(css_content)
-    min_js = minify_js(js_content)
+    min_js = minify_js(core_js_content + "\n" + js_content)
     
     # Inline lesson videos as base64 data URIs after minification so the giant base64
     # strings never pass through the comment-stripping logic.
     min_js = inline_videos(min_js, workspace)
     
     # Replace stylesheets and script links
-    css_link_pattern = '<link rel="stylesheet" href="styles.css">'
     style_block = f"<style>{min_css}</style>"
-    html_content = html_content.replace(css_link_pattern, style_block)
+    html_content = re.sub(r'<link rel="stylesheet" href="styles\.css[^"]*">', style_block, html_content)
+    html_content = re.sub(r'<link rel="stylesheet" href="refinement\.css[^"]*">', '', html_content)
     
-    js_script_pattern = '<script src="app.js"></script>'
     script_block = f"<script>{min_js}</script>"
-    html_content = html_content.replace(js_script_pattern, script_block)
+    html_content = re.sub(r'<script defer src="shared/mechintel-core\.js[^"]*"></script>\s*<script defer src="app\.js[^"]*"></script>', script_block, html_content)
     
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html_content)

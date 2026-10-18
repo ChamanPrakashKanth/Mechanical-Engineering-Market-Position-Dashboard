@@ -225,99 +225,16 @@ function generateDataset() {
 }
 
 // Resume Parsing algorithms
-const KEYWORDS_TAXONOMY = ["gd&t", "fea", "cfd", "cad", "ansys", "solidworks", "revit", "hvac", "six sigma", "asme", "dfm", "matlab", "cnc"];
+const KEYWORDS_TAXONOMY = MechIntelCore.ATS_KEYWORDS;
 
 function parseResumeText(text) {
-    const textLower = text.toLowerCase();
-    
-    // Redact email/phone
-    let cleaned = text;
-    cleaned = cleaned.replace(/\b[\w\.-]+@[\w\.-]+\.\w{2,}\b/g, '[REDACTED_EMAIL]');
-    cleaned = cleaned.replace(/\b(?:\+?\d{1,3}[- ]?)?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}\b/g, '[REDACTED_PHONE]');
-    
-    const skills = [];
-    const software = [];
-    const certs = [];
-    
-    if (textLower.includes("gd&t") || textLower.includes("geometric dimensioning")) skills.push("GD&T (Geometric Dimensioning & Tolerancing)");
-    if (textLower.includes("fea") || textLower.includes("finite element")) skills.push("Finite Element Analysis (FEA)");
-    if (textLower.includes("cfd") || textLower.includes("computational fluid")) skills.push("Computational Fluid Dynamics (CFD)");
-    if (textLower.includes("hvac")) skills.push("HVAC Design");
-    if (textLower.includes("mechatronics")) skills.push("Mechatronics");
-    
-    if (textLower.includes("solidworks")) software.push("SolidWorks");
-    if (textLower.includes("autocad")) software.push("AutoCAD");
-    if (textLower.includes("ansys")) software.push("ANSYS");
-    if (textLower.includes("matlab")) software.push("MATLAB");
-    
-    if (textLower.includes("cswa")) certs.push("Certified SolidWorks Associate (CSWA)");
-    if (textLower.includes("cswp")) certs.push("Certified SolidWorks Professional (CSWP)");
-    
-    const projects = Math.min(Math.max(Math.round((textLower.match(/project|design/g) || []).length / 2), 1), 5);
-    const internships = Math.min((textLower.match(/internship|intern\b|trainee/g) || []).length, 2);
-    
-    return {
-        region: textLower.includes("mit") || textLower.includes("stanford") ? "Global" : "India",
-        tier: textLower.includes("iit") || textLower.includes("bits") ? "Tier 1" : "Tier 2",
-        degree: textLower.includes("master") || textLower.includes("m.tech") ? "M.Tech/M.S." : "B.Tech/B.S.",
-        projects: projects,
-        internships: internships,
-        research_papers: textLower.includes("publication") ? 1 : 0,
-        competitions: textLower.includes("fsae") || textLower.includes("baja") ? 1 : 0,
-        skills: skills,
-        software_tools: software,
-        certifications: certs,
-        raw_text: cleaned
-    };
+    return MechIntelCore.parseResumeText(text);
 }
 
 // Structured Assessment Calculators
 function calculateScores(profile, proficiencyValues = softwareProficiency) {
-    // 1. Academics
-    const acadBase = profile.tier === "Tier 1" ? 100 : (profile.tier === "Tier 2" ? 70 : 40);
-    const degBase = profile.degree === "B.Tech/B.S." ? 70 : (profile.degree === "M.Tech/M.S." ? 85 : 100);
-    const acadWeighted = (acadBase * 0.6 + degBase * 0.4) * 0.25;
-    
-    // 2. Software proficiency values mapping
-    const swValues = Object.values(proficiencyValues);
-    const swAverage = swValues.reduce((a,b) => a+b, 0) / swValues.length;
-    const skillsWeighted = (swAverage * 0.6 + Math.min(profile.skills.length * 20, 100) * 0.4) * 0.35;
-    
-    // 3. Experience
-    const internVal = Math.min(profile.internships * 50, 100);
-    const projVal = Math.min(profile.projects * 33, 100);
-    const compVal = Math.min(profile.competitions * 50, 100);
-    const expWeighted = (internVal * 0.4 + projVal * 0.4 + compVal * 0.2) * 0.30;
-    
-    // 4. Extras
-    const paperVal = Math.min(profile.research_papers * 50, 100);
-    const certVal = Math.min(profile.certifications.length * 50, 100);
-    const extraWeighted = (paperVal * 0.5 + certVal * 0.5) * 0.10;
-    
-    const courseBonus = typeof userCompletedCourses !== 'undefined' ? Math.min(userCompletedCourses.length * 2.5, 20) : 0;
-    const readiness = Math.round((acadWeighted + skillsWeighted + expWeighted + extraWeighted) * 10) / 10;
-    const marketPosition = Math.round(readiness * 0.9 + (profile.tier === "Tier 1" ? 10 : 0));
-    const employability = Math.round((projVal * 0.3 + internVal * 0.5 + swAverage * 0.2));
-    const recruiter = Math.round((acadBase * 0.3 + internVal * 0.4 + certVal * 0.3));
-    const engineeringCompetency = Math.min(100, Math.round((swAverage * 0.7 + Math.min(profile.skills.length * 20, 100) * 0.3) + courseBonus));
-    
-    // Calculate profile completeness
-    let completion = 20; // default name
-    if (profile.projects > 0) completion += 15;
-    if (profile.internships > 0) completion += 15;
-    if (profile.skills.length > 0) completion += 15;
-    if (profile.certifications.length > 0) completion += 15;
-    if (profile.research_papers > 0) completion += 10;
-    if (profile.competitions > 0) completion += 10;
-    
-    return {
-        readiness: Math.min(readiness, 100),
-        marketPosition: Math.min(marketPosition, 100),
-        employability: Math.min(employability, 100),
-        recruiter: Math.min(recruiter, 100),
-        engineeringCompetency: Math.min(engineeringCompetency, 100),
-        completion: Math.min(completion, 100)
-    };
+    const courseCount = typeof userCompletedCourses !== 'undefined' ? userCompletedCourses.length : 0;
+    return MechIntelCore.calculateScores(profile, proficiencyValues, courseCount);
 }
 
 // Plotly renderers
@@ -515,20 +432,8 @@ function normalizeJobTerm(value) {
 }
 
 function scoreLinkedInRole(role, profile) {
-    const profileSkills = (profile?.skills || []).map(normalizeJobTerm);
-    const profileCerts = (profile?.certifications || []).map(normalizeJobTerm);
     const selectedDomains = resolveSpecialtyDomains(profile?.cluster || selectedDomainName);
-    const skillHits = role.keywords.filter(item => profileSkills.includes(normalizeJobTerm(item)));
-    const certHits = role.certs.filter(item => profileCerts.includes(normalizeJobTerm(item)));
-    const softwareHits = role.software.filter(item => (softwareProficiency[item] || 0) >= 40);
-    const softwareScore = role.software.length ? role.software.reduce((sum, item) => sum + Math.min(100, softwareProficiency[item] || 0), 0) / role.software.length : 0;
-    const skillScore = role.keywords.length ? (skillHits.length / role.keywords.length) * 100 : 0;
-    const certScore = role.certs.length ? (certHits.length / role.certs.length) * 100 : 100;
-    const domainScore = selectedDomains.includes(role.domain) || profile?.cluster === role.domain ? 100 : 30;
-    const evidenceScore = Math.min(100, ((Number(profile?.projects) || 0) * 14) + ((Number(profile?.internships) || 0) * 24));
-    const score = Math.round((skillScore * .32) + (softwareScore * .28) + (domainScore * .20) + (certScore * .08) + (evidenceScore * .12));
-    const missing = [...role.keywords.filter(item => !skillHits.includes(item)), ...role.software.filter(item => !softwareHits.includes(item))].slice(0, 3);
-    return { ...role, score: Math.max(1, Math.min(99, score)), skillHits, softwareHits, missing };
+    return MechIntelCore.scoreRole(role, profile, softwareProficiency, selectedDomains);
 }
 
 function buildLinkedInJobUrl(role, location, experience) {
@@ -755,15 +660,12 @@ function renderBadges() {
 
 // Resume ATS scorecard
 function renderAtsScorecard(profile) {
-    const userKeywords = profile.skills.concat(profile.software_tools).map(s => s.toLowerCase());
-    let matchCount = 0;
-    
+    const result = MechIntelCore.atsAlignment(profile);
     const wrapper = document.getElementById("ats-missing-keywords-wrapper");
     wrapper.innerHTML = "";
     
     KEYWORDS_TAXONOMY.forEach(kw => {
-        const present = userKeywords.some(u => u.includes(kw));
-        if (present) matchCount++;
+        const present = result.present.includes(kw);
         
         const box = document.createElement("div");
         box.className = `keyword-status-box ${present ? 'present' : 'missing'}`;
@@ -771,9 +673,8 @@ function renderAtsScorecard(profile) {
         wrapper.appendChild(box);
     });
     
-    const atsScore = Math.round((matchCount / KEYWORDS_TAXONOMY.length) * 100);
-    document.getElementById("ats-score-ring").innerText = `${atsScore}%`;
-    document.getElementById("ats-readiness-label").innerText = atsScore >= 70 ? "Excellent ATS Keywords Match!" : "Keywords Optimization Required";
+    document.getElementById("ats-score-ring").innerText = `${result.score}%`;
+    document.getElementById("ats-readiness-label").innerText = result.score >= 70 ? "Excellent ATS Keywords Match!" : "Keywords Optimization Required";
 }
 
 // Generate static portfolio template code
@@ -1320,14 +1221,7 @@ function showDashboardView(viewId) {
 }
 
 function resolveSpecialtyDomains(matchedDomain) {
-    const specialtyMap = {
-        "CAD Design": ["Design Engineering", "Automotive", "Aerospace"],
-        "CAE/Simulation": ["FEA", "CFD", "Thermal Engineering"],
-        "Robotics/Mechatronics": ["Robotics", "Mechatronics", "Maintenance Engineering"],
-        "Manufacturing/Operations": ["Manufacturing Engineering", "Production Engineering", "Quality Engineering", "Industrial Engineering"],
-        "HVAC/Thermal": ["HVAC", "Thermal Engineering", "CFD"]
-    };
-    return specialtyMap[matchedDomain] || [matchedDomain];
+    return MechIntelCore.resolveSpecialtyDomains(matchedDomain);
 }
 
 function percentileStanding(scores, score, scaleFactor) {
@@ -1523,22 +1417,10 @@ function initCareerPathSimulator() {
         const domain = DOMAINS_CATALOG[roleSelect.value];
         const profile = targetProfile;
         if (!profile || !domain) return;
-        const currentSkills = [...profile.skills, ...profile.certifications].map(item => item.toLowerCase());
-        const presentSkills = domain.skills.filter(skill => currentSkills.some(item => item.includes(skill.toLowerCase()) || skill.toLowerCase().includes(item)));
-        const missingSkills = domain.skills.filter(skill => !presentSkills.includes(skill));
-        const currentTools = profile.software_tools.map(item => item.toLowerCase());
-        const presentTools = domain.software.filter(tool => currentTools.includes(tool.toLowerCase()));
-        const baseAlignment = ((presentSkills.length / Math.max(domain.skills.length, 1)) * 55) + ((presentTools.length / Math.max(domain.software.length, 1)) * 30) + Math.min(profile.projects * 3, 15);
-        const effortGain = Math.min(20, (hours * months / 12) * 0.22);
-        const score = Math.min(100, Math.round(baseAlignment + effortGain));
-        document.getElementById("career-sim-score").textContent = `${score}%`;
-        document.getElementById("career-sim-delta").textContent = `${presentSkills.length}/${domain.skills.length} listed skills · ${presentTools.length}/${domain.software.length} listed tools · ${hours * months} planned hours`;
-        const milestones = [];
-        if (missingSkills.length) milestones.push(`Practice and document: ${missingSkills.slice(0, 2).join("; ")}.`);
-        if (presentTools.length < domain.software.length) milestones.push(`Build a small portfolio artifact using ${domain.software.find(tool => !presentTools.includes(tool))}.`);
-        milestones.push(`Complete one role-relevant project and record the method, constraints, and measured result.`);
-        if (domain.certs.length) milestones.push(`Review the pathway for ${domain.certs[0]}; list it only after earning it.`);
-        document.getElementById("career-sim-milestones").innerHTML = milestones.slice(0, 4).map(item => `<li>${escapeResumeHtml(item)}</li>`).join("");
+        const result = MechIntelCore.careerRoadmap(profile, { ...domain, name: roleSelect.value }, hours, months);
+        document.getElementById("career-sim-score").textContent = `${result.score}%`;
+        document.getElementById("career-sim-delta").textContent = `${result.present_skills.length}/${domain.skills.length} listed skills · ${result.present_software.length}/${domain.software.length} listed tools · ${hours * months} planned hours`;
+        document.getElementById("career-sim-milestones").innerHTML = result.milestones.map(item => `<li>${escapeResumeHtml(item)}</li>`).join("");
     };
     [roleSelect, document.getElementById("career-sim-hours"), document.getElementById("career-sim-months")].forEach(control => control.addEventListener("input", render));
     roleSelect.addEventListener("change", render);

@@ -1,0 +1,416 @@
+{
+  "domains": {
+    "Design Engineering": {
+      "skills": [
+        "GD&T (Geometric Dimensioning & Tolerancing)",
+        "Product Design",
+        "Tolerance Analysis"
+      ],
+      "software": [
+        "SolidWorks",
+        "AutoCAD",
+        "Creo"
+      ],
+      "certs": [
+        "CSWP (Certified SolidWorks Professional)",
+        "ASME GD&T Professional"
+      ],
+      "salary": "₹6.8 LPA",
+      "demand": "Critical"
+    },
+    "Manufacturing Engineering": {
+      "skills": [
+        "Lean Manufacturing",
+        "CNC Programming",
+        "DFM (Design for Manufacturing)"
+      ],
+      "software": [
+        "AutoCAD",
+        "SolidWorks",
+        "Excel"
+      ],
+      "certs": [
+        "SME Certified Manufacturing Engineer (CMfgE)"
+      ],
+      "salary": "₹6.0 LPA",
+      "demand": "High"
+    },
+    "Production Engineering": {
+      "skills": [
+        "Quality Control & Assurance",
+        "CNC Programming",
+        "Six Sigma"
+      ],
+      "software": [
+        "AutoCAD",
+        "Excel"
+      ],
+      "certs": [
+        "Lean Six Sigma Green Belt"
+      ],
+      "salary": "₹5.5 LPA",
+      "demand": "Medium"
+    },
+    "Maintenance Engineering": {
+      "skills": [
+        "Embedded Systems",
+        "Control Systems",
+        "Lean Manufacturing"
+      ],
+      "software": [
+        "Excel",
+        "MATLAB"
+      ],
+      "certs": [
+        "ASME Maintenance Certificate"
+      ],
+      "salary": "₹5.2 LPA",
+      "demand": "Medium"
+    },
+    "Quality Engineering": {
+      "skills": [
+        "Quality Control & Assurance",
+        "Six Sigma",
+        "Tolerance Analysis"
+      ],
+      "software": [
+        "Excel",
+        "Python"
+      ],
+      "certs": [
+        "ASQ Certified Quality Engineer (CQE)"
+      ],
+      "salary": "₹5.8 LPA",
+      "demand": "High"
+    },
+    "HVAC": {
+      "skills": [
+        "HVAC Design",
+        "Thermodynamics",
+        "Piping Design"
+      ],
+      "software": [
+        "AutoCAD",
+        "Revit"
+      ],
+      "certs": [
+        "HVAC Design Certificate",
+        "ASHRAE Member Certification"
+      ],
+      "salary": "₹5.6 LPA",
+      "demand": "High"
+    },
+    "Automotive": {
+      "skills": [
+        "Kinematics & Dynamics",
+        "Vibration Analysis",
+        "Product Design"
+      ],
+      "software": [
+        "SolidWorks",
+        "CATIA",
+        "ANSYS"
+      ],
+      "certs": [
+        "SAE Automotive Design Certificate"
+      ],
+      "salary": "₹7.2 LPA",
+      "demand": "High"
+    },
+    "Aerospace": {
+      "skills": [
+        "Fluid Mechanics",
+        "Structural Analysis",
+        "Heat Transfer"
+      ],
+      "software": [
+        "CATIA",
+        "ANSYS",
+        "Abaqus"
+      ],
+      "certs": [
+        "NAFEMS Simulation Certification"
+      ],
+      "salary": "₹8.8 LPA",
+      "demand": "Critical"
+    },
+    "Robotics": {
+      "skills": [
+        "Robotics",
+        "Control Systems",
+        "Embedded Systems"
+      ],
+      "software": [
+        "MATLAB",
+        "Python"
+      ],
+      "certs": [
+        "ASME Robotics Specialist"
+      ],
+      "salary": "₹8.2 LPA",
+      "demand": "Critical"
+    },
+    "Mechatronics": {
+      "skills": [
+        "Mechatronics",
+        "Control Systems",
+        "Kinematics & Dynamics"
+      ],
+      "software": [
+        "MATLAB",
+        "Simulink",
+        "Python"
+      ],
+      "certs": [
+        "Certified LabVIEW Associate (CLAD)"
+      ],
+      "salary": "₹7.8 LPA",
+      "demand": "High"
+    },
+    "CFD": {
+      "skills": [
+        "Computational Fluid Dynamics (CFD)",
+        "Fluid Mechanics",
+        "Heat Transfer"
+      ],
+      "software": [
+        "ANSYS",
+        "Fluent",
+        "MATLAB"
+      ],
+      "certs": [
+        "ANSYS Certified Professional"
+      ],
+      "salary": "₹8.0 LPA",
+      "demand": "Critical"
+    },
+    "FEA": {
+      "skills": [
+        "Finite Element Analysis (FEA)",
+        "Structural Analysis",
+        "Vibration Analysis"
+      ],
+      "software": [
+        "ANSYS",
+        "Abaqus",
+        "Siemens NX"
+      ],
+      "certs": [
+        "FEA Specialist Certification"
+      ],
+      "salary": "₹7.6 LPA",
+      "demand": "High"
+    },
+    "Thermal Engineering": {
+      "skills": [
+        "Thermodynamics",
+        "Heat Transfer",
+        "Fluid Mechanics"
+      ],
+      "software": [
+        "ANSYS",
+        "MATLAB",
+        "Excel"
+      ],
+      "certs": [
+        "ASME Thermal Systems Specialist"
+      ],
+      "salary": "₹6.5 LPA",
+      "demand": "Medium"
+    },
+    "Industrial Engineering": {
+      "skills": [
+        "Lean Manufacturing",
+        "Six Sigma",
+        "Quality Control & Assurance"
+      ],
+      "software": [
+        "Excel",
+        "Python"
+      ],
+      "certs": [
+        "Lean Six Sigma Black Belt"
+      ],
+      "salary": "₹6.4 LPA",
+      "demand": "High"
+    }
+  },
+  "roles": [
+    {
+      "title": "Mechanical Design Engineer",
+      "domain": "Design Engineering",
+      "keywords": [
+        "GD&T (Geometric Dimensioning & Tolerancing)",
+        "Product Design",
+        "Tolerance Analysis"
+      ],
+      "software": [
+        "SolidWorks",
+        "Creo",
+        "AutoCAD"
+      ],
+      "certs": [
+        "CSWP (Certified SolidWorks Professional)"
+      ],
+      "demand": 96
+    },
+    {
+      "title": "FEA / Structural Analysis Engineer",
+      "domain": "FEA",
+      "keywords": [
+        "Finite Element Analysis (FEA)",
+        "Structural Analysis",
+        "Vibration Analysis"
+      ],
+      "software": [
+        "ANSYS",
+        "Abaqus",
+        "Siemens NX"
+      ],
+      "certs": [
+        "FEA Specialist Certification"
+      ],
+      "demand": 91
+    },
+    {
+      "title": "CFD / Thermal Engineer",
+      "domain": "CFD",
+      "keywords": [
+        "Computational Fluid Dynamics (CFD)",
+        "Fluid Mechanics",
+        "Heat Transfer"
+      ],
+      "software": [
+        "ANSYS",
+        "Fluent",
+        "MATLAB"
+      ],
+      "certs": [
+        "ANSYS Certified Professional"
+      ],
+      "demand": 94
+    },
+    {
+      "title": "Manufacturing Engineer",
+      "domain": "Manufacturing Engineering",
+      "keywords": [
+        "Lean Manufacturing",
+        "CNC Programming",
+        "DFM (Design for Manufacturing)"
+      ],
+      "software": [
+        "SolidWorks",
+        "AutoCAD",
+        "Excel"
+      ],
+      "certs": [
+        "SME Certified Manufacturing Engineer (CMfgE)"
+      ],
+      "demand": 84
+    },
+    {
+      "title": "Quality Engineer",
+      "domain": "Quality Engineering",
+      "keywords": [
+        "Quality Control & Assurance",
+        "Six Sigma",
+        "Tolerance Analysis"
+      ],
+      "software": [
+        "Excel",
+        "Python"
+      ],
+      "certs": [
+        "ASQ Certified Quality Engineer (CQE)"
+      ],
+      "demand": 82
+    },
+    {
+      "title": "HVAC Design Engineer",
+      "domain": "HVAC",
+      "keywords": [
+        "HVAC Design",
+        "Thermodynamics",
+        "Piping Design"
+      ],
+      "software": [
+        "AutoCAD",
+        "Revit"
+      ],
+      "certs": [
+        "HVAC Design Certificate",
+        "ASHRAE Member Certification"
+      ],
+      "demand": 86
+    },
+    {
+      "title": "Automotive Design Engineer",
+      "domain": "Automotive",
+      "keywords": [
+        "Kinematics & Dynamics",
+        "Vibration Analysis",
+        "Product Design"
+      ],
+      "software": [
+        "CATIA",
+        "SolidWorks",
+        "ANSYS"
+      ],
+      "certs": [
+        "SAE Automotive Design Certificate"
+      ],
+      "demand": 89
+    },
+    {
+      "title": "Robotics / Mechatronics Engineer",
+      "domain": "Mechatronics",
+      "keywords": [
+        "Mechatronics",
+        "Control Systems",
+        "Robotics"
+      ],
+      "software": [
+        "MATLAB",
+        "Simulink",
+        "Python"
+      ],
+      "certs": [
+        "Certified LabVIEW Associate (CLAD)"
+      ],
+      "demand": 93
+    },
+    {
+      "title": "Maintenance Engineer",
+      "domain": "Maintenance Engineering",
+      "keywords": [
+        "Control Systems",
+        "Lean Manufacturing",
+        "Embedded Systems"
+      ],
+      "software": [
+        "Excel",
+        "MATLAB"
+      ],
+      "certs": [
+        "ASME Maintenance Certificate"
+      ],
+      "demand": 75
+    },
+    {
+      "title": "Graduate Mechanical Engineer",
+      "domain": "Design Engineering",
+      "keywords": [
+        "Product Design",
+        "Thermodynamics",
+        "GD&T (Geometric Dimensioning & Tolerancing)"
+      ],
+      "software": [
+        "SolidWorks",
+        "AutoCAD",
+        "Excel"
+      ],
+      "certs": [],
+      "demand": 88
+    }
+  ]
+}

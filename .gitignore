@@ -24,3 +24,10 @@ venv/
 .venv/
 env/
 .env/
+
+# JavaScript dependencies and local Worker tooling
+node_modules/
+mcp/worker/.wrangler/
+mcp/worker/.wrangler-logs/
+mcp/worker/.xdg-config/
+mcp/worker/.xdg-cache/

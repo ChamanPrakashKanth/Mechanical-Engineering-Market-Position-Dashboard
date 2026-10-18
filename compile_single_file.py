@@ -41,7 +41,9 @@ def compile_single_file():
     workspace = os.path.dirname(os.path.abspath(__file__))
     index_path = os.path.join(workspace, "index.html")
     css_path = os.path.join(workspace, "styles.css")
+    refinement_css_path = os.path.join(workspace, "refinement.css")
     js_path = os.path.join(workspace, "app.js")
+    core_js_path = os.path.join(workspace, "shared", "mechintel-core.js")
     output_path = os.path.join(workspace, "blogspot_deploy.html")
     
     if not os.path.exists(index_path) or not os.path.exists(css_path) or not os.path.exists(js_path):
@@ -55,23 +57,29 @@ def compile_single_file():
     # Read CSS
     with open(css_path, 'r', encoding='utf-8') as f:
         css_content = f.read()
+
+    if os.path.exists(refinement_css_path):
+        with open(refinement_css_path, 'r', encoding='utf-8') as f:
+            css_content += "\n" + f.read()
         
     # Read JS
     with open(js_path, 'r', encoding='utf-8') as f:
         js_content = f.read()
+
+    with open(core_js_path, 'r', encoding='utf-8') as f:
+        core_js_content = f.read()
     
     # Inline lesson videos as base64 data URIs so the single-file build is self-contained
     js_content = inline_videos(js_content, workspace)
         
     # 1. Replace the stylesheet link with the actual CSS style block
-    css_link_pattern = '<link rel="stylesheet" href="styles.css">'
     style_block = f"<style>\n{css_content}\n</style>"
-    html_content = html_content.replace(css_link_pattern, style_block)
+    html_content = re.sub(r'<link rel="stylesheet" href="styles\.css[^"]*">', style_block, html_content)
+    html_content = re.sub(r'<link rel="stylesheet" href="refinement\.css[^"]*">', '', html_content)
     
     # 2. Replace the external javascript script tag with inline script block
-    js_script_pattern = '<script src="app.js"></script>'
-    script_block = f"<script>\n{js_content}\n</script>"
-    html_content = html_content.replace(js_script_pattern, script_block)
+    script_block = f"<script>\n{core_js_content}\n{js_content}\n</script>"
+    html_content = re.sub(r'<script defer src="shared/mechintel-core\.js[^"]*"></script>\s*<script defer src="app\.js[^"]*"></script>', script_block, html_content)
     
     # Write the compiled result
     with open(output_path, 'w', encoding='utf-8') as f:

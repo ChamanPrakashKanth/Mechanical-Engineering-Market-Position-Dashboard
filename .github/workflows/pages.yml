@@ -22,12 +22,21 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Validate JavaScript
-        run: node --check app.js
+        run: |
+          node --check app.js
+          node --check shared/mechintel-core.js
+
+      - name: Verify local MCP server and agent skill
+        run: |
+          npm ci --prefix mcp
+          npm run sync-catalog --prefix mcp
+          npm test --prefix mcp
 
       - name: Prepare static site
         run: |
-          mkdir -p _site/assets _site/manim_courses/renders _site/engineering-careers
+          mkdir -p _site/assets _site/manim_courses/renders _site/engineering-careers _site/shared
           cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css robots.txt sitemap.xml .nojekyll _site/
+          cp shared/mechintel-core.js _site/shared/
           cp engineering_reference_profiles.json _site/
           cp engineering-careers/*.html _site/engineering-careers/
           cp engineering-careers/app.js _site/engineering-careers/
