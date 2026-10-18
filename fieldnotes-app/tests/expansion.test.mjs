@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { pipeVelocity, pumpPower, sensibleHeat, moreTools } from '../src/expansion.js';
+const defaults=id=>moreTools.find(t=>t.id===id).defaults;
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
+test('60 L/min in a 50 mm bore has 1 kg/s mass flow',()=>{const r=pipeVelocity(defaults('pipe-velocity'));near(r.volumeFlow,.001);near(r.velocity,.001/(Math.PI*.05**2/4));near(r.massFlow,1);});
+test('halving bore at fixed flow quadruples mean velocity',()=>{const d=defaults('pipe-velocity');near(pipeVelocity({...d,diameter:25}).velocity,4*pipeVelocity(d).velocity);});
+test('zero flow produces zero speed and mass flow',()=>{const r=pipeVelocity({...defaults('pipe-velocity'),flow:0});near(r.velocity,0);near(r.massFlow,0);});
+test('two pump efficiencies are applied in sequence',()=>{const r=pumpPower(defaults('pump-power'));near(r.hydraulic,196.133);near(r.shaft,196.133/.7);near(r.electrical,196.133/.63);near(r.combined,63);});
+test('improved pump efficiency reduces electrical input at fixed duty',()=>{const d=defaults('pump-power');near(pumpPower({...d,pumpEfficiency:80}).electrical,196.133/.72);});
+test('pump efficiencies outside physical bounds are rejected',()=>{for(const key of ['pumpEfficiency','motorEfficiency'])for(const value of [0,-1,101,'',Infinity])assert.throws(()=>pumpPower({...defaults('pump-power'),[key]:value}));});
+test('zero pump duty does not divide by flow or head',()=>{near(pumpPower({...defaults('pump-power'),flow:0}).electrical,0);near(pumpPower({...defaults('pump-power'),head:0}).electrical,0);});
+test('sensible heating example gives 1672 kJ and 836 seconds',()=>{const r=sensibleHeat(defaults('sensible-heat'));near(r.energyKj,1672);near(r.energyKwh,1672000/3600000);near(r.minutes,836/60);});
+test('cooling has negative energy and positive duration',()=>{const r=sensibleHeat({...defaults('sensible-heat'),initial:60,final:20});near(r.energyKj,-1672);near(r.minutes,836/60);assert.match(r.direction,/Cooling/);});
+test('equal temperatures need zero ideal energy and time',()=>{const r=sensibleHeat({...defaults('sensible-heat'),initial:20,final:20});near(r.energyKj,0);near(r.minutes,0);});
+test('missing, nonpositive and impossible heating data are rejected',()=>{const d=defaults('sensible-heat');for(const key of ['mass','capacity','power'])for(const value of [0,-1,'',null,Infinity])assert.throws(()=>sensibleHeat({...d,[key]:value}));assert.throws(()=>sensibleHeat({...d,initial:-274}));});
+test('expanded models reject overflow and zero-area underflow',()=>{assert.throws(()=>pipeVelocity({...defaults('pipe-velocity'),diameter:1e-300}));assert.throws(()=>pumpPower({...defaults('pump-power'),head:1e308,density:1e308}));assert.throws(()=>sensibleHeat({...defaults('sensible-heat'),mass:1e308}));});

@@ -224,3 +224,7 @@ The frontend client requires zero external package installations.
 - **No Data Exfiltration**: Resume content is parsed purely on the client (or on the local Streamlit server instance) and is never sent to third-party endpoints.
 - **PII Stripping**: The parser actively strips out email addresses, phone numbers, GitHub/LinkedIn profile handles, and URLs.
 - **Simulated Benchmark**: The comparison pool uses generated profile markers and fixed distributions; it is not a collection of anonymized real applicants.
+
+## Free Engineering Fieldnotes
+
+The [engineering toolbox](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/) includes eight free calculators, eleven original guides, a unit converter, a printable formula sheet, scenario comparisons and device-local saved tools. Source and mathematical tests live in `fieldnotes-app/`. GitHub Actions builds and checks it, publishes the static output under `/fieldnotes/`, and merges its page URLs into the main sitemap. Existing career tools remain at their original paths. No ads or analytics are active in Fieldnotes.

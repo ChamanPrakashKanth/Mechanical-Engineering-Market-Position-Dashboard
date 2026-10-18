@@ -1,0 +1,15 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {axialStress,thermalExpansion,mechanicsTools} from '../src/mechanics.js';
+import {convert,quantities} from '../src/units.js';
+const near=(a,b,t=1e-9)=>assert.ok(Math.abs(a-b)<t,`${a} != ${b}`);
+test('axial bar example gives 100 MPa and 0.5 mm extension',()=>{const r=axialStress(mechanicsTools[0].defaults);near(r.stress,100);near(r.strain,.0005);near(r.extension,.5);});
+test('area scaling and force reversal preserve bar relations',()=>{const d=mechanicsTools[0].defaults;near(axialStress({...d,area:200}).extension,.25);near(axialStress({...d,force:-10}).stress,-100);near(axialStress({...d,force:0}).extension,0);});
+test('bar rejects invalid modulus, geometry, overflow and large strain',()=>{const d=mechanicsTools[0].defaults;for(const value of [0,-1,'',1e308])assert.throws(()=>axialStress({...d,modulus:value}));assert.throws(()=>axialStress({...d,area:0}));assert.throws(()=>axialStress({...d,force:1e6}));});
+test('free expansion example gives 0.72 mm and 1000.72 mm length',()=>{const r=thermalExpansion(mechanicsTools[1].defaults);near(r.change,.72);near(r.finalLength,1000.72);});
+test('cooling and negative expansion coefficient reverse movement',()=>{const d=mechanicsTools[1].defaults;near(thermalExpansion({...d,final:-20}).change,-.48);near(thermalExpansion({...d,coefficient:-12}).change,-.72);});
+test('thermal model rejects impossible temperature and excessive strain',()=>{const d=mechanicsTools[1].defaults;assert.throws(()=>thermalExpansion({...d,initial:-274}));assert.throws(()=>thermalExpansion({...d,coefficient:1000}));});
+test('unit converter handles pressure, energy, flow and exact inch',()=>{near(convert('pressure',1,'bar','kPa'),100);near(convert('energy',1,'kWh','J'),3600000);near(convert('flow',60,'L/min','m³/s'),.001);near(convert('length',1,'in','mm'),25.4);});
+test('temperature offsets and absolute zero are handled explicitly',()=>{near(convert('temperature',32,'°F','°C'),0);near(convert('temperature',100,'°C','°F'),212);near(convert('temperature',-459.67,'°F','K'),0);assert.throws(()=>convert('temperature',-1,'K','°C'));});
+test('all unit pairs round-trip and tiny nonzero lengths survive',()=>{for(const [kind,q]of Object.entries(quantities))for(const from of Object.keys(q.units))for(const to of Object.keys(q.units)){const converted=convert(kind,20,from,to);near(convert(kind,converted,to,from),20,1e-7);}assert.ok(convert('length',1e-15,'m','mm')>0);});
+test('converter rejects empty, nonfinite and incompatible units',()=>{for(const value of ['',null,NaN,Infinity])assert.throws(()=>convert('length',value,'m','mm'));assert.throws(()=>convert('length',1,'m','Pa'));assert.throws(()=>convert('length',1e308,'m','mm'));});

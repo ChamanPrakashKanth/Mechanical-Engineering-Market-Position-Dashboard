@@ -39,3 +39,9 @@
 - [Defense Engineering RSS Feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml)
 - [Creator's YouTube channel](https://www.youtube.com/@Strategic814)
 - [Defense Affairs 814](https://defenseaffairs814.blogspot.com/)
+
+## Free Engineering Calculators & Fieldnotes
+
+- [Engineering toolbox](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/): Eight free calculators for fluids, heat and solid mechanics, eleven worked guides, scenario comparison and local saved tools.
+- [Unit converter](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/units.html): Length, pressure difference, energy, volume flow and absolute temperature conversions.
+- [Formula sheet](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/reference.html): Printable formulas with assumptions and references.

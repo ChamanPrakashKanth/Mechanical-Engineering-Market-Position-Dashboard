@@ -31,3 +31,6 @@ mcp/worker/.wrangler/
 mcp/worker/.wrangler-logs/
 mcp/worker/.xdg-config/
 mcp/worker/.xdg-cache/
+
+# Static Pages build output
+_site/
