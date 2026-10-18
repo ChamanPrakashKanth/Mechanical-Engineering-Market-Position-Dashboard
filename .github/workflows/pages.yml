@@ -29,6 +29,7 @@ jobs:
       - name: Verify local MCP server and agent skill
         run: |
           npm ci --prefix mcp
+          npm ci --prefix mcp/worker
           npm run sync-catalog --prefix mcp
           npm test --prefix mcp
 
