@@ -61,6 +61,7 @@ jobs:
           cp -r assets/cad _site/assets/
           cp -r assets/gate-books _site/assets/
           cp manim_courses/renders/*.mp4 _site/manim_courses/renders/
+          cp -r answerlens _site/answerlens
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs
