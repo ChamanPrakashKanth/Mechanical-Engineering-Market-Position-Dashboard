@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mechanical Tolerance Stack-Up Calculator | MechIntel</title>
+  <meta name="description" content="Calculate signed assembly gaps from a mechanical dimension chain. Compare nominal and exact worst-case limits, handle asymmetric tolerances, inspect contributors, and optionally estimate RSS from centered independent ±3σ process inputs.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-tolerance-stack-calculator.html">
+  <meta property="og:title" content="Mechanical Tolerance Stack-Up Calculator">
+  <meta property="og:description" content="Build a signed 1D dimension chain and inspect nominal gap, worst-case limits, and tolerance contributors. Runs locally in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-tolerance-stack-calculator.html">
+  <meta property="og:image" content="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/assets/mechintel-social-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Mechanical Tolerance Stack-Up Calculator","url":"https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/mechanical-tolerance-stack-calculator.html","description":"Browser-local one-dimensional mechanical tolerance stack-up calculator for signed assembly gaps, asymmetric drawing tolerances, worst-case limits, and explicitly qualified RSS estimates.","applicationCategory":"DesignApplication","operatingSystem":"Any modern browser","isAccessibleForFree":true}</script>
+  <style>
+    :root{color-scheme:dark;--bg:#0b151c;--card:#142832;--panel:#10212a;--line:#35515e;--ink:#f1f7f8;--muted:#bfd0da;--mint:#a8ecd2;--teal:#61c9b5;--warn:#ffd89a;--bad:#ffb8a7;--good:#9de0b8}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 90% 0,#174a46,transparent 45%),var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+    header,main,footer{max-width:1180px;margin:auto;padding:22px}header{display:flex;justify-content:space-between;align-items:center;gap:18px;border-bottom:1px solid var(--line)}nav{display:flex;gap:18px;flex-wrap:wrap}a{color:var(--mint)}h1{font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-.045em;line-height:1.07;margin:.35em 0}h2{line-height:1.2}p,li{color:var(--muted)}.eyebrow{color:var(--mint);font-size:.76rem;letter-spacing:.15em;font-weight:800;text-transform:uppercase}.lead{font-size:1.12rem;max-width:850px}.badge{display:inline-flex;border:1px solid #427468;border-radius:999px;padding:5px 12px;color:var(--mint);font-size:.88rem;font-weight:700}
+    .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:20px;align-items:start}.panel{background:linear-gradient(160deg,rgba(20,40,50,.97),rgba(12,28,36,.98));border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 12px 34px #0002}.panel h2{margin-top:0}.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.fields{display:grid;grid-template-columns:1.35fr 1fr .9fr .9fr .85fr auto;gap:9px;align-items:end}.fields label,.spec label{font-size:.78rem;font-weight:650;color:var(--muted)}input,select,button{font:inherit;border-radius:9px;padding:10px;border:1px solid var(--line)}input,select{display:block;width:100%;background:#0b1b23;color:var(--ink);margin-top:5px;min-width:0}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:2px}button{cursor:pointer;background:var(--mint);color:#0b2426;font-weight:750}button.secondary{background:#203944;color:var(--ink)}button.danger{background:#422d2c;color:#ffe4da}button:disabled{opacity:.5;cursor:not-allowed}.row{display:grid;grid-template-columns:1.35fr 1fr .9fr .9fr .85fr auto;gap:9px;padding:12px 0;border-bottom:1px solid #ffffff17;align-items:end}.row-head{display:grid;grid-template-columns:1.35fr 1fr .9fr .9fr .85fr auto;gap:9px;padding:4px 0 7px;color:var(--muted);font-size:.76rem;font-weight:700}.remove{padding:8px 11px}.hint{font-size:.88rem;color:var(--muted)}.spec{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0}.check{display:flex;gap:9px;align-items:flex-start;background:#0c1d24;border:1px solid var(--line);padding:12px;border-radius:10px}.check input{width:18px;margin:3px 0 0;accent-color:#a8ecd2}.check label{font-weight:700}.check small{display:block;color:var(--muted);font-weight:400;margin-top:3px}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.error{color:var(--bad);min-height:1.5em}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{background:#0b1b23;padding:13px;border-radius:12px;border:1px solid #ffffff12}.metric span{display:block;color:var(--muted);font-size:.82rem}.metric strong{display:block;color:var(--mint);font-size:clamp(1.2rem,3vw,1.7rem);line-height:1.3;overflow-wrap:anywhere}.status{padding:11px 14px;border-radius:10px;background:#203944;color:var(--ink);margin:12px 0}.status.good{border-left:4px solid var(--good)}.status.bad{border-left:4px solid var(--bad)}.status.neutral{border-left:4px solid var(--warn)}.equation{padding:12px;background:#0b1b23;border-radius:10px;overflow-wrap:anywhere}.chain{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0}.chain-chip{background:#0b1b23;border:1px solid var(--line);border-radius:11px;padding:9px 12px;min-width:112px;text-align:center}.chain-chip.plus{border-color:#548d7a}.chain-chip.minus{border-color:#596d99}.chain-chip strong{display:block;color:var(--mint)}.chain-sign{font-weight:900;color:var(--muted)}.bars{display:grid;gap:9px}.bar-row{display:grid;grid-template-columns:minmax(90px,1.1fr) 2fr auto;gap:10px;align-items:center}.bar-track{height:12px;background:#08171d;border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,#61c9b5,#a8ecd2);border-radius:999px}.bar-row small{color:var(--muted)}.callout{border-left:4px solid var(--teal);padding:12px 16px;background:#12332f;border-radius:0 10px 10px 0}.faq{border-bottom:1px solid var(--line);padding:12px 0}.faq h3{margin-bottom:4px}.faq p{margin-top:4px}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid #ffffff17}code{color:var(--mint)}footer{border-top:1px solid var(--line);margin-top:30px;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:850px){.grid{grid-template-columns:1fr}}@media(max-width:680px){header,main,footer{padding:16px}.row-head{display:none}.row{grid-template-columns:1fr 1fr;gap:10px}.row label:first-child{grid-column:1/-1}.remove{width:100%}.spec{grid-template-columns:1fr 1fr}.spec label:first-child{grid-column:1/-1}.panel{padding:16px}.bar-row{grid-template-columns:1fr auto}.bar-track{grid-column:1/-1;grid-row:2}.metrics{grid-template-columns:1fr 1fr}}@media(max-width:420px){.spec{grid-template-columns:1fr}.spec label:first-child{grid-column:auto}.metrics{grid-template-columns:1fr}}
+    @media print{body{background:#fff;color:#111}header,footer,.toolbar button,.controls button,.actions,.remove,.check{display:none!important}.panel{background:#fff;border:1px solid #aaa;box-shadow:none;break-inside:avoid}p,li,.hint,.metric span{color:#333}.metric strong{color:#075e54}.grid{display:block}a{color:#075e54}}
+  </style>
+</head>
+<body>
+  <header><a href="../index.html">MechIntel / Engineering Tools</a><nav aria-label="Related tools"><a href="cad-library.html">CAD Library</a><a href="shaft-spacer-generator.html">CAD Generator</a><a href="bearing-spacer-clearance-calculator.html">Bearing clearance</a></nav></header>
+  <main>
+    <p class="eyebrow">FREE · BROWSER-LOCAL · OFFLINE-CAPABLE</p>
+    <h1>Mechanical Tolerance Stack-Up Calculator</h1>
+    <p class="lead">Build a signed one-dimensional dimension loop to check an assembly gap, clearance or interference. Enter nominal sizes and separate upper/lower drawing tolerances; compare the exact worst-case limits and see which dimensions drive the range.</p>
+    <p><span class="badge">No API · no account · no GPU · no uploads</span></p>
+    <p class="hint">Use one consistent unit for every dimension. “+” opens the functional gap; “−” closes it. This tool analyzes a linear 1D chain only.</p>
+    <noscript><p>Enable JavaScript to calculate a stack. The formulas and assumptions remain available below.</p></noscript>
+
+    <div class="grid">
+      <section class="panel" aria-labelledby="inputs-title">
+        <div class="toolbar"><h2 id="inputs-title">Dimension chain</h2><div class="controls"><label for="units">Units <select id="units"><option value="mm">Millimetres (mm)</option><option value="in">Inches (in)</option></select></label><button class="secondary" id="add-row" type="button">+ Add dimension</button></div></div>
+        <p class="hint">Enter tolerance magnitudes as positive numbers. Example: drawing limits +0.04/−0.01 → upper 0.04, lower 0.01.</p>
+        <div class="row-head" aria-hidden="true"><span>Feature / part</span><span>Nominal</span><span>Upper tol</span><span>Lower tol</span><span>Direction</span><span>Remove</span></div>
+        <div id="rows" aria-live="polite"></div>
+        <div class="spec">
+          <label for="spec-min">Required minimum gap <span class="unit-label">(mm)</span><input id="spec-min" type="number" step="any" value="0" aria-describedby="spec-help"></label>
+          <label for="spec-max">Required maximum gap <span class="unit-label">(mm)</span><input id="spec-max" type="number" step="any" placeholder="Optional"></label>
+          <label for="project-name">Assembly label<input id="project-name" type="text" maxlength="80" value="Axial bearing and spacer stack"></label>
+        </div>
+        <p class="hint" id="spec-help">The worst-case interval must fit inside the limits you enter. Leave the maximum blank if the requirement is only “no interference.”</p>
+        <p class="error" id="error" role="alert"></p>
+        <div class="check"><input id="rss-enabled" type="checkbox"><label for="rss-enabled">Also show an RSS 3σ estimate<small>Only valid when every row is symmetric and its tolerance is an evidenced, centered ±3σ process width; contributors must be independent. This is not a guaranteed assembly limit or a capability result.</small></label></div>
+        <p id="rss-note" class="hint" aria-live="polite">RSS is off. Worst-case bounds are the default design check.</p>
+        <div class="actions"><button id="example" type="button">Load asymmetric example</button><button id="rss-example" class="secondary" type="button">Load symmetric RSS example</button><button id="reset" class="secondary" type="button">Reset</button><button id="print" class="secondary" type="button">Print report</button><button id="csv" class="secondary" type="button">Download CSV</button><button id="json" class="secondary" type="button">Download JSON</button></div>
+      </section>
+
+      <section class="panel" aria-labelledby="results-title">
+        <h2 id="results-title">Stack result</h2>
+        <div id="status" class="status neutral" role="status" aria-live="polite">Enter dimensions to calculate the stack.</div>
+        <div class="metrics" id="metrics" aria-live="polite"></div>
+        <p class="equation" id="equation">Gap = Σ (direction × nominal dimension).</p>
+        <h3>Signed dimension loop</h3><div id="chain" class="chain" aria-label="Dimension loop diagram"></div>
+        <h3>Worst-case range contribution</h3><div id="contributors" class="bars"></div>
+        <p class="hint">Contribution bars show each feature’s share of the full worst-case range width (upper tolerance + lower tolerance). Direction sets whether nominal geometry opens or closes the gap.</p>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="method-title">
+      <h2 id="method-title">How to calculate a mechanical tolerance stack-up</h2>
+      <p>Start at one surface of the functional gap and trace a single dimension loop through the features that locate the opposing surface. Enter dimensions that increase the gap as “+” and dimensions that reduce it as “−”. The tool sums signed nominal values, then evaluates the lowest and highest possible gap by moving each dimension to the unfavorable drawing limit.</p>
+      <p><strong>Worst-case minimum:</strong> add each “+” feature at its minimum size and each “−” feature at its maximum size. <strong>Worst-case maximum:</strong> add each “+” feature at its maximum size and each “−” feature at its minimum size. These arithmetic bounds cover all combinations within the stated limits for this linear 1D model.</p>
+      <div class="callout"><strong>RSS is not a guaranteed limit.</strong> The optional RSS output is an estimate only when each symmetric tolerance is a centered ±3σ process width and the contributors are independent. Drawing limits alone do not prove these assumptions. Use worst-case bounds when guaranteed interchangeability is required; use actual process data and a qualified analysis for production decisions.</div>
+      <h3>Worked bearing and spacer example</h3>
+      <p>For housing length +40.20 mm (+0.04/−0.00), bearing A width −10.00 mm (+0.02/−0.02), spacer length −20.00 mm (+0.03/−0.01), and bearing B width −10.00 mm (+0.01/−0.02), nominal gap is 0.20 mm. The exact worst-case range is 0.14 to 0.29 mm. Against a 0.10 to 0.30 mm requirement, this example passes both limits.</p>
+      <h3>What this tool does not model</h3>
+      <p>This is not a GD&amp;T solver. It does not model geometric tolerances, datum mobility, angular or 2D/3D effects, thermal expansion, deformation, surface finish, assembly sequence, selective assembly, or measured process capability. Verify the complete functional loop and applicable drawing requirements with qualified engineering review.</p>
+      <h3>Frequently asked questions</h3>
+      <div class="faq"><h4>What does a negative minimum gap mean?</h4><p>A negative lower bound means interference is possible within the entered dimensional limits. The simple calculator does not decide whether that interference is acceptable.</p></div>
+      <div class="faq"><h4>Can I enter asymmetric tolerances?</h4><p>Yes. Enter the upper and lower tolerance magnitudes separately for each feature. The worst-case calculation uses each stated limit directly. RSS is disabled for asymmetric rows.</p></div>
+      <div class="faq"><h4>When should I use RSS instead of worst case?</h4><p>Use the optional RSS estimate only when the required process assumptions are supported: symmetric centered ±3σ widths and independent contributors. RSS is not a substitute for worst-case checks where guaranteed fit is required.</p></div>
+      <h3>Method reference</h3>
+      <p>The RSS combination principle combines independent standard uncertainty components by root-sum-of-squares. See <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty" rel="noopener">NIST Technical Note 1297, combined standard uncertainty</a>. NIST TN 1297 is measurement-uncertainty guidance; applying RSS to manufacturing dimensions requires separate evidence for the stated process assumptions.</p>
+      <p>Also explore the <a href="bearing-spacer-clearance-calculator.html">bearing spacer clearance calculator</a>, <a href="shaft-spacer-generator.html">custom shaft spacer generator</a>, and <a href="cad-library.html">mechanical CAD library</a>.</p>
+    </section>
+  </main>
+  <footer>MechIntel · Deterministic browser-local calculation · Educational design aid, not certification</footer>
+  <script>
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const rowsNode = $('rows');
+      const unitSelect = $('units');
+      const rowLimit = 12;
+      const defaults = [
+        {label:'Housing length', nominal:40.20, upper:0.04, lower:0.00, direction:1},
+        {label:'Bearing A width', nominal:10.00, upper:0.02, lower:0.02, direction:-1},
+        {label:'Spacer length', nominal:20.00, upper:0.03, lower:0.01, direction:-1},
+        {label:'Bearing B width', nominal:10.00, upper:0.01, lower:0.02, direction:-1}
+      ];
+      let currentRows = [];
+      let model = null;
+      const number = value => String(value).trim()==='' ? NaN : Number(value);
+      const fmt = (value, unit=unitSelect.value) => {
+        if (!Number.isFinite(value)) return '—';
+        const digits = unit === 'mm' ? 4 : 6;
+        return Number(value.toFixed(digits)).toString();
+      };
+      const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const makeRow = (data={label:'Dimension',nominal:0,upper:0,lower:0,direction:1}) => {
+        const id = crypto.randomUUID();
+        const row = document.createElement('div');
+        row.className = 'row'; row.dataset.id = id;
+        row.innerHTML = `<label>Feature / part<input data-field="label" maxlength="60" value="${esc(data.label)}"></label>
+          <label>Nominal <span class="unit-label">(${unitSelect.value})</span><input data-field="nominal" type="number" step="any" value="${data.nominal}" required></label>
+          <label>Upper tol <span class="unit-label">(${unitSelect.value})</span><input data-field="upper" type="number" min="0" step="any" value="${data.upper}" required></label>
+          <label>Lower tol <span class="unit-label">(${unitSelect.value})</span><input data-field="lower" type="number" min="0" step="any" value="${data.lower}" required></label>
+          <label>Direction<select data-field="direction"><option value="1" ${data.direction===1?'selected':''}>+ opens</option><option value="-1" ${data.direction===-1?'selected':''}>− closes</option></select></label>
+          <button class="danger remove" type="button" aria-label="Remove ${esc(data.label)}">×</button>`;
+        row.querySelectorAll('input,select').forEach(control => control.addEventListener('input', update));
+        row.querySelector('.remove').addEventListener('click', () => { if(rowsNode.children.length > 2){row.remove();update();} });
+        rowsNode.append(row);
+      };
+      const readRows = () => [...rowsNode.children].map(row => {
+        const get = key => row.querySelector(`[data-field="${key}"]`).value;
+        return {label:get('label').trim() || 'Dimension', nominal:number(get('nominal')), upper:number(get('upper')), lower:number(get('lower')), direction:number(get('direction'))};
+      });
+      function calculate(rows) {
+        if(rows.length < 2 || rows.length > rowLimit) throw Error(`Enter between 2 and ${rowLimit} dimensions.`);
+        for(const [index,row] of rows.entries()){
+          if(![row.nominal,row.upper,row.lower].every(Number.isFinite) || row.upper<0 || row.lower<0) throw Error(`Check the nominal size and non-negative tolerances on dimension ${index+1}.`);
+          if(row.direction!==1&&row.direction!==-1) throw Error(`Select whether dimension ${index+1} opens or closes the gap.`);
+          if(Math.abs(row.nominal)>1e9 || row.upper>1e8 || row.lower>1e8) throw Error('A dimension is outside the supported numeric range.');
+        }
+        let nominal=0,min=0,max=0;
+        const contributors=[];
+        for(const row of rows){
+          nominal += row.direction * row.nominal;
+          const rowMin = row.direction===1 ? row.nominal-row.lower : -(row.nominal+row.upper);
+          const rowMax = row.direction===1 ? row.nominal+row.upper : -(row.nominal-row.lower);
+          min += rowMin; max += rowMax;
+          contributors.push({...row,span:row.upper+row.lower});
+        }
+        return {nominal,min,max,width:max-min,contributors};
+      }
+      function update(){
+        model=null;
+        try{
+          currentRows=readRows();
+          const result=calculate(currentRows);
+          const minRaw=$('spec-min').value.trim(),maxRaw=$('spec-max').value.trim();
+          const specMin=minRaw===''?null:number(minRaw),specMax=maxRaw===''?null:number(maxRaw);
+          if(specMin!==null&&!Number.isFinite(specMin)||specMax!==null&&!Number.isFinite(specMax)) throw Error('Functional limits must be finite numbers.');
+          if(specMin!==null&&specMax!==null&&specMin>specMax) throw Error('The required minimum cannot exceed the required maximum.');
+          const meets=(specMin===null||result.min>=specMin-1e-10)&&(specMax===null||result.max<=specMax+1e-10);
+          const hasSpec=specMin!==null||specMax!==null;
+          const status=$('status');status.className=`status ${hasSpec?(meets?'good':'bad'):'neutral'}`;
+          status.textContent=hasSpec?(meets?'PASS — worst-case interval is within the stated functional limits.':'FAIL — worst-case interval falls outside at least one stated limit.'):(result.min<0?'Interference is possible under the entered worst-case limits.':'Worst-case interval calculated. Add a functional limit to see a pass/fail check.');
+          const metrics=[['Nominal stack',`${fmt(result.nominal)} ${unitSelect.value}`],['Worst-case minimum',`${fmt(result.min)} ${unitSelect.value}`],['Worst-case maximum',`${fmt(result.max)} ${unitSelect.value}`],['Full worst-case width',`${fmt(result.width)} ${unitSelect.value}`]];
+          if($('rss-enabled').checked){
+            const symmetric=currentRows.every(r=>Math.abs(r.upper-r.lower)<=1e-10*Math.max(1,r.upper,r.lower));
+            if(symmetric){const rss3=Math.sqrt(currentRows.reduce((sum,r)=>sum+(r.upper*r.upper),0));metrics.push(['RSS 3σ estimate',`±${fmt(rss3)} ${unitSelect.value}`]);metrics.push(['RSS estimate range',`${fmt(result.nominal-rss3)} to ${fmt(result.nominal+rss3)} ${unitSelect.value}`]);$('rss-note').textContent='RSS shown using your stated centered ±3σ, independent-process assumption. This is an estimate; it does not replace exact worst-case bounds.';}
+            else{$('rss-note').textContent='RSS is unavailable because at least one row is asymmetric. RSS requires centered symmetric ±3σ inputs in this tool.';}
+          }else{$('rss-note').textContent='RSS is off. Worst-case bounds are the default design check.';}
+          $('metrics').replaceChildren(...metrics.map(([label,value])=>{const box=document.createElement('div');box.className='metric';const span=document.createElement('span');span.textContent=label;const strong=document.createElement('strong');strong.textContent=value;box.append(span,strong);return box;}));
+          $('equation').textContent=`Gap = ${currentRows.map(r=>`${r.direction===1?'+':'−'} ${fmt(r.nominal)}`).join(' ')} = ${fmt(result.nominal)} ${unitSelect.value}. Worst-case interval = [${fmt(result.min)}, ${fmt(result.max)}] ${unitSelect.value}.`;
+          renderChain(currentRows,result);
+          renderContributors(result.contributors);
+          $('error').textContent='';
+          model={...result,rows:currentRows,unit:unitSelect.value,specMin,specMax,project:$('project-name').value.trim(),meets,hasSpec};
+        }catch(error){
+          $('error').textContent=error.message;
+          $('status').className='status neutral';$('status').textContent='Correct the inputs to update the result.';
+          $('metrics').replaceChildren();$('chain').replaceChildren();$('contributors').replaceChildren();$('equation').textContent='';
+        }
+      }
+      function renderChain(rows,result){
+        const items=[];
+        rows.forEach(row=>{const chip=document.createElement('div');chip.className=`chain-chip ${row.direction===1?'plus':'minus'}`;const label=document.createElement('span');label.textContent=row.label;const value=document.createElement('strong');value.textContent=`${row.direction===1?'+':'−'}${fmt(row.nominal)} ${unitSelect.value}`;chip.append(label,value);items.push(chip);});
+        const eq=document.createElement('span');eq.className='chain-sign';eq.textContent='=';items.push(eq);
+        const end=document.createElement('div');end.className='chain-chip';end.setAttribute('aria-label','Resulting nominal stack');const t=document.createElement('span');t.textContent='Nominal gap';const v=document.createElement('strong');v.textContent=`${fmt(result.nominal)} ${unitSelect.value}`;end.append(t,v);items.push(end);
+        $('chain').replaceChildren(...items);
+      }
+      function renderContributors(rows){
+        const total=rows.reduce((sum,r)=>sum+r.span,0);
+        const sorted=[...rows].sort((a,b)=>b.span-a.span);
+        if(total===0){$('contributors').textContent='All tolerance widths are zero.';return;}
+        $('contributors').replaceChildren(...sorted.map(row=>{const line=document.createElement('div');line.className='bar-row';const name=document.createElement('span');name.textContent=row.label;const track=document.createElement('div');track.className='bar-track';track.setAttribute('role','img');const pct=100*row.span/total;track.setAttribute('aria-label',`${row.label}: ${fmt(pct)} percent of worst-case width`);const bar=document.createElement('div');bar.className='bar';bar.style.width=`${pct}%`;track.append(bar);const value=document.createElement('small');value.textContent=`${fmt(pct)}% · ${fmt(row.span)} ${unitSelect.value}`;line.append(name,track,value);return line;}));
+      }
+      function setUnitLabels(){document.querySelectorAll('.unit-label').forEach(node=>node.textContent=`(${unitSelect.value})`);}
+      function setRows(data){rowsNode.replaceChildren();data.slice(0,rowLimit).forEach(makeRow);setUnitLabels();update();}
+      function download(filename,content,type){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+      function csv(){if(!model)return;const quote=value=>`"${String(value).replaceAll('"','""')}"`;const lines=[['Feature','Nominal','Upper tolerance','Lower tolerance','Direction','Units'].map(quote).join(','),...model.rows.map(r=>[r.label,r.nominal,r.upper,r.lower,r.direction===1?'+':'−',model.unit].map(quote).join(','))];lines.push('');lines.push(['Nominal stack',model.nominal,model.unit].map(quote).join(','),['Worst-case minimum',model.min,model.unit].map(quote).join(','),['Worst-case maximum',model.max,model.unit].map(quote).join(','));download('mechintel-tolerance-stack.csv',lines.join('\r\n'),'text/csv');}
+      function json(){if(!model)return;download('mechintel-tolerance-stack.json',JSON.stringify({tool:'MechIntel 1D tolerance stack calculator',project:model.project,unit:model.unit,assumption:'Linear one-dimensional signed chain; exact drawing-limit bounds.',rows:model.rows,nominal_stack:model.nominal,worst_case_min:model.min,worst_case_max:model.max,required_min:model.specMin,required_max:model.specMax,meets_spec:model.hasSpec?model.meets:null,rss_3sigma_estimate:$('rss-enabled').checked&&model.rows.every(r=>Math.abs(r.upper-r.lower)<=1e-10*Math.max(1,r.upper,r.lower))?Math.sqrt(model.rows.reduce((sum,r)=>sum+r.upper*r.upper,0)):null,rss_warning:'RSS is only an estimate when symmetric tolerances represent centered independent ±3σ process widths; it is not a guaranteed limit.'},null,2),'application/json');}
+      $('add-row').addEventListener('click',()=>{if(rowsNode.children.length>=rowLimit){$('error').textContent=`A stack can contain at most ${rowLimit} dimensions.`;return;}makeRow();update();});
+      $('example').addEventListener('click',()=>{ unitSelect.value='mm';$('rss-enabled').checked=false;$('spec-min').value='0.1';$('spec-max').value='0.3';setRows(defaults);});
+      $('rss-example').addEventListener('click',()=>{ unitSelect.value='mm';$('rss-enabled').checked=true;$('spec-min').value='';$('spec-max').value='';setRows([{label:'Housing length',nominal:40.2,upper:0.04,lower:0.04,direction:1},{label:'Bearing A width',nominal:10,upper:0.02,lower:0.02,direction:-1},{label:'Spacer length',nominal:20,upper:0.03,lower:0.03,direction:-1},{label:'Bearing B width',nominal:10,upper:0.02,lower:0.02,direction:-1}]);});
+      $('reset').addEventListener('click',()=>{unitSelect.value='mm';$('spec-min').value='0';$('spec-max').value='';$('project-name').value='Axial bearing and spacer stack';$('rss-enabled').checked=false;setRows(defaults);});
+      $('spec-min').addEventListener('input',update);$('spec-max').addEventListener('input',update);$('project-name').addEventListener('input',update);$('rss-enabled').addEventListener('change',update);
+      $('print').addEventListener('click',()=>window.print());$('csv').addEventListener('click',csv);$('json').addEventListener('click',json);
+      unitSelect.addEventListener('change',()=>{const factor=unitSelect.value==='in'?1/25.4:25.4;rowsNode.querySelectorAll('input[data-field="nominal"],input[data-field="upper"],input[data-field="lower"]').forEach(input=>{if(input.value!=='')input.value=fmt(number(input.value)*factor,unitSelect.value);});for(const id of ['spec-min','spec-max'])if($(id).value!=='')$(id).value=fmt(number($(id).value)*factor,unitSelect.value);setUnitLabels();update();});
+      setRows(defaults);
+    })();
+  </script>
+</body>
+</html>
