@@ -4,6 +4,8 @@
 
 ## Main tools
 
+- [3D Print Hole Fit Coupon Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/3d-print-hole-fit-coupon-generator.html): Original parametric clearance ladder for measured shafts, visual preview, editable OpenSCAD download and measured-fit CSV. Browser local; no API or GPU. Print-specific results require physical measurement.
+
 - [For AI Agents and Developers](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/ai-agent-integration.html): Local stdio MCP server and repository-local Agent Skill integration guide. Scores are deterministic heuristics; the comparison cohort is synthetic. No remote MCP endpoint is currently deployed.
 
 - [Drone STL and Editable CAD Library](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/drone-cad-library.html): Six original printable drone accessory studies: GPS tray, receiver tray, capacitor strap cradle, dual antenna cable guide, arm wire cover, and battery webbing routing bridge. Download STL, editable OpenSCAD, SVG and a six-part ZIP with print orientation and dimensions. Mesh closure, connectivity and positive volume checked computationally. No physical printing or flight tests. Original CC0 geometry, local CPU generation, no API or GPU.
