@@ -803,6 +803,19 @@ function exportCompetencyMatrixCsv() {
     link.href = URL.createObjectURL(blob);
     link.download = `MechIntel_Competency_Matrix.csv`;
     link.click();
+    window.MechIntelAnalytics?.track("report_downloaded", { report_type: "competency_matrix", file_format: "csv" });
+}
+
+// User-requested assessment only; restoring state and repainting are not analyses.
+function runProfileAnalysis(profile) {
+    window.MechIntelAnalytics?.track("analysis_started", { analysis_type: "career_assessment" });
+    try {
+        buildDashboard(profile);
+        window.MechIntelAnalytics?.track("analysis_completed", { analysis_type: "career_assessment" });
+    } catch (error) {
+        window.MechIntelAnalytics?.track("analysis_failed", { analysis_type: "career_assessment" });
+        throw error;
+    }
 }
 
 // Main Build and Display Dashboard
@@ -958,6 +971,8 @@ async function handlePdfUpload(file) {
         }
         
         if (text.trim()) {
+            // Successful local ingestion only; never send the file or extracted text.
+            window.MechIntelAnalytics?.track("resume_uploaded", { input_type: "pdf" });
             if (statusDiv) statusDiv.innerText = "PDF successfully extracted!";
             
             // Show parsing overlay modal
@@ -1625,7 +1640,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cluster: domain
         };
         
-        buildDashboard(profile);
+        runProfileAnalysis(profile);
     });
 
     // Profile Save details
@@ -4613,6 +4628,7 @@ function downloadVisualPortfolioFile() {
     link.href = URL.createObjectURL(blob);
     link.download = `MechIntel_Visual_Portfolio_${theme}.html`;
     link.click();
+    window.MechIntelAnalytics?.track("report_downloaded", { report_type: "visual_portfolio", file_format: "html" });
 }
 
 

@@ -4,6 +4,8 @@ An interactive engineering career assessment designed for students and early-car
 
 Public SEO site: **https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/**
 
+Optional dashboard GA4 analytics and the repository privacy/Pages checklist are documented in [Analytics and repository privacy](docs/ANALYTICS_AND_REPOSITORY_PRIVACY.md). Analytics defaults to disabled and requires a real Measurement ID, verified stream configuration, and visitor consent.
+
 Defense engineering reading hub: **https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html** — a crawlable, contextual resource page linking to selected [Defense Affairs](https://defenseaffairs814.blogspot.com/) analysis.
 
 Machine-readable discovery: [Defense engineering RSS feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml) · [LLM discovery file](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/llms.txt) · [GitHub defense engineering reading list](DEFENSE_ENGINEERING_READING_LIST.md)

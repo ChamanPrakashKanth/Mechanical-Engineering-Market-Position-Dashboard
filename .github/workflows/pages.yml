@@ -41,6 +41,8 @@ jobs:
         run: |
           node --check app.js
           node --check shared/mechintel-core.js
+          node --check analytics.js
+          node --test tests/analytics.test.cjs
 
       - name: Verify local MCP server and agent skill
         run: |
@@ -53,6 +55,7 @@ jobs:
         run: |
           mkdir -p _site/assets _site/manim_courses/renders _site/engineering-careers _site/shared
           cp index.html defense-engineering-resources.html defense-engineering-feed.xml llms.txt app.js styles.css refinement.css robots.txt sitemap.xml .nojekyll _site/
+          cp analytics.js analytics.css _site/
           cp shared/mechintel-core.js _site/shared/
           cp engineering_reference_profiles.json _site/
           cp engineering-careers/*.html _site/engineering-careers/
@@ -65,6 +68,13 @@ jobs:
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs
+
+      - name: Configure optional consent-first GA4
+        env:
+          GA4_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
+          GA4_ENHANCED_MEASUREMENT_DISABLED: ${{ vars.GA4_ENHANCED_MEASUREMENT_DISABLED }}
+          GA4_DEBUG: ${{ vars.GA4_DEBUG }}
+        run: node scripts/configure-analytics.cjs _site
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
