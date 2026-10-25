@@ -96,7 +96,13 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - Includes campaign attribution parameters, privacy-friendly local click counters, Open Graph/X social cards, JSON-LD, canonical metadata, `robots.txt`, and an XML sitemap.
 - Deploys the crawlable static frontend through the GitHub Pages workflow in `.github/workflows/pages.yml`.
 
-### 12. Responsive Desktop, Android & iOS Experience
+### 12. Daily Robotics Intelligence
+- Publishes a source-attributed robotics and drone headline briefing covering industrial robots, civilian drones, research, public science, and unmanned-systems reporting.
+- Refreshes from six public publisher RSS feeds once daily through GitHub Actions; article titles link directly to their original publishers and are also available in a generated RSS feed.
+- The feed builder runs deterministically with Python's standard library, no AI/API token or GPU, and validates story links against the configured publisher domains. It does not republish article bodies or generate operational guidance.
+- GitHub may delay scheduled runs. If every feed is unavailable, the build fails so the previous published edition remains online.
+
+### 13. Responsive Desktop, Android & iOS Experience
 - Adapts the landing page, profile builder, dashboard, Learning Hub, Video Academy, course reader, charts, tables, and modals across desktop, tablet, Android, and iPhone screen sizes.
 - Adds an accessible mobile dashboard drawer, compact two-column score cards, touch-friendly controls, responsive Plotly charts, and internal scrolling for wide lesson and data content.
 - Supports iOS safe areas, dynamic viewport height, 16 px mobile form controls, orientation changes, coarse pointers, and reduced-motion preferences.

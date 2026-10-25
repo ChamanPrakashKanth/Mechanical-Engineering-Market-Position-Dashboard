@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * *'
 
 permissions:
   contents: read
@@ -68,6 +70,9 @@ jobs:
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs
+
+      - name: Refresh robotics intelligence from credited public RSS feeds
+        run: python3 scripts/update_robotics_intelligence.py --output _site/robotics-intelligence.html --sitemap _site/sitemap.xml
 
       - name: Configure optional consent-first GA4
         env:
