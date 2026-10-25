@@ -24,11 +24,11 @@ function setup({ id = "G-TEST123456", verified = true, saved = null, dnt = false
         commands: () => (window.dataLayer || []).map(args => [...args]) };
 }
 test("no Google request or event before consent; missing, placeholder and incomplete config fail closed", () => {
-    for (const options of [{}, { id: "" }, { id: "G-XXXXXXXXXX" }, { verified: false }]) {
+    for (const options of [{}, { id: "" }, { id: "G-XXXXXXXXXX" }, { id: "G-REPLACE_WITH_MY_ACTUAL_ID" }, { verified: false }]) {
         const s = setup(options);
         assert.equal(s.document.head.children.length, 0);
         assert.equal(s.window.MechIntelAnalytics.track("analysis_started", { analysis_type: "career_assessment" }), false);
-        if (options.id === "" || options.id === "G-XXXXXXXXXX" || options.verified === false) { s.accept(); assert.equal(s.document.head.children.length, 0); }
+        if (options.id !== undefined || options.verified === false) { s.accept(); assert.equal(s.document.head.children.length, 0); }
     }
 });
 test("accept loads one tag and one sanitized page view; reruns and repeated accepts cannot duplicate it", () => {
@@ -96,8 +96,11 @@ test("build config is disabled by default, validates IDs, and uses data serializ
     try {
         execFileSync(process.execPath, [file, target], { env });
         assert.match(fs.readFileSync(path.join(target, "analytics-config.js"), "utf8"), /"measurementId":""/);
-        const result = spawnSync(process.execPath, [file, target], { env: { ...env, GA4_MEASUREMENT_ID: 'G-X\";alert(1)' } });
-        assert.notEqual(result.status, 0);
+        for (const invalid of ['G-X\";alert(1)', 'G-REPLACE_WITH_MY_ACTUAL_ID']) {
+            const result = spawnSync(process.execPath, [file, target], { env: { ...env, GA4_MEASUREMENT_ID: invalid } });
+            assert.notEqual(result.status, 0);
+            assert.match(result.stderr.toString(), /real G- Measurement ID/);
+        }
     } finally { fs.rmSync(target, { recursive: true, force: true }); }
 });
 
