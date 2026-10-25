@@ -38,7 +38,7 @@
 
 ## Other resources
 
-- [Robotics Intelligence](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/robotics-intelligence.html): Daily, source-attributed headlines on industrial and civilian robotics, drones, autonomy research, and public defense technology reporting.
+- [Robotics Intelligence](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/robotics-intelligence.html): Daily robotics news on industrial robots, civilian drones, autonomy, research, and public unmanned-systems reporting. Six publisher RSS feeds refresh the static briefing once daily at 04:17 UTC; GitHub may delay scheduled runs. Each headline links to its credited source. The page publishes headlines, not copied article bodies or independent fact checks. [Subscribe via RSS](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/robotics-intelligence-feed.xml).
 - [Defense Engineering Reading Hub](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-resources.html)
 - [Defense Engineering RSS Feed](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/defense-engineering-feed.xml)
 - [Creator's YouTube channel](https://www.youtube.com/@Strategic814)

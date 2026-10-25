@@ -145,7 +145,7 @@ def render_story(story: dict) -> str:
         f'<article class="story" data-topic="{topic}" data-search="{searchable}">'
         f'<div class="story-top"><span class="tag {topic}">{label}</span>'
         f'<time datetime="{dt}">{display_date}</time></div>'
-        f'<h2><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h2>'
+        f'<h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>'
         f'<p class="source">Source: <a href="{source}" target="_blank" rel="noopener noreferrer">{publisher}</a> · '
         f'<a href="{url}" target="_blank" rel="noopener noreferrer">Read original ↗</a></p></article>'
     )
@@ -213,13 +213,17 @@ def main() -> int:
         rendered = '<p class="empty">No recent headlines matched the feed window. Check publisher sources below for their latest coverage.</p>'
     schema = {
         "@context": "https://schema.org", "@type": "CollectionPage",
-        "name": "Robotics Intelligence: Daily Robot, Drone and Autonomy News",
+        "name": "Daily Robotics News: Industrial Robots, Drones and Autonomy",
         "url": f"{BASE}/robotics-intelligence.html",
         "description": "Daily source-attributed headlines across industrial and civilian robotics, drones, research, and public unmanned-systems reporting.",
         "dateModified": now.date().isoformat(),
         "mainEntity": {"@type": "ItemList", "numberOfItems": len(stories), "itemListElement": [
             {"@type": "ListItem", "position": i, "name": row["title"], "url": row["url"]}
             for i, row in enumerate(stories, 1)
+        ]},
+        "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Robotics Intelligence", "item": f"{BASE}/robotics-intelligence.html"},
         ]},
     }
     schema_text = json.dumps(schema, ensure_ascii=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
