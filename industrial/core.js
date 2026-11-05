@@ -4,7 +4,7 @@
     function assessment(data, country, capability, date) {
         const events = data.events.filter(event => event.country === country && event.capability === capability && event.knownOn <= date && event.date <= date && event.verification === "verified").sort((a, b) => a.knownOn.localeCompare(b.knownOn) || a.id.localeCompare(b.id));
         const event = events[events.length - 1];
-        return event ? { ...event, stage: event.stage, stale: (Date.parse(date) - Date.parse(event.knownOn)) / 86400000 > 180 } : { country, capability, stage: 0, confidence: "Unassessed", capacity: null, valueAdd: null, dependencies: [], diversification: null, stale: false };
+        return event ? { ...event, stage: event.stage, stale: (Date.parse(date) - Date.parse(event.evidenceAsOf || event.knownOn)) / 86400000 > 180 } : { country, capability, stage: 0, confidence: "Unassessed", capacity: null, valueAdd: null, dependencies: [], diversification: null, stale: false };
     }
     function propagate(edges, disrupted, alternatives = [], domestic = []) {
         const affected = new Set(disrupted.filter(id => !alternatives.includes(id) && !domestic.includes(id)));
@@ -41,8 +41,10 @@
             ids.add(event.id);
             if (!data.countries.some(country => country.id === event.country) || !data.capabilities.some(capability => capability.id === event.capability)) throw Error("Unknown country or capability");
             if (!validDate(event.date) || !validDate(event.knownOn)) throw Error("Invalid event dates");
+            if (event.evidenceAsOf && (!validDate(event.evidenceAsOf) || event.evidenceAsOf > event.knownOn)) throw Error("Invalid evidence observation date");
+            if (event.kind === "evidence review" && (!event.stageRationale || event.quantitativeChange !== null)) throw Error("Evidence reviews need rationale and cannot claim quantitative progress");
             if (!Array.isArray(event.dependencies)) throw Error("Dependencies must be explicit");
-            if (!["announcement", "investment approval", "pilot demonstration", "production milestone", "evidence correction"].includes(event.kind)) throw Error("Invalid milestone kind");
+            if (!["announcement", "investment approval", "pilot demonstration", "production milestone", "evidence correction", "evidence review"].includes(event.kind)) throw Error("Invalid milestone kind");
             const source = data.evidence.find(source => source.id === event.source);
             if (source && source.published > event.knownOn) throw Error("Evidence unavailable on knowledge date");
             if (!Number.isInteger(event.stage) || event.stage < 0 || event.stage > 4) throw Error("Invalid stage");

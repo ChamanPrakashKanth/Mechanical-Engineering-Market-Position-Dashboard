@@ -45,3 +45,23 @@ test("announcements preserve established stages and inconsistent commit history 
     copy.events[1].previousStage = 0;
     assert.throws(() => core.validate(copy), /Previous stage/);
 });
+test("research covers every country-capability pair with traceable assessments or explicit gaps", () => {
+    assert.equal(data.reviews.length, data.countries.length * data.capabilities.length);
+    const keys = data.reviews.map(review => review.country + "/" + review.capability);
+    assert.equal(new Set(keys).size, keys.length);
+    assert.equal(data.reviews.filter(review => review.outcome === "insufficient evidence").length, 2);
+    for (const review of data.reviews) {
+        const state = core.assessment(data, review.country, review.capability, data.asOf);
+        assert.equal(state.stage > 0, review.outcome === "supported");
+        if (state.stage > 0) assert(data.evidence.some(source => source.id === state.source));
+    }
+});
+test("research reviews retain historical isolation and source-vintage staleness", () => {
+    assert.equal(core.assessment(data, "CN", "cells", "2026-11-04").stage, 0);
+    const reviewed = core.assessment(data, "CN", "cells", "2026-11-05");
+    assert.equal(reviewed.stage, 4);
+    assert.equal(reviewed.kind, "evidence review");
+    assert.equal(reviewed.quantitativeChange, null);
+    assert.equal(reviewed.stale, true);
+    assert.match(reviewed.stageRationale, /output/);
+});

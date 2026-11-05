@@ -5,7 +5,7 @@
     const escape = value => String(value ?? "Not established").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
     let data;
     try {
-        const response = await fetch("data.json");
+        const response = await fetch("data.json?v=20261105-evidence");
         if (!response.ok) throw Error("Dataset could not be loaded");
         data = await response.json();
         core.validate(data);
@@ -66,7 +66,8 @@
                 countryName: country.name,
                 id: capability.id,
                 name: capability.name,
-                domain: capability.domain
+                domain: capability.domain,
+                sourceUrl: data.evidence.find(source => source.id === state.source)?.url || null
             };
         }).filter(matches));
     }
@@ -79,6 +80,8 @@
         const country = data.countries.find(country => country.id === selected.country);
         const state = core.assessment(data, country.id, capability.id, $("date").value);
         const previous = core.assessment(data, country.id, capability.id, offset(rangeStart(), -1));
+        const review = (data.reviews || []).find(item => item.country === country.id && item.capability === capability.id && item.reviewedOn <= $("date").value);
+        const source = data.evidence.find(item => item.id === state.source);
         const dependencies = state.dependencies.length ? state.dependencies.map(dependency => escape(dependency.name)).join(", ") : "Supplier-specific dependencies and concentration have not been assessed.";
         const entities = state.entities || [];
         const nodes = data.nodes.filter(node => node.id === capability.id || data.edges.some(edge => edge.to === capability.id && edge.from === node.id));
@@ -86,6 +89,9 @@
             <p class="eyebrow">${escape(country.name + " / " + capability.domain)}</p>
             <h2 id="detail-title">${escape(capability.name)}</h2>
             <p>${escape(capability.definition)}</p>
+            <p class="assessment-note"><strong>Stage ${state.stage} · ${escape(core.stages[state.stage])}</strong><br>
+            ${escape(state.stageRationale || review?.notes || "No additional stage rationale in this historical record.")}
+            ${state.kind === "evidence review" ? "<br>Research coverage assessment. The record date does not mark a new factory opening or a new technical achievement." : ""}</p>
             <div class="facts">
                 <p><strong>Before window</strong><br>${escape(core.stages[previous.stage])}</p>
                 <p><strong>Selected day</strong><br>${escape(core.stages[state.stage])}</p>
@@ -107,13 +113,16 @@
                     <div class="graph">
                         ${entities.map(entity => '<span class="node">' + escape(entity.name + " / " + entity.type) + "</span>").join('<span aria-label="connected to">↔</span>')}
                     </div>
-                    <p>Last recorded change — ${escape(state.date)}<br>
-                    Evidence available by — ${escape(state.knownOn)}
+                    <p>Record date — ${escape(state.date)}<br>
+                    Knowledge date — ${escape(state.knownOn)}<br>
+                    Source observation bound — ${escape(state.evidenceAsOf || source?.published)}<br>
+                    Date basis — ${escape(source?.dateBasis || "Dated source")}
                     ${state.stale ? "<br>◷ Evidence needs a freshness review" : ""}</p>
                 </div>
                 <div class="branch">
                     <h3>Where It Is Stuck</h3>
                     <p>${dependencies}</p>
+                    ${review && state.stage === 0 ? "<p>Reviewed " + escape(review.reviewedOn) + " — " + escape(review.notes) + "</p>" : ""}
                     <p>${escape(state.notes || "Evidence gaps require review before an assessment can be made.")}</p>
                     <div class="graph">
                         ${nodes.map(node => '<span class="node">' + escape(node.name + " · " + node.type) + "</span>").join('<span aria-label="connected to">→</span>')}
@@ -143,7 +152,38 @@
         const visibleCapabilities = new Set(view().map(capability => capability.id));
         const visibleCountries = new Set(countries().map(country => country.id));
         const events = data.events.filter(event => event.knownOn >= rangeStart() && event.knownOn <= $("date").value && event.date <= $("date").value && visibleCapabilities.has(event.capability) && visibleCountries.has(event.country) && matches(core.assessment(data, event.country, event.capability, $("date").value))).sort((a, b) => b.knownOn.localeCompare(a.knownOn));
-        $("commits").innerHTML = events.length ? events.map(event => '<article class="commit"><h3>' + escape(event.id) + '</h3><p>' + escape(event.date + " · known by " + event.knownOn + " · " + event.kind + " · " + event.verification) + '</p><p>' + escape(core.stages[event.previousStage] + " → " + core.stages[event.stage]) + '</p><p>' + escape(event.milestone) + '</p><p>Quantitative change — ' + escape(event.quantitativeChange) + '</p><p>' + sourceLink(event) + '</p><p>' + escape(event.notes) + '</p></article>').join("") : "<p>No recorded changes in this date window and filter. Unchanged days preserve their existing assessment.</p>";
+        const renderRecord = event => `
+            <article class="commit">
+                <h3>${escape(event.id)}</h3>
+                <p>${escape(event.date + " · known by " + event.knownOn + " · " + event.kind + " · " + event.verification)}</p>
+                <p>${escape(core.stages[event.previousStage] + " → " + core.stages[event.stage])}</p>
+                <p>${escape(event.milestone)}</p>
+                ${event.stageRationale ? "<p>" + escape(event.stageRationale) + "</p>" : ""}
+                <p>Quantitative change — ${escape(event.quantitativeChange)}</p>
+                <p>${sourceLink(event)}</p>
+                <p>${escape(event.notes)}</p>
+            </article>`;
+        const milestones = events.filter(event => event.kind !== "evidence review");
+        const reviews = events.filter(event => event.kind === "evidence review");
+        $("commits").innerHTML = milestones.map(renderRecord).join("") +
+            (reviews.length ? "<details><summary>" + reviews.length + " evidence reviews · coverage updates</summary>" + reviews.map(renderRecord).join("") + "</details>" : "") +
+            (!events.length ? "<p>No recorded changes in this date window and filter. Unchanged days preserve their existing assessment.</p>" : "");
+    }
+    function renderAudit() {
+        const currentRows = rows();
+        const assessed = currentRows.filter(row => row.stage > 0);
+        $("research-summary").innerHTML = [
+            [currentRows.length, "visible country-capability pairs"],
+            [assessed.length, "supported assessments"],
+            [currentRows.length - assessed.length, "insufficient evidence"],
+            [new Set(assessed.map(row => row.source)).size, "referenced sources"]
+        ].map(([count, label]) => "<span><strong>" + count + "</strong> " + escape(label) + "</span>").join("");
+        $("criteria").innerHTML = (data.stageCriteria || []).map(rule => "<li>" + escape(rule) + "</li>").join("");
+        $("audit").innerHTML = '<table><thead><tr><th scope="col">Country / capability</th><th scope="col">Stage</th><th scope="col">Reason and source</th><th scope="col">Source observation</th></tr></thead><tbody>' + currentRows.map(row => {
+            const review = (data.reviews || []).find(item => item.country === row.country && item.capability === row.id && item.reviewedOn <= $("date").value);
+            const source = data.evidence.find(item => item.id === row.source);
+            return '<tr><th scope="row">' + escape(row.countryName + " / " + row.name) + '</th><td>' + row.stage + " · " + escape(core.stages[row.stage]) + '</td><td>' + escape(row.stageRationale || review?.notes || "Existing historical source record.") + '<div class="review-link">' + sourceLink(row) + '</div></td><td>' + escape(row.evidenceAsOf || source?.published || "Unestablished") + '<br>' + escape(source?.dateBasis || "") + '</td></tr>';
+        }).join("") + "</tbody></table>";
     }
     function renderScenario() {
         const input = $("disrupt").value;
@@ -174,17 +214,20 @@
         $("scrub").max = Math.round(Date.parse(windowEnd) / 86400000);
         $("scrub").value = Math.round(Date.parse(date) / 86400000);
         $("time-caption").textContent = start + " → " + windowEnd + " · viewing " + date + " · no records beyond dataset cutoff";
-        $("status").textContent = data.coverageNote + " Dataset reviewed " + data.asOf + ".";
+        $("status").textContent = date === data.asOf
+            ? data.coverageNote + " Dataset reviewed " + data.asOf + "."
+            : "Historical knowledge view for " + date + ". Coverage and records below include only evidence entered by this date.";
         $("maps").innerHTML = countries().map(country => {
             const states = view().map(capability => ({ capability, state: core.assessment(data, country.id, capability.id, date) })).filter(item => matches(item.state));
             return '<article class="country"><h2>' + escape(country.name) + '</h2><small>' + states.filter(item => item.state.stage > 0).length + ' assessed / ' + states.length + ' visible definitions</small><div class="dots">' + states.map(({ capability, state }) => {
-                const label = country.name + " · " + capability.name + " · " + core.stages[state.stage] + (state.stale ? " · stale evidence" : "");
-                return '<button class="dot stage' + state.stage + (state.dependencies.some(dependency => dependency.materialVulnerability) ? " vulnerable" : "") + '" data-country="' + country.id + '" data-capability="' + capability.id + '" aria-label="' + escape(label) + '" title="' + escape(label) + '" aria-pressed="' + (country.id === selected.country && capability.id === selected.capability) + '">' + (state.stale ? "◷" : "") + '</button>';
+                const label = country.name + " · " + capability.name + " · Stage " + state.stage + " · " + core.stages[state.stage] + (state.stale ? " · stale evidence" : "");
+                return '<button class="dot stage' + state.stage + (state.dependencies.some(dependency => dependency.materialVulnerability) ? " vulnerable" : "") + '" data-country="' + country.id + '" data-capability="' + capability.id + '" aria-label="' + escape(label) + '" title="' + escape(label) + '" aria-pressed="' + (country.id === selected.country && capability.id === selected.capability) + '">' + '<span class="stage-number">' + state.stage + '</span>' + (state.stale ? '<span class="stale-marker" aria-hidden="true">◷</span>' : "") + '</button>';
             }).join("") + '</div>' + (!states.length ? "<p>No capabilities match these filters.</p>" : "") + "</article>";
         }).join("");
         if (visibleRows.length) renderDetail();
         else $("detail").innerHTML = '<h2 id="detail-title">No matching capabilities</h2><p>Adjust the filters to inspect a capability.</p>';
         renderCommits();
+        renderAudit();
         renderScenario();
     }
     function pause() {
@@ -264,7 +307,7 @@
         download("industrial-view-" + $("date").value + ".json", JSON.stringify({ date: $("date").value, assessments, evidence: data.evidence.filter(source => sourceIds.has(source.id)) }, null, 2), "application/json");
     };
     $("csv").onclick = () => {
-        const columns = ["country", "id", "name", "domain", "stage", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "source"];
+        const columns = ["country", "id", "name", "domain", "stage", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "evidenceAsOf", "kind", "stageRationale", "source", "sourceUrl"];
         const cell = value => '"' + String(value ?? "").replace(/"/g, '""').replace(/^[=+@-]/, "'$&") + '"';
         const content = [columns.join(","), ...rows().map(row => columns.map(column => cell(row[column])).join(","))].join("\r\n");
         download("industrial-view-" + $("date").value + ".csv", content, "text/csv");

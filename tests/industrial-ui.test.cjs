@@ -37,7 +37,7 @@ test("assessed-only filtering retains capability IDs and matching detail", async
     const element = await app();
     element("coverage").value = "known";
     element("coverage").handlers.input();
-    assert.equal((element("maps").innerHTML.match(/class="dot /g) || []).length, 3);
+    assert.equal((element("maps").innerHTML.match(/class="dot /g) || []).length, 67);
     assert.match(element("detail").innerHTML, /Chip assembly and test/);
     assert.match(element("maps").innerHTML, /data-capability="osat"/);
     assert.doesNotMatch(element("maps").innerHTML, /data-capability="IN-osat-production"/);
@@ -64,4 +64,14 @@ test("sandbox substitutions leave verified grids unchanged", async () => {
     element("alternative").onchange();
     assert.match(element("scenario").textContent, /nodes 0/);
     assert.equal(element("maps").innerHTML, grid);
+});
+test("numbered dots and historical coverage summary remain readable without color", async () => {
+    const element = await app();
+    assert.match(element("maps").innerHTML, /class="stage-number">4/);
+    assert.match(element("research-summary").innerHTML, /67/);
+    element("date").value = "2026-11-04";
+    element("date").handlers.input();
+    assert.doesNotMatch(element("status").textContent, /67/);
+    assert.match(element("research-summary").innerHTML, /3<\/strong> supported/);
+    assert.doesNotMatch(element("audit").innerHTML, /MIIT/);
 });

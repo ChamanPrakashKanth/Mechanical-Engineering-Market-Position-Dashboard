@@ -20,9 +20,9 @@ A capability means production at a domestic operating facility. Ownership, domes
 
 Stage values are 0 insufficient evidence, 1 emerging or limited, 2 pilot or early commercial, 3 established manufacturing and 4 deep scalable capability. Progress requires a verified event. Staleness is displayed separately after 180 days.
 
-The starter dataset contains 23 definitions across eleven domains and four semiconductor events covering three assessed country/capability pairs. Remaining cells are unassessed. This coverage supports the working platform but does not constitute a comprehensive national assessment.
+The November 5 research update reviews all 69 pairs across 23 definitions, eleven domains and three countries. It contains 67 supported, scoped assessments and two insufficient-evidence findings. The dataset contains 65 source records and 68 events, including the original semiconductor milestones. India lithography-equipment and electronic-photoresist manufacturing remain insufficiently evidenced. Scope, stage rationale and source vintage are visible for every new assessment.
 
-The sources are PIB's August 2025 pilot-line release and July 2026 production release, TSMC's March 2025 newsletter and SMIC's Q4 2024 financial presentation. Company disclosures are labeled source-reported. For quarter-only milestones, date uses quarter-end as an upper bound and the notes state that the exact day is unknown. TSMC's publication knowledge date uses month-end conservatively.
+The source collection includes primary government, regulatory, research-institute and manufacturer records, plus manufacturer-submitted industry profiles and a manufacturer interview in an industry-association publication. The original semiconductor sources remain in the immutable event history. Company disclosures are labeled source-reported. For quarter-only milestones, date uses quarter-end as an upper bound and the notes state that the exact day is unknown. TSMC's publication knowledge date uses month-end conservatively.
 
 Historical queries require both event.date and event.knownOn to be on or before the selected day. Evidence published later cannot color earlier views. Source metadata and entity nodes follow the selected record. Static process edges are explicitly illustrative and carry no country-specific dependency claim.
 
@@ -32,7 +32,7 @@ Review primary sources manually. Prepare a JSON batch with evidence and events a
 
 Each event contains country, capability, date, knownOn, previousStage, stage, kind, verification, milestone, technicalMaturity, confidence, capacity, valueAdd, importConcentration, industrialScale, diversification, dependencies, entities, quantitativeChange, source and notes. Use null for unmeasured quantities and an empty dependency list for an unassessed dependency profile.
 
-Keep publication dates distinct from technical milestone dates. Record exact-day uncertainty in notes. Use announcement, investment approval, pilot demonstration, production milestone or evidence correction for kind. Announcements and approvals must retain the previous stage. Mark verification as verified only after editorial review of the supporting evidence.
+Keep publication dates distinct from technical milestone dates. Record exact-day uncertainty in notes. Use announcement, investment approval, pilot demonstration, production milestone, evidence correction or evidence review for kind. Announcements and approvals must retain the previous stage. Mark verification as verified only after editorial review of the supporting evidence.
 
 A material dependency can contain name and materialVulnerability true. Add its supporting source and scope in the event notes. Amber appears only for an explicitly reviewed vulnerability.
 
@@ -57,3 +57,15 @@ The sandbox uses a small illustrative semiconductor chain including a hypothetic
 The four mind-map branches show sourced company and programme entities for assessed records and process relationships for mapped nodes. Other domains need evidence and their own dependency graphs before detailed supplier mapping can be provided.
 
 CSV/JSON export contains selected assessments. JSON includes the referenced sources. Reproducible URLs include filters, date, selected capability and scenario assumptions.
+
+## November 5 research and visibility update
+
+Every current dot displays its stage number as well as a contrasting color. Legend swatches are larger, forced-color behavior is explicit, and a separate clock marks older source observations.
+
+The new evidence review event type represents improved coverage of existing capability. Its date marks entry into this dataset. It does not claim a new factory or a technological improvement on that date. The original historical states remain reconstructible before the review date. Evidence reviews require a stage rationale and cannot declare a quantitative production change.
+
+evidenceAsOf controls staleness separately from knownOn. Dated reports retain their reporting vintage, and undated current pages disclose their access-date bound. A source remains a producer claim unless independently corroborated. Stage 4 describes production depth within the capability definition and does not establish national supply-chain independence.
+
+The review ledger records all 69 country-capability pairs. The audit table follows current date and filters. CSV includes stage rationale, record type, source observation bound and direct source URL. JSON includes source records.
+
+Capacity, cumulative deliveries, installed bioreactor volume, floor area and production counts retain their original units and scope. They are not compared as equivalent metrics. Unmeasured national value-add, supplier diversity, precise disruption time and replacement time remain explicit gaps.

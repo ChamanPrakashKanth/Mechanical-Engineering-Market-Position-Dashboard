@@ -6,9 +6,9 @@
 <title>Industrial Capability Control Room | MechIntel</title>
 <meta name="description" content="Compare evidence-backed industrial capabilities across India, China and the United States, replay recorded changes and explore dependency scenarios.">
 <link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/industrial/">
-<link rel="stylesheet" href="styles.css">
-<script defer src="core.js"></script>
-<script defer src="app.js"></script>
+<link rel="stylesheet" href="styles.css?v=20261105-colors">
+<script defer src="core.js?v=20261105-evidence"></script>
+<script defer src="app.js?v=20261105-evidence"></script>
 </head>
 <body>
 <header><a href="../">MechIntel</a><span>INDUSTRIAL INTELLIGENCE / 01</span><a href="../defense-engineering-resources.html">Defense reading hub ↗</a></header>
@@ -18,6 +18,7 @@
 <p class="intro">Follow what countries can make, the inputs they need, and the evidence behind each change.</p>
 <p>Free access · Browser-local scenarios · India / China / United States</p>
 <p id="status" role="status">Loading evidence records…</p>
+<div id="research-summary" class="research-summary" aria-label="Evidence coverage summary"></div>
 <section class="toolbar" aria-label="Capability filters">
 <label>Search capabilities<input id="search" type="search" placeholder="Try chip, turbines, metallurgy"></label>
 <label>Domain<select id="domain"><option value="">All domains</option></select></label>
@@ -35,9 +36,16 @@
 <input id="scrub" type="range" aria-label="Historical day">
 <p id="time-caption"></p>
 </section>
-<div class="legend" aria-label="Capability stage legend">
-<span><i class="stage0"></i>Insufficient evidence</span><span><i class="stage1"></i>Emerging / limited</span><span><i class="stage2"></i>Pilot / early commercial</span><span><i class="stage3"></i>Established manufacturing</span><span><i class="stage4"></i>Deep scalable capability</span><span>Amber outline · verified vulnerability</span><span>◷ · evidence over 180 days old</span>
+<h2 id="legend-title">Capability colors</h2>
+<div class="legend" role="group" aria-labelledby="legend-title">
+    <span class="legend-item"><i class="stage0" aria-hidden="true">0</i>Insufficient evidence</span>
+    <span class="legend-item"><i class="stage1" aria-hidden="true">1</i>Emerging / limited</span>
+    <span class="legend-item"><i class="stage2" aria-hidden="true">2</i>Pilot / early commercial</span>
+    <span class="legend-item"><i class="stage3" aria-hidden="true">3</i>Established manufacturing</span>
+    <span class="legend-item"><i class="stage4" aria-hidden="true">4</i>Deep scalable capability</span>
 </div>
+<p>Each dot displays its stage number, 0–4. Select a dot to read the source, scope and reason for that stage.</p>
+<p class="legend-notes">Amber outline · verified vulnerability &nbsp; ◷ · evidence over 180 days old</p>
 <section id="maps" class="maps" aria-label="Country capability maps"></section>
 <section id="detail" class="detail" aria-live="polite" aria-labelledby="detail-title"><h2 id="detail-title">Select a capability</h2><p>Tap a dot or use Tab and Enter to open its evidence and dependency branches.</p></section>
 <section aria-labelledby="sandbox-title" class="sandbox">
@@ -53,7 +61,13 @@
 <p id="scenario" role="status"></p><div id="graph" class="graph"></div>
 <p>Arrows run from input to dependent process. Disruption propagates downstream until an assumed substitute blocks it. Outcomes show technical exposure only. Replacement is assumed immediate and complete for this experiment. The two-body and three-body views are dependency metaphors.</p>
 </section>
-<section><h2>Capability commits</h2><p>Changes are shown only after their evidence became available. Source-reported production and pilot demonstrations carry separate labels.</p><div id="commits"></div></section>
+<section><h2>Capability records</h2><p>Technical milestones and research reviews have separate record types. An evidence review expands coverage and does not establish that production improved on the review date.</p><div id="commits"></div></section>
+<section aria-labelledby="research-title">
+<h2 id="research-title">Evidence coverage and assessment rules</h2>
+<p>Stage assignments are editorial assessments of documented domestic production within each capability definition. A dark-green module factory, for example, is assessed for module manufacturing. Component origin and upstream dependencies require their own evidence.</p>
+<details><summary>How the five stages are assigned</summary><ol id="criteria" class="criteria-list"></ol></details>
+<details><summary>Review every country and capability</summary><p>The audit table follows the selected date, country and topic filters.</p><div id="audit" class="comparison audit" role="region" aria-label="Research coverage audit" tabindex="0"></div></details>
+</section>
 <section><h2>Take the evidence with you</h2><div class="controls"><button id="json">Export view as JSON</button><button id="csv">Export view as CSV</button></div><p>Exports reflect the selected date and filters. The version-controlled event log reconstructs daily states without duplicating daily records.</p></section>
 </main><footer>MechIntel · Original editorial assessments with linked source evidence · <a href="data.json">Dataset</a> · <a href="../">Career and learning tools</a></footer>
 </body></html>
