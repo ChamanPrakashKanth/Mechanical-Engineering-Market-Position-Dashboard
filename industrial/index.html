@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Industrial Capability Control Room | MechIntel</title>
+<meta name="description" content="Compare evidence-backed industrial capabilities across India, China and the United States, replay recorded changes and explore dependency scenarios.">
+<link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/industrial/">
+<link rel="stylesheet" href="styles.css">
+<script defer src="core.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<header><a href="../">MechIntel</a><span>INDUSTRIAL INTELLIGENCE / 01</span><a href="../defense-engineering-resources.html">Defense reading hub ↗</a></header>
+<main>
+<p class="eyebrow">Evidence earns the green</p>
+<h1>Global Industrial<br>Capability Control Room</h1>
+<p class="intro">Follow what countries can make, the inputs they need, and the evidence behind each change.</p>
+<p>Free access · Browser-local scenarios · India / China / United States</p>
+<p id="status" role="status">Loading evidence records…</p>
+<section class="toolbar" aria-label="Capability filters">
+<label>Search capabilities<input id="search" type="search" placeholder="Try chip, turbines, metallurgy"></label>
+<label>Domain<select id="domain"><option value="">All domains</option></select></label>
+<label>Country<select id="country"><option value="">Compare all three</option><option value="IN">India</option><option value="CN">China</option><option value="US">United States</option></select></label>
+<label>Evidence<select id="coverage"><option value="">All evidence states</option><option value="known">Assessed capabilities</option><option value="unknown">Insufficient evidence</option><option value="vulnerable">Material vulnerability</option></select></label>
+</section>
+<section class="timeline" aria-labelledby="time-title">
+<h2 id="time-title">Industrial time machine</h2>
+<div class="controls">
+<label>As known on<input type="date" id="date"></label>
+<label>Window<select id="window"><option value="30">30 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365" selected>365 days</option></select></label>
+<button id="play">Play</button><button id="pause">Pause</button><button id="replay">Replay</button>
+<label>Speed<select id="speed"><option value="500">1×</option><option value="200">2×</option><option value="70">5×</option></select></label>
+</div>
+<input id="scrub" type="range" aria-label="Historical day">
+<p id="time-caption"></p>
+</section>
+<div class="legend" aria-label="Capability stage legend">
+<span><i class="stage0"></i>Insufficient evidence</span><span><i class="stage1"></i>Emerging / limited</span><span><i class="stage2"></i>Pilot / early commercial</span><span><i class="stage3"></i>Established manufacturing</span><span><i class="stage4"></i>Deep scalable capability</span><span>Amber outline · verified vulnerability</span><span>◷ · evidence over 180 days old</span>
+</div>
+<section id="maps" class="maps" aria-label="Country capability maps"></section>
+<section id="detail" class="detail" aria-live="polite" aria-labelledby="detail-title"><h2 id="detail-title">Select a capability</h2><p>Tap a dot or use Tab and Enter to open its evidence and dependency branches.</p></section>
+<section aria-labelledby="sandbox-title" class="sandbox">
+<p class="eyebrow">Hypothetical workspace</p><h2 id="sandbox-title">Supply chain sandbox</h2>
+<p>This illustrative technical dependency graph applies equally to all three countries. Edges describe process relationships. Country-specific supplier exposure requires additional evidence.</p>
+<div class="controls">
+<label>Disrupt input or process<select id="disrupt"><option value="">No disruption</option></select></label>
+<label><input id="alternative" type="checkbox">Assume an available alternative for this node</label>
+<label><input id="domestic" type="checkbox">Assume domestic production fully replaces this node</label>
+<button id="reset">Reset scenario</button><button id="share">Copy scenario URL</button>
+</div>
+<label>Dependency view<select id="network"><option value="full">Full network</option><option value="two">Two-body · one direct input</option><option value="three">Three-body · up to two direct inputs</option></select></label>
+<p id="scenario" role="status"></p><div id="graph" class="graph"></div>
+<p>Arrows run from input to dependent process. Disruption propagates downstream until an assumed substitute blocks it. Outcomes show technical exposure only. Replacement is assumed immediate and complete for this experiment. The two-body and three-body views are dependency metaphors.</p>
+</section>
+<section><h2>Capability commits</h2><p>Changes are shown only after their evidence became available. Source-reported production and pilot demonstrations carry separate labels.</p><div id="commits"></div></section>
+<section><h2>Take the evidence with you</h2><div class="controls"><button id="json">Export view as JSON</button><button id="csv">Export view as CSV</button></div><p>Exports reflect the selected date and filters. The version-controlled event log reconstructs daily states without duplicating daily records.</p></section>
+</main><footer>MechIntel · Original editorial assessments with linked source evidence · <a href="data.json">Dataset</a> · <a href="../">Career and learning tools</a></footer>
+</body></html>

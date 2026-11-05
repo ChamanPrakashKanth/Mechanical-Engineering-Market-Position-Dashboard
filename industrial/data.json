@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-05",
+  "coverageNote": "Curated starter coverage. Unknown cells are unassessed. Historical knowledge dates are conservative publication bounds. Facility production does not establish nationally integrated supply chains.",
+  "countries": [
+    {
+      "id": "IN",
+      "name": "India"
+    },
+    {
+      "id": "CN",
+      "name": "China"
+    },
+    {
+      "id": "US",
+      "name": "United States"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "wafer-fab",
+      "name": "Logic wafer fabrication",
+      "domain": "Semiconductors",
+      "definition": "Logic wafer fabrication produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "osat",
+      "name": "Chip assembly and test",
+      "domain": "Semiconductors",
+      "definition": "Chip assembly and test produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "lithography",
+      "name": "Lithography equipment",
+      "domain": "Semiconductors",
+      "definition": "Lithography equipment produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "cnc",
+      "name": "CNC machine tools",
+      "domain": "Machine tools",
+      "definition": "CNC machine tools produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "spindles",
+      "name": "Precision spindles",
+      "domain": "Machine tools",
+      "definition": "Precision spindles produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "photoresist",
+      "name": "Electronic photoresists",
+      "domain": "Chemicals",
+      "definition": "Electronic photoresists produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "process-gases",
+      "name": "High-purity process gases",
+      "domain": "Chemicals",
+      "definition": "High-purity process gases produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "api",
+      "name": "Active pharmaceutical ingredients",
+      "domain": "Pharmaceuticals",
+      "definition": "Active pharmaceutical ingredients produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "biologics",
+      "name": "Biologics production",
+      "domain": "Pharmaceuticals",
+      "definition": "Biologics production produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "turbines",
+      "name": "Aero-engine hot sections",
+      "domain": "Aerospace",
+      "definition": "Aero-engine hot sections produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "airframes",
+      "name": "Aircraft structures",
+      "domain": "Aerospace",
+      "definition": "Aircraft structures produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "powertrain",
+      "name": "Vehicle powertrains",
+      "domain": "Automotive",
+      "definition": "Vehicle powertrains produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "electronics",
+      "name": "Automotive electronics",
+      "domain": "Automotive",
+      "definition": "Automotive electronics produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "steel",
+      "name": "Specialty steel",
+      "domain": "Metallurgy",
+      "definition": "Specialty steel produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "superalloys",
+      "name": "Nickel superalloys",
+      "domain": "Metallurgy",
+      "definition": "Nickel superalloys produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "robots",
+      "name": "Industrial robot integration",
+      "domain": "Robotics",
+      "definition": "Industrial robot integration produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "reducers",
+      "name": "Precision robot reducers",
+      "domain": "Robotics",
+      "definition": "Precision robot reducers produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "cells",
+      "name": "Battery cells",
+      "domain": "Batteries",
+      "definition": "Battery cells produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "cathodes",
+      "name": "Cathode materials",
+      "domain": "Batteries",
+      "definition": "Cathode materials produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "solar",
+      "name": "Solar modules",
+      "domain": "Energy",
+      "definition": "Solar modules produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "grid",
+      "name": "Grid transformers",
+      "domain": "Energy",
+      "definition": "Grid transformers produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "casting",
+      "name": "Precision casting",
+      "domain": "Manufacturing",
+      "definition": "Precision casting produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "metrology",
+      "name": "Dimensional metrology",
+      "domain": "Manufacturing",
+      "definition": "Dimensional metrology produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "cg-pilot",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2161666",
+      "title": "PIB — CG Power OSAT pilot line",
+      "published": "2025-08-28",
+      "kind": "government release"
+    },
+    {
+      "id": "cg-production",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2281125",
+      "title": "PIB — CG Semi Sanand facility inauguration",
+      "published": "2026-07-04",
+      "kind": "government release"
+    },
+    {
+      "id": "tsmc",
+      "url": "https://pr.tsmc.com/static/campaign/2025March/tsmc_na/index.html",
+      "title": "TSMC March 2025 customer newsletter",
+      "published": "2025-03-31",
+      "kind": "company report"
+    },
+    {
+      "id": "smic",
+      "url": "https://www.smics.com/uploads/Q4_2024%20Financials%20Presentation.pdf",
+      "title": "SMIC Q4 2024 financial presentation",
+      "published": "2025-02-11",
+      "kind": "company report"
+    }
+  ],
+  "events": [
+    {
+      "id": "IN-osat-pilot",
+      "country": "IN",
+      "capability": "osat",
+      "date": "2025-08-28",
+      "knownOn": "2025-08-28",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "cg-pilot",
+      "milestone": "CG Power inaugurated an end-to-end OSAT pilot line in Sanand.",
+      "verification": "verified",
+      "kind": "pilot demonstration",
+      "confidence": "Source-reported",
+      "technicalMaturity": "CG Power inaugurated an end-to-end OSAT pilot line in Sanand.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "entities": [
+        {
+          "name": "CG Semi / CG Power",
+          "type": "company"
+        },
+        {
+          "name": "Renesas Electronics",
+          "type": "partner"
+        },
+        {
+          "name": "Stars Microelectronics",
+          "type": "partner"
+        },
+        {
+          "name": "India Semiconductor Mission",
+          "type": "programme"
+        }
+      ]
+    },
+    {
+      "id": "IN-osat-production",
+      "country": "IN",
+      "capability": "osat",
+      "date": "2026-07-04",
+      "knownOn": "2026-07-04",
+      "stage": 3,
+      "previousStage": 2,
+      "source": "cg-production",
+      "milestone": "CG Semi Sanand facility inaugurated with commercial chip packaging reported.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "CG Semi Sanand facility inaugurated with commercial chip packaging reported.",
+      "capacity": "200 million packaged units annually at CG Semi Sanand, government-reported facility capacity. Actual output and national aggregate unestablished.",
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "Commercial chip packaging at the cited facility",
+      "entities": [
+        {
+          "name": "CG Semi / CG Power",
+          "type": "company"
+        },
+        {
+          "name": "Renesas Electronics",
+          "type": "partner"
+        },
+        {
+          "name": "Stars Microelectronics",
+          "type": "partner"
+        },
+        {
+          "name": "India Semiconductor Mission",
+          "type": "programme"
+        }
+      ]
+    },
+    {
+      "id": "US-wafer-production",
+      "country": "US",
+      "capability": "wafer-fab",
+      "date": "2024-12-31",
+      "knownOn": "2025-03-31",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "tsmc",
+      "milestone": "TSMC reports Arizona N4 high-volume production in Q4 2024. Exact start day undisclosed.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "TSMC reports Arizona N4 high-volume production in Q4 2024. Exact start day undisclosed.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "N4 high-volume production, company-reported",
+      "entities": [
+        {
+          "name": "TSMC Arizona",
+          "type": "company / operating facility"
+        }
+      ]
+    },
+    {
+      "id": "CN-wafer-production",
+      "country": "CN",
+      "capability": "wafer-fab",
+      "date": "2024-12-31",
+      "knownOn": "2025-02-11",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "smic",
+      "milestone": "SMIC reports operating wafer production in Q4 2024. Exact milestone day undisclosed.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "SMIC reports operating wafer production in Q4 2024. Exact milestone day undisclosed.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "Operating wafer production, company-reported",
+      "entities": [
+        {
+          "name": "SMIC",
+          "type": "company"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "supplier",
+      "name": "Equipment supplier (hypothetical)",
+      "type": "supplier"
+    },
+    {
+      "id": "process-gases",
+      "name": "Process gases",
+      "type": "material"
+    },
+    {
+      "id": "lithography",
+      "name": "Lithography equipment",
+      "type": "equipment"
+    },
+    {
+      "id": "wafer-fab",
+      "name": "Wafer fabrication",
+      "type": "process"
+    },
+    {
+      "id": "osat",
+      "name": "Assembly and test",
+      "type": "process"
+    },
+    {
+      "id": "electronics",
+      "name": "Automotive electronics",
+      "type": "dependent technology"
+    }
+  ],
+  "edges": [
+    {
+      "from": "supplier",
+      "to": "lithography"
+    },
+    {
+      "to": "wafer-fab",
+      "from": "process-gases"
+    },
+    {
+      "to": "wafer-fab",
+      "from": "lithography"
+    },
+    {
+      "to": "osat",
+      "from": "wafer-fab"
+    },
+    {
+      "to": "electronics",
+      "from": "osat"
+    }
+  ]
+}

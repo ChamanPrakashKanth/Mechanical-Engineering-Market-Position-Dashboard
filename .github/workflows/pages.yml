@@ -44,7 +44,7 @@ jobs:
           node --check app.js
           node --check shared/mechintel-core.js
           node --check analytics.js
-          node --test tests/analytics.test.cjs
+          node --test tests/analytics.test.cjs tests/industrial.test.cjs tests/industrial-ui.test.cjs
 
       - name: Verify local MCP server and agent skill
         run: |
@@ -67,6 +67,7 @@ jobs:
           cp -r assets/gate-books _site/assets/
           cp manim_courses/renders/*.mp4 _site/manim_courses/renders/
           cp -r answerlens _site/answerlens
+          cp -r industrial _site/industrial
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs
