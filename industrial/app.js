@@ -2,10 +2,11 @@
 (async function () {
     const $ = id => document.getElementById(id);
     const core = window.IndustrialCore;
+    const config = document.currentScript?.dataset || {};
     const escape = value => String(value ?? "Not established").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
     let data;
     try {
-        const response = await fetch("data.json?v=20261105-evidence");
+        const response = await fetch(config.dataset || "data.json?v=20261105-evidence");
         if (!response.ok) throw Error("Dataset could not be loaded");
         data = await response.json();
         core.validate(data);
@@ -13,10 +14,11 @@
         $("status").textContent = "Evidence unavailable. " + error.message;
         return;
     }
+    const stages = data.stageLabels || core.stages;
     const today = new Date().toISOString().slice(0, 10);
     const endDate = data.asOf < today ? data.asOf : today;
     const firstDate = data.events.map(event => event.knownOn).sort()[0] || endDate;
-    let selected = { country: "IN", capability: "osat" };
+    let selected = { country: "IN", capability: config.capability || "osat" };
     let timer;
     let windowEnd = endDate;
     const params = new URLSearchParams(location.search);
@@ -67,6 +69,9 @@
                 id: capability.id,
                 name: capability.name,
                 domain: capability.domain,
+                definition: capability.definition,
+                stageLabel: stages[state.stage],
+                reviewNotes: (data.reviews || []).find(review => review.country === country.id && review.capability === capability.id && review.reviewedOn <= $("date").value)?.notes || null,
                 sourceUrl: data.evidence.find(source => source.id === state.source)?.url || null
             };
         }).filter(matches));
@@ -89,12 +94,12 @@
             <p class="eyebrow">${escape(country.name + " / " + capability.domain)}</p>
             <h2 id="detail-title">${escape(capability.name)}</h2>
             <p>${escape(capability.definition)}</p>
-            <p class="assessment-note"><strong>Stage ${state.stage} · ${escape(core.stages[state.stage])}</strong><br>
+            <p class="assessment-note"><strong>Stage ${state.stage} · ${escape(stages[state.stage])}</strong><br>
             ${escape(state.stageRationale || review?.notes || "No additional stage rationale in this historical record.")}
-            ${state.kind === "evidence review" ? "<br>Research coverage assessment. The record date does not mark a new factory opening or a new technical achievement." : ""}</p>
+            ${state.kind === "evidence review" ? "<br>Research coverage assessment. The record date does not mark a new deployment or a new technical achievement." : ""}</p>
             <div class="facts">
-                <p><strong>Before window</strong><br>${escape(core.stages[previous.stage])}</p>
-                <p><strong>Selected day</strong><br>${escape(core.stages[state.stage])}</p>
+                <p><strong>Before window</strong><br>${escape(stages[previous.stage])}</p>
+                <p><strong>Selected day</strong><br>${escape(stages[state.stage])}</p>
                 <p><strong>Evidence confidence</strong><br>${escape(state.confidence)}</p>
             </div>
             <div class="branches">
@@ -108,7 +113,7 @@
                     <h3>What Is Running</h3>
                     <p>${escape(state.milestone || "No verified operating milestone recorded as of this date.")}</p>
                     <p>Verified capacity — ${escape(state.capacity)}<br>
-                    Industrial scale — ${escape(state.industrialScale)}</p>
+                    Documented scale — ${escape(state.industrialScale)}</p>
                     <p>${sourceLink(state)}</p>
                     <div class="graph">
                         ${entities.map(entity => '<span class="node">' + escape(entity.name + " / " + entity.type) + "</span>").join('<span aria-label="connected to">↔</span>')}
@@ -143,7 +148,7 @@
                     <tbody>${data.countries.map(item => {
                         const after = core.assessment(data, item.id, capability.id, $("date").value);
                         const before = core.assessment(data, item.id, capability.id, offset(rangeStart(), -1));
-                        return "<tr><th scope=\"row\">" + escape(item.name) + "</th><td>" + escape(core.stages[before.stage]) + "</td><td>" + escape(core.stages[after.stage]) + "</td><td>" + escape(after.capacity || after.industrialScale) + "</td><td>" + escape(after.importConcentration) + "</td><td>" + escape(after.diversification) + "</td><td>" + escape(after.confidence) + "</td></tr>";
+                        return "<tr><th scope=\"row\">" + escape(item.name) + "</th><td>" + escape(stages[before.stage]) + "</td><td>" + escape(stages[after.stage]) + "</td><td>" + escape(after.capacity || after.industrialScale) + "</td><td>" + escape(after.importConcentration) + "</td><td>" + escape(after.diversification) + "</td><td>" + escape(after.confidence) + "</td></tr>";
                     }).join("")}</tbody>
                 </table>
             </div>`;
@@ -156,7 +161,7 @@
             <article class="commit">
                 <h3>${escape(event.id)}</h3>
                 <p>${escape(event.date + " · known by " + event.knownOn + " · " + event.kind + " · " + event.verification)}</p>
-                <p>${escape(core.stages[event.previousStage] + " → " + core.stages[event.stage])}</p>
+                <p>${escape(stages[event.previousStage] + " → " + stages[event.stage])}</p>
                 <p>${escape(event.milestone)}</p>
                 ${event.stageRationale ? "<p>" + escape(event.stageRationale) + "</p>" : ""}
                 <p>Quantitative change — ${escape(event.quantitativeChange)}</p>
@@ -182,7 +187,7 @@
         $("audit").innerHTML = '<table><thead><tr><th scope="col">Country / capability</th><th scope="col">Stage</th><th scope="col">Reason and source</th><th scope="col">Source observation</th></tr></thead><tbody>' + currentRows.map(row => {
             const review = (data.reviews || []).find(item => item.country === row.country && item.capability === row.id && item.reviewedOn <= $("date").value);
             const source = data.evidence.find(item => item.id === row.source);
-            return '<tr><th scope="row">' + escape(row.countryName + " / " + row.name) + '</th><td>' + row.stage + " · " + escape(core.stages[row.stage]) + '</td><td>' + escape(row.stageRationale || review?.notes || "Existing historical source record.") + '<div class="review-link">' + sourceLink(row) + '</div></td><td>' + escape(row.evidenceAsOf || source?.published || "Unestablished") + '<br>' + escape(source?.dateBasis || "") + '</td></tr>';
+            return '<tr><th scope="row">' + escape(row.countryName + " / " + row.name) + '</th><td>' + row.stage + " · " + escape(stages[row.stage]) + '</td><td>' + escape(row.stageRationale || review?.notes || "Existing historical source record.") + '<div class="review-link">' + sourceLink(row) + '</div></td><td>' + escape(row.evidenceAsOf || source?.published || "Unestablished") + '<br>' + escape(source?.dateBasis || "") + '</td></tr>';
         }).join("") + "</tbody></table>";
     }
     function renderScenario() {
@@ -194,7 +199,7 @@
         let nodes = data.nodes;
         let edges = data.edges;
         if ($("network").value !== "full") {
-            const target = data.nodes.some(node => node.id === selected.capability) ? selected.capability : "wafer-fab";
+            const target = data.nodes.some(node => node.id === selected.capability) ? selected.capability : data.nodes[0]?.id;
             const count = $("network").value === "two" ? 1 : 2;
             edges = data.edges.filter(edge => edge.to === target).slice(0, count);
             nodes = data.nodes.filter(node => node.id === target || edges.some(edge => edge.from === node.id));
@@ -220,7 +225,7 @@
         $("maps").innerHTML = countries().map(country => {
             const states = view().map(capability => ({ capability, state: core.assessment(data, country.id, capability.id, date) })).filter(item => matches(item.state));
             return '<article class="country"><h2>' + escape(country.name) + '</h2><small>' + states.filter(item => item.state.stage > 0).length + ' assessed / ' + states.length + ' visible definitions</small><div class="dots">' + states.map(({ capability, state }) => {
-                const label = country.name + " · " + capability.name + " · Stage " + state.stage + " · " + core.stages[state.stage] + (state.stale ? " · stale evidence" : "");
+                const label = country.name + " · " + capability.name + " · Stage " + state.stage + " · " + stages[state.stage] + (state.stale ? " · stale evidence" : "");
                 return '<button class="dot stage' + state.stage + (state.dependencies.some(dependency => dependency.materialVulnerability) ? " vulnerable" : "") + '" data-country="' + country.id + '" data-capability="' + capability.id + '" aria-label="' + escape(label) + '" title="' + escape(label) + '" aria-pressed="' + (country.id === selected.country && capability.id === selected.capability) + '">' + '<span class="stage-number">' + state.stage + '</span>' + (state.stale ? '<span class="stale-marker" aria-hidden="true">◷</span>' : "") + '</button>';
             }).join("") + '</div>' + (!states.length ? "<p>No capabilities match these filters.</p>" : "") + "</article>";
         }).join("");
@@ -304,13 +309,13 @@
     $("json").onclick = () => {
         const assessments = rows();
         const sourceIds = new Set(assessments.map(row => row.source));
-        download("industrial-view-" + $("date").value + ".json", JSON.stringify({ date: $("date").value, assessments, evidence: data.evidence.filter(source => sourceIds.has(source.id)) }, null, 2), "application/json");
+        download((config.exportPrefix || "industrial-view") + "-" + $("date").value + ".json", JSON.stringify({ date: $("date").value, assessments, evidence: data.evidence.filter(source => sourceIds.has(source.id)) }, null, 2), "application/json");
     };
     $("csv").onclick = () => {
-        const columns = ["country", "id", "name", "domain", "stage", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "evidenceAsOf", "kind", "stageRationale", "source", "sourceUrl"];
+        const columns = ["country", "id", "name", "domain", "definition", "stage", "stageLabel", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "evidenceAsOf", "kind", "stageRationale", "reviewNotes", "source", "sourceUrl"];
         const cell = value => '"' + String(value ?? "").replace(/"/g, '""').replace(/^[=+@-]/, "'$&") + '"';
         const content = [columns.join(","), ...rows().map(row => columns.map(column => cell(row[column])).join(","))].join("\r\n");
-        download("industrial-view-" + $("date").value + ".csv", content, "text/csv");
+        download((config.exportPrefix || "industrial-view") + "-" + $("date").value + ".csv", content, "text/csv");
     };
     render();
 })();

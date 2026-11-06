@@ -1,0 +1,3976 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-06",
+  "stageLabels": [
+    "Insufficient verified evidence",
+    "Research / limited demonstration",
+    "Pilot / early deployment",
+    "Released / operational capability",
+    "Documented repeated scale"
+  ],
+  "coverageNote": "AI stack baseline: 36 definitions across 12 layers. Evidence gaps remain visible. Colors assess narrow documented capabilities, not national AI rankings.",
+  "countries": [
+    {
+      "id": "IN",
+      "name": "India"
+    },
+    {
+      "id": "CN",
+      "name": "China"
+    },
+    {
+      "id": "US",
+      "name": "United States"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "accelerator-design",
+      "name": "AI accelerator design",
+      "domain": "01 · Silicon",
+      "definition": "Organization-origin accelerator IP; does not establish fabrication location."
+    },
+    {
+      "id": "logic-fab",
+      "name": "Advanced logic fabrication",
+      "domain": "01 · Silicon",
+      "definition": "Operating wafer fabrication at 16 nm class or below, physically inside the country."
+    },
+    {
+      "id": "hbm",
+      "name": "HBM manufacturing",
+      "domain": "01 · Silicon",
+      "definition": "Physical domestic fabrication and stacking of high-bandwidth memory; headquarters alone do not qualify."
+    },
+    {
+      "id": "packaging",
+      "name": "Advanced AI packaging",
+      "domain": "02 · Systems and facilities",
+      "definition": "Domestic 2.5D/3D semiconductor integration; conventional assembly alone does not qualify."
+    },
+    {
+      "id": "networking",
+      "name": "AI cluster networking",
+      "domain": "02 · Systems and facilities",
+      "definition": "Locally developed high-speed accelerator interconnect systems."
+    },
+    {
+      "id": "power-cooling",
+      "name": "AI power and cooling",
+      "domain": "02 · Systems and facilities",
+      "definition": "Documented domestic operation of AI-specific power and liquid-cooling infrastructure."
+    },
+    {
+      "id": "cloud",
+      "name": "Accelerator cloud access",
+      "domain": "03 · Compute access",
+      "definition": "Operational accelerator compute services accessible through a national ecosystem; imported GPUs may qualify for access only."
+    },
+    {
+      "id": "supercomputing",
+      "name": "Large-scale AI computing",
+      "domain": "03 · Compute access",
+      "definition": "Documented multi-accelerator training or serving operation; budgets and proposed clusters do not qualify."
+    },
+    {
+      "id": "edge",
+      "name": "Edge AI deployment stack",
+      "domain": "03 · Compute access",
+      "definition": "Locally developed software or chips supporting device-side inference; release is distinct from fleet adoption."
+    },
+    {
+      "id": "datasets",
+      "name": "Public training datasets",
+      "domain": "04 · Data",
+      "definition": "Locally originated, released datasets for AI training, with access and license scope checked separately."
+    },
+    {
+      "id": "annotation",
+      "name": "Annotation and curation tools",
+      "domain": "04 · Data",
+      "definition": "Locally originated tools for collecting, labeling or curating AI datasets."
+    },
+    {
+      "id": "multilingual-data",
+      "name": "Multilingual corpora",
+      "domain": "04 · Data",
+      "definition": "Locally originated language datasets spanning multiple languages; not a claim to ownership of those languages."
+    },
+    {
+      "id": "training",
+      "name": "Foundation-model training",
+      "domain": "05 · Model development",
+      "definition": "Documented original pre-training by organizations originating in the country; fine-tuning alone is insufficient."
+    },
+    {
+      "id": "reasoning",
+      "name": "Reasoning and post-training",
+      "domain": "05 · Model development",
+      "definition": "Released reasoning models or documented reinforcement-learning/post-training research."
+    },
+    {
+      "id": "open-weights",
+      "name": "Open-weight models",
+      "domain": "05 · Model development",
+      "definition": "Downloadable model weights; open weights do not imply unrestricted licenses or fully open training data."
+    },
+    {
+      "id": "speech",
+      "name": "Speech and translation",
+      "domain": "06 · Modalities",
+      "definition": "Locally originated speech recognition, synthesis or multilingual translation models."
+    },
+    {
+      "id": "vision",
+      "name": "Vision and multimodal AI",
+      "domain": "06 · Modalities",
+      "definition": "Locally originated released vision-language or document-understanding models."
+    },
+    {
+      "id": "generation",
+      "name": "Image and video generation",
+      "domain": "06 · Modalities",
+      "definition": "Locally originated generative image/video model releases; recognition alone does not qualify."
+    },
+    {
+      "id": "framework",
+      "name": "Training frameworks",
+      "domain": "07 · Software stack",
+      "definition": "Locally originated general training frameworks; global contributors and foreign adoption remain separate."
+    },
+    {
+      "id": "distributed",
+      "name": "Distributed training",
+      "domain": "07 · Software stack",
+      "definition": "Documented multi-device training software or original training-system engineering."
+    },
+    {
+      "id": "inference",
+      "name": "Inference runtimes",
+      "domain": "07 · Software stack",
+      "definition": "Locally originated runtime, kernel or serving optimization implementations."
+    },
+    {
+      "id": "apis",
+      "name": "Model API services",
+      "domain": "08 · Serving and retrieval",
+      "definition": "Operational model-serving APIs from locally originated providers; underlying hardware origin is separate."
+    },
+    {
+      "id": "retrieval",
+      "name": "Embeddings and retrieval",
+      "domain": "08 · Serving and retrieval",
+      "definition": "Locally originated embedding, ranking or retrieval software/models for RAG."
+    },
+    {
+      "id": "mlops",
+      "name": "MLOps and observability",
+      "domain": "08 · Serving and retrieval",
+      "definition": "Locally originated tools for model lifecycle tracking, evaluation, monitoring or deployment operations."
+    },
+    {
+      "id": "agents",
+      "name": "Agent frameworks",
+      "domain": "09 · Agents and applications",
+      "definition": "Locally originated released agent orchestration or tool-use implementations; not proof of autonomous reliability."
+    },
+    {
+      "id": "applications",
+      "name": "Deployed AI applications",
+      "domain": "09 · Agents and applications",
+      "definition": "Named operational AI products; no inference about national adoption or commercial success."
+    },
+    {
+      "id": "embodied",
+      "name": "Embodied AI and robotics",
+      "domain": "09 · Agents and applications",
+      "definition": "Released AI robot-policy or embodied-simulation systems; demonstration is distinct from industrial fleet deployment."
+    },
+    {
+      "id": "benchmarks",
+      "name": "Evaluation benchmarks",
+      "domain": "10 · Evaluation and safety",
+      "definition": "Locally originated public evaluation suites, datasets or reproducible harnesses."
+    },
+    {
+      "id": "safety",
+      "name": "Safety evaluation",
+      "domain": "10 · Evaluation and safety",
+      "definition": "Published technical risk-testing methods or implementation; policy alone does not establish test execution."
+    },
+    {
+      "id": "security",
+      "name": "AI security tooling",
+      "domain": "10 · Evaluation and safety",
+      "definition": "Released tools specifically testing AI vulnerabilities; general cybersecurity does not qualify."
+    },
+    {
+      "id": "research",
+      "name": "Research institutions and talent",
+      "domain": "11 · Research and ecosystem",
+      "definition": "Named institutions producing original AI research; not a national workforce estimate."
+    },
+    {
+      "id": "community",
+      "name": "Open-source AI community",
+      "domain": "11 · Research and ecosystem",
+      "definition": "Public locally originated AI projects; international contributions do not imply exclusive national ownership."
+    },
+    {
+      "id": "commercial",
+      "name": "AI commercialization",
+      "domain": "11 · Research and ecosystem",
+      "definition": "Operational AI product providers; financing announcements alone do not establish sales or profitability."
+    },
+    {
+      "id": "governance",
+      "name": "Published AI governance",
+      "domain": "12 · Governance and diffusion",
+      "definition": "Published governmental AI governance instruments; maturity measures publication, not policy quality or compliance."
+    },
+    {
+      "id": "public-sector",
+      "name": "Public-sector AI deployment",
+      "domain": "12 · Governance and diffusion",
+      "definition": "Named operational publicly supported AI service; a planned mission alone does not qualify."
+    },
+    {
+      "id": "standards",
+      "name": "AI standards and interoperability",
+      "domain": "12 · Governance and diffusion",
+      "definition": "Published public technical frameworks or implementation guidance; not a completeness assessment of national standards."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "netra",
+      "title": "Netrasemi company news",
+      "url": "https://www.netrasemi.com/news",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "indiaai",
+      "title": "PIB: IndiaAI compute and data coverage",
+      "url": "https://www.pib.gov.in/FactsheetDetails.aspx?Id=150860&lang=3&reg=3",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "sarvam",
+      "title": "Sarvam: 30B and 105B release",
+      "url": "https://www.sarvam.ai/blogs/sarvam-30b-105b",
+      "published": "2026-03-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "sarvam-models",
+      "title": "Sarvam model catalog",
+      "url": "https://www.sarvam.ai/models",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "indic",
+      "title": "AI4Bharat IndicTrans2",
+      "url": "https://github.com/AI4Bharat/IndicTrans2",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "indicvoices",
+      "title": "AI4Bharat IndicVoices-R",
+      "url": "https://github.com/AI4Bharat/IndicVoices-R",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "ai4bharat",
+      "title": "IIT Madras AI4Bharat",
+      "url": "https://ai4bharat.iitm.ac.in/",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "india-policy",
+      "title": "Principal Scientific Adviser: AI mission and governance",
+      "url": "https://www.psa.gov.in/ai-mission",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "blackwell",
+      "title": "NVIDIA Blackwell architecture",
+      "url": "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "tsmc",
+      "title": "TSMC 2024 annual report",
+      "url": "https://investor.tsmc.com/static/annualReports/2024/english/index.html",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "intel",
+      "title": "Intel opens Fab 9 in New Mexico",
+      "url": "https://download.intel.com/newsroom/archive/2025/en-us-2024-01-24-intel-opens-fab-9-in-new-mexico.pdf",
+      "published": "2024-01-24",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "aws",
+      "title": "AWS accelerator instance specifications",
+      "url": "https://docs.aws.amazon.com/ec2/latest/instancetypes/ac.html",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "dolma",
+      "title": "Allen Institute for AI: Dolma",
+      "url": "https://github.com/allenai/dolma",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "llama",
+      "title": "Meta Llama 3",
+      "url": "https://github.com/meta-llama/llama3",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "llama-models",
+      "title": "Meta Llama models",
+      "url": "https://github.com/meta-llama/llama-models",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "pytorch",
+      "title": "PyTorch framework",
+      "url": "https://github.com/pytorch/pytorch",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "tensorrt",
+      "title": "NVIDIA TensorRT-LLM",
+      "url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "autogen",
+      "title": "Microsoft AutoGen",
+      "url": "https://github.com/microsoft/autogen",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "mlflow",
+      "title": "MLflow project",
+      "url": "https://github.com/mlflow/mlflow",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "helm",
+      "title": "Stanford CRFM HELM",
+      "url": "https://github.com/stanford-crfm/helm",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "garak",
+      "title": "NVIDIA garak",
+      "url": "https://github.com/NVIDIA/garak",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "sana",
+      "title": "NVIDIA SANA",
+      "url": "https://github.com/NVlabs/Sana",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "groot",
+      "title": "NVIDIA Isaac GR00T",
+      "url": "https://github.com/NVIDIA/Isaac-GR00T",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "nist",
+      "title": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "cloudmatrix",
+      "title": "Huawei CloudMatrix384 engineering paper",
+      "url": "https://arxiv.org/abs/2506.12708",
+      "published": "2025-06-15",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "huawei-cloud",
+      "title": "Huawei: Pangu and AI cloud service",
+      "url": "https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html",
+      "published": "2025-06-20",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "deepseek",
+      "title": "DeepSeek V3 model and systems report",
+      "url": "https://github.com/deepseek-ai/DeepSeek-V3",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "r1",
+      "title": "DeepSeek R1 technical paper",
+      "url": "https://arxiv.org/abs/2501.12948",
+      "published": "2025-01-22",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "paddle",
+      "title": "Baidu PaddlePaddle",
+      "url": "https://github.com/PaddlePaddle/Paddle",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "mindspore",
+      "title": "Huawei MindSpore",
+      "url": "https://github.com/mindspore-ai/mindspore",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "qwen-vl",
+      "title": "Alibaba Qwen vision-language models",
+      "url": "https://github.com/QwenLM/Qwen3-VL",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "qwen-image",
+      "title": "Alibaba Qwen Image",
+      "url": "https://github.com/QwenLM/Qwen-Image",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "qwen-agent",
+      "title": "Alibaba Qwen Agent",
+      "url": "https://github.com/QwenLM/Qwen-Agent",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "qwen-speech",
+      "title": "Alibaba Qwen3 TTS",
+      "url": "https://github.com/QwenLM/Qwen3-TTS",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "nemo-speech",
+      "title": "NVIDIA NeMo Speech",
+      "url": "https://github.com/NVIDIA-NeMo/Speech",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "bge",
+      "title": "BAAI FlagEmbedding",
+      "url": "https://github.com/FlagOpen/FlagEmbedding",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "opencompass",
+      "title": "OpenCompass evaluation platform",
+      "url": "https://github.com/open-compass/opencompass",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "intern",
+      "title": "InternUtopia embodied simulation",
+      "url": "https://github.com/InternRobotics/InternUtopia",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "cac",
+      "title": "CAC: 2023 generative AI service measures",
+      "url": "https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm",
+      "published": "2023-07-13",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "smic",
+      "title": "SMIC 2019 Hong Kong Exchange filing",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2019/1212/2019121200789.pdf",
+      "published": "2019-12-12",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Dated primary publication"
+    },
+    {
+      "id": "labelu",
+      "title": "OpenDataLab LabelU",
+      "url": "https://github.com/opendatalab/LabelU",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "frontier",
+      "title": "Oak Ridge: Frontier system",
+      "url": "https://www.olcf.ornl.gov/frontier/",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "nemotron",
+      "title": "NVIDIA reasoning implementation guidance",
+      "url": "https://docs.nvidia.com/rag/latest/enable-nemotron-thinking.html",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "bedrock",
+      "title": "AWS Bedrock overview",
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "graphrag",
+      "title": "Microsoft GraphRAG",
+      "url": "https://github.com/microsoft/graphrag",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    },
+    {
+      "id": "copilot",
+      "title": "Microsoft 365 Copilot product",
+      "url": "https://www.microsoft.com/en-us/microsoft-365-copilot",
+      "published": "2026-11-06",
+      "kind": "Primary source",
+      "accessedOn": "2026-11-06",
+      "dateBasis": "Primary source observed on review date; original publication date not recorded"
+    }
+  ],
+  "events": [
+    {
+      "id": "IN-accelerator-design-review-20261106",
+      "country": "IN",
+      "capability": "accelerator-design",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "netra",
+      "milestone": "Netrasemi reports a production-ready A2000 edge-AI design; domestic fabrication and shipment volume are unestablished here.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Netrasemi reports a production-ready A2000 edge-AI design; domestic fabrication and shipment volume are unestablished here."
+    },
+    {
+      "id": "IN-cloud-review-20261106",
+      "country": "IN",
+      "capability": "cloud",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indiaai",
+      "milestone": "IndiaAI reports shared accelerator access; this establishes compute access, not Indian GPU manufacturing.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IndiaAI reports shared accelerator access; this establishes compute access, not Indian GPU manufacturing."
+    },
+    {
+      "id": "IN-supercomputing-review-20261106",
+      "country": "IN",
+      "capability": "supercomputing",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam reports training its released models on IndiaAI compute physically in India; national cluster capacity is not inferred.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam reports training its released models on IndiaAI compute physically in India; national cluster capacity is not inferred."
+    },
+    {
+      "id": "IN-edge-review-20261106",
+      "country": "IN",
+      "capability": "edge",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "netra",
+      "milestone": "Netrasemi offers an edge-inference chip design; customer deployment volume is not established by the company news record.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Netrasemi offers an edge-inference chip design; customer deployment volume is not established by the company news record."
+    },
+    {
+      "id": "IN-datasets-review-20261106",
+      "country": "IN",
+      "capability": "datasets",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indiaai",
+      "milestone": "AIKosh provides a public dataset and model catalog; individual licenses still govern reuse.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AIKosh provides a public dataset and model catalog; individual licenses still govern reuse."
+    },
+    {
+      "id": "IN-annotation-review-20261106",
+      "country": "IN",
+      "capability": "annotation",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "ai4bharat",
+      "milestone": "AI4Bharat publishes data-collection and annotation tools; national annotation-market scale is unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AI4Bharat publishes data-collection and annotation tools; national annotation-market scale is unassessed."
+    },
+    {
+      "id": "IN-multilingual-data-review-20261106",
+      "country": "IN",
+      "capability": "multilingual-data",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indicvoices",
+      "milestone": "IndicVoices-R releases a multilingual Indian speech corpus; coverage does not establish complete demographic representation.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IndicVoices-R releases a multilingual Indian speech corpus; coverage does not establish complete demographic representation."
+    },
+    {
+      "id": "IN-training-review-20261106",
+      "country": "IN",
+      "capability": "training",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam documents original pre-training of 30B and 105B models in India.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam documents original pre-training of 30B and 105B models in India."
+    },
+    {
+      "id": "IN-reasoning-review-20261106",
+      "country": "IN",
+      "capability": "reasoning",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam releases reasoning models with post-training; provider benchmark results are not a national quality ranking.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam releases reasoning models with post-training; provider benchmark results are not a national quality ranking."
+    },
+    {
+      "id": "IN-open-weights-review-20261106",
+      "country": "IN",
+      "capability": "open-weights",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam releases model weights; model licenses and training-data openness remain separate questions.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam releases model weights; model licenses and training-data openness remain separate questions."
+    },
+    {
+      "id": "IN-speech-review-20261106",
+      "country": "IN",
+      "capability": "speech",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indic",
+      "milestone": "IndicTrans2 provides released translation models covering Indian scheduled languages.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IndicTrans2 provides released translation models covering Indian scheduled languages."
+    },
+    {
+      "id": "IN-vision-review-20261106",
+      "country": "IN",
+      "capability": "vision",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam-models",
+      "milestone": "Sarvam catalogs vision/document models; this does not establish general image-generation capability.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam catalogs vision/document models; this does not establish general image-generation capability."
+    },
+    {
+      "id": "IN-distributed-review-20261106",
+      "country": "IN",
+      "capability": "distributed",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam describes training-system optimization; ecosystem-wide adoption of a standalone framework is not established.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam describes training-system optimization; ecosystem-wide adoption of a standalone framework is not established."
+    },
+    {
+      "id": "IN-apis-review-20261106",
+      "country": "IN",
+      "capability": "apis",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam-models",
+      "milestone": "Sarvam provides model products through its developer platform; coming-soon models are excluded from this assessment.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam provides model products through its developer platform; coming-soon models are excluded from this assessment."
+    },
+    {
+      "id": "IN-applications-review-20261106",
+      "country": "IN",
+      "capability": "applications",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-03-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam",
+      "milestone": "Sarvam names operational Samvaad and Indus products; usage and revenue are unestablished here.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam names operational Samvaad and Indus products; usage and revenue are unestablished here."
+    },
+    {
+      "id": "IN-benchmarks-review-20261106",
+      "country": "IN",
+      "capability": "benchmarks",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "indic",
+      "milestone": "IndicTrans2 publishes evaluation procedures and benchmark data; scope is translation, not general AI safety.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IndicTrans2 publishes evaluation procedures and benchmark data; scope is translation, not general AI safety."
+    },
+    {
+      "id": "IN-research-review-20261106",
+      "country": "IN",
+      "capability": "research",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "ai4bharat",
+      "milestone": "IIT Madras AI4Bharat produces original language-AI research; this is not a national talent count.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IIT Madras AI4Bharat produces original language-AI research; this is not a national talent count."
+    },
+    {
+      "id": "IN-community-review-20261106",
+      "country": "IN",
+      "capability": "community",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indicvoices",
+      "milestone": "AI4Bharat maintains a public speech-data project; contributors and downstream users can be international.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AI4Bharat maintains a public speech-data project; contributors and downstream users can be international."
+    },
+    {
+      "id": "IN-commercial-review-20261106",
+      "country": "IN",
+      "capability": "commercial",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sarvam-models",
+      "milestone": "Sarvam offers operational model products; profitability and national AI-market size are unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Sarvam offers operational model products; profitability and national AI-market size are unassessed."
+    },
+    {
+      "id": "IN-governance-review-20261106",
+      "country": "IN",
+      "capability": "governance",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "india-policy",
+      "milestone": "The PSA publishes AI governance guidance; publication does not prove compliance or policy effectiveness.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "The PSA publishes AI governance guidance; publication does not prove compliance or policy effectiveness."
+    },
+    {
+      "id": "IN-public-sector-review-20261106",
+      "country": "IN",
+      "capability": "public-sector",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "indiaai",
+      "milestone": "IndiaAI operates shared compute and data services; proposed additional infrastructure is excluded.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "IndiaAI operates shared compute and data services; proposed additional infrastructure is excluded."
+    },
+    {
+      "id": "IN-standards-review-20261106",
+      "country": "IN",
+      "capability": "standards",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "india-policy",
+      "milestone": "Published governance guidance provides a public reference; technical interoperability implementation is not demonstrated here.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Published governance guidance provides a public reference; technical interoperability implementation is not demonstrated here."
+    },
+    {
+      "id": "CN-accelerator-design-review-20261106",
+      "country": "CN",
+      "capability": "accelerator-design",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-15",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "cloudmatrix",
+      "milestone": "Huawei documents Ascend 910C accelerators in a working serving system; chip-fabrication origin is a separate assessment.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei documents Ascend 910C accelerators in a working serving system; chip-fabrication origin is a separate assessment."
+    },
+    {
+      "id": "CN-logic-fab-review-20261106",
+      "country": "CN",
+      "capability": "logic-fab",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2019-12-12",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "smic",
+      "milestone": "SMIC reports 14 nm production in its Chinese foundry operations; this does not establish frontier-node parity or the origin of any specific accelerator.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "SMIC reports 14 nm production in its Chinese foundry operations; this does not establish frontier-node parity or the origin of any specific accelerator."
+    },
+    {
+      "id": "CN-networking-review-20261106",
+      "country": "CN",
+      "capability": "networking",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-15",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "cloudmatrix",
+      "milestone": "CloudMatrix384 documents an implemented multi-accelerator interconnect; this is one system, not national network capacity.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "CloudMatrix384 documents an implemented multi-accelerator interconnect; this is one system, not national network capacity."
+    },
+    {
+      "id": "CN-cloud-review-20261106",
+      "country": "CN",
+      "capability": "cloud",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-20",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "huawei-cloud",
+      "milestone": "Huawei offers an AI cloud service using CloudMatrix; regional access conditions require provider checks.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei offers an AI cloud service using CloudMatrix; regional access conditions require provider checks."
+    },
+    {
+      "id": "CN-supercomputing-review-20261106",
+      "country": "CN",
+      "capability": "supercomputing",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-15",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "cloudmatrix",
+      "milestone": "The paper describes a working 384-accelerator serving system; no national fleet size is inferred.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "The paper describes a working 384-accelerator serving system; no national fleet size is inferred."
+    },
+    {
+      "id": "CN-edge-review-20261106",
+      "country": "CN",
+      "capability": "edge",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "mindspore",
+      "milestone": "MindSpore supplies mobile, edge and cloud inference software; released support is distinct from deployed fleet volume.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "MindSpore supplies mobile, edge and cloud inference software; released support is distinct from deployed fleet volume."
+    },
+    {
+      "id": "CN-annotation-review-20261106",
+      "country": "CN",
+      "capability": "annotation",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "labelu",
+      "milestone": "OpenDataLab releases multimodal annotation tooling; national annotation capacity is unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "OpenDataLab releases multimodal annotation tooling; national annotation capacity is unassessed."
+    },
+    {
+      "id": "CN-training-review-20261106",
+      "country": "CN",
+      "capability": "training",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "deepseek",
+      "milestone": "DeepSeek V3 documents original model pre-training and its engineering implementation.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "DeepSeek V3 documents original model pre-training and its engineering implementation."
+    },
+    {
+      "id": "CN-reasoning-review-20261106",
+      "country": "CN",
+      "capability": "reasoning",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-01-22",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "r1",
+      "milestone": "DeepSeek R1 documents reinforcement-learning reasoning methods and released models; benchmark superiority is not assumed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "DeepSeek R1 documents reinforcement-learning reasoning methods and released models; benchmark superiority is not assumed."
+    },
+    {
+      "id": "CN-open-weights-review-20261106",
+      "country": "CN",
+      "capability": "open-weights",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "deepseek",
+      "milestone": "DeepSeek publishes downloadable model weights under stated terms; data openness must be checked independently.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "DeepSeek publishes downloadable model weights under stated terms; data openness must be checked independently."
+    },
+    {
+      "id": "CN-speech-review-20261106",
+      "country": "CN",
+      "capability": "speech",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "qwen-speech",
+      "milestone": "Qwen releases speech-synthesis implementations and model weights; deployed speech-service volume is unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Qwen releases speech-synthesis implementations and model weights; deployed speech-service volume is unassessed."
+    },
+    {
+      "id": "CN-vision-review-20261106",
+      "country": "CN",
+      "capability": "vision",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "qwen-vl",
+      "milestone": "Qwen releases vision-language models; task accuracy depends on model version and evaluation conditions.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Qwen releases vision-language models; task accuracy depends on model version and evaluation conditions."
+    },
+    {
+      "id": "CN-generation-review-20261106",
+      "country": "CN",
+      "capability": "generation",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "qwen-image",
+      "milestone": "Qwen Image releases image-generation software and weights; commercial deployment scale is unestablished here.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Qwen Image releases image-generation software and weights; commercial deployment scale is unestablished here."
+    },
+    {
+      "id": "CN-framework-review-20261106",
+      "country": "CN",
+      "capability": "framework",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "paddle",
+      "milestone": "PaddlePaddle provides a released training framework originating at Baidu; international contributions remain visible separately.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "PaddlePaddle provides a released training framework originating at Baidu; international contributions remain visible separately."
+    },
+    {
+      "id": "CN-distributed-review-20261106",
+      "country": "CN",
+      "capability": "distributed",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "deepseek",
+      "milestone": "DeepSeek V3 describes distributed model-training engineering; availability of every production component is not assumed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "DeepSeek V3 describes distributed model-training engineering; availability of every production component is not assumed."
+    },
+    {
+      "id": "CN-inference-review-20261106",
+      "country": "CN",
+      "capability": "inference",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "mindspore",
+      "milestone": "MindSpore supplies released inference implementations for multiple deployment environments.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "MindSpore supplies released inference implementations for multiple deployment environments."
+    },
+    {
+      "id": "CN-apis-review-20261106",
+      "country": "CN",
+      "capability": "apis",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-20",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "huawei-cloud",
+      "milestone": "Huawei provides model cloud services; service availability does not imply domestic manufacturing of every input.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei provides model cloud services; service availability does not imply domestic manufacturing of every input."
+    },
+    {
+      "id": "CN-retrieval-review-20261106",
+      "country": "CN",
+      "capability": "retrieval",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "bge",
+      "milestone": "BAAI FlagEmbedding releases embedding and reranking implementations for retrieval.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "BAAI FlagEmbedding releases embedding and reranking implementations for retrieval."
+    },
+    {
+      "id": "CN-mlops-review-20261106",
+      "country": "CN",
+      "capability": "mlops",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-20",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "huawei-cloud",
+      "milestone": "Huawei documents model cloud lifecycle services; national enterprise adoption is not established.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei documents model cloud lifecycle services; national enterprise adoption is not established."
+    },
+    {
+      "id": "CN-agents-review-20261106",
+      "country": "CN",
+      "capability": "agents",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "qwen-agent",
+      "milestone": "Qwen Agent provides released tool-use and orchestration implementations; autonomous reliability is not established by release.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Qwen Agent provides released tool-use and orchestration implementations; autonomous reliability is not established by release."
+    },
+    {
+      "id": "CN-applications-review-20261106",
+      "country": "CN",
+      "capability": "applications",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-20",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "huawei-cloud",
+      "milestone": "Huawei offers industry-facing model services; provider descriptions do not establish industry-wide adoption.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei offers industry-facing model services; provider descriptions do not establish industry-wide adoption."
+    },
+    {
+      "id": "CN-embodied-review-20261106",
+      "country": "CN",
+      "capability": "embodied",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "intern",
+      "milestone": "InternUtopia provides an embodied-AI simulation research platform; real-world fleet deployment is not established.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "InternUtopia provides an embodied-AI simulation research platform; real-world fleet deployment is not established."
+    },
+    {
+      "id": "CN-benchmarks-review-20261106",
+      "country": "CN",
+      "capability": "benchmarks",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "opencompass",
+      "milestone": "OpenCompass supplies a public model-evaluation harness; results require model/version-specific interpretation.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "OpenCompass supplies a public model-evaluation harness; results require model/version-specific interpretation."
+    },
+    {
+      "id": "CN-safety-review-20261106",
+      "country": "CN",
+      "capability": "safety",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "opencompass",
+      "milestone": "OpenCompass includes safety evaluation tasks; a harness does not certify any model as safe.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "OpenCompass includes safety evaluation tasks; a harness does not certify any model as safe."
+    },
+    {
+      "id": "CN-research-review-20261106",
+      "country": "CN",
+      "capability": "research",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-01-22",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "r1",
+      "milestone": "DeepSeek publishes original reasoning research; this record does not estimate national researcher numbers.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "DeepSeek publishes original reasoning research; this record does not estimate national researcher numbers."
+    },
+    {
+      "id": "CN-community-review-20261106",
+      "country": "CN",
+      "capability": "community",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "paddle",
+      "milestone": "PaddlePaddle maintains a public AI software project with a global contributor base.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "PaddlePaddle maintains a public AI software project with a global contributor base."
+    },
+    {
+      "id": "CN-commercial-review-20261106",
+      "country": "CN",
+      "capability": "commercial",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2025-06-20",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "huawei-cloud",
+      "milestone": "Huawei sells AI cloud products; this is not a national market-size or profitability estimate.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Huawei sells AI cloud products; this is not a national market-size or profitability estimate."
+    },
+    {
+      "id": "CN-governance-review-20261106",
+      "country": "CN",
+      "capability": "governance",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2023-07-13",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "cac",
+      "milestone": "CAC published generative-AI service measures in 2023; this historical instrument is not a complete current legal survey.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "CAC published generative-AI service measures in 2023; this historical instrument is not a complete current legal survey."
+    },
+    {
+      "id": "US-accelerator-design-review-20261106",
+      "country": "US",
+      "capability": "accelerator-design",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "blackwell",
+      "milestone": "NVIDIA offers Blackwell accelerator designs; US corporate origin does not establish US wafer fabrication.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA offers Blackwell accelerator designs; US corporate origin does not establish US wafer fabrication."
+    },
+    {
+      "id": "US-logic-fab-review-20261106",
+      "country": "US",
+      "capability": "logic-fab",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "tsmc",
+      "milestone": "TSMC reports N4 volume production in Arizona from Q4 2024; facility location is US, corporate origin is Taiwan.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "TSMC reports N4 volume production in Arizona from Q4 2024; facility location is US, corporate origin is Taiwan."
+    },
+    {
+      "id": "US-packaging-review-20261106",
+      "country": "US",
+      "capability": "packaging",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2024-01-24",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "intel",
+      "milestone": "Intel opened Fab 9 for advanced packaging in New Mexico; this does not prove all US AI chips are packaged domestically.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Intel opened Fab 9 for advanced packaging in New Mexico; this does not prove all US AI chips are packaged domestically."
+    },
+    {
+      "id": "US-networking-review-20261106",
+      "country": "US",
+      "capability": "networking",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "blackwell",
+      "milestone": "NVIDIA supplies accelerator interconnect technology; manufacturing geography is not inferred from design origin.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA supplies accelerator interconnect technology; manufacturing geography is not inferred from design origin."
+    },
+    {
+      "id": "US-cloud-review-20261106",
+      "country": "US",
+      "capability": "cloud",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "aws",
+      "milestone": "AWS catalogs operational accelerator instances; hardware sourcing remains a separate dependency.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AWS catalogs operational accelerator instances; hardware sourcing remains a separate dependency."
+    },
+    {
+      "id": "US-supercomputing-review-20261106",
+      "country": "US",
+      "capability": "supercomputing",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "frontier",
+      "milestone": "Oak Ridge operates Frontier for GPU-accelerated scientific and AI workloads; this is one US facility, not total national compute.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Oak Ridge operates Frontier for GPU-accelerated scientific and AI workloads; this is one US facility, not total national compute."
+    },
+    {
+      "id": "US-edge-review-20261106",
+      "country": "US",
+      "capability": "edge",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "llama-models",
+      "milestone": "Meta releases smaller Llama models for constrained deployments; actual device fleet adoption is unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Meta releases smaller Llama models for constrained deployments; actual device fleet adoption is unassessed."
+    },
+    {
+      "id": "US-datasets-review-20261106",
+      "country": "US",
+      "capability": "datasets",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "dolma",
+      "milestone": "Ai2 releases Dolma pre-training data and tools; component licenses and provenance require individual review.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Ai2 releases Dolma pre-training data and tools; component licenses and provenance require individual review."
+    },
+    {
+      "id": "US-annotation-review-20261106",
+      "country": "US",
+      "capability": "annotation",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "dolma",
+      "milestone": "Dolma supplies curation and inspection tools; this does not measure the national annotation industry.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Dolma supplies curation and inspection tools; this does not measure the national annotation industry."
+    },
+    {
+      "id": "US-training-review-20261106",
+      "country": "US",
+      "capability": "training",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "llama",
+      "milestone": "Meta documents original Llama model development; training hardware location is not inferred from company origin.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Meta documents original Llama model development; training hardware location is not inferred from company origin."
+    },
+    {
+      "id": "US-reasoning-review-20261106",
+      "country": "US",
+      "capability": "reasoning",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "nemotron",
+      "milestone": "NVIDIA documents usable Nemotron reasoning modes; comparative model quality is not inferred.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA documents usable Nemotron reasoning modes; comparative model quality is not inferred."
+    },
+    {
+      "id": "US-open-weights-review-20261106",
+      "country": "US",
+      "capability": "open-weights",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "llama",
+      "milestone": "Meta releases Llama weights under its model license; open weights do not mean unrestricted use.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Meta releases Llama weights under its model license; open weights do not mean unrestricted use."
+    },
+    {
+      "id": "US-speech-review-20261106",
+      "country": "US",
+      "capability": "speech",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "nemo-speech",
+      "milestone": "NVIDIA provides released speech recognition and synthesis implementations; national language coverage is not inferred.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA provides released speech recognition and synthesis implementations; national language coverage is not inferred."
+    },
+    {
+      "id": "US-vision-review-20261106",
+      "country": "US",
+      "capability": "vision",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "llama-models",
+      "milestone": "Meta releases multimodal Llama models; this is not a general vision-accuracy ranking.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Meta releases multimodal Llama models; this is not a general vision-accuracy ranking."
+    },
+    {
+      "id": "US-generation-review-20261106",
+      "country": "US",
+      "capability": "generation",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "sana",
+      "milestone": "NVIDIA SANA releases generative-image research software; adoption and commercial scale are unassessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA SANA releases generative-image research software; adoption and commercial scale are unassessed."
+    },
+    {
+      "id": "US-framework-review-20261106",
+      "country": "US",
+      "capability": "framework",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "pytorch",
+      "milestone": "PyTorch is an operational training framework with US organizational origins and global contributors.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "PyTorch is an operational training framework with US organizational origins and global contributors."
+    },
+    {
+      "id": "US-distributed-review-20261106",
+      "country": "US",
+      "capability": "distributed",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "pytorch",
+      "milestone": "PyTorch includes distributed-training implementations; framework origin does not imply exclusively domestic development.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "PyTorch includes distributed-training implementations; framework origin does not imply exclusively domestic development."
+    },
+    {
+      "id": "US-inference-review-20261106",
+      "country": "US",
+      "capability": "inference",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "tensorrt",
+      "milestone": "TensorRT-LLM provides released optimized inference software; speed depends on workload and hardware.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "TensorRT-LLM provides released optimized inference software; speed depends on workload and hardware."
+    },
+    {
+      "id": "US-apis-review-20261106",
+      "country": "US",
+      "capability": "apis",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "bedrock",
+      "milestone": "AWS Bedrock offers operational foundation-model APIs; provider origin does not determine every hosted model's origin.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AWS Bedrock offers operational foundation-model APIs; provider origin does not determine every hosted model's origin."
+    },
+    {
+      "id": "US-retrieval-review-20261106",
+      "country": "US",
+      "capability": "retrieval",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "graphrag",
+      "milestone": "Microsoft releases GraphRAG retrieval-augmented generation software; operational adoption is unquantified.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Microsoft releases GraphRAG retrieval-augmented generation software; operational adoption is unquantified."
+    },
+    {
+      "id": "US-mlops-review-20261106",
+      "country": "US",
+      "capability": "mlops",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "mlflow",
+      "milestone": "MLflow provides released model-lifecycle tooling; the project serves a global ecosystem.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "MLflow provides released model-lifecycle tooling; the project serves a global ecosystem."
+    },
+    {
+      "id": "US-agents-review-20261106",
+      "country": "US",
+      "capability": "agents",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "autogen",
+      "milestone": "Microsoft AutoGen releases multi-agent orchestration tooling; release does not establish reliable autonomous operation.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Microsoft AutoGen releases multi-agent orchestration tooling; release does not establish reliable autonomous operation."
+    },
+    {
+      "id": "US-applications-review-20261106",
+      "country": "US",
+      "capability": "applications",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "copilot",
+      "milestone": "Microsoft offers an operational productivity AI application; national adoption and revenue are not inferred.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Microsoft offers an operational productivity AI application; national adoption and revenue are not inferred."
+    },
+    {
+      "id": "US-embodied-review-20261106",
+      "country": "US",
+      "capability": "embodied",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "groot",
+      "milestone": "NVIDIA releases robot-policy research tools; industrial deployment scale is not established here.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 2,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA releases robot-policy research tools; industrial deployment scale is not established here."
+    },
+    {
+      "id": "US-benchmarks-review-20261106",
+      "country": "US",
+      "capability": "benchmarks",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "helm",
+      "milestone": "Stanford HELM provides a public model-evaluation framework; benchmark coverage is bounded.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Stanford HELM provides a public model-evaluation framework; benchmark coverage is bounded."
+    },
+    {
+      "id": "US-safety-review-20261106",
+      "country": "US",
+      "capability": "safety",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "helm",
+      "milestone": "HELM supports reproducible risk-relevant model evaluation; it does not certify models as safe.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "HELM supports reproducible risk-relevant model evaluation; it does not certify models as safe."
+    },
+    {
+      "id": "US-security-review-20261106",
+      "country": "US",
+      "capability": "security",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "garak",
+      "milestone": "NVIDIA garak releases AI vulnerability testing software; passing scans is not a security guarantee.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NVIDIA garak releases AI vulnerability testing software; passing scans is not a security guarantee."
+    },
+    {
+      "id": "US-research-review-20261106",
+      "country": "US",
+      "capability": "research",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "helm",
+      "milestone": "Stanford CRFM produces original evaluation research; national talent totals are not assessed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "Stanford CRFM produces original evaluation research; national talent totals are not assessed."
+    },
+    {
+      "id": "US-community-review-20261106",
+      "country": "US",
+      "capability": "community",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "pytorch",
+      "milestone": "PyTorch maintains a global public AI software community; national attribution denotes organizational origin only.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "PyTorch maintains a global public AI software community; national attribution denotes organizational origin only."
+    },
+    {
+      "id": "US-commercial-review-20261106",
+      "country": "US",
+      "capability": "commercial",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "aws",
+      "milestone": "AWS offers accelerator compute commercially; market share and profitability are not measured.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "AWS offers accelerator compute commercially; market share and profitability are not measured."
+    },
+    {
+      "id": "US-governance-review-20261106",
+      "country": "US",
+      "capability": "governance",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "nist",
+      "milestone": "NIST publishes a voluntary AI risk framework; this is not a claim that all AI regulation is covered.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NIST publishes a voluntary AI risk framework; this is not a claim that all AI regulation is covered."
+    },
+    {
+      "id": "US-standards-review-20261106",
+      "country": "US",
+      "capability": "standards",
+      "date": "2026-11-06",
+      "knownOn": "2026-11-06",
+      "evidenceAsOf": "2026-11-06",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "nist",
+      "milestone": "NIST provides published AI risk implementation guidance; international interoperability is not guaranteed.",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source statement; editorial stage, independently unquantified",
+      "technicalMaturity": 3,
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "notes": "Country attribution follows this capability definition. No supplier concentration or replacement timing has been established.",
+      "quantitativeChange": null,
+      "entities": [],
+      "stageRationale": "NIST provides published AI risk implementation guidance; international interoperability is not guaranteed."
+    }
+  ],
+  "reviews": [
+    {
+      "country": "IN",
+      "capability": "accelerator-design",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "netra"
+      ],
+      "notes": "Netrasemi reports a production-ready A2000 edge-AI design; domestic fabrication and shipment volume are unestablished here."
+    },
+    {
+      "country": "IN",
+      "capability": "logic-fab",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "hbm",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing."
+    },
+    {
+      "country": "IN",
+      "capability": "packaging",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. Conventional OSAT announcements alone do not meet the advanced AI-packaging definition."
+    },
+    {
+      "country": "IN",
+      "capability": "networking",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "power-cooling",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "cloud",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indiaai"
+      ],
+      "notes": "IndiaAI reports shared accelerator access; this establishes compute access, not Indian GPU manufacturing."
+    },
+    {
+      "country": "IN",
+      "capability": "supercomputing",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam reports training its released models on IndiaAI compute physically in India; national cluster capacity is not inferred."
+    },
+    {
+      "country": "IN",
+      "capability": "edge",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "netra"
+      ],
+      "notes": "Netrasemi offers an edge-inference chip design; customer deployment volume is not established by the company news record."
+    },
+    {
+      "country": "IN",
+      "capability": "datasets",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indiaai"
+      ],
+      "notes": "AIKosh provides a public dataset and model catalog; individual licenses still govern reuse."
+    },
+    {
+      "country": "IN",
+      "capability": "annotation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "ai4bharat"
+      ],
+      "notes": "AI4Bharat publishes data-collection and annotation tools; national annotation-market scale is unassessed."
+    },
+    {
+      "country": "IN",
+      "capability": "multilingual-data",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indicvoices"
+      ],
+      "notes": "IndicVoices-R releases a multilingual Indian speech corpus; coverage does not establish complete demographic representation."
+    },
+    {
+      "country": "IN",
+      "capability": "training",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam documents original pre-training of 30B and 105B models in India."
+    },
+    {
+      "country": "IN",
+      "capability": "reasoning",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam releases reasoning models with post-training; provider benchmark results are not a national quality ranking."
+    },
+    {
+      "country": "IN",
+      "capability": "open-weights",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam releases model weights; model licenses and training-data openness remain separate questions."
+    },
+    {
+      "country": "IN",
+      "capability": "speech",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indic"
+      ],
+      "notes": "IndicTrans2 provides released translation models covering Indian scheduled languages."
+    },
+    {
+      "country": "IN",
+      "capability": "vision",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam-models"
+      ],
+      "notes": "Sarvam catalogs vision/document models; this does not establish general image-generation capability."
+    },
+    {
+      "country": "IN",
+      "capability": "generation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "framework",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "distributed",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam describes training-system optimization; ecosystem-wide adoption of a standalone framework is not established."
+    },
+    {
+      "country": "IN",
+      "capability": "inference",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "apis",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam-models"
+      ],
+      "notes": "Sarvam provides model products through its developer platform; coming-soon models are excluded from this assessment."
+    },
+    {
+      "country": "IN",
+      "capability": "retrieval",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "mlops",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "agents",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "applications",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam"
+      ],
+      "notes": "Sarvam names operational Samvaad and Indus products; usage and revenue are unestablished here."
+    },
+    {
+      "country": "IN",
+      "capability": "embodied",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "benchmarks",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indic"
+      ],
+      "notes": "IndicTrans2 publishes evaluation procedures and benchmark data; scope is translation, not general AI safety."
+    },
+    {
+      "country": "IN",
+      "capability": "safety",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "security",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "IN",
+      "capability": "research",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "ai4bharat"
+      ],
+      "notes": "IIT Madras AI4Bharat produces original language-AI research; this is not a national talent count."
+    },
+    {
+      "country": "IN",
+      "capability": "community",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indicvoices"
+      ],
+      "notes": "AI4Bharat maintains a public speech-data project; contributors and downstream users can be international."
+    },
+    {
+      "country": "IN",
+      "capability": "commercial",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sarvam-models"
+      ],
+      "notes": "Sarvam offers operational model products; profitability and national AI-market size are unassessed."
+    },
+    {
+      "country": "IN",
+      "capability": "governance",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "india-policy"
+      ],
+      "notes": "The PSA publishes AI governance guidance; publication does not prove compliance or policy effectiveness."
+    },
+    {
+      "country": "IN",
+      "capability": "public-sector",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "indiaai"
+      ],
+      "notes": "IndiaAI operates shared compute and data services; proposed additional infrastructure is excluded."
+    },
+    {
+      "country": "IN",
+      "capability": "standards",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "india-policy"
+      ],
+      "notes": "Published governance guidance provides a public reference; technical interoperability implementation is not demonstrated here."
+    },
+    {
+      "country": "CN",
+      "capability": "accelerator-design",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "cloudmatrix"
+      ],
+      "notes": "Huawei documents Ascend 910C accelerators in a working serving system; chip-fabrication origin is a separate assessment."
+    },
+    {
+      "country": "CN",
+      "capability": "logic-fab",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "smic"
+      ],
+      "notes": "SMIC reports 14 nm production in its Chinese foundry operations; this does not establish frontier-node parity or the origin of any specific accelerator."
+    },
+    {
+      "country": "CN",
+      "capability": "hbm",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing."
+    },
+    {
+      "country": "CN",
+      "capability": "packaging",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. Conventional OSAT announcements alone do not meet the advanced AI-packaging definition."
+    },
+    {
+      "country": "CN",
+      "capability": "networking",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "cloudmatrix"
+      ],
+      "notes": "CloudMatrix384 documents an implemented multi-accelerator interconnect; this is one system, not national network capacity."
+    },
+    {
+      "country": "CN",
+      "capability": "power-cooling",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "CN",
+      "capability": "cloud",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "huawei-cloud"
+      ],
+      "notes": "Huawei offers an AI cloud service using CloudMatrix; regional access conditions require provider checks."
+    },
+    {
+      "country": "CN",
+      "capability": "supercomputing",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "cloudmatrix"
+      ],
+      "notes": "The paper describes a working 384-accelerator serving system; no national fleet size is inferred."
+    },
+    {
+      "country": "CN",
+      "capability": "edge",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "mindspore"
+      ],
+      "notes": "MindSpore supplies mobile, edge and cloud inference software; released support is distinct from deployed fleet volume."
+    },
+    {
+      "country": "CN",
+      "capability": "datasets",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "CN",
+      "capability": "annotation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "labelu"
+      ],
+      "notes": "OpenDataLab releases multimodal annotation tooling; national annotation capacity is unassessed."
+    },
+    {
+      "country": "CN",
+      "capability": "multilingual-data",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "CN",
+      "capability": "training",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "deepseek"
+      ],
+      "notes": "DeepSeek V3 documents original model pre-training and its engineering implementation."
+    },
+    {
+      "country": "CN",
+      "capability": "reasoning",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "r1"
+      ],
+      "notes": "DeepSeek R1 documents reinforcement-learning reasoning methods and released models; benchmark superiority is not assumed."
+    },
+    {
+      "country": "CN",
+      "capability": "open-weights",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "deepseek"
+      ],
+      "notes": "DeepSeek publishes downloadable model weights under stated terms; data openness must be checked independently."
+    },
+    {
+      "country": "CN",
+      "capability": "speech",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "qwen-speech"
+      ],
+      "notes": "Qwen releases speech-synthesis implementations and model weights; deployed speech-service volume is unassessed."
+    },
+    {
+      "country": "CN",
+      "capability": "vision",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "qwen-vl"
+      ],
+      "notes": "Qwen releases vision-language models; task accuracy depends on model version and evaluation conditions."
+    },
+    {
+      "country": "CN",
+      "capability": "generation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "qwen-image"
+      ],
+      "notes": "Qwen Image releases image-generation software and weights; commercial deployment scale is unestablished here."
+    },
+    {
+      "country": "CN",
+      "capability": "framework",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "paddle"
+      ],
+      "notes": "PaddlePaddle provides a released training framework originating at Baidu; international contributions remain visible separately."
+    },
+    {
+      "country": "CN",
+      "capability": "distributed",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "deepseek"
+      ],
+      "notes": "DeepSeek V3 describes distributed model-training engineering; availability of every production component is not assumed."
+    },
+    {
+      "country": "CN",
+      "capability": "inference",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "mindspore"
+      ],
+      "notes": "MindSpore supplies released inference implementations for multiple deployment environments."
+    },
+    {
+      "country": "CN",
+      "capability": "apis",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "huawei-cloud"
+      ],
+      "notes": "Huawei provides model cloud services; service availability does not imply domestic manufacturing of every input."
+    },
+    {
+      "country": "CN",
+      "capability": "retrieval",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "bge"
+      ],
+      "notes": "BAAI FlagEmbedding releases embedding and reranking implementations for retrieval."
+    },
+    {
+      "country": "CN",
+      "capability": "mlops",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "huawei-cloud"
+      ],
+      "notes": "Huawei documents model cloud lifecycle services; national enterprise adoption is not established."
+    },
+    {
+      "country": "CN",
+      "capability": "agents",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "qwen-agent"
+      ],
+      "notes": "Qwen Agent provides released tool-use and orchestration implementations; autonomous reliability is not established by release."
+    },
+    {
+      "country": "CN",
+      "capability": "applications",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "huawei-cloud"
+      ],
+      "notes": "Huawei offers industry-facing model services; provider descriptions do not establish industry-wide adoption."
+    },
+    {
+      "country": "CN",
+      "capability": "embodied",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "intern"
+      ],
+      "notes": "InternUtopia provides an embodied-AI simulation research platform; real-world fleet deployment is not established."
+    },
+    {
+      "country": "CN",
+      "capability": "benchmarks",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "opencompass"
+      ],
+      "notes": "OpenCompass supplies a public model-evaluation harness; results require model/version-specific interpretation."
+    },
+    {
+      "country": "CN",
+      "capability": "safety",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "opencompass"
+      ],
+      "notes": "OpenCompass includes safety evaluation tasks; a harness does not certify any model as safe."
+    },
+    {
+      "country": "CN",
+      "capability": "security",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "CN",
+      "capability": "research",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "r1"
+      ],
+      "notes": "DeepSeek publishes original reasoning research; this record does not estimate national researcher numbers."
+    },
+    {
+      "country": "CN",
+      "capability": "community",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "paddle"
+      ],
+      "notes": "PaddlePaddle maintains a public AI software project with a global contributor base."
+    },
+    {
+      "country": "CN",
+      "capability": "commercial",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "huawei-cloud"
+      ],
+      "notes": "Huawei sells AI cloud products; this is not a national market-size or profitability estimate."
+    },
+    {
+      "country": "CN",
+      "capability": "governance",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "cac"
+      ],
+      "notes": "CAC published generative-AI service measures in 2023; this historical instrument is not a complete current legal survey."
+    },
+    {
+      "country": "CN",
+      "capability": "public-sector",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "CN",
+      "capability": "standards",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "US",
+      "capability": "accelerator-design",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "blackwell"
+      ],
+      "notes": "NVIDIA offers Blackwell accelerator designs; US corporate origin does not establish US wafer fabrication."
+    },
+    {
+      "country": "US",
+      "capability": "logic-fab",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "tsmc"
+      ],
+      "notes": "TSMC reports N4 volume production in Arizona from Q4 2024; facility location is US, corporate origin is Taiwan."
+    },
+    {
+      "country": "US",
+      "capability": "hbm",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing."
+    },
+    {
+      "country": "US",
+      "capability": "packaging",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "intel"
+      ],
+      "notes": "Intel opened Fab 9 for advanced packaging in New Mexico; this does not prove all US AI chips are packaged domestically."
+    },
+    {
+      "country": "US",
+      "capability": "networking",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "blackwell"
+      ],
+      "notes": "NVIDIA supplies accelerator interconnect technology; manufacturing geography is not inferred from design origin."
+    },
+    {
+      "country": "US",
+      "capability": "power-cooling",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "US",
+      "capability": "cloud",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "aws"
+      ],
+      "notes": "AWS catalogs operational accelerator instances; hardware sourcing remains a separate dependency."
+    },
+    {
+      "country": "US",
+      "capability": "supercomputing",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "frontier"
+      ],
+      "notes": "Oak Ridge operates Frontier for GPU-accelerated scientific and AI workloads; this is one US facility, not total national compute."
+    },
+    {
+      "country": "US",
+      "capability": "edge",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "llama-models"
+      ],
+      "notes": "Meta releases smaller Llama models for constrained deployments; actual device fleet adoption is unassessed."
+    },
+    {
+      "country": "US",
+      "capability": "datasets",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "dolma"
+      ],
+      "notes": "Ai2 releases Dolma pre-training data and tools; component licenses and provenance require individual review."
+    },
+    {
+      "country": "US",
+      "capability": "annotation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "dolma"
+      ],
+      "notes": "Dolma supplies curation and inspection tools; this does not measure the national annotation industry."
+    },
+    {
+      "country": "US",
+      "capability": "multilingual-data",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "US",
+      "capability": "training",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "llama"
+      ],
+      "notes": "Meta documents original Llama model development; training hardware location is not inferred from company origin."
+    },
+    {
+      "country": "US",
+      "capability": "reasoning",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "nemotron"
+      ],
+      "notes": "NVIDIA documents usable Nemotron reasoning modes; comparative model quality is not inferred."
+    },
+    {
+      "country": "US",
+      "capability": "open-weights",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "llama"
+      ],
+      "notes": "Meta releases Llama weights under its model license; open weights do not mean unrestricted use."
+    },
+    {
+      "country": "US",
+      "capability": "speech",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "nemo-speech"
+      ],
+      "notes": "NVIDIA provides released speech recognition and synthesis implementations; national language coverage is not inferred."
+    },
+    {
+      "country": "US",
+      "capability": "vision",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "llama-models"
+      ],
+      "notes": "Meta releases multimodal Llama models; this is not a general vision-accuracy ranking."
+    },
+    {
+      "country": "US",
+      "capability": "generation",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "sana"
+      ],
+      "notes": "NVIDIA SANA releases generative-image research software; adoption and commercial scale are unassessed."
+    },
+    {
+      "country": "US",
+      "capability": "framework",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "pytorch"
+      ],
+      "notes": "PyTorch is an operational training framework with US organizational origins and global contributors."
+    },
+    {
+      "country": "US",
+      "capability": "distributed",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "pytorch"
+      ],
+      "notes": "PyTorch includes distributed-training implementations; framework origin does not imply exclusively domestic development."
+    },
+    {
+      "country": "US",
+      "capability": "inference",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "tensorrt"
+      ],
+      "notes": "TensorRT-LLM provides released optimized inference software; speed depends on workload and hardware."
+    },
+    {
+      "country": "US",
+      "capability": "apis",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "bedrock"
+      ],
+      "notes": "AWS Bedrock offers operational foundation-model APIs; provider origin does not determine every hosted model's origin."
+    },
+    {
+      "country": "US",
+      "capability": "retrieval",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "graphrag"
+      ],
+      "notes": "Microsoft releases GraphRAG retrieval-augmented generation software; operational adoption is unquantified."
+    },
+    {
+      "country": "US",
+      "capability": "mlops",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "mlflow"
+      ],
+      "notes": "MLflow provides released model-lifecycle tooling; the project serves a global ecosystem."
+    },
+    {
+      "country": "US",
+      "capability": "agents",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "autogen"
+      ],
+      "notes": "Microsoft AutoGen releases multi-agent orchestration tooling; release does not establish reliable autonomous operation."
+    },
+    {
+      "country": "US",
+      "capability": "applications",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "copilot"
+      ],
+      "notes": "Microsoft offers an operational productivity AI application; national adoption and revenue are not inferred."
+    },
+    {
+      "country": "US",
+      "capability": "embodied",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "groot"
+      ],
+      "notes": "NVIDIA releases robot-policy research tools; industrial deployment scale is not established here."
+    },
+    {
+      "country": "US",
+      "capability": "benchmarks",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "helm"
+      ],
+      "notes": "Stanford HELM provides a public model-evaluation framework; benchmark coverage is bounded."
+    },
+    {
+      "country": "US",
+      "capability": "safety",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "helm"
+      ],
+      "notes": "HELM supports reproducible risk-relevant model evaluation; it does not certify models as safe."
+    },
+    {
+      "country": "US",
+      "capability": "security",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "garak"
+      ],
+      "notes": "NVIDIA garak releases AI vulnerability testing software; passing scans is not a security guarantee."
+    },
+    {
+      "country": "US",
+      "capability": "research",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "helm"
+      ],
+      "notes": "Stanford CRFM produces original evaluation research; national talent totals are not assessed."
+    },
+    {
+      "country": "US",
+      "capability": "community",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "pytorch"
+      ],
+      "notes": "PyTorch maintains a global public AI software community; national attribution denotes organizational origin only."
+    },
+    {
+      "country": "US",
+      "capability": "commercial",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "aws"
+      ],
+      "notes": "AWS offers accelerator compute commercially; market share and profitability are not measured."
+    },
+    {
+      "country": "US",
+      "capability": "governance",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "nist"
+      ],
+      "notes": "NIST publishes a voluntary AI risk framework; this is not a claim that all AI regulation is covered."
+    },
+    {
+      "country": "US",
+      "capability": "public-sector",
+      "reviewedOn": "2026-11-06",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability."
+    },
+    {
+      "country": "US",
+      "capability": "standards",
+      "reviewedOn": "2026-11-06",
+      "outcome": "supported",
+      "sourceIds": [
+        "nist"
+      ],
+      "notes": "NIST provides published AI risk implementation guidance; international interoperability is not guaranteed."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "accelerator-design",
+      "name": "AI accelerator design",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "hbm",
+      "name": "HBM manufacturing",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "networking",
+      "name": "AI cluster networking",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "power-cooling",
+      "name": "AI power and cooling",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "cloud",
+      "name": "Accelerator cloud access",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "datasets",
+      "name": "Public training datasets",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "training",
+      "name": "Foundation-model training",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "open-weights",
+      "name": "Open-weight models",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "framework",
+      "name": "Training frameworks",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "distributed",
+      "name": "Distributed training",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "inference",
+      "name": "Inference runtimes",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "apis",
+      "name": "Model API services",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "retrieval",
+      "name": "Embeddings and retrieval",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "agents",
+      "name": "Agent frameworks",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "applications",
+      "name": "Deployed AI applications",
+      "type": "Illustrative AI dependency"
+    },
+    {
+      "id": "embodied",
+      "name": "Embodied AI and robotics",
+      "type": "Illustrative AI dependency"
+    }
+  ],
+  "edges": [
+    {
+      "from": "accelerator-design",
+      "to": "cloud"
+    },
+    {
+      "from": "hbm",
+      "to": "cloud"
+    },
+    {
+      "from": "networking",
+      "to": "cloud"
+    },
+    {
+      "from": "power-cooling",
+      "to": "cloud"
+    },
+    {
+      "from": "cloud",
+      "to": "training"
+    },
+    {
+      "from": "datasets",
+      "to": "training"
+    },
+    {
+      "from": "framework",
+      "to": "training"
+    },
+    {
+      "from": "distributed",
+      "to": "training"
+    },
+    {
+      "from": "training",
+      "to": "open-weights"
+    },
+    {
+      "from": "open-weights",
+      "to": "inference"
+    },
+    {
+      "from": "inference",
+      "to": "apis"
+    },
+    {
+      "from": "apis",
+      "to": "agents"
+    },
+    {
+      "from": "retrieval",
+      "to": "agents"
+    },
+    {
+      "from": "agents",
+      "to": "applications"
+    },
+    {
+      "from": "inference",
+      "to": "embodied"
+    }
+  ],
+  "stageCriteria": [
+    "0 — No qualifying evidence entered for the exact definition. Never interpret this as proof of absence.",
+    "1 — Documented research or limited demonstration; no usable release or operational service established.",
+    "2 — Research implementation, pilot, early deployment or bounded demonstration; operational scale unestablished.",
+    "3 — Released usable implementation or documented operational capability within the stated scope. This does not imply widespread adoption, frontier leadership or self-sufficiency.",
+    "4 — Primary evidence establishes repeated production/deployment at meaningful scale. A benchmark score, budget, announcement or software repository alone cannot establish this stage. No stage-4 claims are made in this baseline."
+  ],
+  "researchMethod": "Manually reviewed primary-source baseline. Software/model/IP attribution follows originating organization, with global contributions acknowledged. Physical fabrication/packaging/infrastructure require in-country operations. Compute access can rely on imported hardware. All records enter knowledge history on the review date; older publication dates are not fabricated historical assessment dates. Missing quantities and dependencies remain null/unassessed. No automated daily research or national score is claimed."
+}
