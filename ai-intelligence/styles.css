@@ -1,0 +1,17 @@
+[hidden] { display: none !important; }
+.evidence-maps { align-items: start; }
+.record-list { display: grid; gap: 12px; margin-top: 16px; }
+.record-card { display: block; width: 100%; min-height: 130px; text-align: left; padding: 14px; border: 1px solid var(--line); background: var(--panel); color: inherit; border-radius: 8px; }
+.record-card[aria-pressed="true"] { outline: 3px solid #90d7be; outline-offset: 2px; }
+.record-card strong,.record-card small { display: block; margin-bottom: 7px; }
+.record-card small { line-height: 1.5; }
+.stage-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 6px; color: #10271b; font-weight: 800; margin-right: 8px; border: 1px solid #82988b; }
+.date-unknown,.record-card small.date-unknown { color: #f6d48a; }
+.static-record { border-bottom: 1px solid var(--line); padding: 12px 0 24px; scroll-margin-top: 20px; }
+.static-record:target { outline: 2px solid #90d7be; padding: 16px; }
+#records section { margin-top: 35px; }
+#records p { max-width: 100ch; overflow-wrap: anywhere; }
+.metric { font-weight: 700; color: #b6f4d6; }
+.graph .node small { display: block; max-width: 240px; }
+.record-list button { cursor: pointer; }
+@media(max-width:700px) { .record-card { min-height: 0; } header { flex-wrap: wrap; gap: 12px; } }

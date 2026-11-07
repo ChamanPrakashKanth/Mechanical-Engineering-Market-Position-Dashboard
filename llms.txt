@@ -2,6 +2,10 @@
 
 > Free, browser-based engineering career assessment and planning tools. Mechanical engineering is covered in depth, with guides for 11 related engineering fields. Scores and benchmark comparisons are deterministic models, not hiring predictions or real applicant data.
 
+## AI intelligence evidence
+
+- [AI Intelligence Control Room](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/ai-intelligence/): Domestic-origin AI evidence for India, China and the US across 36 definitions. Static country-capability anchors such as #IN-training contain source citations, scoped quantities and date limits. Research gaps are distinct from verified absence; origin is separate from adoption. No national ranking or automatic research refresh.
+
 ## Main tools
 
 - [3D Print Hole Fit Coupon Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/3d-print-hole-fit-coupon-generator.html): Original parametric clearance ladder for measured shafts, visual preview, editable OpenSCAD download and measured-fit CSV. Browser local; no API or GPU. Print-specific results require physical measurement.

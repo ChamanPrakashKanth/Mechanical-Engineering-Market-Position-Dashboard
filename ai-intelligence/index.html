@@ -1,74 +1,789 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Intelligence Control Room | MechIntel</title>
-<meta name="description" content="Explore the complete AI stack across India, China and the United States: chips, compute, data, models, agents, safety and applications with primary-source evidence.">
+<meta name="description" content="Source-linked AI evidence across India, China and the US: domestic origin, operational records, scoped quantities and explicit research gaps across 12 layers.">
 <link rel="canonical" href="https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/ai-intelligence/">
-<link rel="stylesheet" href="../industrial/styles.css?v=20261105-colors">
-<script defer src="../industrial/core.js?v=20261105-evidence"></script>
-<script defer src="../industrial/app.js?v=20261106-ai" data-dataset="data.json?v=20261106-ai" data-capability="training" data-export-prefix="ai-intelligence"></script>
-</head>
-<body>
-<header><a href="../">MechIntel</a><span>AI INTELLIGENCE / 02</span><a href="../industrial/">Industrial intelligence ↗</a><a href="../defense-engineering-resources.html">Defense reading hub ↗</a></header>
-<main>
-<p class="eyebrow">Evidence earns the green</p>
-<h1>Global AI<br>Intelligence Control Room</h1>
-<p class="intro">Follow the AI stack from silicon to deployed applications. Compare India, China and the United States through scoped, source-linked assessments.</p>
-<p>Free access · Browser-local scenarios · India / China / United States</p>
-<p id="status" role="status">Loading evidence records…</p>
-<div id="research-summary" class="research-summary" aria-label="Evidence coverage summary"></div>
-<section class="assessment-note"><h2>12 layers · 36 capabilities · 3 countries</h2><p>Silicon → systems and facilities → compute access → data → model development → modalities → software stack → serving and retrieval → agents and applications → evaluation and safety → research and ecosystem → governance and diffusion.</p><p>Use the Domain filter to explore each layer. Numbered colors show evidence maturity within a definition. They do not compare model quality or national competitiveness.</p><p>This is a reviewed baseline dated 6 November 2026. History begins on that review date; older source publication dates are shown separately. Updates require a new reviewed evidence record. Empty evidence cells are research gaps.</p></section>
-<section class="toolbar" aria-label="Capability filters">
-<label>Search capabilities<input id="search" type="search" placeholder="Try reasoning, GPU, agents, safety"></label>
-<label>Domain<select id="domain"><option value="">All domains</option></select></label>
-<label>Country<select id="country"><option value="">Compare all three</option><option value="IN">India</option><option value="CN">China</option><option value="US">United States</option></select></label>
-<label>Evidence<select id="coverage"><option value="">All evidence states</option><option value="known">Assessed capabilities</option><option value="unknown">Insufficient evidence</option><option value="vulnerable">Material vulnerability</option></select></label>
+<link rel="stylesheet" href="../industrial/styles.css?v=20261105-colors"><link rel="stylesheet" href="styles.css?v=20261107-review">
+<script defer src="../industrial/core.js?v=20261107-review"></script><script defer src="app.js?v=20261107-review"></script>
+</head><body><header><a href="../">MechIntel</a><span>AI INTELLIGENCE / 02</span><a href="../industrial/">Industrial intelligence ↗</a><a href="../defense-engineering-resources.html">Defense reading hub ↗</a></header>
+<main><p class="eyebrow">Read the record behind the color</p><h1>Global AI<br>Intelligence Control Room</h1>
+<p class="intro">Explore evidence for domestic-origin AI across India, China and the United States. Twelve layers, 36 definitions, and clear boundaries between a released artifact, an operating service and documented scale.</p>
+<p>Free access · No account · Browser-local scenarios and exports</p>
+<div class="assessment-note"><h2>What this view measures</h2><p>Models, software and IP are attributed to the originating organization, with global contributors acknowledged. Fabrication and infrastructure require physical in-country operations. Cloud access may use imported hardware.</p><p><strong>Adoption of shared or foreign-origin tools is not assessed here.</strong> A gap in domestic-origin supply says nothing about whether a country can use PyTorch, retrieval, MLOps or other global tools. Source counts measure research coverage; they are not country scores.</p></div>
+<p id="status" role="status">Interactive view loading. All capability records and sources are available below.</p><div id="research-summary" class="research-summary" aria-label="Evidence coverage summary"></div>
+<section class="toolbar" aria-label="Capability filters"><label>Search capabilities<input id="search" type="search" placeholder="Try reasoning, fabrication, agents"></label>
+<label>Layer<select id="domain"><option value="">All 12 layers</option></select></label>
+<label>Country<select id="country"><option value="">All three</option><option value="IN">India</option><option value="CN">China</option><option value="US">United States</option></select></label>
+<label>Evidence state<select id="coverage"><option value="">All records and gaps</option><option value="supported">Documented record</option><option value="no-qualifying-record">No qualifying record entered</option><option value="not-researched">Targeted research pending</option><option value="verified-absent">Verified absent within dated scope</option></select></label></section>
+<section id="history" hidden><label>Reviewed baseline<select id="date"></select></label></section><p id="history-note">As of 6 November 2026 · Baseline only; no history yet.</p>
+<section aria-labelledby="legend-title"><h2 id="legend-title">Evidence maturity within each definition</h2><div class="legend" role="group" aria-labelledby="legend-title">
+<span class="legend-item"><i class="stage0" aria-hidden="true">?</i>Evidence gap · inspect state</span><span class="legend-item"><i class="stage1" aria-hidden="true">1</i>Research demonstration</span><span class="legend-item"><i class="stage2" aria-hidden="true">2</i>Pilot / bounded implementation</span><span class="legend-item"><i class="stage3" aria-hidden="true">3</i>Usable artifact or operation · see type</span><span class="legend-item"><i class="stage4" aria-hidden="true">4</i>Documented repeated scale</span></div>
+<p>Stage 3 alone does not establish production scale. Cards distinguish record types and show sourced quantities where available. Quantities refer to named systems or models, not national totals. Different units and scopes cannot be ranked against each other.</p><p>◷ Publication more than 180 days old · <strong>Date unknown</strong> means freshness cannot be determined. Access dates never substitute for publication dates.</p>
+<p>Gap states: <strong>No qualifying record entered</strong> means a limited source check found no entered record; <strong>Targeted research pending</strong> means that search was not completed. <strong>Verified absent</strong> requires explicit dated evidence and scope. No verified-absence claims are made in this baseline.</p></section>
+<section id="maps" class="maps evidence-maps" aria-label="Country evidence records"></section>
+<section id="detail" class="detail" aria-live="polite" aria-labelledby="detail-title"><h2 id="detail-title">Select a capability record</h2><p>Read the static records below while the interactive view loads.</p></section>
+<section class="sandbox"><p class="eyebrow">Hypothetical workspace</p><h2>AI dependency sandbox</h2><p>The graph describes selected technical relationships, including fabrication and packaging. Country labels show the selected country's <em>origin evidence</em>, not supply availability. Unknown origin evidence never breaks a dependency chain or proves resilience.</p>
+<div class="controls"><label>Country evidence overlay<select id="scenario-country"><option value="IN">India</option><option value="CN">China</option><option value="US">United States</option></select></label><label>Disrupt input<select id="disrupt"><option value="">No disruption</option></select></label><label>Dependency view<select id="network"><option value="full">Full network</option><option value="one">One direct input to selected capability</option><option value="two">Up to two direct inputs to selected capability</option></select></label><label><input id="alternative" type="checkbox">Assume an immediate, complete substitute for disrupted input</label><button id="reset">Reset scenario</button><button id="share">Copy record / scenario URL</button></div><p id="scenario" role="status"></p><div id="graph" class="graph"></div><p>Propagation is structural and assumes disruption wherever the input is used. This is not a country-specific loss forecast. Supplier exposure, inventory and replacement time require additional evidence.</p></section>
+<section><h2>Notable documented records</h2><p>These call attention to specific evidence without claiming a national first or changing its stage.</p><div id="notable"><a href="#IN-training">Sarvam 105B training and release in India</a></div></section>
+<section><h2>Stage criteria</h2><ol id="criteria"><li>A release alone cannot establish repeated scale. Read record type, quantity and scope together.</li></ol></section>
+<section><h2>Take the evidence with you</h2><div class="controls"><button id="json">Export filtered JSON</button><button id="csv">Export filtered CSV</button></div><p>Exports preserve gap states, source dates, provenance, quantities and scope. Baseline records enter knowledge history on the review date; publication dates do not backdate assessments.</p></section>
+<section id="records"><h2>All capability records and citations</h2><p>Static HTML records work without JavaScript. Each country-capability heading has a permanent anchor for citation. Sources may report a vendor's statement without independently verifying it; that distinction is retained.</p><details><summary>Browse 36 definitions and all three countries</summary><section><h3>AI accelerator design</h3><p>Organization-origin accelerator IP; does not establish fabrication location.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-accelerator-design"><h4>India / AI accelerator design</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>A2000 silicon is in engineering-sample/customer evaluation, not commercial volume production. Design origin is India; fabrication is TSMC overseas.</p>
+<p>12 nm — Contract fabrication process. A2000 manufactured by TSMC overseas; not an Indian fab</p>
+<p>Original external interview confirms engineering samples and evaluation; statements remain vendor-attributed, not a factory audit.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.netrasemi.com/news">Netrasemi company news</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<p><a href="https://www.eetimes.com/netrasemi-brings-up-a2000-ai-chip-begins-customer-evaluation-phase/">EE Times: original Netrasemi interview</a> — Independent reporting / original vendor interview; publication: 2026-06-04; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=accelerator-design#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-accelerator-design"><h4>China / AI accelerator design</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Huawei documents Ascend 910C accelerators in a working serving system; chip-fabrication origin is a separate assessment.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://arxiv.org/abs/2506.12708">Huawei CloudMatrix384 engineering paper</a> — Primary source; publication: 2025-06-15; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=accelerator-design#detail">Open interactive record</a></article>
+<article class="static-record" id="US-accelerator-design"><h4>United States / AI accelerator design</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA offers Blackwell accelerator designs; US corporate origin does not establish US wafer fabrication.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/">NVIDIA Blackwell architecture</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=accelerator-design#detail">Open interactive record</a></article>
 </section>
-<section class="timeline" aria-labelledby="time-title">
-<h2 id="time-title">AI evidence history</h2>
-<div class="controls">
-<label>As known on<input type="date" id="date"></label>
-<label>Window<select id="window"><option value="30">30 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365" selected>365 days</option></select></label>
-<button id="play">Play</button><button id="pause">Pause</button><button id="replay">Replay</button>
-<label>Speed<select id="speed"><option value="500">1×</option><option value="200">2×</option><option value="70">5×</option></select></label>
-</div>
-<input id="scrub" type="range" aria-label="Historical day">
-<p id="time-caption"></p>
+<section><h3>Advanced logic fabrication</h3><p>Operating wafer fabrication at 16 nm class or below, physically inside the country.</p><p>Physical operation in country</p>
+<article class="static-record" id="IN-logic-fab"><h4>India / Advanced logic fabrication</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=IN&amp;capability=logic-fab#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-logic-fab"><h4>China / Advanced logic fabrication</h4>
+<p>Stage 3 — Documented operation / service</p><p>SMIC reports 14 nm production in its Chinese foundry operations; this does not establish frontier-node parity or the origin of any specific accelerator.</p>
+<p>14 nm class — Documented operating process. SMIC 2019 filing; not a claim to the best current Chinese node</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2019/1212/2019121200789.pdf">SMIC 2019 Hong Kong Exchange filing</a> — Primary source; publication: 2019-12-12; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=logic-fab#detail">Open interactive record</a></article>
+<article class="static-record" id="US-logic-fab"><h4>United States / Advanced logic fabrication</h4>
+<p>Stage 3 — Documented operation / service</p><p>TSMC reports N4 volume production in Arizona from Q4 2024; facility location is US, corporate origin is Taiwan.</p>
+<p>4 nm class — Documented operating process. TSMC Arizona N4; not a claim to the best US node</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://investor.tsmc.com/static/annualReports/2024/english/index.html">TSMC 2024 annual report</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=logic-fab#detail">Open interactive record</a></article>
 </section>
-<h2 id="legend-title">Capability colors</h2>
-<div class="legend" role="group" aria-labelledby="legend-title">
-    <span class="legend-item"><i class="stage0" aria-hidden="true">0</i>Insufficient evidence</span>
-    <span class="legend-item"><i class="stage1" aria-hidden="true">1</i>Research / limited demonstration</span>
-    <span class="legend-item"><i class="stage2" aria-hidden="true">2</i>Pilot / early deployment</span>
-    <span class="legend-item"><i class="stage3" aria-hidden="true">3</i>Released / operational capability</span>
-    <span class="legend-item"><i class="stage4" aria-hidden="true">4</i>Documented repeated scale</span>
-</div>
-<p>Each dot displays its stage number, 0–4. Select a dot to read the source, scope and reason for that stage.</p>
-<p class="legend-notes">Amber outline · verified vulnerability &nbsp; ◷ · evidence over 180 days old</p>
-<section id="maps" class="maps" aria-label="Country capability maps"></section>
-<section id="detail" class="detail" aria-live="polite" aria-labelledby="detail-title"><h2 id="detail-title">Select a capability</h2><p>Tap a dot or use Tab and Enter to open its evidence and dependency branches.</p></section>
-<section aria-labelledby="sandbox-title" class="sandbox">
-<p class="eyebrow">Hypothetical workspace</p><h2 id="sandbox-title">AI dependency sandbox</h2>
-<p>This illustrative AI dependency graph applies equally to all three countries. Edges show selected technical relationships, not measured national dependencies. Imported hardware access is separate from domestic chip manufacturing.</p>
-<div class="controls">
-<label>Disrupt input or process<select id="disrupt"><option value="">No disruption</option></select></label>
-<label><input id="alternative" type="checkbox">Assume an available alternative for this node</label>
-<label><input id="domestic" type="checkbox">Assume a domestic substitute fully replaces this node</label>
-<button id="reset">Reset scenario</button><button id="share">Copy scenario URL</button>
-</div>
-<label>Dependency view<select id="network"><option value="full">Full network</option><option value="two">Two-body · one direct input</option><option value="three">Three-body · up to two direct inputs</option></select></label>
-<p id="scenario" role="status"></p><div id="graph" class="graph"></div>
-<p>Arrows run from input to dependent process. Disruption propagates downstream until an assumed substitute blocks it. Outcomes show technical exposure only. Replacement is assumed immediate and complete for this experiment. The two-body and three-body views are dependency metaphors.</p>
+<section><h3>HBM manufacturing</h3><p>Physical domestic fabrication and stacking of high-bandwidth memory; headquarters alone do not qualify.</p><p>Physical operation in country</p>
+<article class="static-record" id="IN-hbm"><h4>India / HBM manufacturing</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=IN&amp;capability=hbm#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-hbm"><h4>China / HBM manufacturing</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=CN&amp;capability=hbm#detail">Open interactive record</a></article>
+<article class="static-record" id="US-hbm"><h4>United States / HBM manufacturing</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. A company headquarters or overseas HBM output does not establish domestic HBM manufacturing.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=US&amp;capability=hbm#detail">Open interactive record</a></article>
 </section>
-<section><h2>Capability records</h2><p>Technical milestones and research reviews have separate record types. An evidence review expands coverage and does not establish that capability improved on the review date.</p><div id="commits"></div></section>
-<section aria-labelledby="research-title">
-<h2 id="research-title">Evidence coverage and assessment rules</h2>
-<p>Stage assignments are editorial assessments within each exact definition. Models, software and IP follow the originating organization; contributors may be global. Fabrication, packaging and physical infrastructure require in-country operations. Access to imported GPUs does not establish domestic manufacturing. No overall country score is calculated.</p>
-<details><summary>How the five stages are assigned</summary><ol id="criteria" class="criteria-list"></ol></details>
-<details><summary>Review every country and capability</summary><p>The audit table follows the selected date, country and topic filters.</p><div id="audit" class="comparison audit" role="region" aria-label="Research coverage audit" tabindex="0"></div></details>
+<section><h3>Advanced AI packaging</h3><p>Domestic 2.5D/3D semiconductor integration; conventional assembly alone does not qualify.</p><p>Physical operation in country</p>
+<article class="static-record" id="IN-packaging"><h4>India / Advanced AI packaging</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. Conventional OSAT announcements alone do not meet the advanced AI-packaging definition.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=IN&amp;capability=packaging#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-packaging"><h4>China / Advanced AI packaging</h4>
+<p>No qualifying record entered</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability. Conventional OSAT announcements alone do not meet the advanced AI-packaging definition.</p>
+<p>Review: 2026-11-06. Limited source check; not an exhaustive absence determination</p>
+<a href="?selectedCountry=CN&amp;capability=packaging#detail">Open interactive record</a></article>
+<article class="static-record" id="US-packaging"><h4>United States / Advanced AI packaging</h4>
+<p>Stage 3 — Documented operation / service</p><p>Intel opened Fab 9 for advanced packaging in New Mexico; this does not prove all US AI chips are packaged domestically.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://download.intel.com/newsroom/archive/2025/en-us-2024-01-24-intel-opens-fab-9-in-new-mexico.pdf">Intel opens Fab 9 in New Mexico</a> — Primary source; publication: 2024-01-24; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=packaging#detail">Open interactive record</a></article>
 </section>
-<section><h2>Take the evidence with you</h2><div class="controls"><button id="json">Export view as JSON</button><button id="csv">Export view as CSV</button></div><p>Exports reflect the selected date and filters. The version-controlled event log reconstructs daily states without duplicating daily records.</p></section>
-</main><footer>MechIntel · AI capability evidence · Free access · Original editorial assessments · <a href="data.json">Dataset</a> · <a href="../">Career and learning tools</a></footer>
-</body></html>
+<section><h3>AI cluster networking</h3><p>Locally developed high-speed accelerator interconnect systems.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-networking"><h4>India / AI cluster networking</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=networking#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-networking"><h4>China / AI cluster networking</h4>
+<p>Stage 3 — Released artifact / published research</p><p>CloudMatrix384 documents an implemented multi-accelerator interconnect; this is one system, not national network capacity.</p>
+<p>384 NPUs — Interconnected system size. One CloudMatrix384 configuration; not national network capacity</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://arxiv.org/abs/2506.12708">Huawei CloudMatrix384 engineering paper</a> — Primary source; publication: 2025-06-15; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=networking#detail">Open interactive record</a></article>
+<article class="static-record" id="US-networking"><h4>United States / AI cluster networking</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA supplies accelerator interconnect technology; manufacturing geography is not inferred from design origin.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/">NVIDIA Blackwell architecture</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=networking#detail">Open interactive record</a></article>
+</section>
+<section><h3>AI power and cooling</h3><p>Documented domestic operation of AI-specific power and liquid-cooling infrastructure.</p><p>Physical operation in country</p>
+<article class="static-record" id="IN-power-cooling"><h4>India / AI power and cooling</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=power-cooling#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-power-cooling"><h4>China / AI power and cooling</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=power-cooling#detail">Open interactive record</a></article>
+<article class="static-record" id="US-power-cooling"><h4>United States / AI power and cooling</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=US&amp;capability=power-cooling#detail">Open interactive record</a></article>
+</section>
+<section><h3>Accelerator cloud access</h3><p>Operational accelerator compute services accessible through a national ecosystem; imported GPUs may qualify for access only.</p><p>Access through ecosystem; hardware origin separate</p>
+<article class="static-record" id="IN-cloud"><h4>India / Accelerator cloud access</h4>
+<p>Stage 3 — Documented operation / service</p><p>IndiaAI reports shared accelerator access; this establishes compute access, not Indian GPU manufacturing.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.pib.gov.in/FactsheetDetails.aspx?Id=150860&amp;lang=3&amp;reg=3">PIB: IndiaAI compute and data coverage</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=cloud#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-cloud"><h4>China / Accelerator cloud access</h4>
+<p>Stage 3 — Documented operation / service</p><p>Huawei offers an AI cloud service using CloudMatrix; regional access conditions require provider checks.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html">Huawei: Pangu and AI cloud service</a> — Primary source; publication: 2025-06-20; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=cloud#detail">Open interactive record</a></article>
+<article class="static-record" id="US-cloud"><h4>United States / Accelerator cloud access</h4>
+<p>Stage 3 — Documented operation / service</p><p>AWS catalogs operational accelerator instances; hardware sourcing remains a separate dependency.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://docs.aws.amazon.com/ec2/latest/instancetypes/ac.html">AWS accelerator instance specifications</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=cloud#detail">Open interactive record</a></article>
+</section>
+<section><h3>Large-scale AI computing</h3><p>Documented multi-accelerator training or serving operation; budgets and proposed clusters do not qualify.</p><p>Physical operation in country</p>
+<article class="static-record" id="IN-supercomputing"><h4>India / Large-scale AI computing</h4>
+<p>Stage 3 — Documented operation / service</p><p>Sarvam reports training its released models on IndiaAI compute physically in India; national cluster capacity is not inferred.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>External release reporting added; training-location claims are attributed to Sarvam, not independently audited.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<p><a href="https://indianexpress.com/article/technology/artificial-intelligence/sarvam-releases-open-weight-models-ai-summit-deepseek-gemini-10571340/">Indian Express: Sarvam release reporting</a> — Independent reporting; training claims attributed to vendor; publication: 2026-03-10; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=supercomputing#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-supercomputing"><h4>China / Large-scale AI computing</h4>
+<p>Stage 3 — Documented operation / service</p><p>The paper describes a working 384-accelerator serving system; no national fleet size is inferred.</p>
+<p>384 NPUs — Disclosed system size. One CloudMatrix384 configuration; not national installed compute</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://arxiv.org/abs/2506.12708">Huawei CloudMatrix384 engineering paper</a> — Primary source; publication: 2025-06-15; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=supercomputing#detail">Open interactive record</a></article>
+<article class="static-record" id="US-supercomputing"><h4>United States / Large-scale AI computing</h4>
+<p>Stage 3 — Documented operation / service</p><p>Oak Ridge operates Frontier for GPU-accelerated scientific and AI workloads; this is one US facility, not total national compute.</p>
+<p>4 MI250X packages / node — Per-node accelerator configuration. Frontier; each package contains two compute dies. Not a national GPU total</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.olcf.ornl.gov/frontier/">Oak Ridge: Frontier system</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<p><a href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html">OLCF Frontier user guide</a> — Primary source; publication: date not recorded; accessed: 2026-11-07</p>
+<a href="?selectedCountry=US&amp;capability=supercomputing#detail">Open interactive record</a></article>
+</section>
+<section><h3>Edge AI deployment stack</h3><p>Locally developed software or chips supporting device-side inference; release is distinct from fleet adoption.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-edge"><h4>India / Edge AI deployment stack</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>A2000 silicon is in engineering-sample/customer evaluation, not commercial volume production. Design origin is India; fabrication is TSMC overseas.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Original external interview confirms engineering samples and evaluation; statements remain vendor-attributed, not a factory audit.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.netrasemi.com/news">Netrasemi company news</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<p><a href="https://www.eetimes.com/netrasemi-brings-up-a2000-ai-chip-begins-customer-evaluation-phase/">EE Times: original Netrasemi interview</a> — Independent reporting / original vendor interview; publication: 2026-06-04; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=edge#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-edge"><h4>China / Edge AI deployment stack</h4>
+<p>Stage 3 — Released artifact / published research</p><p>MindSpore supplies mobile, edge and cloud inference software; released support is distinct from deployed fleet volume.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/mindspore-ai/mindspore">Huawei MindSpore</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=edge#detail">Open interactive record</a></article>
+<article class="static-record" id="US-edge"><h4>United States / Edge AI deployment stack</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Meta releases smaller Llama models for constrained deployments; actual device fleet adoption is unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/meta-llama/llama-models">Meta Llama models</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=edge#detail">Open interactive record</a></article>
+</section>
+<section><h3>Public training datasets</h3><p>Locally originated, released datasets for AI training, with access and license scope checked separately.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-datasets"><h4>India / Public training datasets</h4>
+<p>Stage 3 — Released artifact / published research</p><p>AIKosh provides a public dataset and model catalog; individual licenses still govern reuse.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.pib.gov.in/FactsheetDetails.aspx?Id=150860&amp;lang=3&amp;reg=3">PIB: IndiaAI compute and data coverage</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=datasets#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-datasets"><h4>China / Public training datasets</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=datasets#detail">Open interactive record</a></article>
+<article class="static-record" id="US-datasets"><h4>United States / Public training datasets</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Ai2 releases Dolma pre-training data and tools; component licenses and provenance require individual review.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/allenai/dolma">Allen Institute for AI: Dolma</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=datasets#detail">Open interactive record</a></article>
+</section>
+<section><h3>Annotation and curation tools</h3><p>Locally originated tools for collecting, labeling or curating AI datasets.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-annotation"><h4>India / Annotation and curation tools</h4>
+<p>Stage 3 — Released artifact / published research</p><p>AI4Bharat publishes data-collection and annotation tools; national annotation-market scale is unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://ai4bharat.iitm.ac.in/">IIT Madras AI4Bharat</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=annotation#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-annotation"><h4>China / Annotation and curation tools</h4>
+<p>Stage 3 — Released artifact / published research</p><p>OpenDataLab releases multimodal annotation tooling; national annotation capacity is unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/opendatalab/LabelU">OpenDataLab LabelU</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=annotation#detail">Open interactive record</a></article>
+<article class="static-record" id="US-annotation"><h4>United States / Annotation and curation tools</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Dolma supplies curation and inspection tools; this does not measure the national annotation industry.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/allenai/dolma">Allen Institute for AI: Dolma</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=annotation#detail">Open interactive record</a></article>
+</section>
+<section><h3>Multilingual corpora</h3><p>Locally originated language datasets spanning multiple languages; not a claim to ownership of those languages.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-multilingual-data"><h4>India / Multilingual corpora</h4>
+<p>Stage 3 — Released artifact / published research</p><p>IndicVoices-R releases a multilingual Indian speech corpus; coverage does not establish complete demographic representation.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/AI4Bharat/IndicVoices-R">AI4Bharat IndicVoices-R</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=multilingual-data#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-multilingual-data"><h4>China / Multilingual corpora</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=multilingual-data#detail">Open interactive record</a></article>
+<article class="static-record" id="US-multilingual-data"><h4>United States / Multilingual corpora</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=US&amp;capability=multilingual-data#detail">Open interactive record</a></article>
+</section>
+<section><h3>Foundation-model training</h3><p>Documented original pre-training by organizations originating in the country; fine-tuning alone is insufficient.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-training"><h4>India / Foundation-model training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Sarvam documents original pre-training of 30B and 105B models in India.</p>
+<p>105 billion parameters — Released model size. Sarvam 105B total parameters; not compute capacity or national model total</p>
+<p>External release reporting added; training-location claims are attributed to Sarvam, not independently audited.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<p><a href="https://indianexpress.com/article/technology/artificial-intelligence/sarvam-releases-open-weight-models-ai-summit-deepseek-gemini-10571340/">Indian Express: Sarvam release reporting</a> — Independent reporting; training claims attributed to vendor; publication: 2026-03-10; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=training#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-training"><h4>China / Foundation-model training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>DeepSeek V3 documents original model pre-training and its engineering implementation.</p>
+<p>671 billion total parameters — Released model size. DeepSeek V3 main MoE model; 37B activated per token. Excludes MTP weights; not a quality or national ranking</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3">DeepSeek V3 model and systems report</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=training#detail">Open interactive record</a></article>
+<article class="static-record" id="US-training"><h4>United States / Foundation-model training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Meta documents original Llama model development; training hardware location is not inferred from company origin.</p>
+<p>70 billion parameters — Documented release size. Original Llama 3 70B release; not the largest US model or a quality ranking</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/meta-llama/llama3">Meta Llama 3</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=training#detail">Open interactive record</a></article>
+</section>
+<section><h3>Reasoning and post-training</h3><p>Released reasoning models or documented reinforcement-learning/post-training research.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-reasoning"><h4>India / Reasoning and post-training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Sarvam releases reasoning models with post-training; provider benchmark results are not a national quality ranking.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>External release reporting added; training-location claims are attributed to Sarvam, not independently audited. Independent evaluator lists the model; no benchmark score is promoted to a national ranking.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<p><a href="https://indianexpress.com/article/technology/artificial-intelligence/sarvam-releases-open-weight-models-ai-summit-deepseek-gemini-10571340/">Indian Express: Sarvam release reporting</a> — Independent reporting; training claims attributed to vendor; publication: 2026-03-10; accessed: 2026-11-07</p>
+<p><a href="https://artificialanalysis.ai/models/sarvam-105b">Artificial Analysis: Sarvam 105B evaluation</a> — Independent evaluator; model/version-specific, not a training audit; publication: date not recorded; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=reasoning#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-reasoning"><h4>China / Reasoning and post-training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>DeepSeek R1 documents reinforcement-learning reasoning methods and released models; benchmark superiority is not assumed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://arxiv.org/abs/2501.12948">DeepSeek R1 technical paper</a> — Primary source; publication: 2025-01-22; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=reasoning#detail">Open interactive record</a></article>
+<article class="static-record" id="US-reasoning"><h4>United States / Reasoning and post-training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA documents usable Nemotron reasoning modes; comparative model quality is not inferred.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://docs.nvidia.com/rag/latest/enable-nemotron-thinking.html">NVIDIA reasoning implementation guidance</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=reasoning#detail">Open interactive record</a></article>
+</section>
+<section><h3>Open-weight models</h3><p>Downloadable model weights; open weights do not imply unrestricted licenses or fully open training data.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-open-weights"><h4>India / Open-weight models</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Sarvam releases model weights; model licenses and training-data openness remain separate questions.</p>
+<p>105 billion parameters — Released model size. Sarvam 105B, not an adoption count</p>
+<p>External release reporting added; training-location claims are attributed to Sarvam, not independently audited. Independent evaluator lists the model; no benchmark score is promoted to a national ranking.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<p><a href="https://indianexpress.com/article/technology/artificial-intelligence/sarvam-releases-open-weight-models-ai-summit-deepseek-gemini-10571340/">Indian Express: Sarvam release reporting</a> — Independent reporting; training claims attributed to vendor; publication: 2026-03-10; accessed: 2026-11-07</p>
+<p><a href="https://artificialanalysis.ai/models/sarvam-105b">Artificial Analysis: Sarvam 105B evaluation</a> — Independent evaluator; model/version-specific, not a training audit; publication: date not recorded; accessed: 2026-11-07</p>
+<a href="?selectedCountry=IN&amp;capability=open-weights#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-open-weights"><h4>China / Open-weight models</h4>
+<p>Stage 3 — Released artifact / published research</p><p>DeepSeek publishes downloadable model weights under stated terms; data openness must be checked independently.</p>
+<p>671 billion total parameters — Released model size. DeepSeek V3 main MoE model; not an adoption count or dense-model equivalent</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3">DeepSeek V3 model and systems report</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=open-weights#detail">Open interactive record</a></article>
+<article class="static-record" id="US-open-weights"><h4>United States / Open-weight models</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Meta releases Llama weights under its model license; open weights do not mean unrestricted use.</p>
+<p>70 billion parameters — Documented release size. Original Llama 3 70B release; license terms apply; not an adoption count</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/meta-llama/llama3">Meta Llama 3</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=open-weights#detail">Open interactive record</a></article>
+</section>
+<section><h3>Speech and translation</h3><p>Locally originated speech recognition, synthesis or multilingual translation models.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-speech"><h4>India / Speech and translation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>IndicTrans2 provides released translation models covering Indian scheduled languages.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/AI4Bharat/IndicTrans2">AI4Bharat IndicTrans2</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=speech#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-speech"><h4>China / Speech and translation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Qwen releases speech-synthesis implementations and model weights; deployed speech-service volume is unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/QwenLM/Qwen3-TTS">Alibaba Qwen3 TTS</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=speech#detail">Open interactive record</a></article>
+<article class="static-record" id="US-speech"><h4>United States / Speech and translation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA provides released speech recognition and synthesis implementations; national language coverage is not inferred.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/NVIDIA-NeMo/Speech">NVIDIA NeMo Speech</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=speech#detail">Open interactive record</a></article>
+</section>
+<section><h3>Vision and multimodal AI</h3><p>Locally originated released vision-language or document-understanding models.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-vision"><h4>India / Vision and multimodal AI</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Sarvam catalogs vision/document models; this does not establish general image-generation capability.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/models">Sarvam model catalog</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=vision#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-vision"><h4>China / Vision and multimodal AI</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Qwen releases vision-language models; task accuracy depends on model version and evaluation conditions.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/QwenLM/Qwen3-VL">Alibaba Qwen vision-language models</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=vision#detail">Open interactive record</a></article>
+<article class="static-record" id="US-vision"><h4>United States / Vision and multimodal AI</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Meta releases multimodal Llama models; this is not a general vision-accuracy ranking.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/meta-llama/llama-models">Meta Llama models</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=vision#detail">Open interactive record</a></article>
+</section>
+<section><h3>Image and video generation</h3><p>Locally originated generative image/video model releases; recognition alone does not qualify.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-generation"><h4>India / Image and video generation</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=generation#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-generation"><h4>China / Image and video generation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Qwen Image releases image-generation software and weights; commercial deployment scale is unestablished here.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/QwenLM/Qwen-Image">Alibaba Qwen Image</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=generation#detail">Open interactive record</a></article>
+<article class="static-record" id="US-generation"><h4>United States / Image and video generation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA SANA releases generative-image research software; adoption and commercial scale are unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/NVlabs/Sana">NVIDIA SANA</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=generation#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin training frameworks</h3><p>Locally originated general training frameworks; global contributors and foreign adoption remain separate.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-framework"><h4>India / Domestic-origin training frameworks</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=framework#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-framework"><h4>China / Domestic-origin training frameworks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>PaddlePaddle provides a released training framework originating at Baidu; international contributions remain visible separately.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/PaddlePaddle/Paddle">Baidu PaddlePaddle</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=framework#detail">Open interactive record</a></article>
+<article class="static-record" id="US-framework"><h4>United States / Domestic-origin training frameworks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>PyTorch is an operational training framework with US organizational origins and global contributors.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/pytorch/pytorch">PyTorch framework</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=framework#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin distributed training</h3><p>Documented multi-device training software or original training-system engineering.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-distributed"><h4>India / Domestic-origin distributed training</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>Sarvam describes training-system optimization; ecosystem-wide adoption of a standalone framework is not established.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=distributed#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-distributed"><h4>China / Domestic-origin distributed training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>DeepSeek V3 describes distributed model-training engineering; availability of every production component is not assumed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3">DeepSeek V3 model and systems report</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=distributed#detail">Open interactive record</a></article>
+<article class="static-record" id="US-distributed"><h4>United States / Domestic-origin distributed training</h4>
+<p>Stage 3 — Released artifact / published research</p><p>PyTorch includes distributed-training implementations; framework origin does not imply exclusively domestic development.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/pytorch/pytorch">PyTorch framework</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=distributed#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin inference runtimes</h3><p>Locally originated runtime, kernel or serving optimization implementations.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-inference"><h4>India / Domestic-origin inference runtimes</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=inference#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-inference"><h4>China / Domestic-origin inference runtimes</h4>
+<p>Stage 3 — Released artifact / published research</p><p>MindSpore supplies released inference implementations for multiple deployment environments.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/mindspore-ai/mindspore">Huawei MindSpore</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=inference#detail">Open interactive record</a></article>
+<article class="static-record" id="US-inference"><h4>United States / Domestic-origin inference runtimes</h4>
+<p>Stage 3 — Released artifact / published research</p><p>TensorRT-LLM provides released optimized inference software; speed depends on workload and hardware.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/NVIDIA/TensorRT-LLM">NVIDIA TensorRT-LLM</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=inference#detail">Open interactive record</a></article>
+</section>
+<section><h3>Model API services</h3><p>Operational model-serving APIs from locally originated providers; underlying hardware origin is separate.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-apis"><h4>India / Model API services</h4>
+<p>Stage 3 — Documented operation / service</p><p>Sarvam provides model products through its developer platform; coming-soon models are excluded from this assessment.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/models">Sarvam model catalog</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=apis#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-apis"><h4>China / Model API services</h4>
+<p>Stage 3 — Documented operation / service</p><p>Huawei provides model cloud services; service availability does not imply domestic manufacturing of every input.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html">Huawei: Pangu and AI cloud service</a> — Primary source; publication: 2025-06-20; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=apis#detail">Open interactive record</a></article>
+<article class="static-record" id="US-apis"><h4>United States / Model API services</h4>
+<p>Stage 3 — Documented operation / service</p><p>AWS Bedrock offers operational foundation-model APIs; provider origin does not determine every hosted model&#x27;s origin.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html">AWS Bedrock overview</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=apis#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin embeddings and retrieval</h3><p>Locally originated embedding, ranking or retrieval software/models for RAG.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-retrieval"><h4>India / Domestic-origin embeddings and retrieval</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=retrieval#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-retrieval"><h4>China / Domestic-origin embeddings and retrieval</h4>
+<p>Stage 3 — Released artifact / published research</p><p>BAAI FlagEmbedding releases embedding and reranking implementations for retrieval.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/FlagOpen/FlagEmbedding">BAAI FlagEmbedding</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=retrieval#detail">Open interactive record</a></article>
+<article class="static-record" id="US-retrieval"><h4>United States / Domestic-origin embeddings and retrieval</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Microsoft releases GraphRAG retrieval-augmented generation software; operational adoption is unquantified.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/microsoft/graphrag">Microsoft GraphRAG</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=retrieval#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin mlops and observability</h3><p>Locally originated tools for model lifecycle tracking, evaluation, monitoring or deployment operations.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-mlops"><h4>India / Domestic-origin mlops and observability</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=mlops#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-mlops"><h4>China / Domestic-origin mlops and observability</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Huawei documents model cloud lifecycle services; national enterprise adoption is not established.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html">Huawei: Pangu and AI cloud service</a> — Primary source; publication: 2025-06-20; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=mlops#detail">Open interactive record</a></article>
+<article class="static-record" id="US-mlops"><h4>United States / Domestic-origin mlops and observability</h4>
+<p>Stage 3 — Released artifact / published research</p><p>MLflow provides released model-lifecycle tooling; the project serves a global ecosystem.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/mlflow/mlflow">MLflow project</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=mlops#detail">Open interactive record</a></article>
+</section>
+<section><h3>Domestic-origin agent frameworks</h3><p>Locally originated released agent orchestration or tool-use implementations; not proof of autonomous reliability.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-agents"><h4>India / Domestic-origin agent frameworks</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=agents#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-agents"><h4>China / Domestic-origin agent frameworks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Qwen Agent provides released tool-use and orchestration implementations; autonomous reliability is not established by release.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/QwenLM/Qwen-Agent">Alibaba Qwen Agent</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=agents#detail">Open interactive record</a></article>
+<article class="static-record" id="US-agents"><h4>United States / Domestic-origin agent frameworks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Microsoft AutoGen releases multi-agent orchestration tooling; release does not establish reliable autonomous operation.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=agents#detail">Open interactive record</a></article>
+</section>
+<section><h3>Deployed AI applications</h3><p>Named operational AI products; no inference about national adoption or commercial success.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-applications"><h4>India / Deployed AI applications</h4>
+<p>Stage 3 — Documented operation / service</p><p>Sarvam names operational Samvaad and Indus products; usage and revenue are unestablished here.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/blogs/sarvam-30b-105b">Sarvam: 30B and 105B release</a> — Primary source; publication: 2026-03-06; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=applications#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-applications"><h4>China / Deployed AI applications</h4>
+<p>Stage 3 — Documented operation / service</p><p>Huawei offers industry-facing model services; provider descriptions do not establish industry-wide adoption.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html">Huawei: Pangu and AI cloud service</a> — Primary source; publication: 2025-06-20; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=applications#detail">Open interactive record</a></article>
+<article class="static-record" id="US-applications"><h4>United States / Deployed AI applications</h4>
+<p>Stage 3 — Documented operation / service</p><p>Microsoft offers an operational productivity AI application; national adoption and revenue are not inferred.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.microsoft.com/en-us/microsoft-365-copilot">Microsoft 365 Copilot product</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=applications#detail">Open interactive record</a></article>
+</section>
+<section><h3>Embodied AI and robotics</h3><p>Released AI robot-policy or embodied-simulation systems; demonstration is distinct from industrial fleet deployment.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-embodied"><h4>India / Embodied AI and robotics</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=embodied#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-embodied"><h4>China / Embodied AI and robotics</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>InternUtopia provides an embodied-AI simulation research platform; real-world fleet deployment is not established.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/InternRobotics/InternUtopia">InternUtopia embodied simulation</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=embodied#detail">Open interactive record</a></article>
+<article class="static-record" id="US-embodied"><h4>United States / Embodied AI and robotics</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>NVIDIA releases robot-policy research tools; industrial deployment scale is not established here.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/NVIDIA/Isaac-GR00T">NVIDIA Isaac GR00T</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=embodied#detail">Open interactive record</a></article>
+</section>
+<section><h3>Evaluation benchmarks</h3><p>Locally originated public evaluation suites, datasets or reproducible harnesses.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-benchmarks"><h4>India / Evaluation benchmarks</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>IndicTrans2 publishes evaluation procedures and benchmark data; scope is translation, not general AI safety.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/AI4Bharat/IndicTrans2">AI4Bharat IndicTrans2</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=benchmarks#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-benchmarks"><h4>China / Evaluation benchmarks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>OpenCompass supplies a public model-evaluation harness; results require model/version-specific interpretation.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/open-compass/opencompass">OpenCompass evaluation platform</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=benchmarks#detail">Open interactive record</a></article>
+<article class="static-record" id="US-benchmarks"><h4>United States / Evaluation benchmarks</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Stanford HELM provides a public model-evaluation framework; benchmark coverage is bounded.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/stanford-crfm/helm">Stanford CRFM HELM</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=benchmarks#detail">Open interactive record</a></article>
+</section>
+<section><h3>Safety evaluation</h3><p>Published technical risk-testing methods or implementation; policy alone does not establish test execution.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-safety"><h4>India / Safety evaluation</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=safety#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-safety"><h4>China / Safety evaluation</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>OpenCompass includes safety evaluation tasks; a harness does not certify any model as safe.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/open-compass/opencompass">OpenCompass evaluation platform</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=safety#detail">Open interactive record</a></article>
+<article class="static-record" id="US-safety"><h4>United States / Safety evaluation</h4>
+<p>Stage 3 — Released artifact / published research</p><p>HELM supports reproducible risk-relevant model evaluation; it does not certify models as safe.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/stanford-crfm/helm">Stanford CRFM HELM</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=safety#detail">Open interactive record</a></article>
+</section>
+<section><h3>AI security tooling</h3><p>Released tools specifically testing AI vulnerabilities; general cybersecurity does not qualify.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-security"><h4>India / AI security tooling</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=IN&amp;capability=security#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-security"><h4>China / AI security tooling</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=security#detail">Open interactive record</a></article>
+<article class="static-record" id="US-security"><h4>United States / AI security tooling</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NVIDIA garak releases AI vulnerability testing software; passing scans is not a security guarantee.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/NVIDIA/garak">NVIDIA garak</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=security#detail">Open interactive record</a></article>
+</section>
+<section><h3>Research institutions and talent</h3><p>Named institutions producing original AI research; not a national workforce estimate.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-research"><h4>India / Research institutions and talent</h4>
+<p>Stage 3 — Released artifact / published research</p><p>IIT Madras AI4Bharat produces original language-AI research; this is not a national talent count.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://ai4bharat.iitm.ac.in/">IIT Madras AI4Bharat</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=research#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-research"><h4>China / Research institutions and talent</h4>
+<p>Stage 3 — Released artifact / published research</p><p>DeepSeek publishes original reasoning research; this record does not estimate national researcher numbers.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://arxiv.org/abs/2501.12948">DeepSeek R1 technical paper</a> — Primary source; publication: 2025-01-22; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=research#detail">Open interactive record</a></article>
+<article class="static-record" id="US-research"><h4>United States / Research institutions and talent</h4>
+<p>Stage 3 — Released artifact / published research</p><p>Stanford CRFM produces original evaluation research; national talent totals are not assessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/stanford-crfm/helm">Stanford CRFM HELM</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=research#detail">Open interactive record</a></article>
+</section>
+<section><h3>Open-source AI community</h3><p>Public locally originated AI projects; international contributions do not imply exclusive national ownership.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-community"><h4>India / Open-source AI community</h4>
+<p>Stage 3 — Released artifact / published research</p><p>AI4Bharat maintains a public speech-data project; contributors and downstream users can be international.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/AI4Bharat/IndicVoices-R">AI4Bharat IndicVoices-R</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=community#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-community"><h4>China / Open-source AI community</h4>
+<p>Stage 3 — Released artifact / published research</p><p>PaddlePaddle maintains a public AI software project with a global contributor base.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/PaddlePaddle/Paddle">Baidu PaddlePaddle</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=community#detail">Open interactive record</a></article>
+<article class="static-record" id="US-community"><h4>United States / Open-source AI community</h4>
+<p>Stage 3 — Released artifact / published research</p><p>PyTorch maintains a global public AI software community; national attribution denotes organizational origin only.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://github.com/pytorch/pytorch">PyTorch framework</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=community#detail">Open interactive record</a></article>
+</section>
+<section><h3>AI commercialization</h3><p>Operational AI product providers; financing announcements alone do not establish sales or profitability.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-commercial"><h4>India / AI commercialization</h4>
+<p>Stage 3 — Documented operation / service</p><p>Sarvam offers operational model products; profitability and national AI-market size are unassessed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.sarvam.ai/models">Sarvam model catalog</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=commercial#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-commercial"><h4>China / AI commercialization</h4>
+<p>Stage 3 — Documented operation / service</p><p>Huawei sells AI cloud products; this is not a national market-size or profitability estimate.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.huaweicloud.com/intl/en-us/news/20250620192415143.html">Huawei: Pangu and AI cloud service</a> — Primary source; publication: 2025-06-20; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=commercial#detail">Open interactive record</a></article>
+<article class="static-record" id="US-commercial"><h4>United States / AI commercialization</h4>
+<p>Stage 3 — Documented operation / service</p><p>AWS offers accelerator compute commercially; market share and profitability are not measured.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://docs.aws.amazon.com/ec2/latest/instancetypes/ac.html">AWS accelerator instance specifications</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=commercial#detail">Open interactive record</a></article>
+</section>
+<section><h3>Published AI governance</h3><p>Published governmental AI governance instruments; maturity measures publication, not policy quality or compliance.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-governance"><h4>India / Published AI governance</h4>
+<p>Stage 3 — Released artifact / published research</p><p>The PSA publishes AI governance guidance; publication does not prove compliance or policy effectiveness.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.psa.gov.in/ai-mission">Principal Scientific Adviser: AI mission and governance</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=governance#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-governance"><h4>China / Published AI governance</h4>
+<p>Stage 3 — Released artifact / published research</p><p>CAC published generative-AI service measures in 2023; this historical instrument is not a complete current legal survey.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm">CAC: 2023 generative AI service measures</a> — Primary source; publication: 2023-07-13; accessed: 2026-11-06</p>
+<a href="?selectedCountry=CN&amp;capability=governance#detail">Open interactive record</a></article>
+<article class="static-record" id="US-governance"><h4>United States / Published AI governance</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NIST publishes a voluntary AI risk framework; this is not a claim that all AI regulation is covered.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=governance#detail">Open interactive record</a></article>
+</section>
+<section><h3>Public-sector AI deployment</h3><p>Named operational publicly supported AI service; a planned mission alone does not qualify.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-public-sector"><h4>India / Public-sector AI deployment</h4>
+<p>Stage 3 — Documented operation / service</p><p>IndiaAI operates shared compute and data services; proposed additional infrastructure is excluded.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.pib.gov.in/FactsheetDetails.aspx?Id=150860&amp;lang=3&amp;reg=3">PIB: IndiaAI compute and data coverage</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=public-sector#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-public-sector"><h4>China / Public-sector AI deployment</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=public-sector#detail">Open interactive record</a></article>
+<article class="static-record" id="US-public-sector"><h4>United States / Public-sector AI deployment</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=US&amp;capability=public-sector#detail">Open interactive record</a></article>
+</section>
+<section><h3>AI standards and interoperability</h3><p>Published public technical frameworks or implementation guidance; not a completeness assessment of national standards.</p><p>Domestic-origin supply / organization origin; global contributions acknowledged</p>
+<article class="static-record" id="IN-standards"><h4>India / AI standards and interoperability</h4>
+<p>Stage 2 — Pilot / bounded research implementation</p><p>Published governance guidance provides a public reference; technical interoperability implementation is not demonstrated here.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.psa.gov.in/ai-mission">Principal Scientific Adviser: AI mission and governance</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=IN&amp;capability=standards#detail">Open interactive record</a></article>
+<article class="static-record" id="CN-standards"><h4>China / AI standards and interoperability</h4>
+<p>Targeted research pending</p><p>No qualifying primary-source record entered for this definition in this baseline. This is an evidence gap, not evidence of absence or a claim that the country lacks the capability.</p>
+<p>Review: 2026-11-06. Targeted research not completed</p>
+<a href="?selectedCountry=CN&amp;capability=standards#detail">Open interactive record</a></article>
+<article class="static-record" id="US-standards"><h4>United States / AI standards and interoperability</h4>
+<p>Stage 3 — Released artifact / published research</p><p>NIST provides published AI risk implementation guidance; international interoperability is not guaranteed.</p>
+<p>Quantity not established for this record; no estimate substituted.</p>
+<p>Single primary source; no independent corroboration entered for this claim.</p>
+<p>Review: 2026-11-06. baseline source pass; not an exhaustive country search</p>
+<p><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> — Primary source; publication: date not recorded; accessed: 2026-11-06</p>
+<a href="?selectedCountry=US&amp;capability=standards#detail">Open interactive record</a></article>
+</section></details></section>
+</main><footer>MechIntel · Free access · <a href="data.json">Dataset</a> · <a href="../">Career and learning tools</a></footer></body></html>
