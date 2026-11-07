@@ -1,0 +1,15 @@
+.country .dots{display:grid;grid-template-columns:1fr;gap:12px}
+.dot.evidence-card{display:block;width:100%;height:auto;min-height:125px;background:var(--panel);color:var(--text,#e7eff3);padding:14px;text-align:left;border:1px solid var(--line);border-radius:8px;font:inherit}
+.evidence-card strong,.evidence-card small{display:block;line-height:1.55;margin-bottom:7px}
+.evidence-card small{font-size:13px}
+.evidence-card .stage-badge{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:6px;margin-right:8px;color:#10271b}
+.evidence-card .stage-badge.stage4{color:#fff}
+.evidence-card .stage-number{position:static}
+.date-unknown,.evidence-card small.date-unknown{color:#f6d48a}
+.static-record{border-bottom:1px solid var(--line);padding:16px 0;scroll-margin-top:20px}
+.static-record:target{outline:2px solid #90d7be;padding:16px}
+.static-record p{overflow-wrap:anywhere}
+.breadcrumbs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.chain-flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:20px 0}
+.chain-flow a,.chain-flow span{padding:12px;border:1px solid var(--line);border-radius:6px}
+@media(max-width:700px){header{flex-wrap:wrap;gap:12px}}

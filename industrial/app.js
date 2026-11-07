@@ -6,7 +6,7 @@
     const escape = value => String(value ?? "Not established").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
     let data;
     try {
-        const response = await fetch(config.dataset || "data.json?v=20261105-evidence");
+        const response = await fetch(config.dataset || "data.json?v=20261107-industrial");
         if (!response.ok) throw Error("Dataset could not be loaded");
         data = await response.json();
         core.validate(data);
@@ -72,6 +72,9 @@
                 definition: capability.definition,
                 stageLabel: stages[state.stage],
                 reviewNotes: (data.reviews || []).find(review => review.country === country.id && review.capability === capability.id && review.reviewedOn <= $("date").value)?.notes || null,
+                publicationDate: data.evidence.find(source => source.id === state.source)?.published || null,
+                publicationUnknown: data.evidence.find(source => source.id === state.source)?.publishedUnknown ?? null,
+                accessedOn: data.evidence.find(source => source.id === state.source)?.accessedOn || null,
                 sourceUrl: data.evidence.find(source => source.id === state.source)?.url || null
             };
         }).filter(matches));
@@ -79,6 +82,11 @@
     function sourceLink(event) {
         const source = data.evidence.find(source => source.id === event.source);
         return source ? '<a href="' + escape(source.url) + '" target="_blank" rel="noopener noreferrer">' + escape(source.title) + "</a>" : "No verified source in this view";
+    }
+    function publicationText(source) {
+        if (!source) return "No publication record";
+        if (source.publishedUnknown) return "Publication date not recorded; freshness undetermined";
+        return "Publication " + (source.publishedIsUpperBound ? "on or before " : "") + source.published;
     }
     function renderDetail() {
         const capability = data.capabilities.find(capability => capability.id === selected.capability);
@@ -94,6 +102,7 @@
             <p class="eyebrow">${escape(country.name + " / " + capability.domain)}</p>
             <h2 id="detail-title">${escape(capability.name)}</h2>
             <p>${escape(capability.definition)}</p>
+            <p><a href="capabilities/${escape(capability.id)}.html">Permanent capability page and country citations</a> · <a href="../supply-chain-intelligence/">Explore supply-chain intelligence</a></p>
             <p class="assessment-note"><strong>Stage ${state.stage} · ${escape(stages[state.stage])}</strong><br>
             ${escape(state.stageRationale || review?.notes || "No additional stage rationale in this historical record.")}
             ${state.kind === "evidence review" ? "<br>Research coverage assessment. The record date does not mark a new deployment or a new technical achievement." : ""}</p>
@@ -112,7 +121,7 @@
                 <div class="branch">
                     <h3>What Is Running</h3>
                     <p>${escape(state.milestone || "No verified operating milestone recorded as of this date.")}</p>
-                    <p>Verified capacity — ${escape(state.capacity)}<br>
+                    <p>Source-reported measure — ${escape(state.capacity)}<br>
                     Documented scale — ${escape(state.industrialScale)}</p>
                     <p>${sourceLink(state)}</p>
                     <div class="graph">
@@ -120,9 +129,11 @@
                     </div>
                     <p>Record date — ${escape(state.date)}<br>
                     Knowledge date — ${escape(state.knownOn)}<br>
-                    Source observation bound — ${escape(state.evidenceAsOf || source?.published)}<br>
+                    ${escape(publicationText(source))}<br>
+                    Source accessed — ${escape(source?.accessedOn || "Not recorded")}<br>
                     Date basis — ${escape(source?.dateBasis || "Dated source")}
-                    ${state.stale ? "<br>◷ Evidence needs a freshness review" : ""}</p>
+                    ${state.stale ? "<br>◷ Publication over 180 days old; current operation needs review" : ""}</p>
+                    <p>${escape(state.corroboration || "Source-reported evidence; independent corroboration not entered.")}</p>
                 </div>
                 <div class="branch">
                     <h3>Where It Is Stuck</h3>
@@ -135,7 +146,7 @@
                     <p>Illustrative process relationships. Connected company and programme nodes above follow the selected evidence record.</p>
                 </div>
                 <div class="branch">
-                    <h3>The Two Clocks</h3>
+                    <h3>Unassessed recovery timing</h3>
                     <p>Disruption impact time — unknown<br>Capability replacement time — unknown</p>
                     <p>Timing requires inventory, qualification and supplier evidence.</p>
                 </div>
@@ -187,7 +198,7 @@
         $("audit").innerHTML = '<table><thead><tr><th scope="col">Country / capability</th><th scope="col">Stage</th><th scope="col">Reason and source</th><th scope="col">Source observation</th></tr></thead><tbody>' + currentRows.map(row => {
             const review = (data.reviews || []).find(item => item.country === row.country && item.capability === row.id && item.reviewedOn <= $("date").value);
             const source = data.evidence.find(item => item.id === row.source);
-            return '<tr><th scope="row">' + escape(row.countryName + " / " + row.name) + '</th><td>' + row.stage + " · " + escape(stages[row.stage]) + '</td><td>' + escape(row.stageRationale || review?.notes || "Existing historical source record.") + '<div class="review-link">' + sourceLink(row) + '</div></td><td>' + escape(row.evidenceAsOf || source?.published || "Unestablished") + '<br>' + escape(source?.dateBasis || "") + '</td></tr>';
+            return '<tr><th scope="row">' + escape(row.countryName + " / " + row.name) + '</th><td>' + row.stage + " · " + escape(stages[row.stage]) + '</td><td>' + escape(row.stageRationale || review?.notes || "Existing historical source record.") + '<div class="review-link">' + sourceLink(row) + '</div></td><td>' + escape(publicationText(source)) + '<br>Accessed ' + escape(source?.accessedOn || "Not recorded") + '<br>' + escape(source?.dateBasis || "") + '</td></tr>';
         }).join("") + "</tbody></table>";
     }
     function renderScenario() {
@@ -226,7 +237,7 @@
             const states = view().map(capability => ({ capability, state: core.assessment(data, country.id, capability.id, date) })).filter(item => matches(item.state));
             return '<article class="country"><h2>' + escape(country.name) + '</h2><small>' + states.filter(item => item.state.stage > 0).length + ' assessed / ' + states.length + ' visible definitions</small><div class="dots">' + states.map(({ capability, state }) => {
                 const label = country.name + " · " + capability.name + " · Stage " + state.stage + " · " + stages[state.stage] + (state.stale ? " · stale evidence" : "");
-                return '<button class="dot stage' + state.stage + (state.dependencies.some(dependency => dependency.materialVulnerability) ? " vulnerable" : "") + '" data-country="' + country.id + '" data-capability="' + capability.id + '" aria-label="' + escape(label) + '" title="' + escape(label) + '" aria-pressed="' + (country.id === selected.country && capability.id === selected.capability) + '">' + '<span class="stage-number">' + state.stage + '</span>' + (state.stale ? '<span class="stale-marker" aria-hidden="true">◷</span>' : "") + '</button>';
+                return '<button class="dot stage' + state.stage + (state.dependencies.some(dependency => dependency.materialVulnerability) ? " vulnerable" : "") + ' evidence-card" data-country="' + country.id + '" data-capability="' + capability.id + '" aria-label="' + escape(label) + '" title="' + escape(label) + '" aria-pressed="' + (country.id === selected.country && capability.id === selected.capability) + '">' + '<strong><span class="stage-badge stage' + state.stage + '"><span class="stage-number">' + state.stage + '</span></span>' + escape(capability.name) + '</strong><small>' + escape(state.recordType || (state.stage ? 'Source-reported manufacturing record' : 'No qualifying record entered; not verified absent')) + '</small><small>' + escape(state.capacity || state.industrialScale || 'Quantity not established') + '</small><small class="' + (state.publicationUnknown ? 'date-unknown' : '') + '">' + escape(!state.stage ? 'No supporting publication entered' : state.publicationUnknown ? 'Publication date unknown · freshness undetermined' : state.stale ? '◷ Publication over 180 days old' : 'Read publication scope and date below') + '</small>' + '</button>';
             }).join("") + '</div>' + (!states.length ? "<p>No capabilities match these filters.</p>" : "") + "</article>";
         }).join("");
         if (visibleRows.length) renderDetail();
@@ -312,7 +323,7 @@
         download((config.exportPrefix || "industrial-view") + "-" + $("date").value + ".json", JSON.stringify({ date: $("date").value, assessments, evidence: data.evidence.filter(source => sourceIds.has(source.id)) }, null, 2), "application/json");
     };
     $("csv").onclick = () => {
-        const columns = ["country", "id", "name", "domain", "definition", "stage", "stageLabel", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "evidenceAsOf", "kind", "stageRationale", "reviewNotes", "source", "sourceUrl"];
+        const columns = ["country", "id", "name", "domain", "definition", "stage", "stageLabel", "confidence", "capacity", "valueAdd", "diversification", "importConcentration", "industrialScale", "date", "knownOn", "evidenceAsOf", "kind", "stageRationale", "reviewNotes", "source", "sourceUrl", "publicationDate", "publicationUnknown", "accessedOn", "recordType", "corroboration"];
         const cell = value => '"' + String(value ?? "").replace(/"/g, '""').replace(/^[=+@-]/, "'$&") + '"';
         const content = [columns.join(","), ...rows().map(row => columns.map(column => cell(row[column])).join(","))].join("\r\n");
         download((config.exportPrefix || "industrial-view") + "-" + $("date").value + ".csv", content, "text/csv");

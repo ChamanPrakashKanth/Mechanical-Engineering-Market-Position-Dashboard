@@ -1,0 +1,630 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-07",
+  "industrialAssessmentAsOf": "2026-11-05",
+  "scope": "Curated process intelligence with manufacturing-evidence overlays; no live trade feed or loss forecast.",
+  "sources": [
+    {
+      "id": "nist-chips",
+      "title": "NIST: photoresist and lithography metrology",
+      "url": "https://www.nist.gov/programs-projects/advanced-metrology-enable-next-generation-euv-photoresists",
+      "published": null,
+      "summary": "NIST describes resist chemistry and lithography metrology as semiconductor-manufacturing research topics.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "doe-battery",
+      "title": "DOE: battery critical materials workshop report",
+      "url": "https://www.energy.gov/sites/default/files/2022-01/Battery%20Critical%20Materials%20Workshop%20Report%20-%20FINAL.pdf",
+      "published": null,
+      "summary": "The workshop maps material processing, cathodes, cells, packs and downstream applications; it does not establish current supplier contracts.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "iea-solar",
+      "title": "IEA: Solar PV Global Supply Chains",
+      "url": "https://www.iea.org/reports/solar-pv-global-supply-chains",
+      "published": "2022-07-07",
+      "summary": "The report separates polysilicon, ingots, wafers, solar cells and modules. Module manufacturing alone does not establish upstream independence.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": false,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "doe-grid",
+      "title": "DOE: electric-grid supply-chain report",
+      "url": "https://www.energy.gov/policy/articles/supply-chain-crisis-facing-nations-electric-grid",
+      "published": "2022-12-12",
+      "summary": "DOE documents historical transformer supply constraints. These 2022 findings are context, not a live shortage or lead-time forecast.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": false,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "howmet",
+      "title": "Howmet: engine-product manufacturing locations",
+      "url": "https://www.howmet.com/engine-products/",
+      "published": null,
+      "summary": "Manufacturer location and product listings provide casting and engine-component examples; no buyer-supplier contract is inferred.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "fda",
+      "title": "FDA: drug shortages and manufacturing disruptions",
+      "url": "https://www.fda.gov/drugs/drug-safety-and-availability/drug-shortages",
+      "published": null,
+      "summary": "FDA identifies manufacturing, quality, delays and discontinuation among shortage causes. Product-specific current status belongs in the official database.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "nabtesco",
+      "title": "Nabtesco: precision reduction gears and actuators",
+      "url": "https://precision.nabtesco.com/en/products/",
+      "published": null,
+      "summary": "The product catalog links reduction gears, servo motors and actuator assemblies; country-specific sourcing is not established.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "bfw",
+      "title": "BFW: vertical machining centres",
+      "url": "https://bfwindia.com/products/vertical-machines",
+      "published": null,
+      "summary": "The machining-centre catalog is manufacturer evidence of an offered product family, not an audit of imported components.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    },
+    {
+      "id": "iea-minerals",
+      "title": "IEA: Global Critical Minerals Outlook 2026",
+      "url": "https://www.iea.org/reports/global-critical-minerals-outlook-2026/executive-summary",
+      "published": null,
+      "summary": "The 2026 outlook discusses concentration, diversification and supply disruptions across mineral stages. Mining and refining require separate assessments.",
+      "accessedOn": "2026-11-07",
+      "publishedUnknown": true,
+      "kind": "Primary institutional or manufacturer context"
+    }
+  ],
+  "chains": [
+    {
+      "id": "semiconductors",
+      "name": "Semiconductor supply chain",
+      "summary": "Photoresists, process gases and lithography feed wafer processing, followed by assembly and test. Process geography, equipment IP and packaging capability are separate questions.",
+      "nodes": [
+        {
+          "id": "photoresist",
+          "name": "Electronic photoresists",
+          "capability": "photoresist"
+        },
+        {
+          "id": "process-gases",
+          "name": "High-purity process gases",
+          "capability": "process-gases"
+        },
+        {
+          "id": "lithography",
+          "name": "Lithography equipment",
+          "capability": "lithography"
+        },
+        {
+          "id": "wafer-fab",
+          "name": "Logic wafer fabrication",
+          "capability": "wafer-fab"
+        },
+        {
+          "id": "osat",
+          "name": "Chip assembly and test",
+          "capability": "osat"
+        },
+        {
+          "id": "electronics",
+          "name": "Automotive electronics",
+          "capability": "electronics"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "photoresist",
+          "toNode": "wafer-fab",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nist-chips"
+          ]
+        },
+        {
+          "fromNode": "process-gases",
+          "toNode": "wafer-fab",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nist-chips"
+          ]
+        },
+        {
+          "fromNode": "lithography",
+          "toNode": "wafer-fab",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nist-chips"
+          ]
+        },
+        {
+          "fromNode": "wafer-fab",
+          "toNode": "osat",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nist-chips"
+          ]
+        },
+        {
+          "fromNode": "osat",
+          "toNode": "electronics",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nist-chips"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "nist-chips"
+      ],
+      "question": "Which semiconductor steps need separate evidence?",
+      "answer": "Wafer fabrication, equipment production, chemical inputs and packaging each need their own facility and source records. A domestic assembly plant does not prove domestic wafer or tool supply.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "batteries",
+      "name": "Battery materials and cell supply chain",
+      "summary": "Follow material processing through cathodes, cells, packs and applications. National cell production does not reveal the origin of cathode feedstocks.",
+      "nodes": [
+        {
+          "id": "mineral-refining",
+          "name": "Mineral refining",
+          "capability": null
+        },
+        {
+          "id": "cathodes",
+          "name": "Cathode materials",
+          "capability": "cathodes"
+        },
+        {
+          "id": "cells",
+          "name": "Battery cells",
+          "capability": "cells"
+        },
+        {
+          "id": "battery-packs",
+          "name": "Battery packs",
+          "capability": null
+        },
+        {
+          "id": "powertrain",
+          "name": "Vehicle powertrains",
+          "capability": "powertrain"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "mineral-refining",
+          "toNode": "cathodes",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-battery",
+            "iea-minerals"
+          ]
+        },
+        {
+          "fromNode": "cathodes",
+          "toNode": "cells",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-battery",
+            "iea-minerals"
+          ]
+        },
+        {
+          "fromNode": "cells",
+          "toNode": "battery-packs",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-battery",
+            "iea-minerals"
+          ]
+        },
+        {
+          "fromNode": "battery-packs",
+          "toNode": "powertrain",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-battery",
+            "iea-minerals"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "doe-battery",
+        "iea-minerals"
+      ],
+      "question": "Does battery-cell production establish material independence?",
+      "answer": "No. Cell manufacturing and upstream extraction, refining and active-material production are different stages. Chemistry and product qualification affect substitutability.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "solar",
+      "name": "Solar PV supply chain",
+      "summary": "Separate polysilicon, ingots, wafers, solar cells and module assembly. Solar cells are not battery cells.",
+      "nodes": [
+        {
+          "id": "polysilicon",
+          "name": "Polysilicon",
+          "capability": null
+        },
+        {
+          "id": "solar-ingots",
+          "name": "Solar ingots",
+          "capability": null
+        },
+        {
+          "id": "solar-wafers",
+          "name": "Solar wafers",
+          "capability": null
+        },
+        {
+          "id": "solar-cells",
+          "name": "Solar cells (PV)",
+          "capability": null
+        },
+        {
+          "id": "solar",
+          "name": "Solar modules",
+          "capability": "solar"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "polysilicon",
+          "toNode": "solar-ingots",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "iea-solar"
+          ]
+        },
+        {
+          "fromNode": "solar-ingots",
+          "toNode": "solar-wafers",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "iea-solar"
+          ]
+        },
+        {
+          "fromNode": "solar-wafers",
+          "toNode": "solar-cells",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "iea-solar"
+          ]
+        },
+        {
+          "fromNode": "solar-cells",
+          "toNode": "solar",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "iea-solar"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "iea-solar"
+      ],
+      "question": "Does module capacity establish a fully domestic solar chain?",
+      "answer": "No. Module nameplate capacity does not establish domestic polysilicon, wafer or solar-cell supply, nor does it equal actual output.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "grid-transformers",
+      "name": "Grid-transformer supply chain",
+      "summary": "Examine electrical-steel and conductor inputs, transformer manufacture and installation. Historical shortage reports are not current delivery quotations.",
+      "nodes": [
+        {
+          "id": "steel",
+          "name": "Specialty steel",
+          "capability": "steel"
+        },
+        {
+          "id": "conductors",
+          "name": "Electrical conductors",
+          "capability": null
+        },
+        {
+          "id": "grid",
+          "name": "Grid transformers",
+          "capability": "grid"
+        },
+        {
+          "id": "grid-installation",
+          "name": "Grid installation",
+          "capability": null
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "steel",
+          "toNode": "grid",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-grid"
+          ]
+        },
+        {
+          "fromNode": "conductors",
+          "toNode": "grid",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-grid"
+          ]
+        },
+        {
+          "fromNode": "grid",
+          "toNode": "grid-installation",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "doe-grid"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "doe-grid"
+      ],
+      "question": "Can this view estimate transformer delivery time?",
+      "answer": "No. Product rating, core material, winding design, plant order book and qualification evidence are required. The cited DOE report describes a historical period.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "aerospace",
+      "name": "Aerospace hot-section supply chain",
+      "summary": "Connect alloy production, casting and hot-section manufacture as a process model. A certified component, a development blade and a complete engine are different scopes.",
+      "nodes": [
+        {
+          "id": "superalloys",
+          "name": "Nickel superalloys",
+          "capability": "superalloys"
+        },
+        {
+          "id": "casting",
+          "name": "Precision casting",
+          "capability": "casting"
+        },
+        {
+          "id": "turbines",
+          "name": "Aero-engine hot sections",
+          "capability": "turbines"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "superalloys",
+          "toNode": "casting",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "howmet"
+          ]
+        },
+        {
+          "fromNode": "casting",
+          "toNode": "turbines",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "howmet"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "howmet"
+      ],
+      "question": "Does hot-section evidence establish a complete domestic engine?",
+      "answer": "No. Material processing, casting, coatings, machining, testing, certification and complete-engine integration need separate evidence. The model includes only selected interfaces.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "pharmaceuticals",
+      "name": "Pharmaceutical manufacturing supply chain",
+      "summary": "Separate active ingredients, dosage-form production and quality release. Biologics follow a different process and are shown as a separate input pathway.",
+      "nodes": [
+        {
+          "id": "api",
+          "name": "Active pharmaceutical ingredients",
+          "capability": "api"
+        },
+        {
+          "id": "biologics",
+          "name": "Biologics production",
+          "capability": "biologics"
+        },
+        {
+          "id": "finished-dose",
+          "name": "Finished-dose manufacture",
+          "capability": null
+        },
+        {
+          "id": "quality-release",
+          "name": "Product quality release",
+          "capability": null
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "api",
+          "toNode": "finished-dose",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "fda"
+          ]
+        },
+        {
+          "fromNode": "biologics",
+          "toNode": "finished-dose",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "fda"
+          ]
+        },
+        {
+          "fromNode": "finished-dose",
+          "toNode": "quality-release",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "fda"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "fda"
+      ],
+      "question": "Does an API facility establish drug availability?",
+      "answer": "No. API manufacturing evidence does not establish finished-dose capacity, product approval, quality release, inventory or current availability. Consult the official product-specific shortage database for current status.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "robotics",
+      "name": "Industrial robotics supply chain",
+      "summary": "Examine precision reduction gears, electronics and robot-system integration. Integration capability does not establish domestic component sourcing.",
+      "nodes": [
+        {
+          "id": "reducers",
+          "name": "Precision robot reducers",
+          "capability": "reducers"
+        },
+        {
+          "id": "electronics",
+          "name": "Automotive electronics",
+          "capability": "electronics"
+        },
+        {
+          "id": "robots",
+          "name": "Industrial robot integration",
+          "capability": "robots"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "reducers",
+          "toNode": "robots",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nabtesco"
+          ]
+        },
+        {
+          "fromNode": "electronics",
+          "toNode": "robots",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "nabtesco"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "nabtesco"
+      ],
+      "question": "Does robot integration establish domestic reducer production?",
+      "answer": "No. System integration and manufacture of reducers, drives and electronics are separate capabilities. A product catalog is not a country-level bill of materials.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    },
+    {
+      "id": "machine-tools",
+      "name": "CNC machine-tool supply chain",
+      "summary": "Relate spindles and dimensional qualification to machining-centre manufacture. Qualification links describe engineering interfaces rather than material consumption.",
+      "nodes": [
+        {
+          "id": "spindles",
+          "name": "Precision spindles",
+          "capability": "spindles"
+        },
+        {
+          "id": "metrology",
+          "name": "Dimensional metrology",
+          "capability": "metrology"
+        },
+        {
+          "id": "cnc",
+          "name": "CNC machine tools",
+          "capability": "cnc"
+        }
+      ],
+      "edges": [
+        {
+          "fromNode": "spindles",
+          "toNode": "cnc",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "bfw"
+          ]
+        },
+        {
+          "fromNode": "metrology",
+          "toNode": "cnc",
+          "basis": "Illustrative engineering/process relationship; not a verified commercial supply contract",
+          "sourceIds": [
+            "bfw"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "bfw"
+      ],
+      "question": "Does a domestic CNC product prove domestic inputs?",
+      "answer": "No. Spindles, controls, metrology and other inputs need their own sourcing evidence. The process model does not establish import shares or supplier interchangeability.",
+      "unknowns": [
+        "Supplier and country import concentration",
+        "Approved substitutes and qualification duration",
+        "Inventory, actual throughput and recovery time",
+        "Verified transaction-level buyer-supplier links"
+      ]
+    }
+  ]
+}

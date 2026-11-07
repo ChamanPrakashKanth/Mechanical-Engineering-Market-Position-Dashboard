@@ -314,6 +314,10 @@ for cap in caps:
         records.append('<a href="?selectedCountry='+country['id']+'&amp;capability='+cap['id']+'#detail">Open interactive record</a></article>')
     records.append('</section>')
 template=(out/'template.html').read_text(encoding='utf-8')
+from intelligence_common import capability_pages, metadata
+_,directory=capability_pages(data,'ai-intelligence')
+template=template.replace('<!-- CAPABILITY_DIRECTORY -->',directory)
+template=template.replace('<!-- SEO_METADATA -->',metadata('AI Intelligence Control Room | MechIntel','Domestic-origin AI evidence across India, China and the US, with scoped quantities, source dates and explicit research gaps in 36 definitions.','ai-intelligence/index.html',[('Home',''),('AI intelligence','ai-intelligence/')],'ai-intelligence/data.json'))
 (out/'index.html').write_text(template.replace('<!-- STATIC_RECORDS -->','\n'.join(records)),encoding='utf-8')
 
 (out/'data.json').write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')

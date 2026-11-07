@@ -39,12 +39,15 @@ jobs:
           npm run build --prefix fieldnotes-app
           npm test --prefix fieldnotes-app
 
+      - name: Generate source-linked intelligence pages
+        run: python3 scripts/generate-intelligence.py
+
       - name: Validate JavaScript
         run: |
           node --check app.js
           node --check shared/mechintel-core.js
           node --check analytics.js
-          node --test tests/analytics.test.cjs tests/industrial.test.cjs tests/industrial-ui.test.cjs tests/ai-intelligence.test.cjs
+          node --test tests/analytics.test.cjs tests/industrial.test.cjs tests/industrial-ui.test.cjs tests/ai-intelligence.test.cjs tests/intelligence-publishing.test.cjs
 
       - name: Verify local MCP server and agent skill
         run: |
@@ -69,6 +72,7 @@ jobs:
           cp -r answerlens _site/answerlens
           cp -r industrial _site/industrial
           cp -r ai-intelligence _site/ai-intelligence
+          cp -r supply-chain-intelligence _site/supply-chain-intelligence
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs

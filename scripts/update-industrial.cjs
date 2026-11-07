@@ -8,7 +8,7 @@ const date = args[0];
 if (!/^\d{4}-\d{2}-\d{2}$/.test(date || "") || !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0, 10) !== date || date > new Date().toISOString().slice(0, 10)) {
     throw Error("Usage: node scripts/update-industrial.cjs YYYY-MM-DD [reviewed-batch.json]. Date must be a real, non-future review date.");
 }
-const file = path.join(root, "data.json");
+const file = path.join(root, fs.existsSync(path.join(root, "reviewed-records.json")) ? "reviewed-records.json" : "data.json");
 const original = fs.readFileSync(file, "utf8");
 const data = JSON.parse(original);
 if (date < data.asOf) throw Error("Review date cannot move backwards");
@@ -35,3 +35,5 @@ try {
     if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
 }
 console.log("Reviewed through " + date + ". " + batch.events.length + " input events. Unchanged days reconstruct from the same evidence.");
+
+require("node:child_process").execFileSync(process.platform === "win32" ? "python" : "python3", [path.resolve(__dirname, "generate-intelligence.py")], { stdio: "inherit" });

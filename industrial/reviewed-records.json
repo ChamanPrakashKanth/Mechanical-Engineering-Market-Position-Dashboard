@@ -1,0 +1,4183 @@
+{
+  "schemaVersion": 2,
+  "asOf": "2026-11-05",
+  "coverageNote": "67 documented records across 69 country-capability pairs. Evidence gaps do not establish absence. Quantities retain facility, product and reporting-period scope. Source metadata corrected November 7; assessment baseline November 5, 2026.",
+  "countries": [
+    {
+      "id": "IN",
+      "name": "India"
+    },
+    {
+      "id": "CN",
+      "name": "China"
+    },
+    {
+      "id": "US",
+      "name": "United States"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "wafer-fab",
+      "name": "Logic wafer fabrication",
+      "domain": "Semiconductors",
+      "definition": "Domestic processing of logic CMOS wafers at a documented node. Advanced-node production and equipment independence are separate assessments."
+    },
+    {
+      "id": "osat",
+      "name": "Chip assembly and test",
+      "domain": "Semiconductors",
+      "definition": "Domestic semiconductor package assembly and testing, including captive integrated-device-manufacturer operations."
+    },
+    {
+      "id": "lithography",
+      "name": "Lithography equipment",
+      "domain": "Semiconductors",
+      "definition": "Domestic manufacture of semiconductor lithography exposure systems, including mature-node and packaging tools. Tool use and imports do not establish tool manufacture."
+    },
+    {
+      "id": "cnc",
+      "name": "CNC machine tools",
+      "domain": "Machine tools",
+      "definition": "Domestic manufacture and assembly of commercial CNC metal-cutting machines. Controllers and critical components have separate supply-chain assessments."
+    },
+    {
+      "id": "spindles",
+      "name": "Precision spindles",
+      "domain": "Machine tools",
+      "definition": "Domestic manufacture of precision machine-tool spindle units. Rebuilding and distribution alone do not establish new-spindle manufacture."
+    },
+    {
+      "id": "photoresist",
+      "name": "Electronic photoresists",
+      "domain": "Chemicals",
+      "definition": "Domestic manufacture of photo-patternable resist formulations for semiconductor, MEMS or electronic processing. EUV-resist formulations are a separate scope."
+    },
+    {
+      "id": "process-gases",
+      "name": "High-purity process gases",
+      "domain": "Chemicals",
+      "definition": "Domestic manufacture or purification of high-purity gases for electronic-device processing. Evidence is scoped to the identified gas species."
+    },
+    {
+      "id": "api",
+      "name": "Active pharmaceutical ingredients",
+      "domain": "Pharmaceuticals",
+      "definition": "Active pharmaceutical ingredients produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "biologics",
+      "name": "Biologics production",
+      "domain": "Pharmaceuticals",
+      "definition": "Biologics production produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "turbines",
+      "name": "Aero-engine hot sections",
+      "domain": "Aerospace",
+      "definition": "Aero-engine hot sections produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "airframes",
+      "name": "Aircraft structures",
+      "domain": "Aerospace",
+      "definition": "Aircraft structures produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "powertrain",
+      "name": "Vehicle powertrains",
+      "domain": "Automotive",
+      "definition": "Vehicle powertrains produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "electronics",
+      "name": "Automotive electronics",
+      "domain": "Automotive",
+      "definition": "Automotive electronics produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "steel",
+      "name": "Specialty steel",
+      "domain": "Metallurgy",
+      "definition": "Specialty steel produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "superalloys",
+      "name": "Nickel superalloys",
+      "domain": "Metallurgy",
+      "definition": "Nickel superalloys produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "robots",
+      "name": "Industrial robot integration",
+      "domain": "Robotics",
+      "definition": "Domestic engineering, build and commissioning of integrated robotic manufacturing cells. The origin of robot arms and critical components is assessed separately."
+    },
+    {
+      "id": "reducers",
+      "name": "Precision robot reducers",
+      "domain": "Robotics",
+      "definition": "Domestic design and manufacture of precision robot-joint reduction gearboxes. Limited product offers and repeat manufacture carry different thresholds."
+    },
+    {
+      "id": "cells",
+      "name": "Battery cells",
+      "domain": "Batteries",
+      "definition": "Battery cells produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "cathodes",
+      "name": "Cathode materials",
+      "domain": "Batteries",
+      "definition": "Cathode materials produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "solar",
+      "name": "Solar modules",
+      "domain": "Energy",
+      "definition": "Domestic manufacture of solar modules. Cell, wafer and polysilicon origin require separate assessment."
+    },
+    {
+      "id": "grid",
+      "name": "Grid transformers",
+      "domain": "Energy",
+      "definition": "Domestic manufacture and testing of grid power or distribution transformers."
+    },
+    {
+      "id": "casting",
+      "name": "Precision casting",
+      "domain": "Manufacturing",
+      "definition": "Precision casting produced at an operating domestic facility. Ownership and domestic value-add are assessed separately."
+    },
+    {
+      "id": "metrology",
+      "name": "Dimensional metrology",
+      "domain": "Manufacturing",
+      "definition": "Domestic manufacture of CMMs or other dimensional-metrology and precision-gauging equipment. Imported sensors and software are assessed separately."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "cg-pilot",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2161666",
+      "title": "PIB — CG Power OSAT pilot line",
+      "published": "2025-08-28",
+      "kind": "government release",
+      "publishedUnknown": false
+    },
+    {
+      "id": "cg-production",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2281125",
+      "title": "PIB — CG Semi Sanand facility inauguration",
+      "published": "2026-07-04",
+      "kind": "government release",
+      "publishedUnknown": false
+    },
+    {
+      "id": "tsmc",
+      "url": "https://pr.tsmc.com/static/campaign/2025March/tsmc_na/index.html",
+      "title": "TSMC March 2025 customer newsletter",
+      "published": "2025-03-31",
+      "kind": "company report",
+      "publishedUnknown": false
+    },
+    {
+      "id": "smic",
+      "url": "https://www.smics.com/uploads/Q4_2024%20Financials%20Presentation.pdf",
+      "title": "SMIC Q4 2024 financial presentation",
+      "published": "2025-02-11",
+      "kind": "company report",
+      "publishedUnknown": false
+    },
+    {
+      "id": "review-source-in-wafer-fab",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1898080",
+      "title": "PIB - SCL operating CMOS fab",
+      "published": "2023-02-10",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-osat",
+      "url": "https://www.jcetglobal.com/uploads/2%20ISO9001%202024.8.22-2027.8.21%20EN.pdf",
+      "title": "JCET - Jiangyin manufacturing certification",
+      "published": "2024-08-22",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-us-osat",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-opens-fab-9-new-mexico.html",
+      "title": "Intel - operational Fab 9",
+      "published": "2024-01-24",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-lithography",
+      "url": "https://www.smee.com.cn/",
+      "title": "SMEE - lithography manufacturing portfolio",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-lithography",
+      "url": "https://www.sec.gov/Archives/edgar/data/103145/000155837025001001/veco-20241231x10k.htm",
+      "title": "Veeco - 2024 Form 10-K",
+      "published": "2025-02-14",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-in-cnc",
+      "url": "https://bfwindia.com/products/vertical-machines",
+      "title": "BFW - Indian CNC machining centres",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-cnc",
+      "url": "https://us.syil.com/about-us",
+      "title": "SYIL - Ningbo factory",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-cnc",
+      "url": "https://www.haas.co.uk/wp-content/uploads/2021/05/Haas-2021-CNC-Guide.pdf",
+      "title": "Haas - US manufacturing guide",
+      "published": "2021-05-31",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-in-spindles",
+      "url": "https://www.mmindia.co.in/article/2974/spinning-success",
+      "title": "IMTMA publication - Setco India manufacturer interview",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "manufacturer interview in industry-association publication",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-spindles",
+      "url": "https://haozhispindle.com/",
+      "title": "Haozhi - precision spindle manufacturing",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-spindles",
+      "url": "https://www.setco.com/",
+      "title": "Setco - precision spindle manufacture",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-photoresist",
+      "url": "https://www.semi.org/en/resources/ecs-directory/kempur-microelectronics-inc",
+      "title": "SEMI - manufacturer-submitted Kempur profile",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "manufacturer-submitted industry profile",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-photoresist",
+      "url": "https://kayakuam.com/faqs",
+      "title": "Kayaku Advanced Materials - US manufacture",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-process-gases",
+      "url": "https://inoxairproducts.com/wp-content/themes/air-products/assets/Press%20Release%20_Nitrous%20Oxide%20Manali%20Commissioning.pdf",
+      "title": "INOX - electronic-grade nitrous oxide plant",
+      "published": "2025-01-17",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-process-gases",
+      "url": "https://www.semi.org/en/resources/ecs-directory/guangdong-huate-gas-coltd",
+      "title": "SEMI - manufacturer-submitted Huate profile",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "manufacturer-submitted industry profile",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-process-gases",
+      "url": "https://electronics.airliquide.com/air-liquide-develops-innovative-solutions-globalfoundries-improve-competitiveness-and-energy",
+      "title": "Air Liquide - existing Malta nitrogen facilities",
+      "published": "2024-02-19",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-in-api",
+      "url": "https://www.divislabs.com/pharmaceutical-company/world-largest-api-manufacturing-facility/",
+      "title": "Divi's - Indian API facilities",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-api",
+      "url": "https://sta.wuxiapptec.com/facility/changzhou-china/",
+      "title": "WuXi STA - Changzhou API manufacturing",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-api",
+      "url": "https://www.pfizer.com/products/pfizer-global-supply/us-manufacturing-sites/kalamazoo",
+      "title": "Pfizer - Kalamazoo API operations",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-biologics",
+      "url": "https://www.bioconbiologics.com/our-capabilities/global-scale-manufacturing/",
+      "title": "Biocon Biologics - manufacturing facilities",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-biologics",
+      "url": "https://www.wuxibiologics.com/locations-facilities/",
+      "title": "WuXi Biologics - operating facility network",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-biologics",
+      "url": "https://www.lonza.com/about-us/our-locations/vacaville-ca-usa",
+      "title": "Lonza - Vacaville commercial biologics",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-turbines",
+      "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1714134",
+      "title": "PIB - DRDO single-crystal blade delivery",
+      "published": "2021-04-26",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-turbines",
+      "url": "https://acae.aecc.cn/aecc/zycp/xjcljzp/2024120221441021336/index.html",
+      "title": "AECC - single-crystal blade manufacture",
+      "published": "2024-12-02",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-us-turbines",
+      "url": "https://www.geaerospace.com/news/press-releases/other-news-information/ge-aviation-asheville-hits-major-production-milestone",
+      "title": "GE Aerospace - Asheville CMC production",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-airframes",
+      "url": "https://www.boeing.co.in/news/2025/tata-boeing-aerospace-delivers-300-ah-64-apache-fuselages",
+      "title": "Boeing - India-made Apache fuselages",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-airframes",
+      "url": "https://english.comac.cc/products/",
+      "title": "COMAC - C919 delivered aircraft",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-airframes",
+      "url": "https://boeing.mediaroom.com/2025-01-28-Boeing-Reports-Fourth-Quarter-Results",
+      "title": "Boeing - 2024 operating results",
+      "published": "2025-01-28",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-in-powertrain",
+      "url": "https://www.globalsuzuki.com/globalnews/2021/pdf/0402.pdf",
+      "title": "Suzuki - Gujarat powertrain plant",
+      "published": "2021-04-02",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-powertrain",
+      "url": "https://corporate.ford.com/operations/locations/",
+      "title": "Ford - global plant locations",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-powertrain",
+      "url": "https://www.fromtheroad.ford.com/us/en/articles/2024/ford-shipping-new-f-150--ranger-in-unprecedented-truck-offensive",
+      "title": "Ford - US truck manufacturing network",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-electronics",
+      "url": "https://www.bosch.in/media/stories/bosch_coffeetable_book_june17_edit_read_only.pdf",
+      "title": "Bosch - Indian electronics manufacturing history",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-electronics",
+      "url": "https://www.denso.com/global/en/news/newsroom/2024/20240905-g01/",
+      "title": "DENSO - inverter manufacturing network",
+      "published": "2024-09-05",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-us-electronics",
+      "url": "https://www.denso.com/us-ca/home/careers/locations/maryville/",
+      "title": "DENSO - Maryville manufacturing",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-steel",
+      "url": "https://www.jindalstainless.com/wp-content/uploads/2025/08/JSL-IR-2024-25.pdf",
+      "title": "Jindal Stainless - FY25 integrated report",
+      "published": "2025-08-31",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-steel",
+      "url": "https://esales.baosteel.com/baosteel_products/eleSteel/en/products/products_02.jsp",
+      "title": "Baosteel - electrical steel production process",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-steel",
+      "url": "https://www.clevelandcliffs.com/operations/steelmaking",
+      "title": "Cleveland-Cliffs - integrated steelmaking",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-superalloys",
+      "url": "https://midhani-india.in/hyderabad-unit/",
+      "title": "MIDHANI - Hyderabad metallurgical plant",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-superalloys",
+      "url": "https://haynesintl.com/en/our-company/",
+      "title": "Haynes - US alloy manufacturing network",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-robots",
+      "url": "https://wipropari.com/automation/",
+      "title": "Wipro PARI - robotic system production and integration",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-robots",
+      "url": "https://en.siasun.com/about-us-2.html/",
+      "title": "SIASUN - industrial robots and integration",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-robots",
+      "url": "https://www.jrautomation.com/about/locations",
+      "title": "JR Automation - US fabrication and integration",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-reducers",
+      "url": "https://gephr.com/",
+      "title": "Gephr Labs - Indian precision gearbox offer",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-reducers",
+      "url": "https://www.leaderdrive.com/",
+      "title": "Leaderdrive - strain-wave reducer production",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-reducers",
+      "url": "https://www.harmonicdrivegearhead.com/about-us/north-america-locations",
+      "title": "Harmonic Drive LLC - US manufacturing site",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-cells",
+      "url": "https://cdn.olaelectric.com/sites/evdp/pages/investor/announcement/shareholders_letter_for_q3_fy26_dated_february_13_2026.pdf",
+      "title": "Ola Electric - Q3 FY26 cell disclosure",
+      "published": "2026-02-13",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-cells",
+      "url": "https://www.miit.gov.cn/gyhxxhb/jgsj/dzxxs/dzjc/art/2025/art_b6fabc541b094897b3f27eea54981762.html",
+      "title": "MIIT - 2024 lithium battery industry output",
+      "published": "2025-02-27",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-us-cells",
+      "url": "https://www.ultiumcell.com/our-locations/warren-ohio",
+      "title": "Ultium Cells - Warren manufacturing milestone",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-cathodes",
+      "url": "https://arci.res.in/pdf/arci-english-annual-report-2023-2024.pdf",
+      "title": "ARCI - C-LFP process demonstration and transfer",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-cathodes",
+      "url": "https://www.basf.com/dam/jcr%3Afe9a57ef-d24e-3eba-bc56-92f2d773f6cb/basf/www/us/documents/en/fact-sheets/Battle%20Creek-MI-SiteFactSheet2024.pdf",
+      "title": "BASF - Battle Creek site facts",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-solar",
+      "url": "https://www.waaree.com/press-release/waaree-energies-emerges-as-indias-largest-almm-approved-solar-manufacturer-crossing-20-gw/",
+      "title": "Waaree - Indian module capacity",
+      "published": "2025-12-29",
+      "dateBasis": "publication upper bound",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false,
+      "publishedIsUpperBound": true
+    },
+    {
+      "id": "review-source-cn-solar",
+      "url": "https://www.longi.com/en/news/longi-2024-annual-report/",
+      "title": "LONGi - 2024 annual report operating results",
+      "published": "2025-04-30",
+      "dateBasis": "dated page header; inconsistent year in body noted",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": false
+    },
+    {
+      "id": "review-source-us-solar",
+      "url": "https://www.firstsolar.com/-/media/First-Solar/Documents/EIS/FS_EconomicImpactStudy.pdf",
+      "title": "First Solar - Alabama integrated manufacturing",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-grid",
+      "url": "https://www.hitachienergy.com/in/en/company/hitachi-energy-india",
+      "title": "Hitachi Energy - Indian factory network",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-grid",
+      "url": "https://en.tbea.com/transformation/1.html",
+      "title": "TBEA - transformer manufacture",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-grid",
+      "url": "https://www.prolec.energy/about-us/our-locations/prolec-waukesha/",
+      "title": "Prolec - US transformer factories",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-casting",
+      "url": "https://midhani-india.in/midhani_categories/investment_castings/",
+      "title": "MIDHANI - vacuum investment casting",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-casting",
+      "url": "https://www.howmet.com/engine-products/",
+      "title": "Howmet - US engine-product sites",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-in-metrology",
+      "url": "https://accurateengg.com/",
+      "title": "Accurate Engineering - measuring instrument manufacture",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "manufacturer publication",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-cn-metrology",
+      "url": "https://hexagon.com/-/media/project/one-web/master-site/mi/pdf/factory-certifications/china-qingdao-iso-9001-2015.pdf?hash=AE959515F2171A9F3ECEC8DBEC7A7E38&sc_lang=en",
+      "title": "Hexagon - Qingdao CMM manufacturing certificate",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "primary production evidence",
+      "publishedUnknown": true
+    },
+    {
+      "id": "review-source-us-metrology",
+      "url": "https://web.uri.edu/wp-content/uploads/sites/481/ELECOMP-Hexagon-Proposal-2021-2022.pdf",
+      "title": "Hexagon / University of Rhode Island - CMM manufacturing project",
+      "published": null,
+      "dateBasis": "Publication date not recorded; accessedOn is the access date only",
+      "accessedOn": "2026-11-05",
+      "kind": "manufacturer-authored university project brief",
+      "publishedUnknown": true
+    }
+  ],
+  "events": [
+    {
+      "id": "IN-osat-pilot",
+      "country": "IN",
+      "capability": "osat",
+      "date": "2025-08-28",
+      "knownOn": "2025-08-28",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "cg-pilot",
+      "milestone": "CG Power inaugurated an end-to-end OSAT pilot line in Sanand.",
+      "verification": "verified",
+      "kind": "pilot demonstration",
+      "confidence": "Source-reported",
+      "technicalMaturity": "CG Power inaugurated an end-to-end OSAT pilot line in Sanand.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": null,
+      "entities": [
+        {
+          "name": "CG Semi / CG Power",
+          "type": "company"
+        },
+        {
+          "name": "Renesas Electronics",
+          "type": "partner"
+        },
+        {
+          "name": "Stars Microelectronics",
+          "type": "partner"
+        },
+        {
+          "name": "India Semiconductor Mission",
+          "type": "programme"
+        }
+      ],
+      "sourceIds": [
+        "cg-pilot"
+      ],
+      "recordType": "Pilot / development evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "IN-osat-production",
+      "country": "IN",
+      "capability": "osat",
+      "date": "2026-07-04",
+      "knownOn": "2026-07-04",
+      "stage": 3,
+      "previousStage": 2,
+      "source": "cg-production",
+      "milestone": "CG Semi Sanand facility inaugurated with commercial chip packaging reported.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "CG Semi Sanand facility inaugurated with commercial chip packaging reported.",
+      "capacity": "200 million packaged units annually at CG Semi Sanand, government-reported facility capacity. Actual output and national aggregate unestablished.",
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "Commercial chip packaging at the cited facility",
+      "entities": [
+        {
+          "name": "CG Semi / CG Power",
+          "type": "company"
+        },
+        {
+          "name": "Renesas Electronics",
+          "type": "partner"
+        },
+        {
+          "name": "Stars Microelectronics",
+          "type": "partner"
+        },
+        {
+          "name": "India Semiconductor Mission",
+          "type": "programme"
+        }
+      ],
+      "sourceIds": [
+        "cg-production"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "US-wafer-production",
+      "country": "US",
+      "capability": "wafer-fab",
+      "date": "2024-12-31",
+      "knownOn": "2025-03-31",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "tsmc",
+      "milestone": "TSMC reports Arizona N4 high-volume production in Q4 2024. Exact start day undisclosed.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "TSMC reports Arizona N4 high-volume production in Q4 2024. Exact start day undisclosed.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "N4 high-volume production, company-reported",
+      "entities": [
+        {
+          "name": "TSMC Arizona",
+          "type": "company / operating facility"
+        }
+      ],
+      "sourceIds": [
+        "tsmc"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "CN-wafer-production",
+      "country": "CN",
+      "capability": "wafer-fab",
+      "date": "2024-12-31",
+      "knownOn": "2025-02-11",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "smic",
+      "milestone": "SMIC reports operating wafer production in Q4 2024. Exact milestone day undisclosed.",
+      "verification": "verified",
+      "kind": "production milestone",
+      "confidence": "Source-reported",
+      "technicalMaturity": "SMIC reports operating wafer production in Q4 2024. Exact milestone day undisclosed.",
+      "capacity": null,
+      "valueAdd": null,
+      "dependencies": [],
+      "diversification": null,
+      "notes": "Scoped facility evidence. National capacity, supplier concentration and domestic value-add are not established by this record.",
+      "quantitativeChange": null,
+      "importConcentration": null,
+      "industrialScale": "Operating wafer production, company-reported",
+      "entities": [
+        {
+          "name": "SMIC",
+          "type": "company"
+        }
+      ],
+      "sourceIds": [
+        "smic"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-wafer-fab",
+      "country": "IN",
+      "capability": "wafer-fab",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-wafer-fab",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2023-02-10",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "SCL delivered more than 200 CMOS device types on its 180 nm platform.",
+      "technicalMaturity": "SCL delivered more than 200 CMOS device types on its 180 nm platform.",
+      "stageRationale": "Operating mature-node fabrication. Advanced nodes are outside this scope.",
+      "scope": "SCL delivered more than 200 CMOS device types on its 180 nm platform.",
+      "capacity": "700 wafer starts/month reported in 2023, excluding planned augmentation.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "PIB - SCL operating CMOS fab",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "700 wafer starts/month reported in 2023, excluding planned augmentation.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-wafer-fab"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-osat",
+      "country": "CN",
+      "capability": "osat",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-osat",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-08-22",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Jiangyin certificate covers package design and semiconductor manufacturing.",
+      "technicalMaturity": "Jiangyin certificate covers package design and semiconductor manufacturing.",
+      "stageRationale": "Certified operating package manufacturing supports established production.",
+      "scope": "Jiangyin certificate covers package design and semiconductor manufacturing.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "JCET - Jiangyin manufacturing certification",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-osat"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-osat",
+      "country": "US",
+      "capability": "osat",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-osat",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-01-24",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Intel reports mass production of Foveros packaging at Fab 9 and Fab 11x in New Mexico.",
+      "technicalMaturity": "Intel reports mass production of Foveros packaging at Fab 9 and Fab 11x in New Mexico.",
+      "stageRationale": "Operational high-volume advanced packaging, without assuming a complete domestic supply chain.",
+      "scope": "Intel reports mass production of Foveros packaging at Fab 9 and Fab 11x in New Mexico.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Intel - operational Fab 9",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-osat"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-lithography",
+      "country": "CN",
+      "capability": "lithography",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-lithography",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "SMEE describes domestic manufacture of IC and packaging lithography equipment.",
+      "technicalMaturity": "SMEE describes domestic manufacture of IC and packaging lithography equipment.",
+      "stageRationale": "Established documented tool families. No EUV or advanced immersion performance is inferred.",
+      "scope": "SMEE describes domestic manufacture of IC and packaging lithography equipment.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "SMEE - lithography manufacturing portfolio",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-lithography"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-lithography",
+      "country": "US",
+      "capability": "lithography",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-lithography",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-02-14",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Veeco reports commercial lithography systems and US manufacturing operations.",
+      "technicalMaturity": "Veeco reports commercial lithography systems and US manufacturing operations.",
+      "stageRationale": "Packaging lithography supports established equipment manufacture. Not evidence of a US-built EUV scanner.",
+      "scope": "Veeco reports commercial lithography systems and US manufacturing operations.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Veeco - 2024 Form 10-K",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-lithography"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-cnc",
+      "country": "IN",
+      "capability": "cnc",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-cnc",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "BFW manufactures CNC vertical machining centres in India.",
+      "technicalMaturity": "BFW manufactures CNC vertical machining centres in India.",
+      "stageRationale": "Commercial manufacture supports stage 3. Controller origin is unquantified.",
+      "scope": "BFW manufactures CNC vertical machining centres in India.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "BFW - Indian CNC machining centres",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-cnc"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-cnc",
+      "country": "CN",
+      "capability": "cnc",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-cnc",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "SYIL performs machine development, production and assembly at its Ningbo factory.",
+      "technicalMaturity": "SYIL performs machine development, production and assembly at its Ningbo factory.",
+      "stageRationale": "Operating factory and commercial machine families support established production.",
+      "scope": "SYIL performs machine development, production and assembly at its Ningbo factory.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "SYIL - Ningbo factory",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-cnc"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-cnc",
+      "country": "US",
+      "capability": "cnc",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-cnc",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2021-05-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Haas describes a broad CNC range designed and built at its California factory.",
+      "technicalMaturity": "Haas describes a broad CNC range designed and built at its California factory.",
+      "stageRationale": "Multi-product domestic manufacture with repeat output supports scalable production depth.",
+      "scope": "Haas describes a broad CNC range designed and built at its California factory.",
+      "capacity": "More than 18,000 machines/year stated in the 2021 guide. Current output unverified.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Haas - US manufacturing guide",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "More than 18,000 machines/year stated in the 2021 guide. Current output unverified.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-cnc"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-spindles",
+      "country": "IN",
+      "capability": "spindles",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-spindles",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Setco India reports manufacture of new milling and grinding spindles.",
+      "technicalMaturity": "Setco India reports manufacture of new milling and grinding spindles.",
+      "stageRationale": "Manufacturer interview explicitly distinguishes new manufacture from rebuilding. Throughput unmeasured.",
+      "scope": "Setco India reports manufacture of new milling and grinding spindles.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "IMTMA publication - Setco India manufacturer interview",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-spindles"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-spindles",
+      "country": "CN",
+      "capability": "spindles",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-spindles",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Haozhi describes production of CNC spindle units and motion components.",
+      "technicalMaturity": "Haozhi describes production of CNC spindle units and motion components.",
+      "stageRationale": "Commercial spindle manufacture supports stage 3. Upstream component origin unassessed.",
+      "scope": "Haozhi describes production of CNC spindle units and motion components.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Haozhi - precision spindle manufacturing",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-spindles"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-spindles",
+      "country": "US",
+      "capability": "spindles",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-spindles",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Setco lists US operations manufacturing new precision spindles.",
+      "technicalMaturity": "Setco lists US operations manufacturing new precision spindles.",
+      "stageRationale": "New-spindle production supports stage 3. Worldwide installed-base totals are excluded.",
+      "scope": "Setco lists US operations manufacturing new precision spindles.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Setco - precision spindle manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-spindles"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-photoresist",
+      "country": "CN",
+      "capability": "photoresist",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-photoresist",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Kempur lists manufactured UV, g-line and i-line photoresists for IC and electronic processing.",
+      "technicalMaturity": "Kempur lists manufactured UV, g-line and i-line photoresists for IC and electronic processing.",
+      "stageRationale": "Commercial mature-node resist formulations support stage 3. EUV-resist capability is unestablished.",
+      "scope": "Kempur lists manufactured UV, g-line and i-line photoresists for IC and electronic processing.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "SEMI - manufacturer-submitted Kempur profile",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-photoresist"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-photoresist",
+      "country": "US",
+      "capability": "photoresist",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-photoresist",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Kayaku states its microfabrication materials are manufactured in Westborough, Massachusetts.",
+      "technicalMaturity": "Kayaku states its microfabrication materials are manufactured in Westborough, Massachusetts.",
+      "stageRationale": "An identified US site and commercial photoresist portfolio support established production.",
+      "scope": "Kayaku states its microfabrication materials are manufactured in Westborough, Massachusetts.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Kayaku Advanced Materials - US manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-photoresist"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-process-gases",
+      "country": "IN",
+      "capability": "process-gases",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-process-gases",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-01-17",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "INOX commissioned an ultra-high-purity nitrous oxide plant in Manali, Chennai.",
+      "technicalMaturity": "INOX commissioned an ultra-high-purity nitrous oxide plant in Manali, Chennai.",
+      "stageRationale": "Commissioned specialty-gas production supports stage 3 for this gas species.",
+      "scope": "INOX commissioned an ultra-high-purity nitrous oxide plant in Manali, Chennai.",
+      "capacity": "1,700 tonnes/year nameplate N2O capacity. Actual output unreported.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "INOX - electronic-grade nitrous oxide plant",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "1,700 tonnes/year nameplate N2O capacity. Actual output unreported.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-process-gases"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-process-gases",
+      "country": "CN",
+      "capability": "process-gases",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-process-gases",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Huate reports research, manufacture and sale of specialty gases from its Foshan-based business.",
+      "technicalMaturity": "Huate reports research, manufacture and sale of specialty gases from its Foshan-based business.",
+      "stageRationale": "Manufacturer-submitted production evidence supports established specialty-gas manufacture.",
+      "scope": "Huate reports research, manufacture and sale of specialty gases from its Foshan-based business.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "SEMI - manufacturer-submitted Huate profile",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-process-gases"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-process-gases",
+      "country": "US",
+      "capability": "process-gases",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-process-gases",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-02-19",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Air Liquide documents existing high-purity nitrogen units supplying GlobalFoundries in Malta, New York.",
+      "technicalMaturity": "Air Liquide documents existing high-purity nitrogen units supplying GlobalFoundries in Malta, New York.",
+      "stageRationale": "Operating nitrogen production supports stage 3. Announced Singapore production is excluded.",
+      "scope": "Air Liquide documents existing high-purity nitrogen units supplying GlobalFoundries in Malta, New York.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Air Liquide - existing Malta nitrogen facilities",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-process-gases"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-api",
+      "country": "IN",
+      "capability": "api",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-in-api",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Divi's operates API and intermediate manufacturing sites near Hyderabad, Visakhapatnam and Kakinada.",
+      "technicalMaturity": "Divi's operates API and intermediate manufacturing sites near Hyderabad, Visakhapatnam and Kakinada.",
+      "stageRationale": "Multi-site commercial production and kilo-to-commercial capabilities support scalable API manufacturing depth.",
+      "scope": "Divi's operates API and intermediate manufacturing sites near Hyderabad, Visakhapatnam and Kakinada.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Divi's - Indian API facilities",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-api"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-api",
+      "country": "CN",
+      "capability": "api",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-api",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "WuXi STA identifies an operating API manufacturing site at Changzhou.",
+      "technicalMaturity": "WuXi STA identifies an operating API manufacturing site at Changzhou.",
+      "stageRationale": "Operating drug-substance manufacture supports stage 3. Global capacity is excluded.",
+      "scope": "WuXi STA identifies an operating API manufacturing site at Changzhou.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "WuXi STA - Changzhou API manufacturing",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-api"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-api",
+      "country": "US",
+      "capability": "api",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-api",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Pfizer's Kalamazoo site manufactures APIs and drug products.",
+      "technicalMaturity": "Pfizer's Kalamazoo site manufactures APIs and drug products.",
+      "stageRationale": "An identified operating API site supports established production. Input origin is unquantified.",
+      "scope": "Pfizer's Kalamazoo site manufactures APIs and drug products.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Pfizer - Kalamazoo API operations",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-api"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-biologics",
+      "country": "IN",
+      "capability": "biologics",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-biologics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Biocon documents its B3 monoclonal-antibody drug-substance facility at Biocon Park, India.",
+      "technicalMaturity": "Biocon documents its B3 monoclonal-antibody drug-substance facility at Biocon Park, India.",
+      "stageRationale": "Indian mAb production supports stage 3. Malaysian insulin production is excluded.",
+      "scope": "Biocon documents its B3 monoclonal-antibody drug-substance facility at Biocon Park, India.",
+      "capacity": "350,000 square feet of Indian B3 building area. Floor area is not annual output.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Biocon Biologics - manufacturing facilities",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "350,000 square feet of Indian B3 building area. Floor area is not annual output.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-biologics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-biologics",
+      "country": "CN",
+      "capability": "biologics",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-biologics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "WuXi identifies Chinese biologics manufacturing facilities.",
+      "technicalMaturity": "WuXi identifies Chinese biologics manufacturing facilities.",
+      "stageRationale": "Operating Chinese production supports stage 3. Planned facilities and worldwide aggregate capacity are excluded.",
+      "scope": "WuXi identifies Chinese biologics manufacturing facilities.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "WuXi Biologics - operating facility network",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-biologics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-biologics",
+      "country": "US",
+      "capability": "biologics",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-biologics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Vacaville is a multi-product commercial mammalian biologics manufacturing site.",
+      "technicalMaturity": "Vacaville is a multi-product commercial mammalian biologics manufacturing site.",
+      "stageRationale": "Large installed bioreactors and repeat commercial supply support scalable manufacturing depth.",
+      "scope": "Vacaville is a multi-product commercial mammalian biologics manufacturing site.",
+      "capacity": "332,000 liters installed bioreactor capacity at Vacaville. Annual output unreported.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Lonza - Vacaville commercial biologics",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "332,000 liters installed bioreactor capacity at Vacaville. Annual output unreported.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-biologics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-turbines",
+      "country": "IN",
+      "capability": "turbines",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "review-source-in-turbines",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2021-04-26",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "DRDO supplied 60 single-crystal blades to HAL for helicopter-engine development.",
+      "technicalMaturity": "DRDO supplied 60 single-crystal blades to HAL for helicopter-engine development.",
+      "stageRationale": "Delivered development hardware supports pilot demonstration. High-volume qualified hot-section manufacture is unestablished.",
+      "scope": "DRDO supplied 60 single-crystal blades to HAL for helicopter-engine development.",
+      "capacity": "60 development blades delivered in April 2021.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "PIB - DRDO single-crystal blade delivery",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "60 development blades delivered in April 2021.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-turbines"
+      ],
+      "recordType": "Pilot / development evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-turbines",
+      "country": "CN",
+      "capability": "turbines",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-turbines",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-12-02",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "AECC describes research, pilot and batch-production sites for single-crystal blades.",
+      "technicalMaturity": "AECC describes research, pilot and batch-production sites for single-crystal blades.",
+      "stageRationale": "Explicit batch production supports established manufacture. Engine-specific yields are undisclosed.",
+      "scope": "AECC describes research, pilot and batch-production sites for single-crystal blades.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "AECC - single-crystal blade manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-turbines",
+      "country": "US",
+      "capability": "turbines",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-turbines",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "GE documents operating production of CMC aero-engine components at Asheville.",
+      "technicalMaturity": "GE documents operating production of CMC aero-engine components at Asheville.",
+      "stageRationale": "Operating component production supports stage 3 within the cited scope.",
+      "scope": "GE documents operating production of CMC aero-engine components at Asheville.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "GE Aerospace - Asheville CMC production",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-turbines"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-airframes",
+      "country": "IN",
+      "capability": "airframes",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-airframes",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Tata Boeing Aerospace delivered its 300th Apache fuselage from Hyderabad.",
+      "technicalMaturity": "Tata Boeing Aerospace delivered its 300th Apache fuselage from Hyderabad.",
+      "stageRationale": "Repeated delivered structures support established airframe manufacture.",
+      "scope": "Tata Boeing Aerospace delivered its 300th Apache fuselage from Hyderabad.",
+      "capacity": "300 cumulative fuselages at the reported milestone. Page date and URL year conflict, so exact day is unassigned.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Boeing - India-made Apache fuselages",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "300 cumulative fuselages at the reported milestone. Page date and URL year conflict, so exact day is unassigned.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-airframes"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-airframes",
+      "country": "CN",
+      "capability": "airframes",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-airframes",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "COMAC documents C919 certification, delivery and commercial flight.",
+      "technicalMaturity": "COMAC documents C919 certification, delivery and commercial flight.",
+      "stageRationale": "Delivered airframes support established manufacture. Engine and avionics origin are separate assessments.",
+      "scope": "COMAC documents C919 certification, delivery and commercial flight.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "COMAC - C919 delivered aircraft",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-airframes"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-airframes",
+      "country": "US",
+      "capability": "airframes",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-airframes",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-01-28",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Boeing reports commercial airplane deliveries across several programs.",
+      "technicalMaturity": "Boeing reports commercial airplane deliveries across several programs.",
+      "stageRationale": "Repeated deliveries across multiple large-aircraft programs support scalable airframe production.",
+      "scope": "Boeing reports commercial airplane deliveries across several programs.",
+      "capacity": "348 commercial airplanes delivered in 2024. Boeing volume, not a national total.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Boeing - 2024 operating results",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "348 commercial airplanes delivered in 2024. Boeing volume, not a national total.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-airframes"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-powertrain",
+      "country": "IN",
+      "capability": "powertrain",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-powertrain",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2021-04-02",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Suzuki documents an operating Gujarat petrol-engine factory.",
+      "technicalMaturity": "Suzuki documents an operating Gujarat petrol-engine factory.",
+      "stageRationale": "An operating engine plant supports established powertrain manufacture.",
+      "scope": "Suzuki documents an operating Gujarat petrol-engine factory.",
+      "capacity": "500,000 engines/year stated nameplate capacity in the April 2021 facility table.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Suzuki - Gujarat powertrain plant",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "500,000 engines/year stated nameplate capacity in the April 2021 facility table.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-powertrain"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-powertrain",
+      "country": "CN",
+      "capability": "powertrain",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-powertrain",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Ford identifies Changan Ford powertrain operations in China.",
+      "technicalMaturity": "Ford identifies Changan Ford powertrain operations in China.",
+      "stageRationale": "Domestic engine and transmission operations support stage 3. Foreign partnership is separate from location.",
+      "scope": "Ford identifies Changan Ford powertrain operations in China.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Ford - global plant locations",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-powertrain"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-powertrain",
+      "country": "US",
+      "capability": "powertrain",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-powertrain",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Ford identifies powertrain, transmission, stamping and assembly across 16 US plants.",
+      "technicalMaturity": "Ford identifies powertrain, transmission, stamping and assembly across 16 US plants.",
+      "stageRationale": "Integrated multi-plant manufacture supports scalable powertrain capability.",
+      "scope": "Ford identifies powertrain, transmission, stamping and assembly across 16 US plants.",
+      "capacity": "16 US plants across four states support these programs. Plant count is not engine throughput.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Ford - US truck manufacturing network",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "16 US plants across four states support these programs. Plant count is not engine throughput.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-powertrain"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-electronics",
+      "country": "IN",
+      "capability": "electronics",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-electronics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2017-12-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Bosch documents the RBAI automotive electronics manufacturing operation in India.",
+      "technicalMaturity": "Bosch documents the RBAI automotive electronics manufacturing operation in India.",
+      "stageRationale": "Documented electronics production supports stage 3. Constituent chip origin remains unassessed.",
+      "scope": "Bosch documents the RBAI automotive electronics manufacturing operation in India.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Bosch - Indian electronics manufacturing history",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-electronics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-electronics",
+      "country": "CN",
+      "capability": "electronics",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-electronics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-09-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "DENSO identifies inverter production sites in Tianjin and Guangzhou.",
+      "technicalMaturity": "DENSO identifies inverter production sites in Tianjin and Guangzhou.",
+      "stageRationale": "Named operating factories support established automotive power-electronics manufacture.",
+      "scope": "DENSO identifies inverter production sites in Tianjin and Guangzhou.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "DENSO - inverter manufacturing network",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-electronics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-electronics",
+      "country": "US",
+      "capability": "electronics",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-electronics",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "DENSO Maryville manufactures clusters, automotive electronics and hybrid inverters.",
+      "technicalMaturity": "DENSO Maryville manufactures clusters, automotive electronics and hybrid inverters.",
+      "stageRationale": "An operating US manufacturing campus supports stage 3. Imported chip content is unmeasured.",
+      "scope": "DENSO Maryville manufactures clusters, automotive electronics and hybrid inverters.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "DENSO - Maryville manufacturing",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-electronics"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-steel",
+      "country": "IN",
+      "capability": "steel",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-in-steel",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-08-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Jindal documents Indian melt capacity and integrated stainless-steel processing.",
+      "technicalMaturity": "Jindal documents Indian melt capacity and integrated stainless-steel processing.",
+      "stageRationale": "Multi-million-tonne capacity and downstream processing support scalable domestic stainless manufacture.",
+      "scope": "Jindal documents Indian melt capacity and integrated stainless-steel processing.",
+      "capacity": "3 million tonnes/year operational Indian capacity in FY25. Overseas capacity excluded.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [
+        {
+          "name": "Overseas nickel feedstock",
+          "materialVulnerability": true,
+          "source": "review-source-in-steel",
+          "notes": "Jindal's FY25 report identifies domestic nickel scarcity and an Indonesian upstream investment. Concentration remains unquantified."
+        }
+      ],
+      "entities": [
+        {
+          "name": "Jindal Stainless - FY25 integrated report",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "3 million tonnes/year operational Indian capacity in FY25. Overseas capacity excluded.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-steel"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-steel",
+      "country": "CN",
+      "capability": "steel",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-steel",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Baosteel documents non-oriented electrical steel manufacture.",
+      "technicalMaturity": "Baosteel documents non-oriented electrical steel manufacture.",
+      "stageRationale": "A manufacturer production-process record supports established specialty-steel production.",
+      "scope": "Baosteel documents non-oriented electrical steel manufacture.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Baosteel - electrical steel production process",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-steel"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-steel",
+      "country": "US",
+      "capability": "steel",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-steel",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Cliffs operates steelmaking and finishing facilities producing stainless, electrical and specialty steels.",
+      "technicalMaturity": "Cliffs operates steelmaking and finishing facilities producing stainless, electrical and specialty steels.",
+      "stageRationale": "Integrated multi-site domestic melt and finishing operations support production depth.",
+      "scope": "Cliffs operates steelmaking and finishing facilities producing stainless, electrical and specialty steels.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Cleveland-Cliffs - integrated steelmaking",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-steel"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-superalloys",
+      "country": "IN",
+      "capability": "superalloys",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-superalloys",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "MIDHANI documents nickel-, cobalt- and iron-base superalloy melting and processing.",
+      "technicalMaturity": "MIDHANI documents nickel-, cobalt- and iron-base superalloy melting and processing.",
+      "stageRationale": "An operating melting-to-product plant supports established manufacture. Grade-level yields are unmeasured.",
+      "scope": "MIDHANI documents nickel-, cobalt- and iron-base superalloy melting and processing.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "MIDHANI - Hyderabad metallurgical plant",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-superalloys"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-superalloys",
+      "country": "CN",
+      "capability": "superalloys",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-turbines",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-12-02",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "AECC describes high-temperature alloy material preparation and batch manufacture.",
+      "technicalMaturity": "AECC describes high-temperature alloy material preparation and batch manufacture.",
+      "stageRationale": "Batch production supports established manufacture within the documented alloy scope.",
+      "scope": "AECC describes high-temperature alloy material preparation and batch manufacture.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "AECC - single-crystal blade manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-superalloys",
+      "country": "US",
+      "capability": "superalloys",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-superalloys",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Haynes documents nickel- and cobalt-alloy operations at Kokomo, Arcadia and Hendersonville.",
+      "technicalMaturity": "Haynes documents nickel- and cobalt-alloy operations at Kokomo, Arcadia and Hendersonville.",
+      "stageRationale": "Domestic specialization in flat, tubular and wire products supports deep processing capability. Feedstock origin is unmeasured.",
+      "scope": "Haynes documents nickel- and cobalt-alloy operations at Kokomo, Arcadia and Hendersonville.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Haynes - US alloy manufacturing network",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-superalloys"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-robots",
+      "country": "IN",
+      "capability": "robots",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-robots",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Wipro PARI produces and integrates robotic and assembly systems from its India-based business.",
+      "technicalMaturity": "Wipro PARI produces and integrates robotic and assembly systems from its India-based business.",
+      "stageRationale": "Physical cell build and commissioning supports stage 3. Indigenous origin of every robot component is unestablished.",
+      "scope": "Wipro PARI produces and integrates robotic and assembly systems from its India-based business.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Wipro PARI - robotic system production and integration",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-robots"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-robots",
+      "country": "CN",
+      "capability": "robots",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-robots",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "SIASUN documents robot products and welding, assembly and logistics integration.",
+      "technicalMaturity": "SIASUN documents robot products and welding, assembly and logistics integration.",
+      "stageRationale": "Commercial robots and system-integration portfolios support established capability.",
+      "scope": "SIASUN documents robot products and welding, assembly and logistics integration.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "SIASUN - industrial robots and integration",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-robots"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-robots",
+      "country": "US",
+      "capability": "robots",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-robots",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "JR identifies integration and CNC fabrication facilities in Michigan and other US states.",
+      "technicalMaturity": "JR identifies integration and CNC fabrication facilities in Michigan and other US states.",
+      "stageRationale": "Domestic cell fabrication supports stage 3 without implying domestic manufacture of every robot arm.",
+      "scope": "JR identifies integration and CNC fabrication facilities in Michigan and other US states.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "JR Automation - US fabrication and integration",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-robots"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-reducers",
+      "country": "IN",
+      "capability": "reducers",
+      "stage": 1,
+      "previousStage": 0,
+      "source": "review-source-in-reducers",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Gephr offers an Indian-made 21:1 precision cycloidal gearbox for robotics.",
+      "technicalMaturity": "Gephr offers an Indian-made 21:1 precision cycloidal gearbox for robotics.",
+      "stageRationale": "A domestic product offer supports limited capability. Independent qualification and repeat-production output remain unverified.",
+      "scope": "Gephr offers an Indian-made 21:1 precision cycloidal gearbox for robotics.",
+      "capacity": "21:1 is a reduction ratio, not production capacity.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Gephr Labs - Indian precision gearbox offer",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "21:1 is a reduction ratio, not production capacity.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-reducers"
+      ],
+      "recordType": "Pilot / development evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-reducers",
+      "country": "CN",
+      "capability": "reducers",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-reducers",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Leaderdrive describes manufacture of precision strain-wave robotic reducers.",
+      "technicalMaturity": "Leaderdrive describes manufacture of precision strain-wave robotic reducers.",
+      "stageRationale": "A commercial reducer manufacturing portfolio supports established production.",
+      "scope": "Leaderdrive describes manufacture of precision strain-wave robotic reducers.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Leaderdrive - strain-wave reducer production",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-reducers"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-reducers",
+      "country": "US",
+      "capability": "reducers",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-reducers",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Harmonic Drive identifies a Massachusetts manufacturing operation.",
+      "technicalMaturity": "Harmonic Drive identifies a Massachusetts manufacturing operation.",
+      "stageRationale": "Domestic precision-gearing manufacture supports stage 3. The page retains legacy Peabody text beside its Beverly address.",
+      "scope": "Harmonic Drive identifies a Massachusetts manufacturing operation.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Harmonic Drive LLC - US manufacturing site",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-reducers"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-cells",
+      "country": "IN",
+      "capability": "cells",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "review-source-in-cells",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-02-13",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Ola reports 4680 cell production and initial captive vehicle deployment.",
+      "technicalMaturity": "Ola reports 4680 cell production and initial captive vehicle deployment.",
+      "stageRationale": "Period output and initial deployment support early-commercial manufacture. Announced GWh targets are excluded.",
+      "scope": "Ola reports 4680 cell production and initial captive vehicle deployment.",
+      "capacity": "72,418 cells reported for Q3 FY26. This is a period unit count, not GWh.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Ola Electric - Q3 FY26 cell disclosure",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "72,418 cells reported for Q3 FY26. This is a period unit count, not GWh.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-cells"
+      ],
+      "recordType": "Pilot / development evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-cells",
+      "country": "CN",
+      "capability": "cells",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-cn-cells",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-02-27",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "MIIT reports nationwide lithium-ion cell and upstream battery-material output.",
+      "technicalMaturity": "MIIT reports nationwide lithium-ion cell and upstream battery-material output.",
+      "stageRationale": "Nationwide repeat output with operating material supply supports deep scalable cell manufacture.",
+      "scope": "MIIT reports nationwide lithium-ion cell and upstream battery-material output.",
+      "capacity": "1,170 GWh lithium-ion output in 2024 across consumer, storage and traction uses. Ministry estimate.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "MIIT - 2024 lithium battery industry output",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "1,170 GWh lithium-ion output in 2024 across consumer, storage and traction uses. Ministry estimate.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-cells"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-cells",
+      "country": "US",
+      "capability": "cells",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-cells",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Ultium reports production of its 100 millionth cell in Warren, Ohio.",
+      "technicalMaturity": "Ultium reports production of its 100 millionth cell in Warren, Ohio.",
+      "stageRationale": "Repeated cell output supports established manufacture. Material origin is unassessed.",
+      "scope": "Ultium reports production of its 100 millionth cell in Warren, Ohio.",
+      "capacity": "100 million cells cumulatively by December 5, 2024. Not annual GWh.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Ultium Cells - Warren manufacturing milestone",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "100 million cells cumulatively by December 5, 2024. Not annual GWh.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-cells"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-cathodes",
+      "country": "IN",
+      "capability": "cathodes",
+      "stage": 2,
+      "previousStage": 0,
+      "source": "review-source-in-cathodes",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-03-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "ARCI documents C-LFP powder production, external validation and a process demonstration to Altmin.",
+      "technicalMaturity": "ARCI documents C-LFP powder production, external validation and a process demonstration to Altmin.",
+      "stageRationale": "Delivered validation material and demonstrated process support pilot capability. No commercial kilotonne plant is inferred.",
+      "scope": "ARCI documents C-LFP powder production, external validation and a process demonstration to Altmin.",
+      "capacity": "15 kg C-LFP supplied for validation in the documented transfer.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "ARCI - C-LFP process demonstration and transfer",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "15 kg C-LFP supplied for validation in the documented transfer.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-cathodes"
+      ],
+      "recordType": "Pilot / development evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-cathodes",
+      "country": "CN",
+      "capability": "cathodes",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-cn-cells",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-02-27",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "MIIT reports domestic cathode active material output at million-tonne scale.",
+      "technicalMaturity": "MIIT reports domestic cathode active material output at million-tonne scale.",
+      "stageRationale": "Nationwide realized output supports deep scalable cathode manufacture.",
+      "scope": "MIIT reports domestic cathode active material output at million-tonne scale.",
+      "capacity": "Approximately 3.1 million tonnes cathode material output in 2024. Ministry estimate.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "MIIT - 2024 lithium battery industry output",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "Approximately 3.1 million tonnes cathode material output in 2024. Ministry estimate.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-cells"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-cathodes",
+      "country": "US",
+      "capability": "cathodes",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-cathodes",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-12-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "BASF's Battle Creek site manufactures cathode active materials.",
+      "technicalMaturity": "BASF's Battle Creek site manufactures cathode active materials.",
+      "stageRationale": "An operating CAM plant supports established manufacture. Domestic independence across every chemistry is unestablished.",
+      "scope": "BASF's Battle Creek site manufactures cathode active materials.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "BASF - Battle Creek site facts",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-cathodes"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-solar",
+      "country": "IN",
+      "capability": "solar",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-in-solar",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-12-29",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Waaree reports operating ALMM-listed module manufacturing facilities in India.",
+      "technicalMaturity": "Waaree reports operating ALMM-listed module manufacturing facilities in India.",
+      "stageRationale": "Multi-GW domestic module production supports scalable module capability. Cell, wafer and polysilicon origins are separate.",
+      "scope": "Waaree reports operating ALMM-listed module manufacturing facilities in India.",
+      "capacity": "20.17 GW ALMM-listed module capacity in India in December 2025. Nameplate capacity, not output.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Waaree - Indian module capacity",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "20.17 GW ALMM-listed module capacity in India in December 2025. Nameplate capacity, not output.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-solar"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-solar",
+      "country": "CN",
+      "capability": "solar",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-cn-solar",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2025-04-30",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "LONGi reports operating wafer and module businesses with substantial realized shipments.",
+      "technicalMaturity": "LONGi reports operating wafer and module businesses with substantial realized shipments.",
+      "stageRationale": "Multiple processing stages and commercial output support scalable module manufacture. Global shipments are not relabeled as domestic totals.",
+      "scope": "LONGi reports operating wafer and module businesses with substantial realized shipments.",
+      "capacity": "National production is not quantified. Future shipment targets excluded.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "LONGi - 2024 annual report operating results",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "National production is not quantified. Future shipment targets excluded.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-solar"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-solar",
+      "country": "US",
+      "capability": "solar",
+      "stage": 4,
+      "previousStage": 0,
+      "source": "review-source-us-solar",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "First Solar documents its Alabama integrated manufacturing facility commissioned in September 2024.",
+      "technicalMaturity": "First Solar documents its Alabama integrated manufacturing facility commissioned in September 2024.",
+      "stageRationale": "Operating multi-GW integrated thin-film manufacture supports scalable module capability.",
+      "scope": "First Solar documents its Alabama integrated manufacturing facility commissioned in September 2024.",
+      "capacity": "3.5 GW/year Alabama nameplate capacity. Actual annual output unreported.",
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "First Solar - Alabama integrated manufacturing",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": "3.5 GW/year Alabama nameplate capacity. Actual annual output unreported.",
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-solar"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-grid",
+      "country": "IN",
+      "capability": "grid",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-grid",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Hitachi documents its operating Indian equipment factories including Vadodara transformer operations.",
+      "technicalMaturity": "Hitachi documents its operating Indian equipment factories including Vadodara transformer operations.",
+      "stageRationale": "An operating manufacturing network supports stage 3. Announced new large-transformer capacity is excluded.",
+      "scope": "Hitachi documents its operating Indian equipment factories including Vadodara transformer operations.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Hitachi Energy - Indian factory network",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-grid"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-grid",
+      "country": "CN",
+      "capability": "grid",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-grid",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "TBEA documents production of transformers and transformer components for grid applications.",
+      "technicalMaturity": "TBEA documents production of transformers and transformer components for grid applications.",
+      "stageRationale": "Documented operating production lines support established capability. National kVA output is unmeasured.",
+      "scope": "TBEA documents production of transformers and transformer components for grid applications.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "TBEA - transformer manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-grid"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-grid",
+      "country": "US",
+      "capability": "grid",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-grid",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Prolec documents US transformer manufacturing at Waukesha and Goldsboro.",
+      "technicalMaturity": "Prolec documents US transformer manufacturing at Waukesha and Goldsboro.",
+      "stageRationale": "Operating power-transformer manufacture supports stage 3. Imported cores and annual output are unquantified.",
+      "scope": "Prolec documents US transformer manufacturing at Waukesha and Goldsboro.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Prolec - US transformer factories",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-grid"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-casting",
+      "country": "IN",
+      "capability": "casting",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-casting",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "MIDHANI documents vacuum melting and investment casting of superalloys and steels.",
+      "technicalMaturity": "MIDHANI documents vacuum melting and investment casting of superalloys and steels.",
+      "stageRationale": "An operating vacuum-casting facility supports established precision casting.",
+      "scope": "MIDHANI documents vacuum melting and investment casting of superalloys and steels.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "MIDHANI - vacuum investment casting",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-casting"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-casting",
+      "country": "CN",
+      "capability": "casting",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-turbines",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2024-12-02",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "AECC describes preparation and batch manufacture of complex single-crystal turbine blades.",
+      "technicalMaturity": "AECC describes preparation and batch manufacture of complex single-crystal turbine blades.",
+      "stageRationale": "Batch manufacture supports established precision casting within this product scope.",
+      "scope": "AECC describes preparation and batch manufacture of complex single-crystal turbine blades.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "AECC - single-crystal blade manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-casting",
+      "country": "US",
+      "capability": "casting",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-casting",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Howmet lists US locations manufacturing investment castings and alloys.",
+      "technicalMaturity": "Howmet lists US locations manufacturing investment castings and alloys.",
+      "stageRationale": "Identified operating casting sites support established precision casting.",
+      "scope": "Howmet lists US locations manufacturing investment castings and alloys.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Howmet - US engine-product sites",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-casting"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-IN-metrology",
+      "country": "IN",
+      "capability": "metrology",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-in-metrology",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Accurate Engineering documents manufacture of precision measuring instruments and gauging systems in Pune.",
+      "technicalMaturity": "Accurate Engineering documents manufacture of precision measuring instruments and gauging systems in Pune.",
+      "stageRationale": "A documented production facility and measuring-system manufacturing portfolio support stage 3 within precision gauging.",
+      "scope": "Accurate documents its Pune metrology business and CMM and gauging products.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Accurate Engineering - measuring instrument manufacture",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-in-metrology"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-CN-metrology",
+      "country": "CN",
+      "capability": "metrology",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-cn-metrology",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2026-11-05",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Hexagon's Qingdao certification includes building coordinate measuring machines.",
+      "technicalMaturity": "Hexagon's Qingdao certification includes building coordinate measuring machines.",
+      "stageRationale": "A manufacturing scope at a Chinese factory supports established CMM production. Ownership is separate from location.",
+      "scope": "Hexagon's Qingdao certification includes building coordinate measuring machines.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Hexagon - Qingdao CMM manufacturing certificate",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-cn-metrology"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    },
+    {
+      "id": "review-20261105-US-metrology",
+      "country": "US",
+      "capability": "metrology",
+      "stage": 3,
+      "previousStage": 0,
+      "source": "review-source-us-metrology",
+      "date": "2026-11-05",
+      "knownOn": "2026-11-05",
+      "evidenceAsOf": "2022-12-31",
+      "verification": "verified",
+      "kind": "evidence review",
+      "confidence": "Primary-source reported",
+      "milestone": "Hexagon's university project brief states that coordinate measuring systems are produced at its Rhode Island facility.",
+      "technicalMaturity": "Hexagon's university project brief states that coordinate measuring systems are produced at its Rhode Island facility.",
+      "stageRationale": "A manufacturer-authored engineering brief explicitly locates CMM production in Rhode Island.",
+      "scope": "Hexagon identifies manufacturing operations in North Kingstown, Rhode Island.",
+      "capacity": null,
+      "valueAdd": null,
+      "diversification": null,
+      "importConcentration": null,
+      "dependencies": [],
+      "entities": [
+        {
+          "name": "Hexagon / University of Rhode Island - CMM manufacturing project",
+          "type": "production evidence"
+        }
+      ],
+      "industrialScale": null,
+      "quantitativeChange": null,
+      "notes": "Baseline evidence review recorded on November 5, 2026. This expands researched coverage and does not represent a newly achieved technical milestone. Source vintage is shown separately. Domestic value-add, supplier concentration and disruption/replacement times need additional evidence.",
+      "sourceIds": [
+        "review-source-us-metrology"
+      ],
+      "recordType": "Source-reported manufacturing evidence",
+      "corroboration": "Source-reported scope. No independent audit or national production total is established by this record."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "supplier",
+      "name": "Equipment supplier (hypothetical)",
+      "type": "supplier"
+    },
+    {
+      "id": "process-gases",
+      "name": "Process gases",
+      "type": "material"
+    },
+    {
+      "id": "lithography",
+      "name": "Lithography equipment",
+      "type": "equipment"
+    },
+    {
+      "id": "wafer-fab",
+      "name": "Wafer fabrication",
+      "type": "process"
+    },
+    {
+      "id": "osat",
+      "name": "Assembly and test",
+      "type": "process"
+    },
+    {
+      "id": "electronics",
+      "name": "Automotive electronics",
+      "type": "dependent technology"
+    }
+  ],
+  "edges": [
+    {
+      "from": "supplier",
+      "to": "lithography"
+    },
+    {
+      "to": "wafer-fab",
+      "from": "process-gases"
+    },
+    {
+      "to": "wafer-fab",
+      "from": "lithography"
+    },
+    {
+      "to": "osat",
+      "from": "wafer-fab"
+    },
+    {
+      "to": "electronics",
+      "from": "osat"
+    }
+  ],
+  "reviews": [
+    {
+      "country": "CN",
+      "capability": "airframes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-airframes"
+      ],
+      "notes": "Delivered airframes support established manufacture. Engine and avionics origin are separate assessments.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "api",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-api"
+      ],
+      "notes": "Operating drug-substance manufacture supports stage 3. Global capacity is excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "biologics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-biologics"
+      ],
+      "notes": "Operating Chinese production supports stage 3. Planned facilities and worldwide aggregate capacity are excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "casting",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "notes": "Batch manufacture supports established precision casting within this product scope.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "cathodes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-cells"
+      ],
+      "notes": "Nationwide realized output supports deep scalable cathode manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "cells",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-cells"
+      ],
+      "notes": "Nationwide repeat output with operating material supply supports deep scalable cell manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "cnc",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-cnc"
+      ],
+      "notes": "Operating factory and commercial machine families support established production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "electronics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-electronics"
+      ],
+      "notes": "Named operating factories support established automotive power-electronics manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "grid",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-grid"
+      ],
+      "notes": "Documented operating production lines support established capability. National kVA output is unmeasured.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "lithography",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-lithography"
+      ],
+      "notes": "Established documented tool families. No EUV or advanced immersion performance is inferred.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "metrology",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-metrology"
+      ],
+      "notes": "A manufacturing scope at a Chinese factory supports established CMM production. Ownership is separate from location.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "osat",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-osat"
+      ],
+      "notes": "Certified operating package manufacturing supports established production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "photoresist",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-photoresist"
+      ],
+      "notes": "Commercial mature-node resist formulations support stage 3. EUV-resist capability is unestablished.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "powertrain",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-powertrain"
+      ],
+      "notes": "Domestic engine and transmission operations support stage 3. Foreign partnership is separate from location.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "process-gases",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-process-gases"
+      ],
+      "notes": "Manufacturer-submitted production evidence supports established specialty-gas manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "reducers",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-reducers"
+      ],
+      "notes": "A commercial reducer manufacturing portfolio supports established production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "robots",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-robots"
+      ],
+      "notes": "Commercial robots and system-integration portfolios support established capability.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "solar",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-solar"
+      ],
+      "notes": "Multiple processing stages and commercial output support scalable module manufacture. Global shipments are not relabeled as domestic totals.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "spindles",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-spindles"
+      ],
+      "notes": "Commercial spindle manufacture supports stage 3. Upstream component origin unassessed.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "steel",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-steel"
+      ],
+      "notes": "A manufacturer production-process record supports established specialty-steel production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "superalloys",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "notes": "Batch production supports established manufacture within the documented alloy scope.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "turbines",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-cn-turbines"
+      ],
+      "notes": "Explicit batch production supports established manufacture. Engine-specific yields are undisclosed.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "CN",
+      "capability": "wafer-fab",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "smic"
+      ],
+      "notes": "Existing sourced production assessment retained.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "airframes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-airframes"
+      ],
+      "notes": "Repeated delivered structures support established airframe manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "api",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-api"
+      ],
+      "notes": "Multi-site commercial production and kilo-to-commercial capabilities support scalable API manufacturing depth.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "biologics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-biologics"
+      ],
+      "notes": "Indian mAb production supports stage 3. Malaysian insulin production is excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "casting",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-casting"
+      ],
+      "notes": "An operating vacuum-casting facility supports established precision casting.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "cathodes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-cathodes"
+      ],
+      "notes": "Delivered validation material and demonstrated process support pilot capability. No commercial kilotonne plant is inferred.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "cells",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-cells"
+      ],
+      "notes": "Period output and initial deployment support early-commercial manufacture. Announced GWh targets are excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "cnc",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-cnc"
+      ],
+      "notes": "Commercial manufacture supports stage 3. Controller origin is unquantified.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "electronics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-electronics"
+      ],
+      "notes": "Documented electronics production supports stage 3. Constituent chip origin remains unassessed.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "grid",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-grid"
+      ],
+      "notes": "An operating manufacturing network supports stage 3. Announced new large-transformer capacity is excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "lithography",
+      "reviewedOn": "2026-11-05",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "Indian nanofabrication sources establish tool use and process capability. Domestic manufacture of semiconductor exposure systems was not verified.",
+      "evidenceState": "no-qualifying-record"
+    },
+    {
+      "country": "IN",
+      "capability": "metrology",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-metrology"
+      ],
+      "notes": "Manufacturer production history supports established dimensional-metrology capability. Sensor and encoder origins remain unassessed.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "osat",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "cg-production"
+      ],
+      "notes": "Existing sourced production assessment retained.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "photoresist",
+      "reviewedOn": "2026-11-05",
+      "outcome": "insufficient evidence",
+      "sourceIds": [],
+      "notes": "Indian nanofabrication sources describe resist use. Domestic manufacture of electronic photoresist formulations was not verified.",
+      "evidenceState": "no-qualifying-record"
+    },
+    {
+      "country": "IN",
+      "capability": "powertrain",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-powertrain"
+      ],
+      "notes": "An operating engine plant supports established powertrain manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "process-gases",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-process-gases"
+      ],
+      "notes": "Commissioned specialty-gas production supports stage 3 for this gas species.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "reducers",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-reducers"
+      ],
+      "notes": "A domestic product offer supports limited capability. Independent qualification and repeat-production output remain unverified.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "robots",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-robots"
+      ],
+      "notes": "Physical cell build and commissioning supports stage 3. Indigenous origin of every robot component is unestablished.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "solar",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-solar"
+      ],
+      "notes": "Multi-GW domestic module production supports scalable module capability. Cell, wafer and polysilicon origins are separate.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "spindles",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-spindles"
+      ],
+      "notes": "Manufacturer interview explicitly distinguishes new manufacture from rebuilding. Throughput unmeasured.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "steel",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-steel"
+      ],
+      "notes": "Multi-million-tonne capacity and downstream processing support scalable domestic stainless manufacture.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "superalloys",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-superalloys"
+      ],
+      "notes": "An operating melting-to-product plant supports established manufacture. Grade-level yields are unmeasured.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "turbines",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-turbines"
+      ],
+      "notes": "Delivered development hardware supports pilot demonstration. High-volume qualified hot-section manufacture is unestablished.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "IN",
+      "capability": "wafer-fab",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-in-wafer-fab"
+      ],
+      "notes": "Operating mature-node fabrication. Advanced nodes are outside this scope.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "airframes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-airframes"
+      ],
+      "notes": "Repeated deliveries across multiple large-aircraft programs support scalable airframe production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "api",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-api"
+      ],
+      "notes": "An identified operating API site supports established production. Input origin is unquantified.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "biologics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-biologics"
+      ],
+      "notes": "Large installed bioreactors and repeat commercial supply support scalable manufacturing depth.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "casting",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-casting"
+      ],
+      "notes": "Identified operating casting sites support established precision casting.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "cathodes",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-cathodes"
+      ],
+      "notes": "An operating CAM plant supports established manufacture. Domestic independence across every chemistry is unestablished.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "cells",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-cells"
+      ],
+      "notes": "Repeated cell output supports established manufacture. Material origin is unassessed.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "cnc",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-cnc"
+      ],
+      "notes": "Multi-product domestic manufacture with repeat output supports scalable production depth.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "electronics",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-electronics"
+      ],
+      "notes": "An operating US manufacturing campus supports stage 3. Imported chip content is unmeasured.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "grid",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-grid"
+      ],
+      "notes": "Operating power-transformer manufacture supports stage 3. Imported cores and annual output are unquantified.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "lithography",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-lithography"
+      ],
+      "notes": "Packaging lithography supports established equipment manufacture. Not evidence of a US-built EUV scanner.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "metrology",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-metrology"
+      ],
+      "notes": "An identified domestic metrology-equipment factory supports established production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "osat",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-osat"
+      ],
+      "notes": "Operational high-volume advanced packaging, without assuming a complete domestic supply chain.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "photoresist",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-photoresist"
+      ],
+      "notes": "An identified US site and commercial photoresist portfolio support established production.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "powertrain",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-powertrain"
+      ],
+      "notes": "Integrated multi-plant manufacture supports scalable powertrain capability.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "process-gases",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-process-gases"
+      ],
+      "notes": "Operating nitrogen production supports stage 3. Announced Singapore production is excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "reducers",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-reducers"
+      ],
+      "notes": "Domestic precision-gearing manufacture supports stage 3. The page retains legacy Peabody text beside its Beverly address.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "robots",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-robots"
+      ],
+      "notes": "Domestic cell fabrication supports stage 3 without implying domestic manufacture of every robot arm.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "solar",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-solar"
+      ],
+      "notes": "Operating multi-GW integrated thin-film manufacture supports scalable module capability.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "spindles",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-spindles"
+      ],
+      "notes": "New-spindle production supports stage 3. Worldwide installed-base totals are excluded.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "steel",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-steel"
+      ],
+      "notes": "Integrated multi-site domestic melt and finishing operations support production depth.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "superalloys",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-superalloys"
+      ],
+      "notes": "Domestic specialization in flat, tubular and wire products supports deep processing capability. Feedstock origin is unmeasured.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "turbines",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "review-source-us-turbines"
+      ],
+      "notes": "Operating component production supports stage 3 within the cited scope.",
+      "evidenceState": "supported"
+    },
+    {
+      "country": "US",
+      "capability": "wafer-fab",
+      "reviewedOn": "2026-11-05",
+      "outcome": "supported",
+      "sourceIds": [
+        "tsmc"
+      ],
+      "notes": "Existing sourced production assessment retained.",
+      "evidenceState": "supported"
+    }
+  ],
+  "stageCriteria": [
+    "0 - insufficient primary evidence for the defined domestic manufacturing activity",
+    "1 - documented domestic development or a limited product offer without verified repeat output",
+    "2 - delivered demonstration batches, pilot manufacture or initial captive commercialization",
+    "3 - identified operating commercial manufacture supported by producer, regulatory or government evidence",
+    "4 - documented repeat-output scale, integrated processing or multi-product/multi-site manufacturing depth within the stated scope"
+  ],
+  "researchMethod": "Government, regulatory, research-institute, manufacturer and manufacturer-submitted records. New coverage enters the knowledge timeline on the review date. Source observation dates retain their vintage. Undated pages use access-date bounds instead of invented publication dates. No national independence or numerical ranking is inferred.",
+  "metadataReviewedOn": "2026-11-07",
+  "stageLabels": [
+    "No qualifying record entered",
+    "Research / limited evidence",
+    "Pilot / early commercial",
+    "Documented production operation",
+    "Source-reported production depth (scoped)"
+  ]
+}

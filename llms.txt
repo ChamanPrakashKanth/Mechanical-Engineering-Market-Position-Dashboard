@@ -6,6 +6,11 @@
 
 - [AI Intelligence Control Room](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/ai-intelligence/): Domestic-origin AI evidence for India, China and the US across 36 definitions. Static country-capability anchors such as #IN-training contain source citations, scoped quantities and date limits. Research gaps are distinct from verified absence; origin is separate from adoption. No national ranking or automatic research refresh.
 
+## Industrial and supply-chain evidence
+
+- [Industrial Capability Control Room](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/industrial/): 23 capability definitions, 69 country records, recorded history, separate publication and access dates, source-reported quantities and explicit evidence gaps. Dedicated capability pages contain static country citations.
+- [Supply-chain Intelligence](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/supply-chain-intelligence/): Eight static process maps and browser-local scenarios with India, China and US manufacturing overlays. Technical relationships are distinct from commercial contracts. Missing evidence never proves resilience. No live inventory, trade exposure, losses or recovery-time forecast.
+
 ## Main tools
 
 - [3D Print Hole Fit Coupon Generator](https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/engineering-careers/3d-print-hole-fit-coupon-generator.html): Original parametric clearance ladder for measured shafts, visual preview, editable OpenSCAD download and measured-fit CSV. Browser local; no API or GPU. Print-specific results require physical measurement.
