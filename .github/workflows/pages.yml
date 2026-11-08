@@ -73,7 +73,7 @@ jobs:
           cp -r industrial _site/industrial
           cp -r ai-intelligence _site/ai-intelligence
           cp -r supply-chain-intelligence _site/supply-chain-intelligence
-          cp -r gate-practice-coach/site _site/gate-practice-coach
+          cp -r gate-practice-coach _site/gate-practice-coach
 
       - name: Integrate engineering fieldnotes and sitemap
         run: node fieldnotes-app/scripts/integrate.mjs
