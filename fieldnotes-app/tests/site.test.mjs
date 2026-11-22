@@ -6,3 +6,15 @@ test('printable formula sheet covers every calculator',async()=>{const html=awai
 test('production HTML has readable content before JavaScript runs',async()=>{const home=await readFile('dist/index.html','utf8');assert.match(home,/A little theory/);for(const t of tools){const html=await readFile(`dist/tools/${t.id}.html`,'utf8');assert.match(html,/Your inputs/);assert.match(html,/THE METHOD/);}for(const g of guides){const html=await readFile(`dist/guides/${g.slug}.html`,'utf8');assert.ok(html.includes(g.sections[0][1]));}});
 test('all local page links resolve under the configured deployment base',async()=>{const pages=['index.html','units.html','reference.html','about.html','privacy.html','methodology.html',...tools.map(t=>`tools/${t.id}.html`),...guides.map(g=>`guides/${g.slug}.html`)];for(const page of pages){const html=await readFile(`dist/${page}`,'utf8');for(const [,url]of html.matchAll(/href="(\/[^"]*)"/g)){const base=process.env.BASE_PATH||'/';const path=url.split('#')[0].split('?')[0];assert.ok(path.startsWith(base),`Unexpected base: ${path}`);const file=path.slice(base.length);if(!file)continue;await assert.doesNotReject(access(`dist/${file}`),`${page} → ${file}`);}}});
 test('no advertising or analytics scripts, fake publisher ID or fabricated canonical domain',async()=>{const html=await readFile('dist/index.html','utf8');assert.doesNotMatch(html,/adsbygoogle|googletagmanager|ca-pub-|example\.com/);assert.match(html,/application\/ld\+json/);});
+
+test('prerendered worked answers and descriptive links connect every guide to its calculator', async () => {
+  const base = process.env.BASE_PATH || '/';
+  for (const g of guides) {
+    const article = await readFile(`dist/guides/${g.slug}.html`, 'utf8');
+    const calculator = await readFile(`dist/tools/${g.tool}.html`, 'utf8');
+    assert.ok(g.quickAnswer, `${g.slug} has a visible summary`);
+    assert.ok(article.includes(`<h2>Quick answer</h2><p>${g.quickAnswer}</p>`), g.slug);
+    assert.ok(article.includes(`href="${base}tools/${g.tool}.html"`), g.slug);
+    assert.ok(calculator.includes(`href="${base}guides/${g.slug}.html">${g.title}</a>`), g.slug);
+  }
+});
