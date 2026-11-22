@@ -1,0 +1,55 @@
+name: MechIntel PR checks
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mechintel-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_PATH: /Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/
+      SITE_URL: https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/fieldnotes/
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Build and test Fieldnotes
+        run: |
+          npm ci --prefix fieldnotes-app
+          npm run build --prefix fieldnotes-app
+          npm test --prefix fieldnotes-app
+
+      - name: Generate and test the dashboard and intelligence pages
+        run: |
+          python3 scripts/generate-intelligence.py
+          node --check app.js
+          node --check shared/mechintel-core.js
+          node --check analytics.js
+          node --test tests/*.test.cjs
+
+      - name: Test the MCP server
+        run: |
+          npm ci --prefix mcp
+          npm ci --prefix mcp/worker
+          npm run sync-catalog --prefix mcp
+          npm test --prefix mcp
+
+      - name: Assemble and check the local Pages site
+        run: |
+          python3 scripts/assemble-pr-site.py
+          python3 scripts/check-pr-site.py
