@@ -1,6 +1,6 @@
 # Mech-Eng Pathfinder: Market Position & Career Intelligence Dashboard
 
-An interactive engineering career assessment designed for students and early-career engineers. It parses resumes locally, evaluates skills, maps profiles to career paths, and compares readiness against a **deterministically simulated 100,000-profile mechanical engineering benchmark**. Benchmark profiles are generated examples, not real or anonymized applicants.
+An interactive engineering career assessment designed for students and early-career engineers. It parses resumes locally, evaluates skills, maps profiles to career paths, and compares readiness against **10,000 deterministically generated mechanical engineering profiles**, with rank counts shown on a **100,000-profile model scale**. Benchmark profiles are generated examples, not real or anonymized applicants.
 
 Public SEO site: **https://chamanprakashkanth.github.io/Mechanical-Engineering-Market-Position-Dashboard/**
 
@@ -30,8 +30,8 @@ This project offers two fully functional UI versions:
 - Resume drafting and recommendations run in the browser with fixed templates and rules; no AI API token, server processing, or GPU is required.
 
 ### 2. Double-Percentile Ranking Heuristics
-Computes a custom **Employability Score** (from 0 to 100) based on weighted resume attributes, and calculates the candidate's exact percentile and ordinal rank across four key dimensions:
-- **Global / Worldwide Rank**: Position against the generated 100,000-profile mechanical benchmark.
+Computes a custom **Employability Score** (from 0 to 100) based on weighted resume attributes, and reports rounded sample percentiles and scaled rank estimates across four dimensions:
+- **Global / Worldwide Rank**: Position on the 100,000-profile model scale, estimated from the 10,000 generated profiles.
 - **National (India) Rank**: Position against the generated India-region subset of that simulated cohort.
 - **Tier Group Rank**: Performance relative to peers from the same college tier.
 - **Specialization Cluster Rank**: Ranking within the matched career discipline.
@@ -63,7 +63,7 @@ Using technical keyword intersections, profiles are matched to one of five key d
 - **LinkedIn Job Match Ranking**: Ranks mechanical-engineering job search lanes locally from profile skills, software proficiency, certifications, portfolio projects, internships, and specialty alignment. Daily links open LinkedIn results posted within the last 24 hours, with no scraping, paid API, account token, or AI-token usage.
 
 ### 7. Interactive Competitor Database Viewer
-- Explore, filter, and paginate through the deterministic 100,000-profile simulated benchmark.
+- Explore, filter, and paginate through the 10,000 generated benchmark profiles.
 - Filter by target region (India vs. Global) or career cluster, and search for specific colleges, degrees, or tools.
 
 ### 8. Comprehensive Text Course Academy

@@ -142,7 +142,7 @@ const HR_QA = [
     { q: "Tell me about a time you had to resolve a major technical failure in a group project.", a: "Guideline: Use the STAR method. S: Situation (Identify the group task), T: Task (Specify the structural failure or design clash), A: Action (Show how you ran FEA/CAD diagnostics), R: Result (Verify that the prototype passed tests)." }
 ];
 
-// Seeded dataset generator (Generates a deterministic 100,000-profile simulated benchmark)
+// Generate 10,000 profiles; display rank counts on a 100,000-profile model scale.
 function generateDataset() {
     const random = createRandom(42);
     const data = [];
@@ -1122,10 +1122,17 @@ function loadPreset(presetName) {
     }
 }
 
-// Particle Canvas backgrounds
+// Decorative canvases are hidden in the current theme; don't queue invisible frames.
+function canAnimateDecorativeCanvas(canvas) {
+    return Boolean(canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        && window.getComputedStyle(canvas).display !== 'none');
+}
+
 function initParticles() {
     const canvas = document.getElementById('particle-canvas');
+    if (!canAnimateDecorativeCanvas(canvas)) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
@@ -5136,8 +5143,9 @@ function playAudioTone(type) { /* Audio disabled */ }
 // 2. Ambient Particle Canvas Animation Loop
 function initParticleBackground() {
     const canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
+    if (!canAnimateDecorativeCanvas(canvas)) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
     
