@@ -960,7 +960,8 @@ async function handlePdfUpload(file) {
     
     try {
         const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        // CVE-2024-4367: Mozilla's documented mitigation for this legacy PDF.js version.
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, isEvalSupported: false }).promise;
         let text = "";
         
         for (let i = 1; i <= pdf.numPages; i++) {
@@ -1005,17 +1006,11 @@ async function handlePdfUpload(file) {
                 
                 // Build Highlight
                 const hlBox = document.getElementById("highlighted-resume-box");
-                let highlightedText = parsed.raw_text;
-                parsed.skills.forEach(s => {
-                    highlightedText = highlightedText.replace(new RegExp(s, 'gi'), `<span class="highlight-skill">${s}</span>`);
-                });
-                parsed.software_tools.forEach(sw => {
-                    highlightedText = highlightedText.replace(new RegExp(sw, 'gi'), `<span class="highlight-software">${sw}</span>`);
-                });
-                parsed.certifications.forEach(c => {
-                    highlightedText = highlightedText.replace(new RegExp(c, 'gi'), `<span class="highlight-cert">${c}</span>`);
-                });
-                hlBox.innerHTML = highlightedText;
+                renderHighlightedResume(hlBox, parsed.raw_text, [
+                    [parsed.skills, "highlight-skill"],
+                    [parsed.software_tools, "highlight-software"],
+                    [parsed.certifications, "highlight-cert"]
+                ]);
                 document.getElementById("highlighted-resume-container").classList.remove("hidden");
                 
                 showPane("manual-setup-panel");
@@ -1030,6 +1025,35 @@ async function handlePdfUpload(file) {
     }
 }
 
+// Imported résumé text is untrusted. Keep highlights as DOM elements, never HTML.
+function renderHighlightedResume(box, text, groups) {
+    const rules = groups.flatMap(([terms, className]) =>
+        terms.filter(Boolean).map(term => ({ term, className }))
+    );
+    if (!rules.length) {
+        box.textContent = text;
+        return;
+    }
+    const escapePattern = term => term.replace(/[.*+?^${}()|[\]\\]/g, "\\// Tag helpers
+");
+    const pattern = new RegExp(
+        rules.map(({ term }) => escapePattern(term)).sort((a, b) => b.length - a.length).join("|"),
+        "gi"
+    );
+    const fragment = document.createDocumentFragment();
+    let cursor = 0;
+    for (const match of text.matchAll(pattern)) {
+        fragment.append(document.createTextNode(text.slice(cursor, match.index)));
+        const span = document.createElement("span");
+        span.className = rules.find(({ term }) => term.toLowerCase() === match[0].toLowerCase()).className;
+        span.textContent = match[0];
+        fragment.append(span);
+        cursor = match.index + match[0].length;
+    }
+    fragment.append(document.createTextNode(text.slice(cursor)));
+    box.replaceChildren(fragment);
+}
+
 // Tag helpers
 function addTag(wrapperId, text, className) {
     const wrapper = document.getElementById(wrapperId);
@@ -1040,11 +1064,14 @@ function addTag(wrapperId, text, className) {
     
     const pill = document.createElement("span");
     pill.className = `tag-pill ${className}`;
-    pill.innerHTML = `${text} <i data-lucide="x" class="remove-tag-icon"></i>`;
-    
-    pill.querySelector("i").addEventListener("click", () => {
+    pill.append(document.createTextNode(`${text} `));
+    const removeIcon = document.createElement("i");
+    removeIcon.setAttribute("data-lucide", "x");
+    removeIcon.className = "remove-tag-icon";
+    removeIcon.addEventListener("click", () => {
         pill.remove();
     });
+    pill.append(removeIcon);
     
     wrapper.insertBefore(pill, input);
     lucide.createIcons();
@@ -1412,16 +1439,38 @@ function buildResumeDraft() {
     const summary = value("rb-summary");
     const bullets = value("rb-experience").split(/\n+/).map(line => line.replace(/^[-•*]\s*/, "").trim()).filter(Boolean);
     const skills = value("rb-skills").split(/[,;\n]+/).map(skill => skill.trim()).filter(Boolean);
-    const sections = [
-        contact ? `<p class="resume-contact">${escapeResumeHtml(contact)}</p>` : "",
-        `<h2>${escapeResumeHtml(role)}</h2>`,
-        summary ? `<h3>Professional Summary</h3><p>${escapeResumeHtml(summary)}</p>` : "",
-        bullets.length ? `<h3>Experience &amp; Projects</h3><ul>${bullets.map(line => `<li>${escapeResumeHtml(line)}</li>`).join("")}</ul>` : "",
-        skills.length ? `<h3>Skills &amp; Tools</h3><p>${skills.map(escapeResumeHtml).join(" · ")}</p>` : "",
-        education ? `<h3>Education</h3><p>${escapeResumeHtml(education)}</p>` : ""
-    ].filter(Boolean).join("");
-    const preview = document.getElementById("resume-builder-preview");
-    preview.innerHTML = `<header><h1>${escapeResumeHtml(name)}</h1>${sections}</header>`;
+
+    // Build only the fixed résumé structure; all user-provided values are text nodes.
+    const appendText = (parent, tagName, content, className) => {
+        const element = document.createElement(tagName);
+        element.textContent = content;
+        if (className) element.className = className;
+        parent.appendChild(element);
+        return element;
+    };
+    const header = document.createElement("header");
+    appendText(header, "h1", name);
+    if (contact) appendText(header, "p", contact, "resume-contact");
+    appendText(header, "h2", role);
+    if (summary) {
+        appendText(header, "h3", "Professional Summary");
+        appendText(header, "p", summary);
+    }
+    if (bullets.length) {
+        appendText(header, "h3", "Experience & Projects");
+        const list = document.createElement("ul");
+        bullets.forEach(line => appendText(list, "li", line));
+        header.appendChild(list);
+    }
+    if (skills.length) {
+        appendText(header, "h3", "Skills & Tools");
+        appendText(header, "p", skills.join(" · "));
+    }
+    if (education) {
+        appendText(header, "h3", "Education");
+        appendText(header, "p", education);
+    }
+    document.getElementById("resume-builder-preview").replaceChildren(header);
     document.getElementById("resume-builder-status").textContent = bullets.length || skills.length || education || summary
         ? "Draft built from your entries. Check dates, measurements, and credentials before printing."
         : "Add your own experience, skills, education, or summary to make this draft useful.";
