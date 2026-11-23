@@ -46,3 +46,30 @@ test('the root benchmark and its navigation describe what is actually available'
     assert.ok(homepage.includes(`href="${path}"`), path);
   }
 });
+
+test('homepage beam example agrees with its initial and updated calculator results', () => {
+  const homepage = rootFile('index.html');
+  const ids = ['load', 'length', 'e', 'i'];
+  const outputs = ['deflection', 'moment', 'stress'];
+  const elements = Object.fromEntries([...ids.map(id => 'slider-beam-' + id),
+    ...ids.map(id => 'val-beam-' + id), ...outputs.map(id => 'calc-beam-' + id)]
+    .map(id => [id, { addEventListener(event, handler) { this[event] = handler; } }]));
+  for (const id of ids) {
+    const input = homepage.match(new RegExp('<input[^>]+id="slider-beam-' + id + '"[^>]+>'))[0];
+    elements['slider-beam-' + id].value = input.match(/\bvalue="([^"]+)"/)[1];
+  }
+  const beam = source.slice(source.indexOf('function initBeamCalculator()'), source.indexOf('function renderBeamSvgDiagram('));
+  runInNewContext(beam + '\ninitBeamCalculator();', {
+    document: { getElementById: id => elements[id] },
+    renderBeamSvgDiagram() {},
+    playAudioTone() {},
+  });
+  const results = () => outputs.map(id => elements['calc-beam-' + id].innerText);
+  // Independently evaluated at P=50 kN, L=4 m, E=200 GPa, I=4.5e-5 m⁴ and c=0.1 m.
+  assert.deepEqual(results(), ['7.41 mm', '50.00 kN·m', '111.1 MPa']);
+  assert.deepEqual(outputs.map(id => homepage.match(new RegExp('id="calc-beam-' + id + '"[^>]*>([^<]+)<'))[1]), results());
+  for (const id of ids) assert.match(homepage, new RegExp('<label[^>]+for="slider-beam-' + id + '"'));
+  elements['slider-beam-load'].value = '100';
+  elements['slider-beam-load'].input();
+  assert.deepEqual(results(), ['14.81 mm', '100.00 kN·m', '222.2 MPa']);
+});
