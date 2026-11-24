@@ -2160,22 +2160,76 @@
                     </div>
                 </div>
 
-<!-- Expanded mechanical design calculators -->
-<div class="calculator-node-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.5rem;">
-<div class="glass-card calculator-node"><h4>🔩 Shaft Torsion & Shear Stress</h4><p class="section-subtitle">Solid circular shaft under torque.</p><div class="calculator-input-row"><label>Torque (N·m)</label><input type="number" id="calc-torque" value="500"></div><div class="calculator-input-row"><label>Diameter (mm)</label><input type="number" id="calc-shaft-d" value="30"></div><div class="calc-result-box" id="calc-torque-result">Shear stress: 47.2 MPa</div></div>
-<div class="glass-card calculator-node"><h4>🌡️ Thermal Conduction</h4><p class="section-subtitle">Steady 1D heat transfer through a wall.</p><div class="calculator-input-row"><label>Conductivity k (W/m·K)</label><input type="number" id="calc-k" value="45"></div><div class="calculator-input-row"><label>Area (m²) / Thickness (mm)</label><input type="number" id="calc-area" value="2"><input type="number" id="calc-thickness" value="10"></div><div class="calculator-input-row"><label>Temperature drop (K)</label><input type="number" id="calc-delta-t" value="50"></div><div class="calc-result-box" id="calc-thermal-result">Heat flow: 450,000 W</div></div>
-<div class="glass-card calculator-node"><h4>💧 Pump Power & Head</h4><p class="section-subtitle">Hydraulic power with efficiency.</p><div class="calculator-input-row"><label>Flow (L/s)</label><input type="number" id="calc-flow" value="12"></div><div class="calculator-input-row"><label>Head (m) / Efficiency (%)</label><input type="number" id="calc-head" value="30"><input type="number" id="calc-eff" value="75"></div><div class="calc-result-box" id="calc-pump-result">Input power: 4.71 kW</div></div>
-<div class="glass-card calculator-node"><h4>🛢️ Thin-Wall Pressure Vessel</h4><p class="section-subtitle">Hoop and longitudinal stress estimate.</p><div class="calculator-input-row"><label>Pressure (MPa)</label><input type="number" id="calc-pressure" value="2"></div><div class="calculator-input-row"><label>Diameter (mm) / Wall (mm)</label><input type="number" id="calc-vessel-d" value="500"><input type="number" id="calc-vessel-t" value="8"></div><div class="calc-result-box" id="calc-vessel-result">Hoop: 62.5 MPa · Longitudinal: 31.3 MPa</div></div>
-</div>
-
-<div class="calculator-node-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem;">
-<div class="glass-card calculator-node"><h4>🏗️ Euler Column Buckling</h4><p class="section-subtitle">Critical load for a slender pinned column.</p><div class="calculator-input-row"><label>E (GPa) / I (cm⁴)</label><input type="number" id="calc-buck-e" value="200"><input type="number" id="calc-buck-i" value="500"></div><div class="calculator-input-row"><label>Effective length (m)</label><input type="number" id="calc-buck-l" value="2"></div><div class="calc-result-box" id="calc-buck-result">Critical load: 246.7 kN</div></div>
-<div class="glass-card calculator-node"><h4>📉 Darcy–Weisbach Pressure Drop</h4><p class="section-subtitle">Major loss in a straight pipe.</p><div class="calculator-input-row"><label>f / Length (m) / Diameter (m)</label><input type="number" id="calc-darcy-f" value="0.02" step="0.001"><input type="number" id="calc-darcy-l" value="20"><input type="number" id="calc-darcy-d" value="0.05" step="0.001"></div><div class="calculator-input-row"><label>Velocity (m/s)</label><input type="number" id="calc-darcy-v" value="2"></div><div class="calc-result-box" id="calc-darcy-result">Head loss: 1.63 m</div></div>
-<div class="glass-card calculator-node"><h4>♨️ Heat Exchanger LMTD</h4><p class="section-subtitle">Log-mean temperature difference.</p><div class="calculator-input-row"><label>ΔT₁ (K) / ΔT₂ (K)</label><input type="number" id="calc-lmtd-a" value="60"><input type="number" id="calc-lmtd-b" value="30"></div><div class="calc-result-box" id="calc-lmtd-result">LMTD: 43.3 K</div></div>
-<div class="glass-card calculator-node"><h4>⚙️ Bearing L10 Life</h4><p class="section-subtitle">Basic rating life in million revolutions.</p><div class="calculator-input-row"><label>Dynamic rating C (kN) / Load P (kN)</label><input type="number" id="calc-bearing-c" value="20"><input type="number" id="calc-bearing-p" value="5"></div><div class="calculator-input-row"><label>Speed (rpm)</label><input type="number" id="calc-bearing-n" value="1500"></div><div class="calc-result-box" id="calc-bearing-result">L10: 64.0 million rev · 711 h</div></div>
-<div class="glass-card calculator-node"><h4>🌀 Helical Spring Stiffness</h4><p class="section-subtitle">Axial rate for a close-coiled spring.</p><div class="calculator-input-row"><label>Wire d (mm) / Mean coil D (mm)</label><input type="number" id="calc-spring-d" value="5"><input type="number" id="calc-spring-D" value="40"></div><div class="calculator-input-row"><label>Active coils / G (GPa)</label><input type="number" id="calc-spring-n" value="8"><input type="number" id="calc-spring-g" value="79"></div><div class="calc-result-box" id="calc-spring-result">Rate: 1.93 N/mm</div></div>
-<div class="glass-card calculator-node"><h4>🔧 Fillet Weld Throat Stress</h4><p class="section-subtitle">Direct shear on an equal-leg fillet weld.</p><div class="calculator-input-row"><label>Load (kN) / Weld length (mm)</label><input type="number" id="calc-weld-p" value="10"><input type="number" id="calc-weld-l" value="100"></div><div class="calculator-input-row"><label>Leg size (mm)</label><input type="number" id="calc-weld-s" value="6"></div><div class="calc-result-box" id="calc-weld-result">Throat stress: 23.6 MPa</div></div>
-</div>
+                <!-- Fixed mechanical design worked examples -->
+                <section id="mechanical-design-examples" aria-labelledby="mechanical-design-examples-title" style="margin-top:1.5rem;">
+                    <h3 id="mechanical-design-examples-title">Mechanical design worked examples</h3>
+                    <p class="section-subtitle">These examples use fixed inputs and illustrate simplified engineering models. They are not design ratings.</p>
+                    <div class="calculator-node-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem;margin-top:1rem;">
+                        <article class="glass-card calculator-node">
+                            <h4>Shaft torsion and shear stress</h4>
+                            <p class="section-subtitle">Linear-elastic torsion of a solid circular shaft.</p>
+                            <p>Torque: 500 N·m; diameter: 30 mm.</p>
+                            <div class="calc-result-box" id="calc-torque-result">Maximum surface shear stress: 94.3 MPa</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Thermal conduction</h4>
+                            <p class="section-subtitle">Steady one-dimensional heat transfer through a flat wall with constant conductivity.</p>
+                            <p>Conductivity: 45 W/(m·K); area: 2 m²; thickness: 10 mm; temperature drop: 50 K.</p>
+                            <div class="calc-result-box" id="calc-thermal-result">Heat flow: 450,000 W</div>
+                            <p><a href="fieldnotes/tools/conduction.html">Open the wall conduction calculator</a></p>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Pump power and head</h4>
+                            <p class="section-subtitle">Input power for water at 1,000 kg/m³ and g = 9.81 m/s².</p>
+                            <p>Flow: 12 L/s; head: 30 m; pump efficiency: 75%.</p>
+                            <div class="calc-result-box" id="calc-pump-result">Pump shaft input power: 4.71 kW</div>
+                            <p><a href="fieldnotes/tools/pump-power.html">Open the pump power calculator</a></p>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Thin-wall pressure vessel</h4>
+                            <p class="section-subtitle">Membrane stress estimate for a thin, closed-end circular cylinder.</p>
+                            <p>Internal gauge pressure: 2 MPa; internal diameter: 500 mm; wall thickness: 8 mm.</p>
+                            <div class="calc-result-box" id="calc-vessel-result">Hoop: 62.5 MPa · Longitudinal: 31.3 MPa</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Euler column buckling</h4>
+                            <p class="section-subtitle">Ideal elastic buckling of a straight, slender column. Use the least second moment of area and the effective length for the relevant axis.</p>
+                            <p>Elastic modulus: 200 GPa; second moment of area: 500 cm⁴; effective length: 2 m.</p>
+                            <div class="calc-result-box" id="calc-buck-result">Critical load: 2,467.4 kN</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Darcy–Weisbach pipe head loss</h4>
+                            <p class="section-subtitle">Major head loss in a straight pipe, excluding fittings.</p>
+                            <p>Darcy friction factor: 0.02; length: 20 m; diameter: 0.05 m; mean velocity: 2 m/s; g = 9.81 m/s².</p>
+                            <div class="calc-result-box" id="calc-darcy-result">Head loss: 1.63 m</div>
+                            <p><a href="fieldnotes/tools/pressure-drop.html">Open the pipe pressure-drop calculator</a></p>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Heat exchanger LMTD</h4>
+                            <p class="section-subtitle">Log-mean of two positive terminal temperature differences.</p>
+                            <p>Terminal temperature differences: 60 K and 30 K.</p>
+                            <div class="calc-result-box" id="calc-lmtd-result">LMTD: 43.3 K</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Ball bearing L10 life</h4>
+                            <p class="section-subtitle">Basic rating life for a ball bearing at constant equivalent load and speed.</p>
+                            <p>Dynamic load rating: 20 kN; equivalent load: 5 kN; speed: 1,500 rpm.</p>
+                            <div class="calc-result-box" id="calc-bearing-result">L10: 64.0 million revolutions · 711 h</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Helical spring stiffness</h4>
+                            <p class="section-subtitle">Ideal axial stiffness of a close-coiled, round-wire spring in the elastic range.</p>
+                            <p>Wire diameter: 5 mm; mean coil diameter: 40 mm; active coils: 8; shear modulus: 79 GPa.</p>
+                            <div class="calc-result-box" id="calc-spring-result">Spring rate: 12.05 N/mm</div>
+                        </article>
+                        <article class="glass-card calculator-node">
+                            <h4>Fillet weld throat stress</h4>
+                            <p class="section-subtitle">Average direct shear over a single equal-leg fillet weld’s effective throat area.</p>
+                            <p>Shear load: 10 kN; effective weld length: 100 mm; leg size: 6 mm.</p>
+                            <div class="calc-result-box" id="calc-weld-result">Average throat shear stress: 23.6 MPa</div>
+                        </article>
+                    </div>
+                </section>
 
                 <!-- Dashboard Sub-View: Video Academy (MP4) -->
                 <div id="dashboard-videos" class="dashboard-view-tab hidden">

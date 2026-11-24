@@ -73,3 +73,19 @@ test('homepage beam example agrees with its initial and updated calculator resul
   elements['slider-beam-load'].input();
   assert.deepEqual(results(), ['14.81 mm', '100.00 kN·m', '222.2 MPa']);
 });
+
+test('fixed engineering examples are non-editable and match independently evaluated examples', () => {
+  const homepage = rootFile('index.html');
+  const block = homepage.match(/<section id="mechanical-design-examples"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(block, 'worked examples section exists');
+  assert.equal((block.match(/<article\b/g) ?? []).length, 10);
+  assert.doesNotMatch(block, /<(?:input|button|select|textarea)\b|\bcontenteditable\b/);
+  const result = id => block.match(new RegExp('id="calc-' + id + '-result">([^<]+)'))?.[1];
+  assert.equal(result('torque'), 'Maximum surface shear stress: 94.3 MPa');
+  assert.equal(result('buck'), 'Critical load: 2,467.4 kN');
+  assert.equal(result('spring'), 'Spring rate: 12.05 N/mm');
+  for (const tool of ['conduction', 'pump-power', 'pressure-drop']) {
+    assert.ok(block.includes(`href="fieldnotes/tools/${tool}.html"`), tool);
+  }
+  assert.match(homepage, /<input[^>]+id="slider-beam-load"/, 'working beam slider preserved');
+});
