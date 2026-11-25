@@ -950,6 +950,39 @@ function renderDatabaseTable() {
     document.getElementById("next-page-btn").disabled = (endIdx >= totalRecords);
 }
 
+// Imported content is text. Only the fixed highlight spans are elements.
+function renderResumePreview(box, parsed) {
+    const classes = new Map();
+    for (const [keywords, className] of [
+        [parsed.skills, "highlight-skill"],
+        [parsed.software_tools, "highlight-software"],
+        [parsed.certifications, "highlight-cert"]
+    ]) {
+        for (const keyword of keywords) {
+            const key = keyword.toLowerCase();
+            if (key && !classes.has(key)) classes.set(key, className);
+        }
+    }
+    const text = parsed.raw_text;
+    box.textContent = "";
+    if (!classes.size) {
+        box.textContent = text;
+        return;
+    }
+    const terms = [...classes.keys()].sort((a, b) => b.length - a.length)
+        .map(term => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    let offset = 0;
+    for (const match of text.matchAll(new RegExp(terms.join("|"), "gi"))) {
+        box.append(document.createTextNode(text.slice(offset, match.index)));
+        const span = document.createElement("span");
+        span.className = classes.get(match[0].toLowerCase());
+        span.textContent = match[0];
+        box.append(span);
+        offset = match.index + match[0].length;
+    }
+    box.append(document.createTextNode(text.slice(offset)));
+}
+
 // local PDF file reader
 async function handlePdfUpload(file) {
     const statusDiv = document.getElementById("hero-upload-status") || document.getElementById("pdf-upload-status");
@@ -960,7 +993,7 @@ async function handlePdfUpload(file) {
     
     try {
         const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, isEvalSupported: false }).promise;
         let text = "";
         
         for (let i = 1; i <= pdf.numPages; i++) {
@@ -1003,19 +1036,7 @@ async function handlePdfUpload(file) {
                 parsed.software_tools.forEach(sw => addTag("tools-input-wrapper", sw, "tag-sw"));
                 parsed.certifications.forEach(c => addTag("certs-input-wrapper", c, "tag-cert"));
                 
-                // Build Highlight
-                const hlBox = document.getElementById("highlighted-resume-box");
-                let highlightedText = parsed.raw_text;
-                parsed.skills.forEach(s => {
-                    highlightedText = highlightedText.replace(new RegExp(s, 'gi'), `<span class="highlight-skill">${s}</span>`);
-                });
-                parsed.software_tools.forEach(sw => {
-                    highlightedText = highlightedText.replace(new RegExp(sw, 'gi'), `<span class="highlight-software">${sw}</span>`);
-                });
-                parsed.certifications.forEach(c => {
-                    highlightedText = highlightedText.replace(new RegExp(c, 'gi'), `<span class="highlight-cert">${c}</span>`);
-                });
-                hlBox.innerHTML = highlightedText;
+                renderResumePreview(document.getElementById("highlighted-resume-box"), parsed);
                 document.getElementById("highlighted-resume-container").classList.remove("hidden");
                 
                 showPane("manual-setup-panel");
