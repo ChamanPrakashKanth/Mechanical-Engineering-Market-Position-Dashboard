@@ -43,3 +43,12 @@ test('generated GATE book pages provide a first keyboard shortcut and a reduced-
     assert.match(page, /@media\(prefers-reduced-motion:reduce\)\{html\{scroll-behavior:auto\}\}/);
   }
 });
+
+test('the GATE 2027 coach callout uses the official XE0 label and explains the archived code', () => {
+  const callout = book('books').match(/<h2>GATE 2027 Practice Coach<\/h2>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(callout);
+  assert.match(callout, /Practise XE0 Engineering Mathematics/);
+  assert.match(callout, /compulsory 15-mark section of GATE XE/);
+  assert.match(callout, /called XE-A in the 2026 paper/);
+  assert.ok(callout.includes('https://gate2027.iitm.ac.in/exam_papers_and_syllabus'));
+});
