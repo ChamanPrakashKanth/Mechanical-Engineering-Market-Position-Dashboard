@@ -80,7 +80,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#upload-dropzone">Skip to career assessment</a>
+<a class="skip-link" href="#choose-resume-pdf">Skip to career assessment</a>
     <!-- Ambient Geometric Particle Background Canvas -->
     <canvas id="bg-canvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; opacity: 0.45;"></canvas>
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
@@ -195,13 +195,13 @@
                     <h3>Start your career assessment</h3>
                     <p>Provide your resume PDF or details to generate a competency scorecard.</p>
                 </div>
-                <div class="drag-drop-zone" id="upload-dropzone" tabindex="0" role="button" aria-label="Choose a resume PDF">
-                    <i data-lucide="file-text" class="upload-icon"></i>
-                    <p class="upload-title">Drag & Drop Resume PDF</p>
-                    <p class="upload-subtitle">or click to browse local files</p>
-                    <input type="file" id="hero-file-input" accept=".pdf" class="hidden-file-input">
-                    <div id="hero-upload-status" class="upload-status-text"></div>
+                <div class="drag-drop-zone" id="upload-dropzone">
+                    <i data-lucide="file-text" class="upload-icon" aria-hidden="true"></i>
+                    <p class="upload-title" id="resume-drop-hint">Drag and drop a résumé PDF here, or choose a file below.</p>
+                    <button type="button" class="btn btn-outline" id="choose-resume-pdf" aria-describedby="resume-drop-hint">Choose a résumé PDF</button>
+                    <div id="hero-upload-status" class="upload-status-text" role="status"></div>
                 </div>
+                <input type="file" id="hero-file-input" accept=".pdf" hidden>
                 <div class="or-divider"><span>OR</span></div>
                 <button class="btn btn-outline" id="hero-manual-btn">
                     <i data-lucide="edit-3"></i> Enter profile manually
