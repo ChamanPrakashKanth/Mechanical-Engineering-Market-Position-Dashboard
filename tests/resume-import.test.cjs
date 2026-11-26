@@ -44,3 +44,12 @@ test('résumé preview preserves literal text and creates only fixed highlight s
     render(box, { raw_text: '<sample>plain text</sample>', skills: [], software_tools: [], certifications: [] });
     assert.deepEqual(box.children, [{ textContent: '<sample>plain text</sample>' }]);
 });
+
+test('career assessment skip link targets the native PDF chooser, not the drop area or hidden input', () => {
+    const html = read('index.html');
+    assert.match(html, /<a class="skip-link" href="#choose-resume-pdf">/);
+    const zone = html.match(/<div class="drag-drop-zone" id="upload-dropzone">([\s\S]+?)<\/div>\s*<\/div>\s*<input\b[^>]*id="hero-file-input"[^>]*\bhidden>/);
+    assert.ok(zone, 'the native file input is hidden and outside the click handling area');
+    assert.match(zone[1], /<button type="button"[^>]*id="choose-resume-pdf"[^>]*>Choose a résumé PDF<\/button>/);
+    assert.match(zone[1], /id="hero-upload-status"[^>]*role="status"/);
+});
