@@ -18,3 +18,11 @@ test('prerendered worked answers and descriptive links connect every guide to it
     assert.ok(calculator.includes(`href="${base}guides/${g.slug}.html">${g.title}</a>`), g.slug);
   }
 });
+
+test('pipe calculator exposes the worked example and points to it from the guide', async () => {
+  const calculator = await readFile('dist/tools/pressure-drop.html', 'utf8');
+  const guide = await readFile('dist/guides/pipe-pressure-drop-worked-example.html', 'utf8');
+  assert.match(calculator, /<button type="button"[^>]*>Load worked example<\/button>/);
+  assert.match(calculator, /Reset to defaults/);
+  assert.match(guide, /Load worked example.*1 mPa·s/);
+});
