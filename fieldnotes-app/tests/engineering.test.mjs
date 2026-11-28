@@ -7,6 +7,15 @@ test('SI conversion reproduces Re=1000 and laminar classification',()=>{const r=
 test('conservative transition boundaries do not produce pressure estimates',()=>{for(const re of [2000,3000,4000]){const r=pressureDrop({...fluid,velocity:re/10000});near(r.re,re);assert.equal(r.regime,'Transitional');assert.equal(r.drop,null);}});
 test('both sides of transition use their own friction model',()=>{assert.equal(pressureDrop({...fluid,velocity:.1999}).regime,'Laminar');assert.equal(pressureDrop({...fluid,velocity:.4001}).regime,'Turbulent');});
 test('Poiseuille-equivalent hand example gives 320 Pa',()=>{const r=pressureDrop(fluid);near(r.friction,.064);near(r.drop,320);near(r.head,320/(1000*9.80665));});
+test('pipe pressure-drop preset matches the guide and differs from the turbulent defaults', () => {
+  const tool = tools.find(t => t.id === 'pressure-drop');
+  assert.deepEqual(tool.exampleInputs, fluid);
+  const example = pressureDrop(tool.exampleInputs);
+  near(example.re, 1000);
+  near(example.drop, 32 * 0.001 * 10 * 0.1 / 0.010 ** 2);
+  assert.equal(example.regime, 'Laminar');
+  assert.equal(pressureDrop(tool.defaults).regime, 'Turbulent');
+});
 test('doubling length doubles loss at fixed flow',()=>{near(pressureDrop({...fluid,length:20}).drop,2*pressureDrop(fluid).drop);});
 test('Colebrook solution satisfies its defining equation',()=>{const r=pressureDrop({...fluid,velocity:10,roughness:.01});const x=1/Math.sqrt(r.friction);near(x,-2*Math.log10(r.relative/3.7+2.51*x/r.re),1e-10);assert.ok(r.friction>0.02&&r.friction<0.03);});
 test('zero flow has zero loss without dividing by zero',()=>{const r=pressureDrop({...fluid,velocity:0});assert.equal(r.regime,'Stationary');assert.equal(r.drop,0);assert.equal(r.friction,null);});
